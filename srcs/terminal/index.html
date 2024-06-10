@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	<body>
+		<div class="main">
+			<div class="banner">
+					<p class="ascii">ascii art goes here</p>
+					<h1 class="title">FT_TRANSCENDENCE</h1>
+			</div>
+			<div id="terminal">
+				<div class="cmd-line">
+					<p class="prompt">vgoret@made-f0Br4s12:</p>
+					<input class="cmd" type="text">
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
+
+<script>
+	const terminal = document.getElementById("terminal");
+
+	function setupInput(input) {
+		input.addEventListener("keydown", function(event) {
+			if (event.key === "Enter") {
+				event.preventDefault();
+				const command = input.value;
+				executeCommand(command);
+				input.value = "";
+			}
+		});
+	}
+
+	function executeCommand(command) {
+		const output = document.createElement("p");
+		output.className = "output";
+		output.textContent = `Command executed: ${command}`;
+		terminal.appendChild(output);
+
+		const newCmdLine = document.createElement("div");
+		newCmdLine.className = "cmd-line";
+
+		const prompt = document.createElement("p");
+		prompt.className = "prompt";
+		prompt.textContent = "vgoret@made-f0Br4s12:";
+
+		const newInput = document.createElement("input");
+		newInput.className = "cmd";
+		newInput.type = "text";
+
+		newCmdLine.appendChild(prompt);
+		newCmdLine.appendChild(newInput);
+		terminal.appendChild(newCmdLine);
+
+		newInput.focus();
+		setupInput(newInput);
+	}
+
+	const initialInput = document.querySelector(".cmd");
+	setupInput(initialInput);
+</script>
