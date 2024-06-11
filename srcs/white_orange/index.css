@@ -1,0 +1,66 @@
+html {
+	width: 100%;
+	height: 110%;
+}
+
+body {
+	display: flex;
+	background-color: #eceff4;
+	color: #d08770;
+	height: 100%;
+	border: 3px solid black;
+    box-shadow: 8px 8px 0 -3px white, 8px 8px 0 0 black;
+}
+
+.top {
+	display: block;
+	width : 100%;
+	padding: 10px;
+  }
+  
+  .welcome {
+	margin: 5%;
+	font-size: medium;
+  }
+  
+  .shell {
+	display: block;
+	margin: 0 0 10px auto;
+	height: 25%;
+	width: 25%;
+  }
+  
+  .links-commands-wrapper {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	height: 30%;
+  }
+  
+  .links, .commands {
+	width: 40%;
+	height: 40%;
+	margin: 0;
+	border: 3px solid black;
+    box-shadow: 8px 8px 0 -3px white, 8px 8px 0 0 black;
+  }
+
+.commands{
+	margin-top: 5%;
+}
+
+.terminal{
+
+/* TAILLE */
+	height: 50%;
+	width: 100%;
+
+/* APPARANCE */
+	min-height: 100vh; /* Ensure the container covers the entire viewport height */
+	/* background: url('fdf.jpg') no-repeat center center; Replace with your image path */
+	/* background-size: cover; */
+	background-color: rgba(0, 0, 0, 0.2);
+	/* background-color: green; */
+	border: 3px solid #d08770;
+	border-radius: 5px;
+}
