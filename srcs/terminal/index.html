@@ -4,12 +4,23 @@
 		<link rel="stylesheet" href="index.css">
 	</head>
 	<body>
-		<div class="main">
-			<div class="banner">
+		<div id="terminalContainer">
+			<!-- <div class="banner">
 					<p class="ascii">ascii art goes here</p>
 					<h1 class="title">FT_TRANSCENDENCE</h1>
-			</div>
+			</div> -->
 			<div id="terminal">
+				<div class="banner">
+					<pre>
+
+████████╗██████╗  █████╗ ███╗   ██╗███████╗ ██████╗███████╗███╗   ██╗██████╗ ███████╗███╗   ██╗ ██████╗███████╗
+╚══██╔══╝██╔══██╗██╔══██╗████╗  ██║██╔════╝██╔════╝██╔════╝████╗  ██║██╔══██╗██╔════╝████╗  ██║██╔════╝██╔════╝
+   ██║   ██████╔╝███████║██╔██╗ ██║███████╗██║     █████╗  ██╔██╗ ██║██║  ██║█████╗  ██╔██╗ ██║██║     █████╗  
+   ██║   ██╔══██╗██╔══██║██║╚██╗██║╚════██║██║     ██╔══╝  ██║╚██╗██║██║  ██║██╔══╝  ██║╚██╗██║██║     ██╔══╝  
+   ██║   ██║  ██║██║  ██║██║ ╚████║███████║╚██████╗███████╗██║ ╚████║██████╔╝███████╗██║ ╚████║╚██████╗███████╗
+   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝ ╚═════╝╚══════╝╚═╝  ╚═══╝╚═════╝ ╚══════╝╚═╝  ╚═══╝ ╚═════╝╚══════╝
+					</pre>
+				</div>
 				<div class="cmd-line">
 					<p class="prompt">vgoret@made-f0Br4s12:</p>
 					<input class="cmd" type="text">
@@ -21,13 +32,14 @@
 
 
 <script>
+	const terminalContainer = document.getElementById("terminal-container");
 	const terminal = document.getElementById("terminal");
 
 	function setupInput(input) {
 		input.addEventListener("keydown", function(event) {
 			if (event.key === "Enter") {
 				event.preventDefault();
-				const command = input.value;
+				const command = input.value.trim();
 				executeCommand(command);
 				input.value = "";
 			}
@@ -37,7 +49,17 @@
 	function executeCommand(command) {
 		const output = document.createElement("p");
 		output.className = "output";
-		output.textContent = `Command executed: ${command}`;
+		const result = parseCommand(command);
+		if (command === "chat") {
+        	const pre = document.createElement("pre");
+        	pre.innerHTML = result;
+        	output.appendChild(pre);
+    	}
+		else
+		{
+        	output.innerHTML = result;
+    	}
+		output.textContent = result;
 		terminal.appendChild(output);
 
 		const newCmdLine = document.createElement("div");
@@ -57,7 +79,39 @@
 
 		newInput.focus();
 		setupInput(newInput);
+	
+		terminalContainer.scrollTop = terminalContainer.scrollHeight;
 	}
+
+	function parseCommand(command) {
+            const [cmd, ...args] = command.split(" ");
+			console.log ("coucou " + args);
+            switch (cmd) {
+                case "help":
+                    return "Available commands: man, help, echo, date, chat, pong";
+                case "echo":
+                    return args.join(" ");
+                case "date":
+                    return new Date().toString();
+				case "chat":
+					return "Options du chat : -C -P...";
+				case "pong":
+					return "Options du pong : -T -d...";
+				case "man":
+				{
+					if (args == "")
+						return "Man dispos : transcendence, pong, chat...";
+					else if (args == "transcendence")
+						return "Open man transcendence";
+					else if (args == "pong")
+						return "Open man pong";
+					else if (args == "chat")
+						return "Open man chat";
+				}
+				default:
+                    return `Command not found: ${cmd}`;
+            }
+        }
 
 	const initialInput = document.querySelector(".cmd");
 	setupInput(initialInput);
