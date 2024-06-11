@@ -3,7 +3,7 @@ const ballSpeed = document.getElementById("ballSpeed");
 const score_P1 = document.getElementById("score_P1");
 const score_P2 = document.getElementById("score_P2");
 const ctx = canvas.getContext("2d");
-document.getElementById("restartButton").addEventListener("click", (event) => {
+document.getElementById("ModeButton").addEventListener("click", (event) => {
   // Change a parameter before restarting the game
   if (gameMode == 1)
     gameMode = 0;
@@ -12,8 +12,8 @@ document.getElementById("restartButton").addEventListener("click", (event) => {
 
   // Reset the game
   resetBall();
-  playerPaddle.score_P1 = 0;
-  computerPaddle.score_P2 = 0;
+  player1Paddle.score_P1 = 0;
+  player2Paddle.score_P2 = 0;
 });
 
 const paddleWidth = 20;
@@ -22,18 +22,22 @@ const ballRadius = 10;
 
 let upArrowPressed = false;
 let downArrowPressed = false;
+let wPressed = false;
+let sPressed = false;
+
+let gameMode = 0;
 
 const paddleSpeed = 8;
-let playerPaddle = {
+let player1Paddle = {
   score_P1: 0,
   x: 0,
   y: canvas.height / 2 - paddleHeight / 2,
   // coord :
   // {
-  //     xA : playerPaddle.x - paddleHeight / 2,
-  //     xB : playerPaddle.x + paddleHeight / 2,
-  //     yA : playerPaddle.y - paddleHeight / 2,
-  //     yB : playerPaddle.y + paddleHeight / 2,
+  //     xA : player1Paddle.x - paddleHeight / 2,
+  //     xB : player1Paddle.x + paddleHeight / 2,
+  //     yA : player1Paddle.y - paddleHeight / 2,
+  //     yB : player1Paddle.y + paddleHeight / 2,
   // },
   width: paddleWidth,
   height: paddleHeight,
@@ -52,7 +56,7 @@ let playerPaddle = {
   // }
 };
 
-let computerPaddle = {
+let player2Paddle = {
   score_P2: 0,
   x: canvas.width - paddleWidth,
   y: canvas.height / 2 - paddleHeight / 2,
@@ -122,28 +126,28 @@ function drawField() {
 
 function update()
 {
-  // Handle paddle move
-  if (upArrowPressed && playerPaddle.y > 0) {
-    playerPaddle.y -= paddleSpeed;
-  } else if (downArrowPressed && (playerPaddle.y < canvas.height - paddleHeight)) {
-    playerPaddle.y += paddleSpeed;
+  // Handle player 1 move
+  if (upArrowPressed && player1Paddle.y > 0) {
+    player1Paddle.y -= paddleSpeed;
+  } else if (downArrowPressed && (player1Paddle.y < canvas.height - paddleHeight)) {
+    player1Paddle.y += paddleSpeed;
   }
 
 
   //Handle Computer paddle move
   if (gameMode == 0)
   {
-    computerPaddle.y += computerPaddle.dy;
-    if (computerPaddle.y <= 0 || computerPaddle.y + paddleHeight >= canvas.height) {
-      computerPaddle.dy *= -1;
+    player2Paddle.y += player2Paddle.dy;
+    if (player2Paddle.y <= 0 || player2Paddle.y + paddleHeight >= canvas.height) {
+      player2Paddle.dy *= -1;
     }
   }
-  else
+  else //Handle player 2 move
   {
-    //if (wPressed && player2Paddle.y > 0)
-      //player2Paddle -= paddleSpeed;
-    //else if (sPressed && player2Paddle.y < canvas.height - paddleHeight)
-      //player2Paddle.y += paddleSpeed;
+    if (wPressed && player2Paddle.y > 0)
+      player2Paddle.y -= paddleSpeed;
+    else if (sPressed && player2Paddle.y < canvas.height - paddleHeight)
+      player2Paddle.y += paddleSpeed;
   }
 
   // Move the ball
@@ -157,13 +161,13 @@ function update()
   }
 
   // Handle collision with paddle
-  if (ball.positionVector.x - ball.radius <= playerPaddle.x + paddleWidth && ball.positionVector.y >= playerPaddle.y && ball.positionVector.y <= playerPaddle.y + paddleHeight)
+  if (ball.positionVector.x - ball.radius <= player1Paddle.x + paddleWidth && ball.positionVector.y >= player1Paddle.y && ball.positionVector.y <= player1Paddle.y + paddleHeight)
   {
     // need to add the difference between -1 and cone de frotement
     ball.speedVector.dx -= 0.2;
     ball.speedVector.dx *= -1;
   }
-  if (ball.positionVector.x + ball.radius >= computerPaddle.x && ball.positionVector.y >= computerPaddle.y && ball.positionVector.y <= computerPaddle.y + paddleHeight)
+  if (ball.positionVector.x + ball.radius >= player2Paddle.x && ball.positionVector.y >= player2Paddle.y && ball.positionVector.y <= player2Paddle.y + paddleHeight)
   {
     ball.speedVector.dx += 0.2;
     ball.speedVector.dx *= -1;
@@ -174,13 +178,13 @@ function update()
   // Detect goal
   if (ball.positionVector.x - ball.radius <= 0)
   {
-    computerPaddle.score_P2 += 1;
-    score_P2.textContent = computerPaddle.score_P2;
+    player2Paddle.score_P2 += 1;
+    score_P2.textContent = player2Paddle.score_P2;
     resetBall(1);
   } else if (ball.positionVector.x + ball.radius >= canvas.width)
   {
-    playerPaddle.score_P1 += 1;
-    score_P1.textContent = playerPaddle.score_P1;
+    player1Paddle.score_P1 += 1;
+    score_P1.textContent = player1Paddle.score_P1;
     resetBall(2);
   }
 }
@@ -199,10 +203,11 @@ function draw()
 {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawField();
-  drawPaddle(playerPaddle.x, playerPaddle.y, playerPaddle.width, playerPaddle.height);
-  drawPaddle(computerPaddle.x, computerPaddle.y, computerPaddle.width, computerPaddle.height);
-  //drawEngagement
-  //wait endEngagement
+  drawPaddle(player1Paddle.x, player1Paddle.y, player1Paddle.width, player1Paddle.height);
+  drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
+  console.log(player2Paddle.x);
+  console.log(player2Paddle.y);
+
   drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
 }
 
@@ -214,19 +219,25 @@ function gameLoop()
 }
 
 document.addEventListener("keydown", (event) => {
-  if (event.key == "ArrowUp") {
+  if (event.key == "ArrowUp")
     upArrowPressed = true;
-  } else if (event.key == "ArrowDown") {
+  else if (event.key == "ArrowDown")
     downArrowPressed = true;
-  }
+  if (event.key == "w")
+    wPressed = true;
+  else if (event.key == "s")
+    sPressed = true;
 });
 
 document.addEventListener("keyup", (event) => {
-  if (event.key == "ArrowUp") {
+  if (event.key == "ArrowUp")
     upArrowPressed = false;
-  } else if (event.key == "ArrowDown") {
+  else if (event.key == "ArrowDown")
     downArrowPressed = false;
-  }
+  if (event.key == "w")
+    wPressed = false;
+  if (event.key == "s")
+    sPressed = false;
 });
 
 gameLoop();
