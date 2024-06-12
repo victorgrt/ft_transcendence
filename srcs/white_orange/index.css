@@ -1,34 +1,40 @@
 html {
-	width: 100%;
-	height: 110%;
+	margin:2%;
 }
 
 body {
-	display: flex;
 	background-color: #eceff4;
 	color: #d08770;
-	height: 100%;
 	border: 3px solid black;
     box-shadow: 8px 8px 0 -3px white, 8px 8px 0 0 black;
 }
 
+.header {
+	display: flex;
+	width: 100%;
+	height : 30%;
+	background-color: red;
+	text-align: center;
+	align-items: center;
+}
+
 .top {
-	display: block;
 	width : 100%;
-	padding: 10px;
-  }
+}
   
   .welcome {
-	margin: 5%;
-	font-size: medium;
+	border: 2px solid black;
+	width: 50%;
+	/* font-size: medium; */
+	/* justify-content: center; */
+
   }
   
   .shell {
-	display: block;
-	margin: 0 0 10px auto;
-	height: 25%;
-	width: 25%;
-  }
+	width: 15%;
+	align-self: center;
+	margin-left: 20%;
+}
   
   .links-commands-wrapper {
 	display: flex;
@@ -38,12 +44,20 @@ body {
   }
   
   .links, .commands {
+	padding: 3%;
 	width: 40%;
 	height: 40%;
-	margin: 0;
-	border: 3px solid black;
-    box-shadow: 8px 8px 0 -3px white, 8px 8px 0 0 black;
+	margin: 2%;
+	border: 7px double black;
+	/* align-items: center; */
+	/* justify-content: center; */
+    /* box-shadow: 8px 8px 0 -3px white, 8px 8px 0 0 black; */
   }
+
+  .links {
+	/* text-align: center; */
+
+}
 
 .commands{
 	margin-top: 5%;
