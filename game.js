@@ -137,6 +137,7 @@ function update()
   //Handle Computer paddle move
   if (gameMode == 0)
   {
+    // nned
     player2Paddle.y += player2Paddle.dy;
     if (player2Paddle.y <= 0 || player2Paddle.y + paddleHeight >= canvas.height) {
       player2Paddle.dy *= -1;
@@ -164,12 +165,12 @@ function update()
   if (ball.positionVector.x - ball.radius <= player1Paddle.x + paddleWidth && ball.positionVector.y >= player1Paddle.y && ball.positionVector.y <= player1Paddle.y + paddleHeight)
   {
     // need to add the difference between -1 and cone de frotement
-    ball.speedVector.dx -= 0.2;
+    ball.speedVector.dx -= 0.6;
     ball.speedVector.dx *= -1;
   }
   if (ball.positionVector.x + ball.radius >= player2Paddle.x && ball.positionVector.y >= player2Paddle.y && ball.positionVector.y <= player2Paddle.y + paddleHeight)
   {
-    ball.speedVector.dx += 0.2;
+    ball.speedVector.dx += 0.6;
     ball.speedVector.dx *= -1;
   }
 
