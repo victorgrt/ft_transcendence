@@ -1,9 +1,12 @@
 const canvas = document.getElementById("pongCanvas");
+const ballStyle = document.getElementById("ballStyle");
 const ballSpeed = document.getElementById("ballSpeed");
 const score_P1 = document.getElementById("score_P1");
 const score_P2 = document.getElementById("score_P2");
 const ctx = canvas.getContext("2d");
-document.getElementById("ModeButton").addEventListener("click", (event) => {
+
+document.getElementById("ModeButton").addEventListener("click", (event) =>
+{
   // Change a parameter before restarting the game
   if (gameMode == 1)
     gameMode = 0;
@@ -15,9 +18,19 @@ document.getElementById("ModeButton").addEventListener("click", (event) => {
   player1Paddle.score_P1 = 0;
   player2Paddle.score_P2 = 0;
 });
+document.getElementById("settingsButton").addEventListener("click", (event) =>
+{
+  if (pause == 0)
+    pause = 1;
+  else
+  {
+    pause = 0;
+    gameLoop();
+  }
+});
 
 const paddleWidth = 20;
-const paddleHeight = 200;
+const paddleHeight = 2000;
 const ballRadius = 10;
 
 let upArrowPressed = false;
@@ -25,20 +38,16 @@ let downArrowPressed = false;
 let wPressed = false;
 let sPressed = false;
 
+let hue = 0;
+
 let gameMode = 0;
+let pause = 0;
 
 const paddleSpeed = 8;
 let player1Paddle = {
   score_P1: 0,
   x: 0,
   y: canvas.height / 2 - paddleHeight / 2,
-  // coord :
-  // {
-  //     xA : player1Paddle.x - paddleHeight / 2,
-  //     xB : player1Paddle.x + paddleHeight / 2,
-  //     yA : player1Paddle.y - paddleHeight / 2,
-  //     yB : player1Paddle.y + paddleHeight / 2,
-  // },
   width: paddleWidth,
   height: paddleHeight,
   dy: 0,
@@ -66,33 +75,83 @@ let player2Paddle = {
   phi: 0.6,
 };
 
-let ball = {
+let ball =
+{
   speedVector:
   {//Math. random() * (max - min) + min
     dx: 5 + (Math.random() * (2 + 2) - 2),
     dy: 5 + (Math.random() * (2 + 2) - 2),
   },
-  positionVector: {
+  positionVector:
+  {
     x: canvas.width / 2,
     y: canvas.height / 2,
   },
-  // frictionVector :
-  // {
-  //   xF : ,
-  //   yF : ,
-  // }
+  nextBounce:
+  {
+    x: 0,
+    y: 0,
+  },
+  trajectory:
+  {//equation d'une droite = ax + by + c // ici on ajoutera un gap g
+    a : 0,
+    b : 0,
+    c : 0,
+    g : 0.1,
+  },
   phi: 0.4,
   radius: ballRadius,
-  //speed: 4,
 };
 
-function drawPaddle(x, y, width, height) {
+function drawPaddle(x, y, width, height)
+{
   ctx.fillStyle = "#fff";
   ctx.fillRect(x, y, width, height);
 }
 
-function drawBall(x, y, radius) {
-  ctx.fillStyle = "#fff";
+function getNextColor(hue)
+{
+  hue = (hue + 1) % 360;
+  return hue;
+}
+
+function rgbToCss(rgb) {
+  return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
+}
+
+function drawBallTraj(x, y) // for debugg or item
+{
+  x2 = x;
+  y2 = y;
+  if (ball.speedVector.dx > 0)
+  {
+    while (x2 < 1180 && (y2 > 0 && y2 < 600))
+    {
+      x2 += ball.speedVector.dx;
+      y2 += ball.speedVector.dy;
+    }
+  }
+  else
+  {
+    while (x2 > 20 && (y2 > 0 && y2 < 600))
+    {
+      x2 += ball.speedVector.dx;
+      y2 += ball.speedVector.dy;
+    }
+  }
+  ball.nextBounce.x = x2;
+  ball.nextBounce.y = y2;
+  ctx.beginPath()
+  ctx.moveTo(x, y);
+  ctx.lineTo(x2, y2);
+  ctx.lineWidth = 3;
+  ctx.stroke();
+}
+
+function drawBall(x, y, radius)
+{
+  hue = getNextColor(hue);
+  ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, Math.PI * 2);
   ctx.closePath();
@@ -104,9 +163,6 @@ function drawField() {
   const height = canvas.height;
   const centerX = width / 2;
   const centerY = height / 2;
-
-  // Effacer le canvas
-  // context.clearRect(0, 0, width, height);
 
   // Dessiner la ligne centrale
   ctx.beginPath();
@@ -127,27 +183,24 @@ function drawField() {
 function update()
 {
   // Handle player 1 move
-  if (upArrowPressed && player1Paddle.y > 0) {
+  if (wPressed && player1Paddle.y > 0)
     player1Paddle.y -= paddleSpeed;
-  } else if (downArrowPressed && (player1Paddle.y < canvas.height - paddleHeight)) {
+  else if (sPressed && (player1Paddle.y < canvas.height - paddleHeight))
     player1Paddle.y += paddleSpeed;
-  }
 
 
   //Handle Computer paddle move
   if (gameMode == 0)
   {
-    // nned
     player2Paddle.y += player2Paddle.dy;
-    if (player2Paddle.y <= 0 || player2Paddle.y + paddleHeight >= canvas.height) {
+    if (player2Paddle.y <= 0 || player2Paddle.y + paddleHeight >= canvas.height)
       player2Paddle.dy *= -1;
-    }
   }
   else //Handle player 2 move
   {
-    if (wPressed && player2Paddle.y > 0)
+    if (upArrowPressed && player2Paddle.y > 0)
       player2Paddle.y -= paddleSpeed;
-    else if (sPressed && player2Paddle.y < canvas.height - paddleHeight)
+    else if (downArrowPressed && player2Paddle.y < canvas.height - paddleHeight)
       player2Paddle.y += paddleSpeed;
   }
 
@@ -156,15 +209,12 @@ function update()
   ball.positionVector.y += ball.speedVector.dy;
 
   // Handle collision with walls
-  if (ball.positionVector.y + ball.radius >= canvas.height || ball.positionVector.y - ball.radius <= 0) {
+  if (ball.positionVector.y + ball.radius >= canvas.height || ball.positionVector.y - ball.radius <= 0)
     ball.speedVector.dy *= -1;
-    // ball.speed = ball.speed + 0.2;
-  }
 
   // Handle collision with paddle
   if (ball.positionVector.x - ball.radius <= player1Paddle.x + paddleWidth && ball.positionVector.y >= player1Paddle.y && ball.positionVector.y <= player1Paddle.y + paddleHeight)
   {
-    // need to add the difference between -1 and cone de frotement
     ball.speedVector.dx -= 0.6;
     ball.speedVector.dx *= -1;
   }
@@ -177,17 +227,50 @@ function update()
   ballSpeed.textContent = Math.round(ball.speedVector.dx * 100) / 100;
 
   // Detect goal
-  if (ball.positionVector.x - ball.radius <= 0)
+  if (ball.positionVector.x <= 0)
   {
-    player2Paddle.score_P2 += 1;
-    score_P2.textContent = player2Paddle.score_P2;
-    resetBall(1);
-  } else if (ball.positionVector.x + ball.radius >= canvas.width)
-  {
-    player1Paddle.score_P1 += 1;
-    score_P1.textContent = player1Paddle.score_P1;
-    resetBall(2);
+    console.log("ball position : ", ball.positionVector);
+    console.log("player 1 paddle position : ",player1Paddle.x);
+    if (ball.positionVector.x - player1Paddle.width < 0)
+    {
+      console.log(ball.speedVector);
+      console.log(ball.positionVector);
+      console.log("Enter in save goal part");
+      ball.positionVector.x = 100;
+      ball.speedVector.dx += 0.6;
+      ball.speedVector.dx *= -1;
+      console.log(ball.speedVector);
+      console.log(ball.positionVector);
+    }
+    else
+    {
+      player2Paddle.score_P2 += 1;
+      score_P2.textContent = player2Paddle.score_P2;
+      resetBall(1);
+    }
   }
+    else if (ball.positionVector.x + ball.radius >= canvas.width)
+    {
+      console.log("ball position : ", ball.positionVector);
+      console.log("player 2 paddle position : ", player2Paddle.x);
+      if (ball.positionVector.x + player2Paddle.width > canvas.width)
+      {
+        console.log(ball.speedVector);
+        console.log(ball.positionVector);
+        console.log("Enter in save goal part");
+        ball.positionVector.x = 1100;
+        ball.speedVector.dx -= 0.6;
+        ball.speedVector.dx *= -1;
+        console.log(ball.speedVector);
+        console.log(ball.positionVector);
+      }
+      else
+      {
+        player1Paddle.score_P1 += 1;
+        score_P1.textContent = player1Paddle.score_P1;
+        resetBall(2);
+      }
+    }
 }
 
 function resetBall(x)
@@ -206,17 +289,18 @@ function draw()
   drawField();
   drawPaddle(player1Paddle.x, player1Paddle.y, player1Paddle.width, player1Paddle.height);
   drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
-  console.log(player2Paddle.x);
-  console.log(player2Paddle.y);
-
   drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
+  drawBallTraj(ball.positionVector.x, ball.positionVector.y);
 }
 
 function gameLoop()
 {
-  update();
-  draw();
-  requestAnimationFrame(gameLoop);
+  if (pause == false)
+  {
+    update();
+    draw();
+    requestAnimationFrame(gameLoop);
+  }
 }
 
 document.addEventListener("keydown", (event) => {
