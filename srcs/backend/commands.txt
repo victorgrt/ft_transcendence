@@ -1,0 +1,14 @@
+python -m venv .venv --  create a local python environment
+
+source .venv/bin/activate -- use the local python env
+
+python manage.py migrate -- migrate django apps in the new DB
+
+python manage.py startapp pages -- create a new app within the project
+
+pip freeze > requirement.txt -- outputs the list of python packages used in the project
+
+three ways to write a view in Django: 
+function-based views (FBVs)
+class-based views (CBVs)
+generic class-based views (GCBVs)
