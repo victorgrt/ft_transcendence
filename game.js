@@ -42,6 +42,7 @@ let hue = 0;
 
 let gameMode = 0;
 let pause = 0;
+let winner = 0;
 
 const paddleSpeed = 8;
 let player1Paddle = {
@@ -287,12 +288,31 @@ function gameLoop()
 {
   score_P2.textContent = player2Paddle.score_P2;
   score_P1.textContent = player1Paddle.score_P1;
-  if (pause == false)
+  if (pause == false && (player1Paddle.score_P1 < 3 && player2Paddle.score_P2 < 3))
   {
     update();
     draw();
     requestAnimationFrame(gameLoop);
   }
+  if (player1Paddle.score_P1 == 3)
+    winner = 1;
+  else if (player2Paddle.score_P2 == 3)
+    winner = 2;
+  if (winner == 1)
+  {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "48px serif";
+    ctx.fillText("Player 1 win", 10, 50);
+    return ;
+  }
+  if (winner == 2)
+  {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "48px serif";
+    ctx.fillText("Player 2 win", 10, 50);
+    return ;
+  }
+
 }
 
 document.addEventListener("keydown", (event) => {
