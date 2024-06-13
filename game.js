@@ -141,11 +141,11 @@ function drawBallTraj(x, y) // for debugg or item
   }
   ball.nextBounce.x = x2;
   ball.nextBounce.y = y2;
-  ctx.beginPath()
-  ctx.moveTo(x, y);
-  ctx.lineTo(x2, y2);
-  ctx.lineWidth = 3;
-  ctx.stroke();
+  // ctx.beginPath()
+  // ctx.moveTo(x, y);
+  // ctx.lineTo(x2, y2);
+  // ctx.lineWidth = 3;
+  // ctx.stroke();
 }
 
 function drawBall(x, y, radius)
@@ -230,16 +230,13 @@ function update()
   if (ball.positionVector.x <= 0)
   {
     //if (ball.positionVector.x - player1Paddle.width < 0)
-    if ((ball.nextBounce.x <= 20) && (ball.nextBounce.y >= player1Paddle.y || ball.nextBounce.y <= player1Paddle.y + paddleHeight))
+    if ((ball.nextBounce.x <= 20) && (ball.nextBounce.y <= player1Paddle.y && ball.nextBounce.y >= player1Paddle.y + paddleHeight))
     {//save goal part
-      console.log("next bounce was ", ball.nextBounce);
-      console.log("ball position was : ", ball.positionVector);
-      console.log("Paddle coord was ", player1Paddle.y, player1Paddle.y + player1Paddle.paddleHeight);
-      console.log("Paddle coord was ", player1Paddle.y, player1Paddle.y + paddleHeight);
       ball.positionVector.x = 100;
       ball.speedVector.dx += 0.6;
       if (ball.speedVector.dx < 0)
       ball.speedVector.dx *= -1;
+    pause = 1;
     }
     else
     {
@@ -283,7 +280,7 @@ function draw()
   drawPaddle(player1Paddle.x, player1Paddle.y, player1Paddle.width, player1Paddle.height);
   drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
   drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
-  //drawBallTraj(ball.positionVector.x, ball.positionVector.y);
+  drawBallTraj(ball.positionVector.x, ball.positionVector.y);
 }
 
 function gameLoop()
