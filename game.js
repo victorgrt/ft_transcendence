@@ -30,7 +30,7 @@ document.getElementById("settingsButton").addEventListener("click", (event) =>
 });
 
 const paddleWidth = 20;
-const paddleHeight = 200;
+const paddleHeight = 2000;
 const ballRadius = 10;
 
 let upArrowPressed = false;
@@ -77,6 +77,7 @@ let player2Paddle = {
 
 let ball =
 {
+  lastPoints : [],
   speedVector:
   {//Math. random() * (max - min) + min
     dx: 5 + (Math.random() * (2 + 2) - 2),
@@ -158,6 +159,25 @@ function drawBall(x, y, radius)
   ctx.fill();
 }
 
+function drawBallTray(x, y)
+{
+  ctx.save(); // Save current state
+  ctx.moveTo(ball.lastPoints[0].x, ball.lastPoints[0].y); // Move to the first point
+
+  for (let i = 1; i < ball.lastPoints.length; i++)
+  {
+    ctx.beginPath(); // Start a new path for each segment
+    ctx.moveTo(ball.lastPoints[i-1].x, ball.lastPoints[i-1].y); // Move to the start of the segment
+    ctx.lineTo(ball.lastPoints[i].x, ball.lastPoints[i].y); // Draw the segment
+
+    // Set the stroke style and line width for the segment
+    ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - i / ball.lastPoints.length) + ")";
+    ctx.lineWidth = 20 * (1 - i / ball.lastPoints.length);
+
+    ctx.stroke(); // Stroke the segment
+    ctx.restore(); // Restore to the state when save() was last called
+  }
+}
 function drawField() {
   const width = canvas.width;
   const height = canvas.height;
@@ -207,6 +227,11 @@ function update()
   // Move the ball
   ball.positionVector.x += ball.speedVector.dx;
   ball.positionVector.y += ball.speedVector.dy;
+
+  // record last points
+  ball.lastPoints.unshift({x: ball.positionVector.x, y: ball.positionVector.y});
+  if (ball.lastPoints.length > 20)
+    ball.lastPoints.pop();
 
   // Handle collision with walls
   if (ball.positionVector.y + ball.radius >= canvas.height || ball.positionVector.y - ball.radius <= 0)
@@ -269,6 +294,7 @@ function resetBall(x)
   ball.positionVector.y = canvas.height / 2;
   ball.speedVector.dx = 5 + (Math.random() * (2 + 2) - 2);
   ball.speedVector.dy = 5 + (Math.random() * (2 + 2) - 2);
+  ball.lastPoints = [{x: ball.positionVector.x, y: ball.positionVector.y}];
   if (x == 2)
     ball.speedVector.dx *= -1;
 }
@@ -277,6 +303,7 @@ function draw()
 {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawField();
+  drawBallTray(ball.positionVector.x, ball.positionVector.y);
   drawPaddle(player1Paddle.x, player1Paddle.y, player1Paddle.width, player1Paddle.height);
   drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
   drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
