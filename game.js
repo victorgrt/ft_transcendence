@@ -30,7 +30,7 @@ document.getElementById("settingsButton").addEventListener("click", (event) =>
 });
 
 const paddleWidth = 20;
-const paddleHeight = 2000;
+const paddleHeight = 200;
 const ballRadius = 10;
 
 let upArrowPressed = false;
@@ -127,16 +127,16 @@ function drawBallTraj(x, y) // for debugg or item
   {
     while (x2 < 1180 && (y2 > 0 && y2 < 600))
     {
-      x2 += ball.speedVector.dx;
-      y2 += ball.speedVector.dy;
+      x2 += ball.speedVector.dx / 20;
+      y2 += ball.speedVector.dy / 20;
     }
   }
   else
   {
     while (x2 > 20 && (y2 > 0 && y2 < 600))
     {
-      x2 += ball.speedVector.dx;
-      y2 += ball.speedVector.dy;
+      x2 += ball.speedVector.dx / 200;
+      y2 += ball.speedVector.dy / 200;
     }
   }
   ball.nextBounce.x = x2;
@@ -224,23 +224,22 @@ function update()
     ball.speedVector.dx *= -1;
   }
 
-  ballSpeed.textContent = Math.round(ball.speedVector.dx * 100) / 100;
+  ballSpeed.textContent = Math.abs((Math.round(ball.speedVector.dx * 100) / 100));
 
   // Detect goal
   if (ball.positionVector.x <= 0)
   {
-    console.log("ball position : ", ball.positionVector);
-    console.log("player 1 paddle position : ",player1Paddle.x);
-    if (ball.positionVector.x - player1Paddle.width < 0)
-    {
-      console.log(ball.speedVector);
-      console.log(ball.positionVector);
-      console.log("Enter in save goal part");
+    //if (ball.positionVector.x - player1Paddle.width < 0)
+    if ((ball.nextBounce.x <= 20) && (ball.nextBounce.y >= player1Paddle.y || ball.nextBounce.y <= player1Paddle.y + paddleHeight))
+    {//save goal part
+      console.log("next bounce was ", ball.nextBounce);
+      console.log("ball position was : ", ball.positionVector);
+      console.log("Paddle coord was ", player1Paddle.y, player1Paddle.y + player1Paddle.paddleHeight);
+      console.log("Paddle coord was ", player1Paddle.y, player1Paddle.y + paddleHeight);
       ball.positionVector.x = 100;
       ball.speedVector.dx += 0.6;
+      if (ball.speedVector.dx < 0)
       ball.speedVector.dx *= -1;
-      console.log(ball.speedVector);
-      console.log(ball.positionVector);
     }
     else
     {
@@ -249,20 +248,14 @@ function update()
       resetBall(1);
     }
   }
-    else if (ball.positionVector.x + ball.radius >= canvas.width)
+  else if (ball.positionVector.x >= canvas.width)
     {
-      console.log("ball position : ", ball.positionVector);
-      console.log("player 2 paddle position : ", player2Paddle.x);
-      if (ball.positionVector.x + player2Paddle.width > canvas.width)
-      {
-        console.log(ball.speedVector);
-        console.log(ball.positionVector);
-        console.log("Enter in save goal part");
+      if ((ball.nextBounce.x >= 1180) && (ball.nextBounce.y >= player2Paddle.y && ball.nextBounce.y <= player2Paddle.y + player1Paddle.height))
+      {//save goal part
         ball.positionVector.x = 1100;
         ball.speedVector.dx -= 0.6;
+        if (ball.speedVector.dx > 0)
         ball.speedVector.dx *= -1;
-        console.log(ball.speedVector);
-        console.log(ball.positionVector);
       }
       else
       {
@@ -290,11 +283,13 @@ function draw()
   drawPaddle(player1Paddle.x, player1Paddle.y, player1Paddle.width, player1Paddle.height);
   drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
   drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
-  drawBallTraj(ball.positionVector.x, ball.positionVector.y);
+  //drawBallTraj(ball.positionVector.x, ball.positionVector.y);
 }
 
 function gameLoop()
 {
+  score_P2.textContent = player2Paddle.score_P2;
+  score_P1.textContent = player1Paddle.score_P1;
   if (pause == false)
   {
     update();
