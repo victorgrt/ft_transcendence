@@ -1,5 +1,5 @@
 // script.js
-
+console.log("theo ce bg");
 // Fonction pour charger le contenu d'une page via Ajax
 function loadPage(url) {
     fetch(url)
@@ -8,6 +8,7 @@ function loadPage(url) {
             document.getElementById('main').innerHTML = data;
             // Mettre à jour l'URL dans l'historique du navigateur
             history.pushState(null, '', url);
+            console.log("history : ", history);
         })
         .catch(error => console.error('Error loading page:', error));
 }
@@ -33,3 +34,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+console.log("theo ce bg22");

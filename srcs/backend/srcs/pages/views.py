@@ -11,3 +11,6 @@ def starting_page(request):
 
 def game(request):
     return render(request, 'pages/game.html')
+
+def acount(request):
+    return render(request, 'pages/acount.html')
