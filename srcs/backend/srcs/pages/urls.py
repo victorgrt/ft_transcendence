@@ -1,8 +1,10 @@
 # pages/urls.py
 from django.urls import path
 
-from .views import home_page_view
+from .views import starting_page
+from .views import game
 
 urlpatterns = [
-    path("", home_page_view, name="home"),
+    path("", starting_page, name="home"),
+    path("game/", game)
 ]
