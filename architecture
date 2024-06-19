@@ -1,0 +1,49 @@
+project/
+│
+├── frontend/ #contain all frontend stuff
+│   ├── public/ #contient les fichiers statics qui seront servis par nginx (index.html de base, err404...)
+│   ├── src/
+│   │   ├── assets/ #image, svg, icones, polices...
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── services/
+│   │   ├── App.vue / App.js
+│   │   ├── main.js
+│   │   └── ...
+│   ├── package.json
+│   ├── yarn.lock / package-lock.json
+│   └── ...
+│
+├── backend/
+│   ├── manage.py #manage all django stuff
+│   ├── project_name/
+│   │   ├── settings.py
+│   │   ├── urls.py
+│   │   ├── wsgi.py
+│   │   └── ...
+│   ├── apps/
+│   │   ├── core/
+│   │   │   ├── migrations/
+│   │   │   ├── admin.py
+│   │   │   ├── models.py
+│   │   │   ├── views.py
+│   │   │   ├── templates/
+│   │   │   │   ├── core/
+│   │   │   │   │   ├── base.html
+│   │   │   │   │   ├── index.html
+│   │   │   │   │   └── ...
+│   │   │   ├── static/
+│   │   │   │   ├── core/
+│   │   │   │   │   ├── css/
+│   │   │   │   │   │   └── styles.css
+│   │   │   │   │   ├── js/
+│   │   │   │   │   │   └── scripts.js
+│   │   │   │   │   └── ...
+│   │   │   └── ...
+│   │   └── ...
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+├── docker-compose.yml
+├── README.md
+└── .gitignore

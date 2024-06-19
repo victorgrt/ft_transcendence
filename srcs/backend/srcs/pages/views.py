@@ -10,7 +10,7 @@ def starting_page(request):
     return render(request, 'pages/base.html')
 
 def game(request):
-    return render(request, 'pages/game.html')
+    return render(request, 'pages/partials/game.html')
 
 def acount(request):
-    return render(request, 'pages/acount.html')
+    return render(request, 'pages/partials/acount.html')
