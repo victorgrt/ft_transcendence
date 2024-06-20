@@ -1,3 +1,5 @@
+console.log("game script is loaded!");
+
 const canvas = document.getElementById("pongCanvas");
 const ballStyle = document.getElementById("ballStyle");
 const ballSpeed = document.getElementById("ballSpeed");

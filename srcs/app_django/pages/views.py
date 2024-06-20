@@ -9,8 +9,8 @@ from django.http import HttpResponse
 def starting_page(request):
     return render(request, 'pages/base.html')
 
-def game(request):
-    return render(request, 'pages/partials/game.html')
+def pong(request):
+    return render(request, 'pages/partials/pong.html')
 
 def acount(request):
     return render(request, 'pages/partials/acount.html')
