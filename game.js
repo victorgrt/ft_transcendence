@@ -30,7 +30,7 @@ document.getElementById("settingsButton").addEventListener("click", (event) =>
 });
 
 const paddleWidth = 20;
-const paddleHeight = 2000;
+const paddleHeight = 200;
 const ballRadius = 10;
 
 let upArrowPressed = false;
@@ -143,11 +143,11 @@ function drawBallTraj(x, y) // for debugg or item
   }
   ball.nextBounce.x = x2;
   ball.nextBounce.y = y2;
-  // ctx.beginPath()
-  // ctx.moveTo(x, y);
-  // ctx.lineTo(x2, y2);
-  // ctx.lineWidth = 3;
-  // ctx.stroke();
+  ctx.beginPath()
+  ctx.moveTo(x, y);
+  ctx.lineTo(x2, y2);
+  ctx.lineWidth = 3;
+  ctx.stroke();
 }
 
 function drawBall(x, y, radius)
@@ -304,11 +304,11 @@ function draw()
 {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   drawField();
-  drawBallTray(ball.positionVector.x, ball.positionVector.y);
   drawPaddle(player1Paddle.x, player1Paddle.y, player1Paddle.width, player1Paddle.height);
   drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
   drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
   drawBallTraj(ball.positionVector.x, ball.positionVector.y);
+  drawBallTray(ball.positionVector.x, ball.positionVector.y);
 }
 
 function gameLoop()
