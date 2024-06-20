@@ -1,0 +1,26 @@
+Pas besoin de .conf ou quoi car django s'en occupe, a check dans les settings
+
+Prendre une image officielle de postgre
+
+github container postgre : https://git.hexanyn.fr/42/ft_transcendence/-/blob/master/docker/postgresql/srcs/create_db.sql?ref_type=heads
+
+Exemple docker-compose.yml :
+version: '3.9'
+
+services:
+
+  database:
+    image: postgres
+    restart: always
+    volumes:
+        path:'path'
+    environment:
+      POSTGRES_PASSWORD: example
+    expose:
+        - port:port
+networks:
+  transcendence:
+    driver: bridge
+
+
+Peut etre pas besoin d'un dockerfile mais juste d'un docker-compose !
