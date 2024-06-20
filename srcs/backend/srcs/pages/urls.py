@@ -8,5 +8,6 @@ from .views import *
 urlpatterns = [
     path("", starting_page, name="home"),
     path("game/", game),
-    path("acount/", acount)
+    path("acount/", acount),
+    path("home_page/", home_page)
 ]

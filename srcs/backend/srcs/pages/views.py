@@ -14,3 +14,6 @@ def game(request):
 
 def acount(request):
     return render(request, 'pages/partials/acount.html')
+
+def home_page(request):
+    return render(request, 'pages/partials/home_page.html')

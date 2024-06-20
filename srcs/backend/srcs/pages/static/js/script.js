@@ -1,5 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
     function loadContent(url, pushState = true) {
+        console.log(url)
+        if (url == '/')
+            url = "/home_page"
+
         fetch(url)
             .then(response => response.text())
             .then(data => {
