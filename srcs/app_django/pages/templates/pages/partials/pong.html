@@ -3,22 +3,35 @@
   <link rel="stylesheet" type="text/css" href="{% static '/css/pong.css' %}">
 </head>
 <div id="game">
-	<div id="buttons">
+	<div id="titre">
+		Ft_transcendence en mode detente mon pote
+	  </div>
+	  <div id="buttons">
 		<button id="settingsButton">Pause</button>
 		<button id="ModeButton">Player 2 / IA</button>
 		<button id="customizationButton">Customisation</button>
-	</div>
-	<div class = "ballSpeedindic">SPEED :
-	    <div id="ballSpeed"></div>Km/h
-	</div>
+	  </div>
+  
+	<div class = "ballSpeedindic">
+		  SPEED :
+		  <div id="ballSpeed">
+  
+		  </div>Km/h
+	  </div>
 	<div class = "score">
-		<div>P1 Score :
-			<div id = "score_P1"></div>
+	  <div>
+		P1 Score :
+		<div id = "score_P1">
+  
 		</div>
-		<div>P2 Score :
-	  		<div id = "score_P2"></div>
+	  </div>
+	  <div>
+		P2 Score :
+		<div id = "score_P2">
+  
 		</div>
+	  </div>
 	</div>
-	<canvas id="pongCanvas" width="1200" height="600"></canvas>
-	<script src="{% static '/js/pong.js' %}"></script>
+	  <canvas id="pongCanvas" width="1200" height="600"></canvas>
+	  <script src="{% static '/js/pong.js' %}"></script>
 </div>
