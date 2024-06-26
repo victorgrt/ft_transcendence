@@ -38,7 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
+
+    'chat.apps.ChatConfig',
+    'channels',
+    # need to fixe it, does chat.apps work like a lib ??
 ]
+ASGI_APPLICATION = 'ChatApp.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
