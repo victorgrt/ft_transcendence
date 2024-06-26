@@ -18,6 +18,7 @@ document.getElementById("ModeButton").addEventListener("click", (event) =>
   player1Paddle.score_P1 = 0;
   player2Paddle.score_P2 = 0;
 });
+
 document.getElementById("settingsButton").addEventListener("click", (event) =>
 {
   if (pause == 0)
@@ -40,7 +41,7 @@ let sPressed = false;
 
 let hue = 0;
 
-let gameMode = 0;
+let gameMode = -1;
 let pause = 0;
 let winner = 0;
 
@@ -241,13 +242,15 @@ function update()
   // Handle collision with paddle
   if (ball.positionVector.x - ball.radius <= player1Paddle.x + paddleWidth && ball.positionVector.y >= player1Paddle.y && ball.positionVector.y <= player1Paddle.y + paddleHeight)
   {
-    ball.speedVector.dx -= 0.6;
     ball.speedVector.dx *= -1;
-  }
-  if (ball.positionVector.x + ball.radius >= player2Paddle.x && ball.positionVector.y >= player2Paddle.y && ball.positionVector.y <= player2Paddle.y + paddleHeight)
-  {
     ball.speedVector.dx += 0.6;
+    ball.positionVector.x += ballRadius;
+  }
+  else if (ball.positionVector.x + ball.radius >= player2Paddle.x && ball.positionVector.y >= player2Paddle.y && ball.positionVector.y <= player2Paddle.y + paddleHeight)
+  {
     ball.speedVector.dx *= -1;
+    ball.speedVector.dx -= 0.6;
+    ball.positionVector.x -= ballRadius;
   }
 
   ballSpeed.textContent = Math.abs((Math.round(ball.speedVector.dx * 100) / 100));
