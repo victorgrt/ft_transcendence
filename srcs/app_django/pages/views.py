@@ -12,8 +12,8 @@ def starting_page(request):
 def pong(request):
     return render(request, 'pages/partials/pong.html')
 
-def acount(request):
-    return render(request, 'pages/partials/acount.html')
+def account(request):
+    return render(request, 'pages/partials/account.html')
 
 def home_page(request):
     return render(request, 'pages/partials/home_page.html')
