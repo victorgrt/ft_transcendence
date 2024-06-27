@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(url)
             .then(response => response.text())
             .then(data => {
+                console.log("fected url : ", url);
                 const mainDiv = document.getElementById('main');
                 mainDiv.innerHTML = data;
 
