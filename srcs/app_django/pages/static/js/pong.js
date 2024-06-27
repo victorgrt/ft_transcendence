@@ -1,3 +1,4 @@
+console.log("hi from pong!");
 const canvas = document.getElementById("pongCanvas");
 const ballStyle = document.getElementById("ballStyle");
 const ballSpeed = document.getElementById("ballSpeed");

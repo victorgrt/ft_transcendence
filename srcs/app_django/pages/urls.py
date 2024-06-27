@@ -6,5 +6,6 @@ urlpatterns = [
     path("", starting_page, name="home"),
     path("pong/", pong),
     path("acount/", acount),
-    path("home_page/", home_page)
+    path("home_page/", home_page),
+    path("scene/", scene)
 ]

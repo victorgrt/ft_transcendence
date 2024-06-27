@@ -17,3 +17,6 @@ def acount(request):
 
 def home_page(request):
     return render(request, 'pages/partials/home_page.html')
+
+def scene(request):
+    return render(request, 'pages/partials/index.html')
