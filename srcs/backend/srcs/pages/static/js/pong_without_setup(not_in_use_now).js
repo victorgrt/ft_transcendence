@@ -1,109 +1,3 @@
-const canvas = document.getElementById("pongCanvas");
-const ballStyle = document.getElementById("ballStyle");
-const ballSpeed = document.getElementById("ballSpeed");
-const score_P1 = document.getElementById("score_P1");
-const score_P2 = document.getElementById("score_P2");
-const ctx = canvas.getContext("2d");
-
-document.getElementById("ModeButton").addEventListener("click", (event) =>
-{
-  // Change a parameter before restarting the game
-  if (gameMode == 1)
-    gameMode = 0;
-  else
-    gameMode = 1;
-
-  // Reset the game
-  resetBall();
-  player1Paddle.score_P1 = 0;
-  player2Paddle.score_P2 = 0;
-});
-document.getElementById("settingsButton").addEventListener("click", (event) =>
-{
-  if (pause == 0)
-    pause = 1;
-  else
-  {
-    pause = 0;
-    gameLoop();
-  }
-});
-
-const paddleWidth = 20;
-const paddleHeight = 200;
-const ballRadius = 10;
-
-let upArrowPressed = false;
-let downArrowPressed = false;
-let wPressed = false;
-let sPressed = false;
-
-let hue = 0;
-
-let gameMode = 0;
-let pause = 0;
-let winner = 0;
-
-const paddleSpeed = 8;
-let player1Paddle = {
-  score_P1: 0,
-  x: 0,
-  y: canvas.height / 2 - paddleHeight / 2,
-  width: paddleWidth,
-  height: paddleHeight,
-  dy: 0,
-  phi: 0.6,
-  // d : Math.sqrt(Math.pow(((coord.xB - coord.xA) / 2),2) + Math.pow(((coord.yB - coord.yA) / 2),2)),
-  // tanganteVector :
-  // {
-  //   xT : 1 / d * (coord.xB - coord.xA),
-  //   yT : 1 / d * (coord.yB - coord.yA),
-  // },
-  // normalVector :
-  // {
-  //   xN : 1 / d * (coord.yB - coord.yA),
-  //   yN : 1 / d * (coord.xA - coord.xB),
-  // }
-};
-
-let player2Paddle = {
-  score_P2: 0,
-  x: canvas.width - paddleWidth,
-  y: canvas.height / 2 - paddleHeight / 2,
-  width: paddleWidth,
-  height: paddleHeight,
-  dy: 4,
-  phi: 0.6,
-};
-
-let ball =
-{
-  speedVector:
-  {//Math. random() * (max - min) + min
-    dx: 5 + (Math.random() * (2 + 2) - 2),
-    dy: 5 + (Math.random() * (2 + 2) - 2),
-  },
-  positionVector:
-  {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-  },
-  nextBounce:
-  {
-    x: 0,
-    y: 0,
-  },
-  trajectory:
-  {//equation d'une droite = ax + by + c // ici on ajoutera un gap g
-    a : 0,
-    b : 0,
-    c : 0,
-    g : 0.1,
-  },
-  phi: 0.4,
-  radius: ballRadius,
-};
-
 function drawPaddle(x, y, width, height)
 {
   ctx.fillStyle = "#fff";
@@ -142,11 +36,11 @@ function drawBallTraj(x, y) // for debugg or item
   }
   ball.nextBounce.x = x2;
   ball.nextBounce.y = y2;
-  // ctx.beginPath()
-  // ctx.moveTo(x, y);
-  // ctx.lineTo(x2, y2);
-  // ctx.lineWidth = 3;
-  // ctx.stroke();
+  ctx.beginPath()
+  ctx.moveTo(x, y);
+  ctx.lineTo(x2, y2);
+  ctx.lineWidth = 3;
+  ctx.stroke();
 }
 
 function drawBall(x, y, radius)
@@ -159,6 +53,25 @@ function drawBall(x, y, radius)
   ctx.fill();
 }
 
+function drawBallTray(x, y)
+{
+  ctx.save(); // Save current state
+  ctx.moveTo(ball.lastPoints[0].x, ball.lastPoints[0].y); // Move to the first point
+
+  for (let i = 1; i < ball.lastPoints.length; i++)
+  {
+    ctx.beginPath(); // Start a new path for each segment
+    ctx.moveTo(ball.lastPoints[i-1].x, ball.lastPoints[i-1].y); // Move to the start of the segment
+    ctx.lineTo(ball.lastPoints[i].x, ball.lastPoints[i].y); // Draw the segment
+
+    // Set the stroke style and line width for the segment
+    ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - i / ball.lastPoints.length) + ")";
+    ctx.lineWidth = 20 * (1 - i / ball.lastPoints.length);
+
+    ctx.stroke(); // Stroke the segment
+    ctx.restore(); // Restore to the state when save() was last called
+  }
+}
 function drawField() {
   const width = canvas.width;
   const height = canvas.height;
@@ -209,6 +122,11 @@ function update()
   ball.positionVector.x += ball.speedVector.dx;
   ball.positionVector.y += ball.speedVector.dy;
 
+  // record last points
+  ball.lastPoints.unshift({x: ball.positionVector.x, y: ball.positionVector.y});
+  if (ball.lastPoints.length > 20)
+    ball.lastPoints.pop();
+
   // Handle collision with walls
   if (ball.positionVector.y + ball.radius >= canvas.height || ball.positionVector.y - ball.radius <= 0)
     ball.speedVector.dy *= -1;
@@ -216,13 +134,15 @@ function update()
   // Handle collision with paddle
   if (ball.positionVector.x - ball.radius <= player1Paddle.x + paddleWidth && ball.positionVector.y >= player1Paddle.y && ball.positionVector.y <= player1Paddle.y + paddleHeight)
   {
-    ball.speedVector.dx -= 0.6;
     ball.speedVector.dx *= -1;
-  }
-  if (ball.positionVector.x + ball.radius >= player2Paddle.x && ball.positionVector.y >= player2Paddle.y && ball.positionVector.y <= player2Paddle.y + paddleHeight)
-  {
     ball.speedVector.dx += 0.6;
+    ball.positionVector.x += ballRadius;
+  }
+  else if (ball.positionVector.x + ball.radius >= player2Paddle.x && ball.positionVector.y >= player2Paddle.y && ball.positionVector.y <= player2Paddle.y + paddleHeight)
+  {
     ball.speedVector.dx *= -1;
+    ball.speedVector.dx -= 0.6;
+    ball.positionVector.x -= ballRadius;
   }
 
   ballSpeed.textContent = Math.abs((Math.round(ball.speedVector.dx * 100) / 100));
@@ -270,6 +190,7 @@ function resetBall(x)
   ball.positionVector.y = canvas.height / 2;
   ball.speedVector.dx = 5 + (Math.random() * (2 + 2) - 2);
   ball.speedVector.dy = 5 + (Math.random() * (2 + 2) - 2);
+  ball.lastPoints = [{x: ball.positionVector.x, y: ball.positionVector.y}];
   if (x == 2)
     ball.speedVector.dx *= -1;
 }
@@ -282,6 +203,7 @@ function draw()
   drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
   drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
   drawBallTraj(ball.positionVector.x, ball.positionVector.y);
+  drawBallTray(ball.positionVector.x, ball.positionVector.y);
 }
 
 function gameLoop()
@@ -312,29 +234,4 @@ function gameLoop()
     ctx.fillText("Player 2 win", 10, 50);
     return ;
   }
-
 }
-
-document.addEventListener("keydown", (event) => {
-  if (event.key == "ArrowUp")
-    upArrowPressed = true;
-  else if (event.key == "ArrowDown")
-    downArrowPressed = true;
-  if (event.key == "w")
-    wPressed = true;
-  else if (event.key == "s")
-    sPressed = true;
-});
-
-document.addEventListener("keyup", (event) => {
-  if (event.key == "ArrowUp")
-    upArrowPressed = false;
-  else if (event.key == "ArrowDown")
-    downArrowPressed = false;
-  if (event.key == "w")
-    wPressed = false;
-  if (event.key == "s")
-    sPressed = false;
-});
-
-gameLoop();
