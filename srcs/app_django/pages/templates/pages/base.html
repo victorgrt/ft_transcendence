@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel="stylesheet" type="text/css" href="{% static '/css/base.css' %}">
+        <link rel="stylesheet" type="text/css" href="{% static 'pages/css/base.css' %}">
     </head>
     <body>
         <header id="navbarre">
@@ -16,12 +16,17 @@
                 <a class="nav" href="">About us</a>
             </span>
         </header>
+        <h1>WebSocket Chat</h1>
+        <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br>
+        <input id="chat-message-input" type="text" size="100"><br>
+        <input id="chat-message-submit" type="button" value="Send">
         <div id="main">
             <a class="button1" href="pong/">Game</a>
             <a class="button2" href="acount/">Tkt</a>
             <h1>Welcome to FT_TRANSCENDENCE</h1>
             <p>This is the initial content of the main div.</p>
-            <script src="{% static '/js/script.js' %}"></script>
+            <script src="{% static 'pages/js/script.js' %}"></script>
+            <script src="{% static 'pages/js/chat.js' %}"></script>
         </div>            
     </body>
 </html>
