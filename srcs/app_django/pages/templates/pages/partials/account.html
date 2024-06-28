@@ -1,0 +1,38 @@
+{% load static %}
+<head>
+	<link rel="stylesheet" type="text/css" href="{% static '/css/account.css' %}">
+</head>
+<body>
+    <div class="browser">
+        <div class="navbar">
+            <button onclick="go_back_to_scene()">&#8592; Back</button>
+            <button>&#8594; Forward</button>
+            <input type="text" class="url-bar" value="http://ft_transcendence.fr">
+        </div>
+        <div class="content">
+            <div class="form-container">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username">
+                
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password">
+                
+                <div style="display: flex; justify-content: space-between;">
+                    <button class="login-btn">Login</button>
+                    <button class="register-btn">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script>
+		function go_back_to_scene() {
+			const templateName = 'scene';
+    		const currentUrl = window.location.href;
+    		const baseUrl = currentUrl.split('/account/')[0]; // Extract base URL
+    		const newUrl = `${baseUrl}/${templateName}/`;
+    		window.location.href = newUrl; // Redirect to new URL
+    		console.log("new URL:", newUrl);
+		}
+	</script>
+</body>
+</html>

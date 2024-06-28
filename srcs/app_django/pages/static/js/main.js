@@ -65,7 +65,7 @@ function init() {
 }
 
 var highlightedObject = null;
-
+var selected_object_name;
 var selecting_clickable;
 var full_computer;
 
@@ -96,15 +96,16 @@ function onMouseMove(event) {
             // Check si l'utilisteur est sur un objet cliquable
             if (intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2')
             {
-                console.log("object name : ", intersect.object.name);
+                // console.log("object name : ", intersect.object.name);
                 // full_computer = Plane009_1.object;
-                // console.log(full_computer.Color);
+                // console.log(full_computer.Color);\
+                selected_object_name = intersect.object.name;
                 return intersect.object.name;
             }
         });
         
         if (selectedObject) {
-            console.log("NEED HIGHLIGTHING to :", selectedObject);
+            // console.log("NEED HIGHLIGTHING to :", selectedObject);
             selecting_clickable = true;
             var objectToHighlight = selectedObject.object;
             //ARCADE MACHINE
@@ -128,7 +129,6 @@ function onMouseMove(event) {
 
 function animate() {
     requestAnimationFrame(animate);
-    // renderer.render(scene, camera);
     if (controls) {
         controls.update(); // Mettre à jour les contrôles OrbitControls à chaque frame
     }
@@ -137,6 +137,7 @@ function animate() {
 }
 
 init();
+
 //=== LAUNCH SCRIPT ===//
 function loadScript(url, callback) {
     var script = document.createElement("script");
@@ -146,10 +147,8 @@ function loadScript(url, callback) {
     script.onload = function() {
         if (callback) callback();
     };
-
     document.head.appendChild(script);
 }
-
 
 //=== RESIZE WINDOW ===//
 window.addEventListener('resize', () => {
@@ -161,7 +160,8 @@ window.addEventListener('resize', () => {
 });
 
 //=== ZOOM INTO OBJECTS ===//
-let isZoomed = false; // Pour suivre l'état de zoom
+let isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom
+console.log("isZoomed? ", isZoomed);
 
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
@@ -169,78 +169,149 @@ const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la 
 function zoomToCoordinates(clickCoordinates) {
     console.log("zooming");
 
-    // Durée de l'animation
-    const duration = 2000; // Durée de l'animation en millisecondes (ici 2 secondes)
+    // Duration of the animation
+    const duration = 3000;
 
     if (isZoomed) {
-        // Dézoomer vers la position initiale de la caméra
+        // Calculate the target quaternion for the initial camera position
+        const initialQuaternion = new THREE.Quaternion();
+        // camera.position.copy(initialCameraPosition);
+        camera.lookAt(scene.position);
+        camera.getWorldQuaternion(initialQuaternion);
+
+        // Animate the camera position and quaternion back to the initial state
         new TWEEN.Tween(camera.position)
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate(() => {
+                camera.lookAt(scene.position); // Update the lookAt during the animation
+            })
             .onComplete(() => {
-                isZoomed = false; // Mettre à jour l'état de zoom
+                isZoomed = false; // Update zoom state
+                localStorage.setItem('isZoomed', isZoomed);
+                camera.lookAt(scene.position); // Reset the camera's lookAt to the scene center
             })
             .start();
     } else if (!isZoomed && selecting_clickable == true) {
-        console.log("ici")
-        // Zoomer vers les coordonnées cliquées
-        const zoomDistance = 0.5; // Distance de zoom par rapport à l'objet (à ajuster selon vos besoins)
+        isZoomed = true;
+        console.log("isZoomed : ", isZoomed);
 
-        // Calculer la direction de la caméra vers les coordonnées cliquées
+        // Zoom towards the clicked coordinates
+        const zoomDistance = 1.2; // Zoom distance relative to the object (adjust as needed)
+
+        // Calculate the direction from the camera to the clicked coordinates
         const direction = new THREE.Vector3();
         direction.subVectors(clickCoordinates, camera.position).normalize();
 
-        // Calculer la position cible pour le zoom
+        // Calculate the target position for the zoom
         const targetPosition = new THREE.Vector3(
             clickCoordinates.x - direction.x * zoomDistance,
             clickCoordinates.y - direction.y * zoomDistance,
             clickCoordinates.z - direction.z * zoomDistance
         );
-        camera.lookAt(initialCameraPosition);
 
-        // Animer la position de la caméra vers les coordonnées cliquées
+        // Calculate the target quaternion for the camera
+        const targetQuaternion = new THREE.Quaternion();
+        camera.lookAt(clickCoordinates);
+        camera.getWorldQuaternion(targetQuaternion);
+
+        // Animate the camera position and quaternion towards the target
         new TWEEN.Tween(camera.position)
-            .to({ x: targetPosition.x - 2, y: targetPosition.y, z: targetPosition.z }, duration)
+            .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate(() => {
+                camera.lookAt(clickCoordinates); // Update the lookAt during the animation
+            })
             .onComplete(() => {
-                console.log("launch script")
-                camera.lookAt(initialCameraPosition);
-                function changeTemplate(templateName) {
-                    const currentUrl = window.location.href;
-                    const baseUrl = currentUrl.split('/scene/')[0]; // Extract base URL
-                    const newUrl = `${baseUrl}/${templateName}/`;
-                    window.location.href = newUrl; // Redirect to new URL
-                    console.log("new :", newUrl);
+                console.log("Animation complete");
+                console.log("selected : ", selected_object_name);
+
+                if (selected_object_name === "Plane009_2")
+                {
+                    //se mettre en face de l'ecran
+                    changeTemplate('account')
                 }
-                changeTemplate('pong');
+                else if (selected_object_name == "Plane003_2")
+                    changeTemplate('pong');
             })
             .start();
     }
 }
 
+function onClickScene(event) {
+    // Calculate the click coordinates in 3D space
+    const mouse = new THREE.Vector2(
+        (event.clientX / window.innerWidth) * 2 - 1,
+        -(event.clientY / window.innerHeight) * 2 + 1
+    );
 
-window.removeEventListener('click', onClickScene, false); // Assure que l'écouteur est retiré d'abord
+    // Use Raycaster to detect intersections with scene objects
+    const raycaster = new THREE.Raycaster();
+    raycaster.setFromCamera(mouse, camera);
+    const intersects = raycaster.intersectObjects(scene.children, true);
+
+    if (intersects.length > 0) {
+        const intersection = intersects[0];
+        const clickCoordinates = intersection.point;
+        // Call zoomToCoordinates with the clicked coordinates
+        zoomToCoordinates(clickCoordinates);
+    }
+}
+
+window.removeEventListener('click', onClickScene, false); // Ensure the event listener is removed first
 window.addEventListener('click', onClickScene, false);
 
-animate();
 
-function onClickScene(event) {
-        // Calculer les coordonnées du clic dans l'espace 3D
-        const mouse = new THREE.Vector2(
-            (event.clientX / window.innerWidth) * 2 - 1,
-            -(event.clientY / window.innerHeight) * 2 + 1
-        );
-    
-        // Utiliser Raycaster pour détecter les intersections avec les objets de la scène
-        const raycaster = new THREE.Raycaster();
-        raycaster.setFromCamera(mouse, camera);
-        const intersects = raycaster.intersectObjects(scene.children, true);
-    
-        if (intersects.length > 0) {
-            const intersection = intersects[0];
-            const clickCoordinates = intersection.point;
-    
-            // Appeler zoomToCoordinates avec les coordonnées cliquées
-            zoomToCoordinates(clickCoordinates);
+//=== ZOOM BACK IF GO BACK ===//
+function getZoomState() {
+    const zoomState = localStorage.getItem('isZoomed');
+    return zoomState === 'true';
+}
+
+window.addEventListener('beforeunload', function() {
+    localStorage.setItem('isReloaded', 'true');
+});
+
+window.addEventListener('pageshow', function(event) {
+    const isReloaded = localStorage.getItem('isReloaded') === 'true';
+    const isZoomed = getZoomState();
+
+    if (isReloaded) {
+        // The page was reloaded or navigated back to
+        console.log("The page was reloaded or navigated back to");
+
+        // Perform actions based on zoom state
+        if (isZoomed) {
+            console.log("Zooming in (reload)");
+            // Perform actions to zoom in
+        } else {
+            console.log("Zooming out or keeping default (reload)");
+            // Perform actions to zoom out or keep default
+            zoomToCoordinates(initialCameraPosition);
+        }
+
+        // Clear the reload flag
+        localStorage.removeItem('isReloaded');
+    } else {
+        // The page was loaded for the first time
+        console.log("The page was loaded for the first time");
+
+        // Perform actions based on zoom state
+        if (isZoomed) {
+            console.log("Zooming in (first load)");
+            // Perform actions to zoom in
+        } else {
+            console.log("Zooming out or keeping default (first load)");
+            // Perform actions to zoom out or keep default
         }
     }
+});
+
+//=== CHANGE PAGE ===//
+function changeTemplate(templateName) {
+    const currentUrl = window.location.href;
+    const baseUrl = currentUrl.split('/scene/')[0]; // Extract base URL
+    const newUrl = `${baseUrl}/${templateName}/`;
+    window.location.href = newUrl; // Redirect to new URL
+    console.log("new URL:", newUrl);
+}
