@@ -35,14 +35,15 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
+    # 'django.contrib.authchat',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
 
-    'chat.apps.ChatConfig',
-    'channels',
+    # 'chat.apps.ChatConfig',
+    # 'channels',
     # need to fixe it, does chat.apps work like a lib ??
 ]
 ASGI_APPLICATION = 'ChatApp.asgi.application'
@@ -82,11 +83,15 @@ WSGI_APPLICATION = 'django_project.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE':   django.db.backends.sqlite3,
+    'default': {    
+        #Update database
+        #python manage.py makemigrations
+        #python manage.py migrate
+
+        'ENGINE':   'django.db.backends.postgresql',
         'NAME':     BASE_DIR / 'dbAccGestion',
         'USER':     'dbAccUser',
-        'PASSWORD': env('DATABASE_ACCOUNTS_PASSWORD', default='psw'),
+        'PASSWORD': 'lol',#env('DATABASE_ACCOUNTS_PASSWORD', default='psw'),
         'HOST':     '127.0.0.1',
         'PORT':     '5432',
     }
