@@ -10,6 +10,7 @@ function init() {
 
     camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.set(12,5,12);
+    // camera.lookAt(0, 0, 0);
     // Ajouter OrbitControls après chargement du modèle
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.update(); // Mettre à jour les contrôles une première fois
@@ -60,6 +61,7 @@ function init() {
             console.error('Erreur lors du chargement du modèle glTF', error);
         }
     );
+    window.addEventListener('click', onClickScene);
 	document.addEventListener('mousemove', onMouseMove, false);
     animate();
 }
@@ -83,29 +85,23 @@ function onMouseMove(event) {
     // Réinitialiser l'objet surligné précédent
     if (highlightedObject) {
         highlightedObject.material.emissiveIntensity = 1; // Réinitialiser l'intensité d'émission
-        // highlightedObject.material.emissive = new THREE.Color(255, 255, 255);
         highlightedObject = null;
-        console.log("ON EST PASSE LA G")
     }
-
+    // console.log(intersects);
     // Mettre en surbrillance l'objet spécifique
     if (intersects.length > 0) {
         document.body.style.cursor = 'pointer';
         var selectedObject = intersects.find(function (intersect) {
-            // console.log("here : ", intersect.object.name);
             // Check si l'utilisteur est sur un objet cliquable
-            if (intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2')
+            if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2') && isZooming === false)
             {
-                // console.log("object name : ", intersect.object.name);
-                // full_computer = Plane009_1.object;
-                // console.log(full_computer.Color);\
+                console.log("selected : ", selectedObject);
                 selected_object_name = intersect.object.name;
                 return intersect.object.name;
             }
         });
         
         if (selectedObject) {
-            // console.log("NEED HIGHLIGTHING to :", selectedObject);
             selecting_clickable = true;
             var objectToHighlight = selectedObject.object;
             //ARCADE MACHINE
@@ -167,37 +163,37 @@ const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
 function zoomToCoordinates(clickCoordinates) {
-    console.log("zooming");
+    const duration = 2000;
+    if (isZoomed)
+    {
+        isZooming = true;
+        console.log("LA : x:", clickCoordinates.x, "y:", clickCoordinates.y, "z:", clickCoordinates.z)
 
-    // Duration of the animation
-    const duration = 3000;
 
-    if (isZoomed) {
-        // Calculate the target quaternion for the initial camera position
-        const initialQuaternion = new THREE.Quaternion();
-        // camera.position.copy(initialCameraPosition);
-        camera.lookAt(scene.position);
-        camera.getWorldQuaternion(initialQuaternion);
-
-        // Animate the camera position and quaternion back to the initial state
         new TWEEN.Tween(camera.position)
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
-                camera.lookAt(scene.position); // Update the lookAt during the animation
+                camera.lookAt(initialCameraLookAt);
             })
             .onComplete(() => {
-                isZoomed = false; // Update zoom state
+                isZoomed = false;
+                isZooming = false;
                 localStorage.setItem('isZoomed', isZoomed);
-                camera.lookAt(scene.position); // Reset the camera's lookAt to the scene center
+                // camera.position = initialCameraPosition;
+                // camera.lookAt(initialCameraLookAt);
+                controls.target = initialCameraLookAt;
             })
             .start();
-    } else if (!isZoomed && selecting_clickable == true) {
+    }
+    else if (!isZoomed && selecting_clickable == true && isZooming == false)
+    {
+        isZooming = true;
         isZoomed = true;
         console.log("isZoomed : ", isZoomed);
 
         // Zoom towards the clicked coordinates
-        const zoomDistance = 1.2; // Zoom distance relative to the object (adjust as needed)
+        const zoomDistance = 2; // Zoom distance relative to the object (adjust as needed)
 
         // Calculate the direction from the camera to the clicked coordinates
         const direction = new THREE.Vector3();
@@ -207,15 +203,8 @@ function zoomToCoordinates(clickCoordinates) {
         const targetPosition = new THREE.Vector3(
             clickCoordinates.x - direction.x * zoomDistance,
             clickCoordinates.y - direction.y * zoomDistance,
-            clickCoordinates.z - direction.z * zoomDistance
-        );
+            clickCoordinates.z - direction.z * zoomDistance);
 
-        // Calculate the target quaternion for the camera
-        const targetQuaternion = new THREE.Quaternion();
-        camera.lookAt(clickCoordinates);
-        camera.getWorldQuaternion(targetQuaternion);
-
-        // Animate the camera position and quaternion towards the target
         new TWEEN.Tween(camera.position)
             .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
@@ -223,9 +212,12 @@ function zoomToCoordinates(clickCoordinates) {
                 camera.lookAt(clickCoordinates); // Update the lookAt during the animation
             })
             .onComplete(() => {
-                console.log("Animation complete");
+                // camera.lookAt(initialCameraPosition); // Update the lookAt during the animation
+                isZooming = false;
                 console.log("selected : ", selected_object_name);
-
+                controls.target = clickCoordinates;
+                // this.controls.position = targetPosition;
+                // camera.lookAt(targetPosition);
                 if (selected_object_name === "Plane009_2")
                 {
                     //se mettre en face de l'ecran
@@ -238,7 +230,22 @@ function zoomToCoordinates(clickCoordinates) {
     }
 }
 
+let isZooming = false;
+window.addEventListener('click', onClickScene);
+
 function onClickScene(event) {
+        // Duration of the animation
+    // controls.enabled = false;
+    //     controls.enableZoom = false;
+    
+    // // to disable rotation
+    // controls.enableRotate = false;
+        
+    // // to disable pan
+    // controls.enablePan = false;
+    console.log("isZooming :", isZooming);
+    if (isZooming)
+        return;
     // Calculate the click coordinates in 3D space
     const mouse = new THREE.Vector2(
         (event.clientX / window.innerWidth) * 2 - 1,
@@ -253,13 +260,9 @@ function onClickScene(event) {
     if (intersects.length > 0) {
         const intersection = intersects[0];
         const clickCoordinates = intersection.point;
-        // Call zoomToCoordinates with the clicked coordinates
         zoomToCoordinates(clickCoordinates);
     }
 }
-
-window.removeEventListener('click', onClickScene, false); // Ensure the event listener is removed first
-window.addEventListener('click', onClickScene, false);
 
 
 //=== ZOOM BACK IF GO BACK ===//
@@ -276,34 +279,15 @@ window.addEventListener('pageshow', function(event) {
     const isReloaded = localStorage.getItem('isReloaded') === 'true';
     const isZoomed = getZoomState();
 
-    if (isReloaded) {
-        // The page was reloaded or navigated back to
-        console.log("The page was reloaded or navigated back to");
-
-        // Perform actions based on zoom state
-        if (isZoomed) {
-            console.log("Zooming in (reload)");
-            // Perform actions to zoom in
-        } else {
-            console.log("Zooming out or keeping default (reload)");
-            // Perform actions to zoom out or keep default
+    //page was reloaded
+    if (isReloaded)
+    {
+        if (isZoomed)
+            return;
+        else
             zoomToCoordinates(initialCameraPosition);
-        }
-
         // Clear the reload flag
         localStorage.removeItem('isReloaded');
-    } else {
-        // The page was loaded for the first time
-        console.log("The page was loaded for the first time");
-
-        // Perform actions based on zoom state
-        if (isZoomed) {
-            console.log("Zooming in (first load)");
-            // Perform actions to zoom in
-        } else {
-            console.log("Zooming out or keeping default (first load)");
-            // Perform actions to zoom out or keep default
-        }
     }
 });
 
@@ -315,3 +299,9 @@ function changeTemplate(templateName) {
     window.location.href = newUrl; // Redirect to new URL
     console.log("new URL:", newUrl);
 }
+
+// Issues :
+// - weird camera moovement on complete of animation of zoom
+// - can click on other clickable object when in animation
+//Plane003_2 == aracade
+//Plane009 == pc
