@@ -31,7 +31,7 @@ document.getElementById("settingsButton").addEventListener("click", (event) =>
 });
 
 const paddleWidth = 20;
-const paddleHeight = 200;
+const paddleHeight = 2000;
 const ballRadius = 10;
 
 let upArrowPressed = false;
@@ -82,8 +82,8 @@ let ball =
   lastPoints : [],
   speedVector:
   {//Math. random() * (max - min) + min
-    dx: 5 + (Math.random() * (2 + 2) - 2),
-    dy: 5 + (Math.random() * (2 + 2) - 2),
+    dx: 5 + (Math.random() * (5 + 3) - 3),
+    dy: 5 + (Math.random() * (5 + 3) - 3),
   },
   positionVector:
   {
