@@ -1,3 +1,5 @@
+<<<<<<<< HEAD:srcs/app_django/pages/static/pages/js/pong_without_setup(not_in_use_now).js
+========
 const canvas = document.getElementById("pongCanvas");
 const ballStyle = document.getElementById("ballStyle");
 const ballSpeed = document.getElementById("ballSpeed");
@@ -31,7 +33,7 @@ document.getElementById("settingsButton").addEventListener("click", (event) =>
 });
 
 const paddleWidth = 20;
-const paddleHeight = 2000;
+const paddleHeight = 200;
 const ballRadius = 10;
 
 let upArrowPressed = false;
@@ -82,8 +84,8 @@ let ball =
   lastPoints : [],
   speedVector:
   {//Math. random() * (max - min) + min
-    dx: 5 + (Math.random() * (5 + 3) - 3),
-    dy: 5 + (Math.random() * (5 + 3) - 3),
+    dx: 5 + (Math.random() * (2 + 2) - 2),
+    dy: 5 + (Math.random() * (2 + 2) - 2),
   },
   positionVector:
   {
@@ -106,6 +108,7 @@ let ball =
   radius: ballRadius,
 };
 
+>>>>>>>> main:srcs/app_django/pages/static/pages/js/pong.js
 function drawPaddle(x, y, width, height)
 {
   ctx.fillStyle = "#fff";
@@ -342,8 +345,9 @@ function gameLoop()
     ctx.fillText("Player 2 win", 10, 50);
     return ;
   }
-
 }
+<<<<<<<< HEAD:srcs/app_django/pages/static/pages/js/pong_without_setup(not_in_use_now).js
+========
 
 document.addEventListener("keydown", (event) => {
   if (event.key == "ArrowUp")
@@ -368,4 +372,5 @@ document.addEventListener("keyup", (event) => {
 });
 
 gameLoop();
-
+  
+>>>>>>>> main:srcs/app_django/pages/static/pages/js/pong.js
