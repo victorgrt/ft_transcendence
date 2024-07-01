@@ -137,7 +137,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'  # A directory named 'staticfiles' at you
 # Django automatically looks for a 'static' folder in each of your INSTALLED_APPS
 STATICFILES_DIRS = [
     # If you have any global static directories, list them here
-    BASE_DIR / 'staticfiles',
+    BASE_DIR / 'static',
 ]
 
 # Adding WhiteNoise for serving static files more efficiently
