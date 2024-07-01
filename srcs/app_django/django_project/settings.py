@@ -89,8 +89,8 @@ DATABASES = {
         #python manage.py migrate
 
         'ENGINE':   'django.db.backends.postgresql',
-        'NAME':     BASE_DIR / 'dbAccGestion',
-        'USER':     'dbAccUser',
+        'NAME':     'dbAccGestion',
+        'USER':     'dbAccAdmin',
         'PASSWORD': 'lol',#env('DATABASE_ACCOUNTS_PASSWORD', default='psw'),
         'HOST':     '127.0.0.1',
         'PORT':     '5432',
