@@ -1,5 +1,3 @@
-<<<<<<<< HEAD:srcs/app_django/pages/static/pages/js/pong_without_setup(not_in_use_now).js
-========
 const canvas = document.getElementById("pongCanvas");
 const ballStyle = document.getElementById("ballStyle");
 const ballSpeed = document.getElementById("ballSpeed");
@@ -108,7 +106,6 @@ let ball =
   radius: ballRadius,
 };
 
->>>>>>>> main:srcs/app_django/pages/static/pages/js/pong.js
 function drawPaddle(x, y, width, height)
 {
   ctx.fillStyle = "#fff";
@@ -372,5 +369,3 @@ document.addEventListener("keyup", (event) => {
 });
 
 gameLoop();
-  
->>>>>>>> main:srcs/app_django/pages/static/pages/js/pong.js
