@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+from termcolor import colored
 import environ
 import os
 
@@ -94,14 +96,14 @@ DATABASES = {
         #Update database
         #python manage.py makemigrations
         #python manage.py migrate
-
         'ENGINE':   'django.db.backends.postgresql',
-        'NAME':     'dbAccGestion',
-        'USER':     'dbAccAdmin',
-        'PASSWORD': 'lol',#env('DATABASE_ACCOUNTS_PASSWORD', default='psw'),
-        'HOST':     '127.0.0.1',
-        'PORT':     '5432',
+        'NAME':     config('DB_ACC_NAME'),
+        'USER':     config('DB_ACC_ADMIN'),
+        'PASSWORD': config('DB_ACC_PSWD'),
+        'HOST':     config('DB_ACC_HOST'),
+        'PORT':     config('DB_ACC_PORT'),
     }
+  
 }
 
 
@@ -124,6 +126,9 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+print(colored(config('DB_ACC_NAME'), 'green'))
+print(colored(config('DB_ACC_ADMIN'), 'blue'))
+print(colored(config('DB_ACC_PSWD'), 'red'))
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -156,3 +161,5 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
