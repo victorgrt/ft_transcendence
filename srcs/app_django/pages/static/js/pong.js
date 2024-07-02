@@ -1,13 +1,25 @@
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-const renderer = new THREE.WebGLRenderer({alpha:true , antialias:true});
+const renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-let pointLight = new THREE.PointLight(0x404040); // Lumière douce
+
+let pointLight1 = new THREE.PointLight(0xffffff, 1); // Lumière douce
+pointLight1.position.set(7, 2 , 1);
+scene.add(pointLight1);
+
+let pointLight2 = new THREE.PointLight(0xffffff, 1); // Lumière douce
+pointLight2.position.set(0, 7 , -2);
+scene.add(pointLight2);
+
+let pointLight = new THREE.PointLight(0xffffff, 1); // Lumière douce
 pointLight.position.set(-7, 2 , 1);
 scene.add(pointLight);
 
+// let ambientLight = new THREE.PointLight(0x404040); // Lumière douce
+// ambientLight.position.set(7, 2 , 1);
+// scene.add(ambientLight);
 
 // Initialisation des contrôles d'orbite
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
@@ -33,6 +45,9 @@ scene.add(paddle1);
 scene.add(paddle2);
 
 // Créer la balle
+// let texture =  new
+// const fakeglow = new FakeGlowMaterial({glowColor: '#8039ea'});
+
 const ballGeometry = new THREE.SphereGeometry(0.1, 32, 32);
 const ballMaterial = new THREE.MeshPhysicalMaterial();
 const ball = new THREE.Mesh(ballGeometry, ballMaterial);
