@@ -61,6 +61,7 @@ function init() {
             console.error('Erreur lors du chargement du modèle glTF', error);
         }
     );
+    console.log("charged ouais la zone");
     window.addEventListener('click', onClickScene);
 	document.addEventListener('mousemove', onMouseMove, false);
     animate();
@@ -163,7 +164,7 @@ const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la 
 
 
 function zoomToCoordinates(clickCoordinates) {
-    console.log(clickCoordinates);
+    console.log("ici");
     const duration = 2000;
     if (isZoomed)
     {
@@ -289,16 +290,16 @@ function changeTemplate(templateName) {
     console.log("new URL:", newUrl);
 }
 
-function zoomToPC(){
-    let coordinates = [2.224749245944513, 2.670698308531501, -2.3195560957531383];
-    console.log(coordinates[0], coordinates[1], coordinates[2]);
-    if (!controls) {
-        controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.update(); // Mettre à jour les contrôles une première fois
-    }
-    // animate();
+function zoomToPC(event){
+    // const coordinates = ["2.224749245944513", "2.670698308531501", "-2.3195560957531383"];
+    if (isZooming) return;
+
+    // Coordonnées fixes de l'objet vers lequel vous voulez zoomer
+    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
+
     selecting_clickable = true;
-    zoomToCoordinates(coordinates);
+    selected_object_name = "Plane009_2";
+    zoomToCoordinates(clickCoordinates);
 }
 
 // Issues :

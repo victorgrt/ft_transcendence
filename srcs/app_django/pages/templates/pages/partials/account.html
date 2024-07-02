@@ -26,10 +26,9 @@
     </div>
 	<script>
 		function go_back_to_scene() {
-			const templateName = 'scene';
     		const currentUrl = window.location.href;
     		const baseUrl = currentUrl.split('/account/')[0]; // Extract base URL
-    		const newUrl = `${baseUrl}/${templateName}/`;
+    		const newUrl = `${baseUrl}`;
     		window.location.href = newUrl; // Redirect to new URL
     		console.log("new URL:", newUrl);
 		}
