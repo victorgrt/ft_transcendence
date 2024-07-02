@@ -285,8 +285,7 @@ function changeTemplate(templateName) {
     console.log("new URL:", newUrl);
 }
 
-function zoomToPC(event){
-    // const coordinates = ["2.224749245944513", "2.670698308531501", "-2.3195560957531383"];
+function zoomToPC(){
     if (isZooming) return;
 
     // Coordonnées fixes de l'objet vers lequel vous voulez zoomer
@@ -299,6 +298,5 @@ function zoomToPC(event){
 
 // Issues :
 // - weird camera moovement on complete of animation of zoom
-// - can click on other clickable object when in animation
 //Plane003_2 == aracade
 //Plane009 == pc
