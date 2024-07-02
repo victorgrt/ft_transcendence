@@ -12,8 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import config
-from termcolor import colored
-import environ
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -103,7 +101,7 @@ DATABASES = {
         'HOST':     config('DB_ACC_HOST'),
         'PORT':     config('DB_ACC_PORT'),
     }
-  
+
 }
 
 
@@ -125,10 +123,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-print(colored(config('DB_ACC_NAME'), 'green'))
-print(colored(config('DB_ACC_ADMIN'), 'blue'))
-print(colored(config('DB_ACC_PSWD'), 'red'))
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
