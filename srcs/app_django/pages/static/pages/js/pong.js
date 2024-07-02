@@ -7,13 +7,11 @@ const ctx = canvas.getContext("2d");
 
 document.getElementById("ModeButton").addEventListener("click", (event) =>
 {
-  // Change a parameter before restarting the game
   if (gameMode == 1)
     gameMode = 0;
   else
     gameMode = 1;
 
-  // Reset the game
   resetBall();
   player1Paddle.score_P1 = 0;
   player2Paddle.score_P2 = 0;
@@ -342,7 +340,6 @@ function gameLoop()
     ctx.fillText("Player 2 win", 10, 50);
     return ;
   }
-
 }
 
 document.addEventListener("keydown", (event) => {
@@ -368,4 +365,3 @@ document.addEventListener("keyup", (event) => {
 });
 
 gameLoop();
-  

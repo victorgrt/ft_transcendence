@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-bsssz*0u%)7*#g3ir7a04w-c=%l*y-p&_fc^7%2xed%a8#g10a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -43,15 +43,23 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
-
-    # 'chat.apps.ChatConfig',
-    # 'channels',
-    # need to fixe it, does chat.apps work like a lib ??
+    'chat',
+    'channels'
 ]
-ASGI_APPLICATION = 'ChatApp.asgi.application'
+
+WSGI_APPLICATION = 'django_project.wsgi.application'
+
+ASGI_APPLICATION = 'django_project.asgi.application'
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels.layers.InMemoryChannelLayer"
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -78,7 +86,6 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'django_project.wsgi.application'
 
 
 # Database
@@ -133,11 +140,24 @@ USE_I18N = True
 
 USE_TZ = True
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+
+# STATIC FILES CONFIGURATION
+
+STATIC_URL = '/static/'
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # A directory named 'staticfiles' at your project's root
+
+# Django automatically looks for a 'static' folder in each of your INSTALLED_APPS
+STATICFILES_DIRS = [
+    # If you have any global static directories, list them here
+    BASE_DIR / 'static',
+]
+
+# Adding WhiteNoise for serving static files more efficiently
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

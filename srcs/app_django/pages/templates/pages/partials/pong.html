@@ -1,6 +1,6 @@
 {% load static %}
 <head>
-  <link rel="stylesheet" type="text/css" href="{% static '/css/pong.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'pages/css/pong.css' %}">
 </head>
 <div id="game">
 	<div id="titre">
@@ -11,27 +11,27 @@
 		<button id="ModeButton">Player 2 / IA</button>
 		<button id="customizationButton">Customisation</button>
 	  </div>
-  
+
 	<div class = "ballSpeedindic">
 		  SPEED :
 		  <div id="ballSpeed">
-  
+
 		  </div>Km/h
 	  </div>
 	<div class = "score">
 	  <div>
 		P1 Score :
 		<div id = "score_P1">
-  
+
 		</div>
 	  </div>
 	  <div>
 		P2 Score :
 		<div id = "score_P2">
-  
+
 		</div>
 	  </div>
 	</div>
 	  <canvas id="pongCanvas" width="1200" height="600"></canvas>
-	  <script src="{% static '/js/pong.js' %}"></script>
+	  <script src="{% static 'pages/js/pong.js' %}"></script>
 </div>
