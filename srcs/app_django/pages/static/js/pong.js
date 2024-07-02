@@ -1,369 +1,174 @@
-console.log("hi from pong!");
-const canvas = document.getElementById("pongCanvas");
-const ballStyle = document.getElementById("ballStyle");
-const ballSpeed = document.getElementById("ballSpeed");
-const score_P1 = document.getElementById("score_P1");
-const score_P2 = document.getElementById("score_P2");
-const ctx = canvas.getContext("2d");
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+const renderer = new THREE.WebGLRenderer({alpha:true , antialias:true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-document.getElementById("ModeButton").addEventListener("click", (event) =>
-{
-  // Change a parameter before restarting the game
-  if (gameMode == 1)
-    gameMode = 0;
-  else
-    gameMode = 1;
+let pointLight = new THREE.PointLight(0x404040); // Lumière douce
+pointLight.position.set(-7, 2 , 1);
+scene.add(pointLight);
 
-  // Reset the game
-  resetBall();
-  player1Paddle.score_P1 = 0;
-  player2Paddle.score_P2 = 0;
-});
-document.getElementById("settingsButton").addEventListener("click", (event) =>
-{
-  if (pause == 0)
-    pause = 1;
-  else
-  {
-    pause = 0;
-    gameLoop();
-  }
-});
 
-const paddleWidth = 20;
-const paddleHeight = 200;
-const ballRadius = 10;
+// Initialisation des contrôles d'orbite
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // Ajoute un effet de damping (inertie)
+controls.dampingFactor = 0.25; // Facteur de damping
+controls.screenSpacePanning = true; // Déplace uniquement la caméra en orbite
+controls.minDistance = 5; // Distance minimale de zoom
+controls.maxDistance = 100; // Distance maximale de zoom
 
-let upArrowPressed = false;
-let downArrowPressed = false;
-let wPressed = false;
-let sPressed = false;
+// 0, 7, -2 Position initiale de la caméra
+camera.position.set(0, 7, -2); // Position derrière le paddle rouge
+camera.lookAt(0, 0, 0); // La caméra regarde le centre de la scène
+controls.update(); // Met à jour les contrôles après avoir défini la position de la caméra
 
-let hue = 0;
+const paddleGeometry = new THREE.BoxGeometry(0.8, 0.2, 0.2); // Modifier la géométrie des paddles pour les rendre horizontaux
+const paddleMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff });
+const paddleMaterial2 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const paddle1 = new THREE.Mesh(paddleGeometry, paddleMaterial);
+const paddle2 = new THREE.Mesh(paddleGeometry, paddleMaterial2);
+paddle1.position.set(0, 0, 3.5); // Positionner paddle1 en haut
+paddle2.position.set(0, 0, -3.5); // Positionner paddle2 en bas
+scene.add(paddle1);
+scene.add(paddle2);
 
-let gameMode = 0;
-let pause = 0;
-let winner = 0;
+// Créer la balle
+const ballGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+const ballMaterial = new THREE.MeshPhysicalMaterial();
+const ball = new THREE.Mesh(ballGeometry, ballMaterial);
+scene.add(ball);
 
-const paddleSpeed = 8;
-let player1Paddle = {
-  score_P1: 0,
-  x: 0,
-  y: canvas.height / 2 - paddleHeight / 2,
-  width: paddleWidth,
-  height: paddleHeight,
-  dy: 0,
-  phi: 0.6,
-  // d : Math.sqrt(Math.pow(((coord.xB - coord.xA) / 2),2) + Math.pow(((coord.yB - coord.yA) / 2),2)),
-  // tanganteVector :
-  // {
-  //   xT : 1 / d * (coord.xB - coord.xA),
-  //   yT : 1 / d * (coord.yB - coord.yA),
-  // },
-  // normalVector :
-  // {
-  //   xN : 1 / d * (coord.yB - coord.yA),
-  //   yN : 1 / d * (coord.xA - coord.xB),
-  // }
-};
+// Créer les murs
+const wallGeometry = new THREE.BoxGeometry(0.2, 0.2, 7); // Modifier la géométrie des murs pour les rendre verticaux
+const wallMaterial = new THREE.MeshBasicMaterial({ color: 0x00fff8});
+const leftWall = new THREE.Mesh(wallGeometry, wallMaterial);
+const rightWall = new THREE.Mesh(wallGeometry, wallMaterial);
+leftWall.position.x = -2.5; // Positionner le mur gauche plus près du centre
+rightWall.position.x = 2.5; // Positionner le mur droit plus près du centre
+scene.add(leftWall);
+scene.add(rightWall);
 
-let player2Paddle = {
-  score_P2: 0,
-  x: canvas.width - paddleWidth,
-  y: canvas.height / 2 - paddleHeight / 2,
-  width: paddleWidth,
-  height: paddleHeight,
-  dy: 4,
-  phi: 0.6,
-};
+// Variables pour la vitesse de la balle
+let ballSpeedX = 0.05;
+let ballSpeedZ = 0.05;
 
-let ball =
-{
-  lastPoints : [],
-  speedVector:
-  {//Math. random() * (max - min) + min
-    dx: 5 + (Math.random() * (2 + 2) - 2),
-    dy: 5 + (Math.random() * (2 + 2) - 2),
-  },
-  positionVector:
-  {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-  },
-  nextBounce:
-  {
-    x: 0,
-    y: 0,
-  },
-  trajectory:
-  {//equation d'une droite = ax + by + c // ici on ajoutera un gap g
-    a : 0,
-    b : 0,
-    c : 0,
-    g : 0.1,
-  },
-  phi: 0.4,
-  radius: ballRadius,
-};
+// Variables pour les paddles
+const paddleSpeed = 0.05; // Vitesse ajustée pour des mouvements plus fluides
+const paddleLimitX = 2.3; // Limite horizontale pour les paddles
 
-function drawPaddle(x, y, width, height)
-{
-  ctx.fillStyle = "#fff";
-  ctx.fillRect(x, y, width, height);
+// Variables pour le score
+let score1 = 0;
+let score2 = 0;
+const scoreElement = document.createElement('div');
+scoreElement.style.position = 'absolute';
+scoreElement.style.top = '10px';
+scoreElement.style.left = '10px';
+scoreElement.style.color = '#ffffff';
+scoreElement.style.fontSize = '24px';
+document.body.appendChild(scoreElement);
+updateScore();
+
+// Fonction pour mettre à jour le score affiché
+function updateScore() {
+    scoreElement.innerText = `Score: ${score1} - ${score2}`;
 }
 
-function getNextColor(hue)
-{
-  hue = (hue + 1) % 360;
-  return hue;
-}
+// Fonction d'animation
+function animate() {
+    requestAnimationFrame(animate);
 
-function rgbToCss(rgb) {
-  return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-}
+    // Déplacement de la balle
+    console.log('Position de la caméra :', camera.position);
+    ball.position.x += ballSpeedX;
+    ball.position.z += ballSpeedZ;
 
-function drawBallTraj(x, y) // for debugg or item
-{
-  x2 = x;
-  y2 = y;
-  if (ball.speedVector.dx > 0)
-  {
-    while (x2 < 1180 && (y2 > 0 && y2 < 600))
-    {
-      x2 += ball.speedVector.dx / 20;
-      y2 += ball.speedVector.dy / 20;
+    // Collision de la balle avec les murs
+    if (ball.position.x >= 2.4 || ball.position.x <= -2.4) {
+        ballSpeedX = -ballSpeedX;
     }
-  }
-  else
-  {
-    while (x2 > 20 && (y2 > 0 && y2 < 600))
-    {
-      x2 += ball.speedVector.dx / 200;
-      y2 += ball.speedVector.dy / 200;
+
+    // Balle derrière les paddles - points marqués
+    if (ball.position.z <= -4 || ball.position.z >= 4) {
+        if (ball.position.z <= -4) {
+            score2++;
+            updateScore();
+            resetBall();
+        } else if (ball.position.z >= 4) {
+            score1++;
+            updateScore();
+            resetBall();
+        }
     }
-  }
-  ball.nextBounce.x = x2;
-  ball.nextBounce.y = y2;
-  ctx.beginPath()
-  ctx.moveTo(x, y);
-  ctx.lineTo(x2, y2);
-  ctx.lineWidth = 3;
-  ctx.stroke();
-}
 
-function drawBall(x, y, radius)
-{
-  hue = getNextColor(hue);
-  ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.closePath();
-  ctx.fill();
-}
-
-function drawBallTray(x, y)
-{
-  ctx.save(); // Save current state
-  ctx.moveTo(ball.lastPoints[0].x, ball.lastPoints[0].y); // Move to the first point
-
-  for (let i = 1; i < ball.lastPoints.length; i++)
-  {
-    ctx.beginPath(); // Start a new path for each segment
-    ctx.moveTo(ball.lastPoints[i-1].x, ball.lastPoints[i-1].y); // Move to the start of the segment
-    ctx.lineTo(ball.lastPoints[i].x, ball.lastPoints[i].y); // Draw the segment
-
-    // Set the stroke style and line width for the segment
-    ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - i / ball.lastPoints.length) + ")";
-    ctx.lineWidth = 20 * (1 - i / ball.lastPoints.length);
-
-    ctx.stroke(); // Stroke the segment
-    ctx.restore(); // Restore to the state when save() was last called
-  }
-}
-function drawField() {
-  const width = canvas.width;
-  const height = canvas.height;
-  const centerX = width / 2;
-  const centerY = height / 2;
-
-  // Dessiner la ligne centrale
-  ctx.beginPath();
-  ctx.setLineDash([10, 10]); // Ligne en pointillés
-  ctx.moveTo(centerX, 0);
-  ctx.lineTo(centerX, height);
-  ctx.strokeStyle = "#fff";
-  ctx.stroke();
-  ctx.setLineDash([]); // Réinitialiser les pointillés
-
-  // Dessiner le cercle central
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, 50, 0, 2 * Math.PI); // Rayon du cercle de 50
-  ctx.strokeStyle = "#fff";
-  ctx.stroke();
-}
-
-function update()
-{
-  // Handle player 1 move
-  if (wPressed && player1Paddle.y > 0)
-    player1Paddle.y -= paddleSpeed;
-  else if (sPressed && (player1Paddle.y < canvas.height - paddleHeight))
-    player1Paddle.y += paddleSpeed;
-
-
-  //Handle Computer paddle move
-  if (gameMode == 0)
-  {
-    player2Paddle.y += player2Paddle.dy;
-    if (player2Paddle.y <= 0 || player2Paddle.y + paddleHeight >= canvas.height)
-      player2Paddle.dy *= -1;
-  }
-  else //Handle player 2 move
-  {
-    if (upArrowPressed && player2Paddle.y > 0)
-      player2Paddle.y -= paddleSpeed;
-    else if (downArrowPressed && player2Paddle.y < canvas.height - paddleHeight)
-      player2Paddle.y += paddleSpeed;
-  }
-
-  // Move the ball
-  ball.positionVector.x += ball.speedVector.dx;
-  ball.positionVector.y += ball.speedVector.dy;
-
-  // record last points
-  ball.lastPoints.unshift({x: ball.positionVector.x, y: ball.positionVector.y});
-  if (ball.lastPoints.length > 20)
-    ball.lastPoints.pop();
-
-  // Handle collision with walls
-  if (ball.positionVector.y + ball.radius >= canvas.height || ball.positionVector.y - ball.radius <= 0)
-    ball.speedVector.dy *= -1;
-
-  // Handle collision with paddle
-  if (ball.positionVector.x - ball.radius <= player1Paddle.x + paddleWidth && ball.positionVector.y >= player1Paddle.y && ball.positionVector.y <= player1Paddle.y + paddleHeight)
-  {
-    ball.speedVector.dx -= 0.6;
-    ball.speedVector.dx *= -1;
-  }
-  if (ball.positionVector.x + ball.radius >= player2Paddle.x && ball.positionVector.y >= player2Paddle.y && ball.positionVector.y <= player2Paddle.y + paddleHeight)
-  {
-    ball.speedVector.dx += 0.6;
-    ball.speedVector.dx *= -1;
-  }
-
-  ballSpeed.textContent = Math.abs((Math.round(ball.speedVector.dx * 100) / 100));
-
-  // Detect goal
-  if (ball.positionVector.x <= 0)
-  {
-    //if (ball.positionVector.x - player1Paddle.width < 0)
-    if ((ball.nextBounce.x <= 20) && (ball.nextBounce.y <= player1Paddle.y && ball.nextBounce.y >= player1Paddle.y + paddleHeight))
-    {//save goal part
-      ball.positionVector.x = 100;
-      ball.speedVector.dx += 0.6;
-      if (ball.speedVector.dx < 0)
-      ball.speedVector.dx *= -1;
-    pause = 1;
+    // Collision de la balle avec les paddles
+    if (ball.position.z >= paddle1.position.z - 0.1 && ball.position.z <= paddle1.position.z + 0.1 && ball.position.x >= paddle1.position.x - 0.4 && ball.position.x <= paddle1.position.x + 0.4) {
+        ballSpeedZ = -ballSpeedZ;
+        ball.position.z = paddle1.position.z - 0.1; // Repositionner la balle à la surface du paddle
     }
-    else
-    {
-      player2Paddle.score_P2 += 1;
-      score_P2.textContent = player2Paddle.score_P2;
-      resetBall(1);
+    if (ball.position.z >= paddle2.position.z - 0.1 && ball.position.z <= paddle2.position.z + 0.1 && ball.position.x >= paddle2.position.x - 0.4 && ball.position.x <= paddle2.position.x + 0.4) {
+        ballSpeedZ = -ballSpeedZ;
+        ball.position.z = paddle2.position.z + 0.1; // Repositionner la balle à la surface du paddle
     }
-  }
-  else if (ball.positionVector.x >= canvas.width)
-    {
-      if ((ball.nextBounce.x >= 1180) && (ball.nextBounce.y >= player2Paddle.y && ball.nextBounce.y <= player2Paddle.y + player1Paddle.height))
-      {//save goal part
-        ball.positionVector.x = 1100;
-        ball.speedVector.dx -= 0.6;
-        if (ball.speedVector.dx > 0)
-        ball.speedVector.dx *= -1;
-      }
-      else
-      {
-        player1Paddle.score_P1 += 1;
-        score_P1.textContent = player1Paddle.score_P1;
-        resetBall(2);
-      }
+
+    // Vérifier si un joueur a gagné (ex: atteint 10 points)
+    if (score1 === 10 || score2 === 10) {
+        alert(`Joueur ${score1 === 10 ? '1' : '2'} a gagné!`);
+        score1 = 0;
+        score2 = 0;
+        updateScore();
     }
+
+    controls.update(); // Met à jour les contrôles à chaque frame
+    // Rendu de la scène
+    renderer.render(scene, camera);
 }
 
-function resetBall(x)
-{
-  ball.positionVector.x = canvas.width / 2;
-  ball.positionVector.y = canvas.height / 2;
-  ball.speedVector.dx = 5 + (Math.random() * (2 + 2) - 2);
-  ball.speedVector.dy = 5 + (Math.random() * (2 + 2) - 2);
-  ball.lastPoints = [{x: ball.positionVector.x, y: ball.positionVector.y}];
-  if (x == 2)
-    ball.speedVector.dx *= -1;
+// Fonction pour réinitialiser la balle au centre après un point marqué
+function resetBall() {
+    ball.position.x = 0;
+    ball.position.z = 0;
+    ballSpeedX = 0.05;
+    ballSpeedZ = 0.05;
 }
 
-function draw()
-{
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawField();
-  drawPaddle(player1Paddle.x, player1Paddle.y, player1Paddle.width, player1Paddle.height);
-  drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
-  drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
-  drawBallTraj(ball.positionVector.x, ball.positionVector.y);
-  drawBallTray(ball.positionVector.x, ball.positionVector.y);
-}
-
-function gameLoop()
-{
-  score_P2.textContent = player2Paddle.score_P2;
-  score_P1.textContent = player1Paddle.score_P1;
-  if (pause == false && (player1Paddle.score_P1 < 3 && player2Paddle.score_P2 < 3))
-  {
-    update();
-    draw();
-    requestAnimationFrame(gameLoop);
-  }
-  if (player1Paddle.score_P1 == 3)
-    winner = 1;
-  else if (player2Paddle.score_P2 == 3)
-    winner = 2;
-  if (winner == 1)
-  {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "48px serif";
-    ctx.fillText("Player 1 win", 10, 50);
-    return ;
-  }
-  if (winner == 2)
-  {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "48px serif";
-    ctx.fillText("Player 2 win", 10, 50);
-    return ;
-  }
-
-}
-
-document.addEventListener("keydown", (event) => {
-  if (event.key == "ArrowUp")
-    upArrowPressed = true;
-  else if (event.key == "ArrowDown")
-    downArrowPressed = true;
-  if (event.key == "w")
-    wPressed = true;
-  else if (event.key == "s")
-    sPressed = true;
+// Gestion des événements de pression des touches
+let keys = {};
+document.addEventListener('keydown', function (e) {
+    keys[e.key] = true;
 });
 
-document.addEventListener("keyup", (event) => {
-  if (event.key == "ArrowUp")
-    upArrowPressed = false;
-  else if (event.key == "ArrowDown")
-    downArrowPressed = false;
-  if (event.key == "w")
-    wPressed = false;
-  if (event.key == "s")
-    sPressed = false;
+document.addEventListener('keyup', function (e) {
+    delete keys[e.key];
 });
 
-gameLoop();
-  
+// Boucle de mise à jour des paddles
+function updatePaddles() {
+    if ('ArrowLeft' in keys && paddle1.position.x > -paddleLimitX) {
+        paddle1.position.x -= paddleSpeed;
+    }
+    if ('ArrowRight' in keys && paddle1.position.x < paddleLimitX) {
+        paddle1.position.x += paddleSpeed;
+    }
+    if ('d' in keys && paddle2.position.x > -paddleLimitX) {
+        paddle2.position.x -= paddleSpeed;
+    }
+    if ('a' in keys && paddle2.position.x < paddleLimitX) {
+        paddle2.position.x += paddleSpeed;
+    }
+
+    // Demander à être rappelé avant le prochain rafraîchissement
+    requestAnimationFrame(updatePaddles);
+}
+
+// Lancer la mise à jour des paddles
+updatePaddles();
+
+// Ajuster la taille du rendu à la taille de la fenêtre
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Lancer l'animation
+animate();
