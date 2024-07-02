@@ -4,17 +4,61 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Three.js Model Viewer</title>
+        <title>FT_TRANSCENDENCE</title>
         <style>
-            .content { margin: 0; }
-            canvas { display: block; }
-            .content{
+            @font-face {
+                font-family: "Arcades";
+                src: url('../../pages/static/fonts/arcade/Arcades.eot') format('embedded-opentype'),
+                     url('../../pages/static/fonts/arcade/Arcades.woff2') format('woff2'),
+                     url('../../pages/static/fonts/arcade/Arcades.woff') format('woff'),
+                     url('../../pages/static/fonts/arcade/Arcades.ttf') format('truetype');
+            }
+
+            /* canvas { display: block; } */
+            #content{
                 height: 100%;
                 width: 100%;
             }
+
+            #header{
+                /* background:rgba(0,0,0,0.1); */
+                text-align: center;
+                align-items: center;
+                justify-content: center;
+                height: 5%;
+                width: 100%;
+                font-family: 'Arcade', Arial, Helvetica, sans-serif;
+                position: fixed;
+            }
+
+            button {
+                background: none;
+                padding: 1%;
+                border: 2px solid white;
+                border-radius: 1vh;
+                font: larger;
+                font-weight: bold;
+                margin-left: 5%;
+                margin-right: 5%;
+                text-decoration: none;
+                color: white;
+                inset: 0;
+
+            }
+            .needed_hover:hover {
+              background-color: white;
+              color: black;
+              transition: 1s;
+              text-decoration: underline;
+            }
         </style>
     </head>
+
     <div id="content">
+        <div id="header">
+            <button class="needed_hover" onclick='zoomToPC()' src="{% static '/js/main.js' %}">LOGIN</a>
+            <button class="needed_hover" onclick='zoomToPC()' src="{% static '/js/main.js' %}">REGISTER</a>
+        </div>
         <!-- THREE JS LIBRARY -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
         <!-- SCENE LOADER -->
@@ -25,5 +69,11 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
         <!-- MAIN SCRIPT -->
         <script type="text/javascript" src="{% static '/js/main.js' %}"></script>
+    
+        <!-- <script> function zoomToPC()
+        {
+            console.log("coucou");
+        }
+        </script> -->
     </div>
 </html>

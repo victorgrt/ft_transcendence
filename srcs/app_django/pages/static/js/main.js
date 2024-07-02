@@ -81,7 +81,7 @@ function onMouseMove(event) {
 
     // Trouver les intersections avec les objets de la scène
     var intersects = raycaster.intersectObjects(scene.children, true);
-
+    console.log("inter:", intersects);
     // Réinitialiser l'objet surligné précédent
     if (highlightedObject) {
         highlightedObject.material.emissiveIntensity = 1; // Réinitialiser l'intensité d'émission
@@ -95,7 +95,6 @@ function onMouseMove(event) {
             // Check si l'utilisteur est sur un objet cliquable
             if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2') && isZooming === false)
             {
-                console.log("selected : ", selectedObject);
                 selected_object_name = intersect.object.name;
                 return intersect.object.name;
             }
@@ -162,13 +161,14 @@ console.log("isZoomed? ", isZoomed);
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
+
 function zoomToCoordinates(clickCoordinates) {
+    console.log(clickCoordinates);
     const duration = 2000;
     if (isZoomed)
     {
         isZooming = true;
         console.log("LA : x:", clickCoordinates.x, "y:", clickCoordinates.y, "z:", clickCoordinates.z)
-
 
         new TWEEN.Tween(camera.position)
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
@@ -213,8 +213,8 @@ function zoomToCoordinates(clickCoordinates) {
             })
             .onComplete(() => {
                 // camera.lookAt(initialCameraPosition); // Update the lookAt during the animation
+                console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
                 isZooming = false;
-                console.log("selected : ", selected_object_name);
                 controls.target = clickCoordinates;
                 // this.controls.position = targetPosition;
                 // camera.lookAt(targetPosition);
@@ -234,15 +234,6 @@ let isZooming = false;
 window.addEventListener('click', onClickScene);
 
 function onClickScene(event) {
-        // Duration of the animation
-    // controls.enabled = false;
-    //     controls.enableZoom = false;
-    
-    // // to disable rotation
-    // controls.enableRotate = false;
-        
-    // // to disable pan
-    // controls.enablePan = false;
     console.log("isZooming :", isZooming);
     if (isZooming)
         return;
@@ -251,7 +242,6 @@ function onClickScene(event) {
         (event.clientX / window.innerWidth) * 2 - 1,
         -(event.clientY / window.innerHeight) * 2 + 1
     );
-
     // Use Raycaster to detect intersections with scene objects
     const raycaster = new THREE.Raycaster();
     raycaster.setFromCamera(mouse, camera);
@@ -294,10 +284,21 @@ window.addEventListener('pageshow', function(event) {
 //=== CHANGE PAGE ===//
 function changeTemplate(templateName) {
     const currentUrl = window.location.href;
-    const baseUrl = currentUrl.split('/scene/')[0]; // Extract base URL
-    const newUrl = `${baseUrl}/${templateName}/`;
+    const newUrl = `${currentUrl}${templateName}/`;
     window.location.href = newUrl; // Redirect to new URL
     console.log("new URL:", newUrl);
+}
+
+function zoomToPC(){
+    let coordinates = [2.224749245944513, 2.670698308531501, -2.3195560957531383];
+    console.log(coordinates[0], coordinates[1], coordinates[2]);
+    if (!controls) {
+        controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.update(); // Mettre à jour les contrôles une première fois
+    }
+    // animate();
+    selecting_clickable = true;
+    zoomToCoordinates(coordinates);
 }
 
 // Issues :
