@@ -5,7 +5,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 
-let pointLight1 = new THREE.PointLight(0xffffff, 1); // Lumière douce
+let pointLight1 = new THREE.PointLight(0xffffff, 0.5); // Lumière douce
 pointLight1.position.set(7, 2 , 1);
 scene.add(pointLight1);
 
@@ -13,10 +13,15 @@ let pointLight2 = new THREE.PointLight(0xffffff, 1); // Lumière douce
 pointLight2.position.set(0, 7 , -2);
 scene.add(pointLight2);
 
-let pointLight = new THREE.PointLight(0xffffff, 1); // Lumière douce
+let pointLight = new THREE.PointLight(0xffffff, 0.5); // Lumière douce
 pointLight.position.set(-7, 2 , 1);
 scene.add(pointLight);
-
+let pointLight3 = new THREE.PointLight(0xffffff, 0.5); // Lumière douce
+pointLight3.position.set(0, 1, 7);
+scene.add(pointLight3);
+let pointLight4 = new THREE.PointLight(0xffffff, 0.5); // Lumière douce
+pointLight4.position.set(0, 1 , -7);
+scene.add(pointLight4);
 // let ambientLight = new THREE.PointLight(0x404040); // Lumière douce
 // ambientLight.position.set(7, 2 , 1);
 // scene.add(ambientLight);
@@ -30,13 +35,13 @@ controls.minDistance = 5; // Distance minimale de zoom
 controls.maxDistance = 100; // Distance maximale de zoom
 
 // 0, 7, -2 Position initiale de la caméra
-camera.position.set(0, 7, -2); // Position derrière le paddle rouge
+camera.position.set(0, 3, -7); // Position derrière le paddle rouge
 camera.lookAt(0, 0, 0); // La caméra regarde le centre de la scène
 controls.update(); // Met à jour les contrôles après avoir défini la position de la caméra
 
 const paddleGeometry = new THREE.BoxGeometry(0.8, 0.2, 0.2); // Modifier la géométrie des paddles pour les rendre horizontaux
-const paddleMaterial = new THREE.MeshBasicMaterial({ color: 0x00ffff });
-const paddleMaterial2 = new THREE.MeshBasicMaterial({ color: 0xff0000 });
+const paddleMaterial = new THREE.MeshPhysicalMaterial({ color: 0x00ffff });
+const paddleMaterial2 = new THREE.MeshPhysicalMaterial({ color: 0xff0000 });
 const paddle1 = new THREE.Mesh(paddleGeometry, paddleMaterial);
 const paddle2 = new THREE.Mesh(paddleGeometry, paddleMaterial2);
 paddle1.position.set(0, 0, 3.5); // Positionner paddle1 en haut
@@ -55,7 +60,7 @@ scene.add(ball);
 
 // Créer les murs
 const wallGeometry = new THREE.BoxGeometry(0.2, 0.2, 7); // Modifier la géométrie des murs pour les rendre verticaux
-const wallMaterial = new THREE.MeshBasicMaterial({ color: 0x00fff8});
+const wallMaterial = new THREE.MeshPhysicalMaterial({ color: 0xff781f});
 const leftWall = new THREE.Mesh(wallGeometry, wallMaterial);
 const rightWall = new THREE.Mesh(wallGeometry, wallMaterial);
 leftWall.position.x = -2.5; // Positionner le mur gauche plus près du centre
@@ -68,7 +73,7 @@ let ballSpeedX = 0.05;
 let ballSpeedZ = 0.05;
 
 // Variables pour les paddles
-const paddleSpeed = 0.05; // Vitesse ajustée pour des mouvements plus fluides
+const paddleSpeed = 0.075; // Vitesse ajustée pour des mouvements plus fluides
 const paddleLimitX = 2.3; // Limite horizontale pour les paddles
 
 // Variables pour le score
@@ -119,6 +124,9 @@ function animate() {
     if (ball.position.z >= paddle1.position.z - 0.1 && ball.position.z <= paddle1.position.z + 0.1 && ball.position.x >= paddle1.position.x - 0.4 && ball.position.x <= paddle1.position.x + 0.4) {
         ballSpeedZ = -ballSpeedZ;
         ball.position.z = paddle1.position.z - 0.1; // Repositionner la balle à la surface du paddle
+        ballSpeedX *= 1.1;
+        ballSpeedZ *= 1.1;
+
     }
     if (ball.position.z >= paddle2.position.z - 0.1 && ball.position.z <= paddle2.position.z + 0.1 && ball.position.x >= paddle2.position.x - 0.4 && ball.position.x <= paddle2.position.x + 0.4) {
         ballSpeedZ = -ballSpeedZ;
@@ -158,10 +166,10 @@ document.addEventListener('keyup', function (e) {
 
 // Boucle de mise à jour des paddles
 function updatePaddles() {
-    if ('ArrowLeft' in keys && paddle1.position.x > -paddleLimitX) {
+    if ('ArrowRight' in keys && paddle1.position.x > -paddleLimitX) {
         paddle1.position.x -= paddleSpeed;
     }
-    if ('ArrowRight' in keys && paddle1.position.x < paddleLimitX) {
+    if ('ArrowLeft' in keys && paddle1.position.x < paddleLimitX) {
         paddle1.position.x += paddleSpeed;
     }
     if ('d' in keys && paddle2.position.x > -paddleLimitX) {
