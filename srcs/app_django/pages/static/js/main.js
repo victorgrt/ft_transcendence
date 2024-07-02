@@ -2,6 +2,10 @@ var scene, camera, renderer, loader, controls;
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
 
+var highlightedObject = null;
+var selected_object_name;
+var selecting_clickable;
+
 function init() {
     scene = new THREE.Scene();
 
@@ -10,10 +14,8 @@ function init() {
 
     camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.set(12,5,12);
-    // camera.lookAt(0, 0, 0);
-    // Ajouter OrbitControls après chargement du modèle
     controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.update(); // Mettre à jour les contrôles une première fois
+    controls.update();
     renderer.outpuEncoding = THREE.RGBEEncoding;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 1.25;
@@ -67,11 +69,6 @@ function init() {
     animate();
 }
 
-var highlightedObject = null;
-var selected_object_name;
-var selecting_clickable;
-var full_computer;
-
 function onMouseMove(event) {
     // Mettre à jour la position du pointeur de la souris
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
@@ -82,13 +79,11 @@ function onMouseMove(event) {
 
     // Trouver les intersections avec les objets de la scène
     var intersects = raycaster.intersectObjects(scene.children, true);
-    console.log("inter:", intersects);
     // Réinitialiser l'objet surligné précédent
     if (highlightedObject) {
         highlightedObject.material.emissiveIntensity = 1; // Réinitialiser l'intensité d'émission
         highlightedObject = null;
     }
-    // console.log(intersects);
     // Mettre en surbrillance l'objet spécifique
     if (intersects.length > 0) {
         document.body.style.cursor = 'pointer';

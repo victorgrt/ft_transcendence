@@ -14,7 +14,14 @@
                      url('../../pages/static/fonts/arcade/Arcades.ttf') format('truetype');
             }
 
-            /* canvas { display: block; } */
+            html {
+                overflow: hidden;
+            }
+
+            body{
+                margin: 0;
+            }
+
             #content{
                 height: 100%;
                 width: 100%;
@@ -53,27 +60,22 @@
             }
         </style>
     </head>
-
-    <div id="content">
-        <div id="header">
-            <button class="needed_hover" onclick='zoomToPC(event)' src="{% static '/js/main.js' %}">LOGIN</a>
-            <button class="needed_hover" onclick='zoomToPC(event)' src="{% static '/js/main.js' %}">REGISTER</a>
+    <body>
+        <div id="content">
+            <div id="header">
+                <button class="needed_hover" onclick='zoomToPC(event)' src="{% static '/js/main.js' %}">LOGIN</button>
+                <button class="needed_hover" onclick='zoomToPC(event)' src="{% static '/js/main.js' %}">REGISTER</button>
+            </div>
+            <!-- THREE JS LIBRARY -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+            <!-- SCENE LOADER -->
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+            <!-- CAMERA CONTROLS -->
+            <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+            <!-- ZOOM -->
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+            <!-- MAIN SCRIPT -->
+            <script type="text/javascript" src="{% static '/js/main.js' %}"></script>
         </div>
-        <!-- THREE JS LIBRARY -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-        <!-- SCENE LOADER -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-        <!-- CAMERA CONTROLS -->
-        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-        <!-- ZOOM -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
-        <!-- MAIN SCRIPT -->
-        <script type="text/javascript" src="{% static '/js/main.js' %}"></script>
-    
-        <!-- <script> function zoomToPC()
-        {
-            console.log("coucou");
-        }
-        </script> -->
-    </div>
+    </body>
 </html>
