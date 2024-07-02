@@ -94,7 +94,8 @@ DATABASES = {
         #Update database
         #python manage.py makemigrations
         #python manage.py migrate
-        'ENGINE':   'django.db.backends.postgresql',
+        # 'ENGINE':   'django.db.backends.postgresql',
+        'ENGINE':   'django.db.backends.sqlite3',
         'NAME':     config('DB_ACC_NAME'),
         'USER':     config('DB_ACC_ADMIN'),
         'PASSWORD': config('DB_ACC_PSWD'),
@@ -136,6 +137,7 @@ USE_TZ = True
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+APPEND_SLASH = False
 
 
 # STATIC FILES CONFIGURATION
