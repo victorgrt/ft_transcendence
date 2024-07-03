@@ -25,7 +25,7 @@ function init() {
     scene.add(light);
 
     loader = new THREE.GLTFLoader();
-    const sceneurl = "/static/js/scene-18.gltf";
+    const sceneurl = "/static/images/scene.gltf";
 	
     loader.load(
         sceneurl,
@@ -63,6 +63,15 @@ function init() {
             console.error('Erreur lors du chargement du modèle glTF', error);
         }
     );
+    const loader_image = new THREE.TextureLoader();
+        loader_image.load('/static/images/background-space.jpg', function(texture) {
+        texture.minFilter = THREE.LinearFilter; // Use linear filter for minification
+        texture.magFilter = THREE.LinearFilter; // Use linear filter for magnification
+        texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); // Use maximum anisotropy
+
+        // Option 1: Set as background
+        scene.background = texture;
+    });
     console.log("charged ouais la zone");
     window.addEventListener('click', onClickScene);
 	document.addEventListener('mousemove', onMouseMove, false);
@@ -178,7 +187,11 @@ function zoomToCoordinates(clickCoordinates) {
                 localStorage.setItem('isZoomed', isZoomed);
                 // camera.position = initialCameraPosition;
                 // camera.lookAt(initialCameraLookAt);
+                // controls.target = initialCameraPosition;
+                controls.position = initialCameraPosition;
                 controls.target = initialCameraLookAt;
+                // camera.lookAt(initialCameraLookAt);
+                // camera.position = initialCameraPosition;
             })
             .start();
     }
@@ -187,8 +200,6 @@ function zoomToCoordinates(clickCoordinates) {
         isZooming = true;
         isZoomed = true;
         console.log("isZoomed : ", isZoomed);
-
-        // Zoom towards the clicked coordinates
         const zoomDistance = 2; // Zoom distance relative to the object (adjust as needed)
 
         // Calculate the direction from the camera to the clicked coordinates
@@ -196,33 +207,51 @@ function zoomToCoordinates(clickCoordinates) {
         direction.subVectors(clickCoordinates, camera.position).normalize();
 
         // Calculate the target position for the zoom
-        const targetPosition = new THREE.Vector3(
-            clickCoordinates.x - direction.x * zoomDistance,
-            clickCoordinates.y - direction.y * zoomDistance,
-            clickCoordinates.z - direction.z * zoomDistance);
+        // const targetPosition = new THREE.Vector3(
+        //     clickCoordinates.x - direction.x * zoomDistance,
+        //     clickCoordinates.y - direction.y * zoomDistance,
+        //     clickCoordinates.z - direction.z * zoomDistance);
 
-        new TWEEN.Tween(camera.position)
-            .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
-            .easing(TWEEN.Easing.Quadratic.InOut)
-            .onUpdate(() => {
-                camera.lookAt(clickCoordinates); // Update the lookAt during the animation
-            })
-            .onComplete(() => {
-                // camera.lookAt(initialCameraPosition); // Update the lookAt during the animation
-                console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
-                isZooming = false;
-                controls.target = clickCoordinates;
-                // this.controls.position = targetPosition;
-                // camera.lookAt(targetPosition);
-                if (selected_object_name === "Plane009_2")
-                {
-                    //se mettre en face de l'ecran
+        if (selected_object_name == "Plane009_2")
+        {
+            const targetPosition = new THREE.Vector3(2, 2.8, 0.02);
+            new TWEEN.Tween(camera.position)
+                .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, duration)
+                .easing(TWEEN.Easing.Quadratic.InOut)
+                .onUpdate(() => {
+                    camera.lookAt(clickCoordinates);
+                })
+                .onComplete(() => {
+                    console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
+                    isZooming = false;
+                    controls.target.x = targetPosition.x;
+                    controls.target.y = targetPosition.y;
+                    controls.target.z = -targetPosition.z;
+
                     changeTemplate('account')
-                }
-                else if (selected_object_name == "Plane003_2")
-                    changeTemplate('pong');
-            })
-            .start();
+                })
+                .start();
+            }
+            else if (selected_object_name == "Plane003_2")
+            {
+                const targetPosition = new THREE.Vector3(1.75, 3.7, 2.5);
+                new TWEEN.Tween(camera.position)
+                .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
+                .easing(TWEEN.Easing.Quadratic.InOut)
+                .onUpdate(() => {
+                    camera.lookAt(clickCoordinates);
+                })
+                .onComplete(() => {
+                    console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
+                    isZooming = false;
+                    controls.target.x = -targetPosition.x;
+                    controls.target.y = targetPosition.y;
+                    controls.target.z = targetPosition.z;
+
+                    changeTemplate('pong')
+                })
+                .start();
+            }
     }
 }
 
