@@ -24,6 +24,9 @@ def starting_page(request):
 
 def pong(request):
     return redirect('pages/partials/pong.html')
+
+def pongIA(request):
+    return render(request, 'pages/partials/pongIA.html')
     # return render(request, 'pages/partials/pong.html')
 
 def menuPong(request):
