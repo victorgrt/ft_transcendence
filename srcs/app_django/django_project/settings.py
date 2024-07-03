@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+# from decouple import config
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -96,11 +96,11 @@ DATABASES = {
         #python manage.py migrate
         # 'ENGINE':   'django.db.backends.postgresql',
         'ENGINE':   'django.db.backends.sqlite3',
-        'NAME':     config('DB_ACC_NAME'),
-        'USER':     config('DB_ACC_ADMIN'),
-        'PASSWORD': config('DB_ACC_PSWD'),
-        'HOST':     config('DB_ACC_HOST'),
-        'PORT':     config('DB_ACC_PORT'),
+        # 'NAME':     config('DB_ACC_NAME'),
+        # 'USER':     config('DB_ACC_ADMIN'),
+        # 'PASSWORD': config('DB_ACC_PSWD'),
+        # 'HOST':     config('DB_ACC_HOST'),
+        # 'PORT':     config('DB_ACC_PORT'),
     }
 
 }
@@ -144,7 +144,7 @@ APPEND_SLASH = False
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # A directory named 'staticfiles' at your project's root
+STATIC_ROOT = BASE_DIR / 'static'  # A directory named 'staticfiles' at your project's root
 
 # Django automatically looks for a 'static' folder in each of your INSTALLED_APPS
 STATICFILES_DIRS = [
