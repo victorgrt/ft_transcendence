@@ -1,4 +1,4 @@
 # ft_transcendence
 
 Que des bgs dans ma team
-run server: python3 manage.py runserver
+run server: python 3 runserver.py
