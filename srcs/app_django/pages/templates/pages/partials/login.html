@@ -53,15 +53,13 @@
         background-color: #45a049;
     }
 </style>
-</head>
-<body>
 
 <div class="container">
     <h2>Registering</h2>
-    <form action="/submit-form.php" method="post">
+    <form action="/login/" method="post">
         <div class="form-group">
-            <label for="email">Your Email:</label>
-            <input type="email" id="email" name="email" required>
+            <label for="username">Your username:</label>
+            <input type="username" id="username" name="username" required>
         </div>
         <div class="form-group">
             <label for="password">Your Password:</label>
@@ -72,7 +70,20 @@
         </div>
     </form>
 </div>
+<!-- <form method="post">
+    {% csrf_token %}
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" required><br><br>
 
-</body>
-</html>
+    <label for="password">Password:</label>
+    <input type="password" id="password" name="password" required><br><br>
+
+    <input type="submit" value="Login">
+
+    {% if messages %}
+        {% for message in messages %}
+            <div>{{ message }}</div>
+        {% endfor %}
+    {% endif %}
+</form> -->
 
