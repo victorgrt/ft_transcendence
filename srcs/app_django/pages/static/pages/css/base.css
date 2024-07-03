@@ -38,7 +38,7 @@ html, body {
     color: #bc2727;
 }
 
-.nav {
+.nav, .account {
     text-decoration: none;
     color: #555;
     margin-left: 20px;
@@ -73,7 +73,7 @@ html, body {
     color: #666;
 }
 
-.button1, .button2 {
+.button1, .button2, .button3 {
     display: inline-block;
     padding: 15px 30px;
     background-color: #007bff;
@@ -86,7 +86,7 @@ html, body {
     border: 2px solid transparent;
 }
 
-.button1:hover, .button2:hover {
+.button1:hover, .button2:hover, .button3.hover {
     background-color: #0056b3;
     border-color: #0056b3;
 }

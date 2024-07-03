@@ -1,6 +1,4 @@
 {% load static %}
-<!DOCTYPE html>
-<html>
 <head>
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/pong.css' %}">
@@ -18,8 +16,9 @@
     <div id="main">
         <div class="hero-section">
             <h1>Welcome to FT_TRANSCENDENCE</h1>
-            <a class="button button1" href="pong/">Play Game</a>
+            <a class="button button1" href="menuPong/">Play Game</a>
             <a class="button button2" href="register/">Create an account</a>
+            <a class="button button3" href="login/">Login</a>
         </div>
         <div class="chat-container">
             <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br>
@@ -30,4 +29,3 @@
     <script src="{% static 'pages/js/pong.js' %}"></script>
     <script src="{% static 'pages/js/chat.js' %}"></script>
 </body>
-</html>
