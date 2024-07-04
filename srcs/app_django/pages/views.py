@@ -23,11 +23,13 @@ def starting_page(request):
     return render(request, 'pages/base.html')
 
 def pong(request):
-    return redirect('pages/partials/pong.html')
-    # return render(request, 'pages/partials/pong.html')
+    # return redirect('pages/partials/pong.html')
+    return render(request, 'pages/partials/pong.html')
 
 def menuPong(request):
     return render(request, 'pages/partials/menuPong.html')
+def account(request):
+    return render(request, 'pages/partials/account.html')
 
 def home_page(request):
     return render(request, 'pages/partials/home_page.html')
@@ -50,7 +52,8 @@ def createUser(request):
         user = CustomUser.objects.create_user(username=username, email=email, password=password)
         user.save()
 
-        return redirect('home')
+        # return redirect('starting_page')
+        return render(request, 'pages/partials/starting_page')
     return HttpResponse("This endpoint expects a POST request.")
 
 @csrf_exempt
@@ -80,3 +83,7 @@ def get_login_status(request):
         'email': user.email,
         'is_active': user.is_active
     })
+
+
+def scene(request):
+    return render(request, 'pages/index.html')

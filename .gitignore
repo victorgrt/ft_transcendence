@@ -2,3 +2,5 @@
 *.o
 a.out
 *.pyc
+tuto_django/
+bruh/

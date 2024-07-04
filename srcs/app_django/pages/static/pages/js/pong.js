@@ -1,367 +1,245 @@
-const canvas = document.getElementById("pongCanvas");
-const ballStyle = document.getElementById("ballStyle");
-const ballSpeed = document.getElementById("ballSpeed");
-const score_P1 = document.getElementById("score_P1");
-const score_P2 = document.getElementById("score_P2");
-const ctx = canvas.getContext("2d");
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-document.getElementById("ModeButton").addEventListener("click", (event) =>
-{
-  if (gameMode == 1)
-    gameMode = 0;
-  else
-    gameMode = 1;
-
-  resetBall();
-  player1Paddle.score_P1 = 0;
-  player2Paddle.score_P2 = 0;
+const loader = new THREE.TextureLoader();
+const bg_image = '/staticfiles/pages/images/arcade.jpg'; 
+loader.load(bg_image, function(texture) {
+    texture.minFilter = THREE.LinearFilter;
+    texture.magFilter = THREE.LinearFilter;
+    texture.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    scene.background = texture;
 });
 
-document.getElementById("settingsButton").addEventListener("click", (event) =>
-{
-  if (pause == 0)
-    pause = 1;
-  else
-  {
-    pause = 0;
-    gameLoop();
-  }
+// Load the font once
+let font;
+const loader_text = new THREE.FontLoader();
+loader_text.load('/staticfiles/pages/fonts/arcades/threejs_font.typeface.json', function(loadedFont) {
+    font = loadedFont;
+    updateScoreText(); // Initialize the score text once the font is loaded
 });
 
-const paddleWidth = 20;
-const paddleHeight = 200;
-const ballRadius = 10;
+// Variables to hold the score text meshes
+let textMesh1, textMesh2;
 
-let upArrowPressed = false;
-let downArrowPressed = false;
-let wPressed = false;
-let sPressed = false;
-
-let hue = 0;
-
-let gameMode = -1;
-let pause = 0;
-let winner = 0;
-
-const paddleSpeed = 8;
-let player1Paddle = {
-  score_P1: 0,
-  x: 0,
-  y: canvas.height / 2 - paddleHeight / 2,
-  width: paddleWidth,
-  height: paddleHeight,
-  dy: 0,
-  phi: 0.6,
-  // d : Math.sqrt(Math.pow(((coord.xB - coord.xA) / 2),2) + Math.pow(((coord.yB - coord.yA) / 2),2)),
-  // tanganteVector :
-  // {
-  //   xT : 1 / d * (coord.xB - coord.xA),
-  //   yT : 1 / d * (coord.yB - coord.yA),
-  // },
-  // normalVector :
-  // {
-  //   xN : 1 / d * (coord.yB - coord.yA),
-  //   yN : 1 / d * (coord.xA - coord.xB),
-  // }
-};
-
-let player2Paddle = {
-  score_P2: 0,
-  x: canvas.width - paddleWidth,
-  y: canvas.height / 2 - paddleHeight / 2,
-  width: paddleWidth,
-  height: paddleHeight,
-  dy: 4,
-  phi: 0.6,
-};
-
-let ball =
-{
-  lastPoints : [],
-  speedVector:
-  {//Math. random() * (max - min) + min
-    dx: 5 + (Math.random() * (2 + 2) - 2),
-    dy: 5 + (Math.random() * (2 + 2) - 2),
-  },
-  positionVector:
-  {
-    x: canvas.width / 2,
-    y: canvas.height / 2,
-  },
-  nextBounce:
-  {
-    x: 0,
-    y: 0,
-  },
-  trajectory:
-  {//equation d'une droite = ax + by + c // ici on ajoutera un gap g
-    a : 0,
-    b : 0,
-    c : 0,
-    g : 0.1,
-  },
-  phi: 0.4,
-  radius: ballRadius,
-};
-
-function drawPaddle(x, y, width, height)
-{
-  ctx.fillStyle = "#fff";
-  ctx.fillRect(x, y, width, height);
-}
-
-function getNextColor(hue)
-{
-  hue = (hue + 1) % 360;
-  return hue;
-}
-
-function rgbToCss(rgb) {
-  return `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`;
-}
-
-function drawBallTraj(x, y) // for debugg or item
-{
-  x2 = x;
-  y2 = y;
-  if (ball.speedVector.dx > 0)
-  {
-    while (x2 < 1180 && (y2 > 0 && y2 < 600))
-    {
-      x2 += ball.speedVector.dx / 20;
-      y2 += ball.speedVector.dy / 20;
+// Function to update the score text
+function updateScoreText() {
+    if (textMesh1) {
+        scene.remove(textMesh1);
+        textMesh1.geometry.dispose();
+        textMesh1.material.dispose();
     }
-  }
-  else
-  {
-    while (x2 > 20 && (y2 > 0 && y2 < 600))
-    {
-      x2 += ball.speedVector.dx / 200;
-      y2 += ball.speedVector.dy / 200;
+    if (textMesh2) {
+        scene.remove(textMesh2);
+        textMesh2.geometry.dispose();
+        textMesh2.material.dispose();
     }
-  }
-  ball.nextBounce.x = x2;
-  ball.nextBounce.y = y2;
-  ctx.beginPath()
-  ctx.moveTo(x, y);
-  ctx.lineTo(x2, y2);
-  ctx.lineWidth = 3;
-  ctx.stroke();
+
+    const textGeometry1 = new THREE.TextGeometry(score_player_1.toString(), {
+        font: font,
+        size: 0.5,
+        height: 0.2,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.1,
+        bevelSize: 0.05,
+        bevelOffset: 0,
+        bevelSegments: 5,
+    });
+
+    const textGeometry2 = new THREE.TextGeometry(score_player_2.toString(), {
+        font: font,
+        size: 0.5,
+        height: 0.2,
+        curveSegments: 12,
+        bevelEnabled: true,
+        bevelThickness: 0.1,
+        bevelSize: 0.05,
+        bevelOffset: 0,
+        bevelSegments: 5,
+    });
+
+    const textMaterial = new THREE.MeshBasicMaterial({ color: 0xFFFFFF });
+    textMesh1 = new THREE.Mesh(textGeometry1, textMaterial);
+    textMesh2 = new THREE.Mesh(textGeometry2, textMaterial);
+
+    // textMesh1.rotation.y = 10;
+    // textMesh1.rotation.z = 45;
+    // textMesh2.rotation.y = 180;
+
+    scene.add(textMesh1);
+    scene.add(textMesh2);
+
+    updateScorePositions(); // Position the score texts initially
 }
 
-function drawBall(x, y, radius)
-{
-  hue = getNextColor(hue);
-  ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-  ctx.beginPath();
-  ctx.arc(x, y, radius, 0, Math.PI * 2);
-  ctx.closePath();
-  ctx.fill();
-}
-
-function drawBallTray(x, y)
-{
-  ctx.save(); // Save current state
-  ctx.moveTo(ball.lastPoints[0].x, ball.lastPoints[0].y); // Move to the first point
-
-  for (let i = 1; i < ball.lastPoints.length; i++)
-  {
-    ctx.beginPath(); // Start a new path for each segment
-    ctx.moveTo(ball.lastPoints[i-1].x, ball.lastPoints[i-1].y); // Move to the start of the segment
-    ctx.lineTo(ball.lastPoints[i].x, ball.lastPoints[i].y); // Draw the segment
-
-    // Set the stroke style and line width for the segment
-    ctx.strokeStyle = "rgba(255, 255, 255, " + (1 - i / ball.lastPoints.length) + ")";
-    ctx.lineWidth = 20 * (1 - i / ball.lastPoints.length);
-
-    ctx.stroke(); // Stroke the segment
-    ctx.restore(); // Restore to the state when save() was last called
-  }
-}
-function drawField() {
-  const width = canvas.width;
-  const height = canvas.height;
-  const centerX = width / 2;
-  const centerY = height / 2;
-
-  // Dessiner la ligne centrale
-  ctx.beginPath();
-  ctx.setLineDash([10, 10]); // Ligne en pointillés
-  ctx.moveTo(centerX, 0);
-  ctx.lineTo(centerX, height);
-  ctx.strokeStyle = "#fff";
-  ctx.stroke();
-  ctx.setLineDash([]); // Réinitialiser les pointillés
-
-  // Dessiner le cercle central
-  ctx.beginPath();
-  ctx.arc(centerX, centerY, 50, 0, 2 * Math.PI); // Rayon du cercle de 50
-  ctx.strokeStyle = "#fff";
-  ctx.stroke();
-}
-
-function update()
-{
-  // Handle player 1 move
-  if (wPressed && player1Paddle.y > 0)
-    player1Paddle.y -= paddleSpeed;
-  else if (sPressed && (player1Paddle.y < canvas.height - paddleHeight))
-    player1Paddle.y += paddleSpeed;
-
-
-  //Handle Computer paddle move
-  if (gameMode == 0)
-  {
-    player2Paddle.y += player2Paddle.dy;
-    if (player2Paddle.y <= 0 || player2Paddle.y + paddleHeight >= canvas.height)
-      player2Paddle.dy *= -1;
-  }
-  else //Handle player 2 move
-  {
-    if (upArrowPressed && player2Paddle.y > 0)
-      player2Paddle.y -= paddleSpeed;
-    else if (downArrowPressed && player2Paddle.y < canvas.height - paddleHeight)
-      player2Paddle.y += paddleSpeed;
-  }
-
-  // Move the ball
-  ball.positionVector.x += ball.speedVector.dx;
-  ball.positionVector.y += ball.speedVector.dy;
-
-  // record last points
-  ball.lastPoints.unshift({x: ball.positionVector.x, y: ball.positionVector.y});
-  if (ball.lastPoints.length > 20)
-    ball.lastPoints.pop();
-
-  // Handle collision with walls
-  if (ball.positionVector.y + ball.radius >= canvas.height || ball.positionVector.y - ball.radius <= 0)
-    ball.speedVector.dy *= -1;
-
-  // Handle collision with paddle
-  if (ball.positionVector.x - ball.radius <= player1Paddle.x + paddleWidth && ball.positionVector.y >= player1Paddle.y && ball.positionVector.y <= player1Paddle.y + paddleHeight)
-  {
-    ball.speedVector.dx *= -1;
-    ball.speedVector.dx += 0.6;
-    ball.positionVector.x += ballRadius;
-  }
-  else if (ball.positionVector.x + ball.radius >= player2Paddle.x && ball.positionVector.y >= player2Paddle.y && ball.positionVector.y <= player2Paddle.y + paddleHeight)
-  {
-    ball.speedVector.dx *= -1;
-    ball.speedVector.dx -= 0.6;
-    ball.positionVector.x -= ballRadius;
-  }
-
-  ballSpeed.textContent = Math.abs((Math.round(ball.speedVector.dx * 100) / 100));
-
-  // Detect goal
-  if (ball.positionVector.x <= 0)
-  {
-    //if (ball.positionVector.x - player1Paddle.width < 0)
-    if ((ball.nextBounce.x <= 20) && (ball.nextBounce.y <= player1Paddle.y && ball.nextBounce.y >= player1Paddle.y + paddleHeight))
-    {//save goal part
-      ball.positionVector.x = 100;
-      ball.speedVector.dx += 0.6;
-      if (ball.speedVector.dx < 0)
-      ball.speedVector.dx *= -1;
-    pause = 1;
-    }
-    else
-    {
-      player2Paddle.score_P2 += 1;
-      score_P2.textContent = player2Paddle.score_P2;
-      resetBall(1);
-    }
-  }
-  else if (ball.positionVector.x >= canvas.width)
-    {
-      if ((ball.nextBounce.x >= 1180) && (ball.nextBounce.y >= player2Paddle.y && ball.nextBounce.y <= player2Paddle.y + player1Paddle.height))
-      {//save goal part
-        ball.positionVector.x = 1100;
-        ball.speedVector.dx -= 0.6;
-        if (ball.speedVector.dx > 0)
-        ball.speedVector.dx *= -1;
-      }
-      else
-      {
-        player1Paddle.score_P1 += 1;
-        score_P1.textContent = player1Paddle.score_P1;
-        resetBall(2);
-      }
+// Function to update the positions of the score texts
+function updateScorePositions() {
+    if (textMesh1 && textMesh2) {
+        textMesh1.position.set(paddle2.position.x, paddle2.position.y + 1.5, paddle2.position.z);
+        textMesh2.position.set(paddle1.position.x, paddle1.position.y + 1.5, paddle1.position.z);
     }
 }
 
-function resetBall(x)
-{
-  ball.positionVector.x = canvas.width / 2;
-  ball.positionVector.y = canvas.height / 2;
-  ball.speedVector.dx = 5 + (Math.random() * (2 + 2) - 2);
-  ball.speedVector.dy = 5 + (Math.random() * (2 + 2) - 2);
-  ball.lastPoints = [{x: ball.positionVector.x, y: ball.positionVector.y}];
-  if (x == 2)
-    ball.speedVector.dx *= -1;
+let pointLight1 = new THREE.PointLight(0xffffff, 0.5); // Soft light
+pointLight1.position.set(7, 2, 1);
+scene.add(pointLight1);
+
+let pointLight2 = new THREE.PointLight(0xffffff, 1); // Soft light
+pointLight2.position.set(0, 7, -2);
+scene.add(pointLight2);
+
+let pointLight = new THREE.PointLight(0xffffff, 0.5); // Soft light
+pointLight.position.set(-7, 2, 1);
+scene.add(pointLight);
+
+let pointLight3 = new THREE.PointLight(0xffffff, 0.5); // Soft light
+pointLight3.position.set(0, 1, 7);
+scene.add(pointLight3);
+
+let pointLight4 = new THREE.PointLight(0xffffff, 0.5); // Soft light
+pointLight4.position.set(0, 1, -7);
+scene.add(pointLight4);
+
+const controls = new THREE.OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true; // Add damping (inertia)
+controls.dampingFactor = 0.25; // Damping factor
+controls.screenSpacePanning = true; // Only move the camera around the orbit
+controls.minDistance = 5; // Minimum zoom distance
+controls.maxDistance = 100; // Maximum zoom distance
+
+camera.position.set(0, 3, -7); // Position behind the red paddle
+camera.lookAt(0, 0, 0); // The camera looks at the center of the scene
+controls.update(); // Update controls after setting the camera position
+
+const paddleGeometry = new THREE.BoxGeometry(0.8, 0.2, 0.2); // Adjust paddle geometry to make them horizontal
+const paddleMaterial = new THREE.MeshPhysicalMaterial({ color: 0x00ffff });
+const paddleMaterial2 = new THREE.MeshPhysicalMaterial({ color: 0xff0000 });
+const paddle1 = new THREE.Mesh(paddleGeometry, paddleMaterial);
+const paddle2 = new THREE.Mesh(paddleGeometry, paddleMaterial2);
+paddle1.position.set(0, 0, 3.5); // Position paddle1 at the top
+paddle2.position.set(0, 0, -3.5); // Position paddle2 at the bottom
+scene.add(paddle1);
+scene.add(paddle2);
+
+const ballGeometry = new THREE.SphereGeometry(0.1, 32, 32);
+const ballMaterial = new THREE.MeshPhysicalMaterial();
+const ball = new THREE.Mesh(ballGeometry, ballMaterial);
+scene.add(ball);
+
+const wallGeometry = new THREE.BoxGeometry(0.2, 0.2, 7); // Adjust wall geometry to make them vertical
+const wallMaterial = new THREE.MeshPhysicalMaterial({ color: 0xff781f });
+const leftWall = new THREE.Mesh(wallGeometry, wallMaterial);
+const rightWall = new THREE.Mesh(wallGeometry, wallMaterial);
+leftWall.position.x = -2.5; // Position the left wall closer to the center
+rightWall.position.x = 2.5; // Position the right wall closer to the center
+scene.add(leftWall);
+scene.add(rightWall);
+
+let ballSpeedX = 0.05;
+let ballSpeedZ = 0.05;
+
+const paddleSpeed = 0.075; // Adjusted speed for smoother movements
+const paddleLimitX = 2.3; // Horizontal limit for paddles
+
+updateScore();
+
+function updateScore() {
+    console.log("score:", score_player_1, " - ", score_player_2);
+    if (font) {
+        updateScoreText();
+    }
 }
 
-function draw()
-{
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  drawField();
-  drawPaddle(player1Paddle.x, player1Paddle.y, player1Paddle.width, player1Paddle.height);
-  drawPaddle(player2Paddle.x, player2Paddle.y, player2Paddle.width, player2Paddle.height);
-  drawBall(ball.positionVector.x, ball.positionVector.y, ball.radius);
-  drawBallTraj(ball.positionVector.x, ball.positionVector.y);
-  drawBallTray(ball.positionVector.x, ball.positionVector.y);
+function animate() {
+    requestAnimationFrame(animate);
+
+    ball.position.x += ballSpeedX;
+    ball.position.z += ballSpeedZ;
+
+    if (ball.position.x >= 2.4 || ball.position.x <= -2.4) {
+        ballSpeedX = -ballSpeedX;
+    }
+
+    if (ball.position.z <= -4 || ball.position.z >= 4) {
+        if (ball.position.z <= -4) {
+            score_player_2++;
+            updateScore();
+            resetBall();
+        } else if (ball.position.z >= 4) {
+            score_player_1++;
+            updateScore();
+            resetBall();
+        }
+    }
+
+    if (ball.position.z >= paddle1.position.z - 0.1 && ball.position.z <= paddle1.position.z + 0.1 && ball.position.x >= paddle1.position.x - 0.4 && ball.position.x <= paddle1.position.x + 0.4) {
+        ballSpeedZ = -ballSpeedZ;
+        ball.position.z = paddle1.position.z - 0.1;
+        ballSpeedX *= 1.1;
+        ballSpeedZ *= 1.1;
+    }
+
+    if (ball.position.z >= paddle2.position.z - 0.1 && ball.position.z <= paddle2.position.z + 0.1 && ball.position.x >= paddle2.position.x - 0.4 && ball.position.x <= paddle2.position.x + 0.4) {
+        ballSpeedZ = -ballSpeedZ;
+        ball.position.z = paddle2.position.z + 0.1;
+    }
+
+    if (score_player_1 === 10 || score_player_2 === 10) {
+        score_player_1 = 0;
+        score_player_2 = 0;
+        updateScore();
+    }
+
+    updateScorePositions(); // Update score positions based on paddle positions
+    controls.update();
+    renderer.render(scene, camera);
 }
 
-function gameLoop()
-{
-  score_P2.textContent = player2Paddle.score_P2;
-  score_P1.textContent = player1Paddle.score_P1;
-  if (pause == false && (player1Paddle.score_P1 < 3 && player2Paddle.score_P2 < 3))
-  {
-    update();
-    draw();
-    requestAnimationFrame(gameLoop);
-  }
-  if (player1Paddle.score_P1 == 3)
-    winner = 1;
-  else if (player2Paddle.score_P2 == 3)
-    winner = 2;
-  if (winner == 1)
-  {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "48px serif";
-    ctx.fillText("Player 1 win", 10, 50);
-    return ;
-  }
-  if (winner == 2)
-  {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.font = "48px serif";
-    ctx.fillText("Player 2 win", 10, 50);
-    return ;
-  }
+function resetBall() {
+    ball.position.x = 0;
+    ball.position.z = 0;
+    ballSpeedX = 0.05;
+    ballSpeedZ = 0.05;
 }
 
-document.addEventListener("keydown", (event) => {
-  if (event.key == "ArrowUp")
-    upArrowPressed = true;
-  else if (event.key == "ArrowDown")
-    downArrowPressed = true;
-  if (event.key == "w")
-    wPressed = true;
-  else if (event.key == "s")
-    sPressed = true;
+let keys = {};
+document.addEventListener('keydown', function(e) {
+    keys[e.key] = true;
 });
 
-document.addEventListener("keyup", (event) => {
-  if (event.key == "ArrowUp")
-    upArrowPressed = false;
-  else if (event.key == "ArrowDown")
-    downArrowPressed = false;
-  if (event.key == "w")
-    wPressed = false;
-  if (event.key == "s")
-    sPressed = false;
+document.addEventListener('keyup', function(e) {
+    delete keys[e.key];
 });
 
-gameLoop();
+function updatePaddles() {
+    if ('ArrowRight' in keys && paddle1.position.x > -paddleLimitX) {
+        paddle1.position.x -= paddleSpeed;
+    }
+    if ('ArrowLeft' in keys && paddle1.position.x < paddleLimitX) {
+        paddle1.position.x += paddleSpeed;
+    }
+    if ('d' in keys && paddle2.position.x > -paddleLimitX) {
+        paddle2.position.x -= paddleSpeed;
+    }
+    if ('a' in keys && paddle2.position.x < paddleLimitX) {
+        paddle2.position.x += paddleSpeed;
+    }
+
+    requestAnimationFrame(updatePaddles);
+}
+
+updatePaddles();
+
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+var score_player_1 = 0;
+var score_player_2 = 0;
+
+animate();

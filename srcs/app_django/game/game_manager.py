@@ -9,6 +9,7 @@ class Game:
         self.players = []
         self.ball_position = [0, 0]
         self.ball_velocity = [1, 1]
+        self.player_1_position = [0]
         self.game_over = False
 
     def add_player(self, player):
@@ -22,7 +23,7 @@ class Game:
         self.ball_position[0] += self.ball_velocity[0]
         self.ball_position[1] += self.ball_velocity[1]
         # Add more game logic here
-
+        self.player_1_position[0] += 1;
         # Send the updated game state to the WebSocket group
         self.send_game_state()
 
@@ -35,6 +36,7 @@ class Game:
                 'type': 'game_update',
                 'message': {
                     'ball_position': self.ball_position,
+                    'player_1_position': self.player_1_position,
                     # Add more game state information as needed
                 }
             }
