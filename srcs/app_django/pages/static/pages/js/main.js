@@ -167,7 +167,9 @@ const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
 
-function zoomToCoordinates(clickCoordinates) {
+// redirect_flag 0 : login
+// redirect_flag 1 : register
+function zoomToCoordinates(clickCoordinates, redirect_flag) {
     console.log("ici");
     const duration = 2000;
     var targetPosition;
@@ -201,13 +203,6 @@ function zoomToCoordinates(clickCoordinates) {
         // Calculate the direction from the camera to the clicked coordinates
         const direction = new THREE.Vector3();
         direction.subVectors(clickCoordinates, camera.position).normalize();
-
-        // Calculate the target position for the zoom
-        // const targetPosition = new THREE.Vector3(
-        //     clickCoordinates.x - direction.x * zoomDistance,
-        //     clickCoordinates.y - direction.y * zoomDistance,
-        //     clickCoordinates.z - direction.z * zoomDistance);
-
         if (selected_object_name == "Plane009_2")
         {
             console.log("click :", clickCoordinates);
@@ -224,8 +219,11 @@ function zoomToCoordinates(clickCoordinates) {
                     controls.target.x = targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = -targetPosition.z;
-
-                    changeTemplate('account')
+                    console.log("HERE");
+                    if (redirect_flag === 0)
+                        changeTemplate('login');
+                    else if (redirect_flag === 1)
+                        changeTemplate('register');
                 })
                 .start();
             }
@@ -244,7 +242,7 @@ function zoomToCoordinates(clickCoordinates) {
                     controls.target.x = -targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
-                    changeTemplate('pong')
+                    changeTemplate('menuPong')
                 })
                 .start();
             }
@@ -304,24 +302,35 @@ window.addEventListener('pageshow', function(event) {
 
 //=== CHANGE PAGE ===//
 function changeTemplate(templateName) {
+    // while (isZooming == true)
+    //         return;
     const currentUrl = window.location.href;
     const newUrl = `${currentUrl}${templateName}/`;
     console.log("new URL:", newUrl);
     window.location.href = newUrl; // Redirect to new URL
 }
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function goToLogin(){
     if (isZooming) return;
-    // const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
+    
+    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
 
-    // selecting_clickable = true;
-    // selected_object_name = "Plane009_2";
-    // zoomToCoordinates(clickCoordinates);
-    changeTemplate('login');
+    selecting_clickable = true;
+    selected_object_name = "Plane009_2";
+    zoomToCoordinates(clickCoordinates, 0);
 }
 
 function goToRegister(){
-    changeTemplate('register');
+    if (isZooming) return;
+    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
+
+    selecting_clickable = true;
+    selected_object_name = "Plane009_2";
+    zoomToCoordinates(clickCoordinates, 1);
 }
 
 function zoomToPC(){
