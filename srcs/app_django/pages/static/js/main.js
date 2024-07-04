@@ -170,6 +170,7 @@ const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la 
 function zoomToCoordinates(clickCoordinates) {
     console.log("ici");
     const duration = 2000;
+    var targetPosition;
     if (isZoomed)
     {
         isZooming = true;
@@ -185,13 +186,8 @@ function zoomToCoordinates(clickCoordinates) {
                 isZoomed = false;
                 isZooming = false;
                 localStorage.setItem('isZoomed', isZoomed);
-                // camera.position = initialCameraPosition;
-                // camera.lookAt(initialCameraLookAt);
-                // controls.target = initialCameraPosition;
                 controls.position = initialCameraPosition;
                 controls.target = initialCameraLookAt;
-                // camera.lookAt(initialCameraLookAt);
-                // camera.position = initialCameraPosition;
             })
             .start();
     }
@@ -214,7 +210,8 @@ function zoomToCoordinates(clickCoordinates) {
 
         if (selected_object_name == "Plane009_2")
         {
-            const targetPosition = new THREE.Vector3(2, 2.8, 0.02);
+            console.log("click :", clickCoordinates);
+            targetPosition = new THREE.Vector3(2, 2.8, 0.02);
             new TWEEN.Tween(camera.position)
                 .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, duration)
                 .easing(TWEEN.Easing.Quadratic.InOut)
@@ -228,18 +225,18 @@ function zoomToCoordinates(clickCoordinates) {
                     controls.target.y = targetPosition.y;
                     controls.target.z = -targetPosition.z;
 
-                    changeTemplate('account')
+                    // changeTemplate('account')
                 })
                 .start();
             }
             else if (selected_object_name == "Plane003_2")
             {
-                const targetPosition = new THREE.Vector3(1.75, 3.7, 2.5);
+                targetPosition = new THREE.Vector3(1.75, 3.7, 2.5);
                 new TWEEN.Tween(camera.position)
                 .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
                 .easing(TWEEN.Easing.Quadratic.InOut)
                 .onUpdate(() => {
-                    camera.lookAt(clickCoordinates);
+                    camera.lookAt(-targetPosition.x, targetPosition.y, targetPosition.z);
                 })
                 .onComplete(() => {
                     console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
@@ -247,7 +244,6 @@ function zoomToCoordinates(clickCoordinates) {
                     controls.target.x = -targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
-
                     changeTemplate('pong')
                 })
                 .start();
