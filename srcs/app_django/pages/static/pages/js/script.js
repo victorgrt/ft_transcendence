@@ -1,4 +1,8 @@
 console.log("loaded script");
+
+//pcq c une array
+const loginForm = document.getElementsByClassName("login_form")[0];
+
 const page_scripts = {
     'gameSession' : loadGameSession
 }
@@ -6,7 +10,7 @@ const page_scripts = {
 function loadContent(url, pushState = true) {
     console.log(url)
     if (url == '/')
-        url = "/home_page"
+        url = ""
 
     fetch(url)
         .then(response => response.text())

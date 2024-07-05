@@ -14,6 +14,22 @@
         </div>
         <div id="content">
             <!-- content des pages -->
+            <div class="login_form">
+                <h2>Registering</h2>
+                <form action="/login/" method="post">
+                    <div class="form-group">
+                        <label for="username">Your username:</label>
+                        <input type="username" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Your Password:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
         </div>
         <div id="scene"> 
             <!-- scene 3d -->
@@ -27,8 +43,9 @@
      <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
      <!-- ZOOM -->
      <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
-     <!-- MAIN SCRIPT -->
+    <!-- LOAD SCRIPT -->
+    <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
+     <!-- SCENE SCRIPT -->
      <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
-     <!-- LOAD SCRIPT -->
-     <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
+
 </html>

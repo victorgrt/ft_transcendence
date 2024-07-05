@@ -178,7 +178,7 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
     {
         isZooming = true;
         console.log("LA : x:", clickCoordinates.x, "y:", clickCoordinates.y, "z:", clickCoordinates.z)
-
+        hideElement(loginForm);
         new TWEEN.Tween(camera.position)
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
@@ -222,7 +222,11 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.z = -targetPosition.z;
                     console.log("HERE");
                     if (redirect_flag === 0)
-                        changeTemplate('login');
+                    {
+                        showElement(loginForm);
+                        console.log(loginForm);
+                        console.log(loginForm.style);
+                    }
                     else if (redirect_flag === 1)
                         changeTemplate('register');
                 })
@@ -303,12 +307,8 @@ window.addEventListener('pageshow', function(event) {
 
 //=== CHANGE PAGE ===//
 function changeTemplate(templateName) {
-    // while (isZooming == true)
-    //         return;
     const currentUrl = window.location.href;
     const newUrl = `${currentUrl}${templateName}/`;
-    console.log("new URL:", newUrl);
-    // window.location.href = newUrl; // Redirect to new URL
     loadContent(newUrl);
 }
 
@@ -350,3 +350,13 @@ function zoomToPC(){
 // - weird camera moovement on complete of animation of zoom
 //Plane003_2 == aracade
 //Plane009 == pc
+
+
+function showElement(element){
+    element.style.visibility = 'visible';
+}
+
+
+function hideElement(element){
+    element.style.visibility = 'hidden';
+}
