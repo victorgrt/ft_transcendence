@@ -167,7 +167,6 @@ console.log("isZoomed? ", isZoomed);
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
-
 // redirect_flag 0 : login
 // redirect_flag 1 : register
 function zoomToCoordinates(clickCoordinates, redirect_flag) {
@@ -178,7 +177,8 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
     {
         isZooming = true;
         console.log("LA : x:", clickCoordinates.x, "y:", clickCoordinates.y, "z:", clickCoordinates.z)
-        hideElement(loginForm);
+        if (loginVisible === true)
+            hideElement(loginForm);
         new TWEEN.Tween(camera.position)
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
@@ -247,7 +247,9 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.x = -targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
-                    changeTemplate('menuPong')
+                    // changeTemplate('menuPong')
+                    loadContent('menuPong/');
+                    
                 })
                 .start();
             }
@@ -351,12 +353,14 @@ function zoomToPC(){
 //Plane003_2 == aracade
 //Plane009 == pc
 
-
+var loginVisible;
 function showElement(element){
     element.style.visibility = 'visible';
+    loginVisible = true;
 }
 
 
 function hideElement(element){
     element.style.visibility = 'hidden';
+    loginVisible = false;
 }

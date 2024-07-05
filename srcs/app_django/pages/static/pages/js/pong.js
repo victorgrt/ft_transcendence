@@ -1,8 +1,11 @@
+console.log("PONG SCRIPT LOADED");
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
+// document.getElementById("scene").appendChild(renderer, domElement);
+
 
 const loader = new THREE.TextureLoader();
 const bg_image = '/staticfiles/pages/images/arcade.jpg'; 

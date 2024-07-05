@@ -3,8 +3,12 @@ console.log("loaded script");
 //pcq c une array
 const loginForm = document.getElementsByClassName("login_form")[0];
 
+// const pongScene = document.getElementById("pongScene")[0];
+
 const page_scripts = {
-    'gameSession' : loadGameSession
+    // 'gameSession' : loadGameSession,
+    'menuPong/' : loadMenuPong,
+    '/pong/' : loadPong
 }
 
 function loadContent(url, pushState = true) {
@@ -15,7 +19,7 @@ function loadContent(url, pushState = true) {
     fetch(url)
         .then(response => response.text())
         .then(data => {
-            console.log("fected url : ", url);
+            console.log("fetched url : ", url);
             const mainDiv = document.getElementById('content');
             mainDiv.innerHTML = data;
 
@@ -30,32 +34,3 @@ function loadContent(url, pushState = true) {
         .catch(error => console.error('Error loading content:', error));
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-
-    function handleNavigation(event) {
-        event.preventDefault();
-        const url = event.target.getAttribute('href');
-        loadContent(url);
-    }
-
-    document.querySelectorAll('.nav, .button1, .button2').forEach(link => {
-        link.addEventListener('click', handleNavigation);
-    });
-
-    window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.url) {
-            loadContent(event.state.url, false);
-        } else {
-            loadContent(document.location.pathname, false);
-        }
-    });
-
-    // Initial load to handle direct access or page refresh
-    if (document.location.pathname !== '/') {
-        loadContent(document.location.pathname, false);
-    }
-});
-    
-function loadGameSession(){
-
-}
