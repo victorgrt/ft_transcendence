@@ -20,6 +20,11 @@ from django.views.decorators.csrf import csrf_exempt
 
 #   ----            FRONT
 def starting_page(request):
+    # if request.user.is_authenticated:
+    #     return render(request, 'base.html', {'username': request.user.username})
+    # else:
+    #     return render(request, 'pages/partials/login.html')
+
     return render(request, 'pages/base.html')
 
 def pong(request):
@@ -50,7 +55,7 @@ def createUser(request):
         user = CustomUser.objects.create_user(username=username, email=email, password=password)
         user.save()
 
-        return redirect('home')
+        return render(request, 'pages/partials/login.html')
     return HttpResponse("This endpoint expects a POST request.")
 
 @csrf_exempt
@@ -74,6 +79,7 @@ def login(request):
 
 def get_login_status(request):
     user = request.user
+
     return JsonResponse({
         'is_logged_in': True,
         'username': user.username,
