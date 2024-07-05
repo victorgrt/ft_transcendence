@@ -1,22 +1,32 @@
+console.log("loaded script");
+const page_scripts = {
+    'gameSession' : loadGameSession
+}
+
+function loadContent(url, pushState = true) {
+    console.log(url)
+    if (url == '/')
+        url = "/home_page"
+
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            console.log("fected url : ", url);
+            const mainDiv = document.getElementById('content');
+            mainDiv.innerHTML = data;
+
+            if (page_scripts[url])
+                page_scripts[url]();
+            else
+                console.log("pas trouve chef");
+            if (pushState) {
+                history.pushState({url: url}, '', url);
+            }
+        })
+        .catch(error => console.error('Error loading content:', error));
+}
+
 document.addEventListener('DOMContentLoaded', function() {
-    function loadContent(url, pushState = true) {
-        console.log(url)
-        if (url == '/')
-            url = "/home_page"
-
-        fetch(url)
-            .then(response => response.text())
-            .then(data => {
-                console.log("fected url : ", url);
-                const mainDiv = document.getElementById('main');
-                mainDiv.innerHTML = data;
-
-                if (pushState) {
-                    history.pushState({url: url}, '', url);
-                }
-            })
-            .catch(error => console.error('Error loading content:', error));
-    }
 
     function handleNavigation(event) {
         event.preventDefault();
@@ -42,3 +52,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
     
+function loadGameSession(){
+
+}

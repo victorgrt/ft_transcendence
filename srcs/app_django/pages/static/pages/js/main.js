@@ -19,7 +19,8 @@ function init() {
     renderer.outpuEncoding = THREE.RGBEEncoding;
 	renderer.toneMapping = THREE.ACESFilmicToneMapping;
 	renderer.toneMappingExposure = 1.25;
-    document.body.appendChild(renderer.domElement);
+    document.getElementById('scene').appendChild(renderer.domElement);
+    // document.body.appendChild(renderer.domElement);
     var light = new THREE.PointLight(0xffffff);
     light.position.set(10, 10, 10);
     scene.add(light);
@@ -307,7 +308,8 @@ function changeTemplate(templateName) {
     const currentUrl = window.location.href;
     const newUrl = `${currentUrl}${templateName}/`;
     console.log("new URL:", newUrl);
-    window.location.href = newUrl; // Redirect to new URL
+    // window.location.href = newUrl; // Redirect to new URL
+    loadContent(newUrl);
 }
 
 function sleep(ms) {
