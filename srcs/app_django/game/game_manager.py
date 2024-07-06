@@ -40,7 +40,7 @@ class Game:
         self.send_game_state()
 
     def send_game_state(self):
-        print("Sending game state to group %s" % self.game_id)
+        # print("Sending game state to group %s" % self.game_id)
         channel_layer = get_channel_layer()
         async_to_sync(channel_layer.group_send)(
             self.game_id,

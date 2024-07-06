@@ -28,7 +28,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
         # Handle player inputs and update game state
         # Example: Update player position, handle paddle movement, etc.
-        print(f"Received message: {message} on game {self.game_id}")
+        # print(f"Received message: {message} on game {self.game_id}")
         await self.channel_layer.group_send(
             self.game_id,
             {
@@ -43,5 +43,5 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     async def game_update(self, event):
         message = event['message']
-        print(f"Received message: {message}")
+        # print(f"Received message: {message}")
         await self.send(text_data=json.dumps({'game_state': message}))
