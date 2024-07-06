@@ -5,10 +5,18 @@ const loginForm = document.getElementsByClassName("login_form")[0];
 
 // const pongScene = document.getElementById("pongScene")[0];
 
+function pongPageScripts () {
+    console.log("launchPongScript")
+
+    // connect to game
+    connectToGame();
+
+}
+
 const page_scripts = {
     // 'gameSession' : loadGameSession,
     'menuPong/' : loadMenuPong,
-    '/pong/' : loadPong
+    '/pong/' : pongPageScripts,
 }
 
 function loadContent(url, pushState = true) {

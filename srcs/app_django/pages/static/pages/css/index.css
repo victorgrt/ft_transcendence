@@ -32,6 +32,8 @@ body{
 
 #header{
 	/* background:rgba(0,0,0,0.1); */
+  top: 0;
+  padding: 10px;
 	text-align: center;
 	align-items: center;
 	justify-content: center;

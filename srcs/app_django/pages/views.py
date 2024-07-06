@@ -35,12 +35,13 @@ def join_session(request, session_id):
 def starting_page(request):
     return render(request, 'pages/base.html')
 
-def pong(request):
+def pong(request, session_id):
     # return redirect('pages/partials/pong.html')
-    return render(request, 'pages/partials/pong.html')
+    return render(request, 'pages/partials/lobby.html')
 
 def menuPong(request):
     return render(request, 'pages/partials/menuPong.html')
+
 def account(request):
     return render(request, 'pages/partials/account.html')
 

@@ -34,19 +34,27 @@ async function createGame ()
 		const response = await fetch('/create_session/');
 		const data = await response.json();
 	
-		await connectWebSocket(data.session_id);
-		console.log('Session created with ID:', data.session_id);
+		// const socket = await connectWebSocket(data.session_id);
+    // setUpSocket(socket);
+		// console.log('Session created with ID:', data.session_id);
 		// window.location.href = '/pong/'
-		loadContent('/pong/');
+		loadContent('/pong/' + data.session_id + '/');
 	} catch (error) {
 		console.error('Error creating session or connecting WebSocket:', error);
 	}
 }
 
-function loadPong(){
-    console.log("should load pong game here");
-    
+function connectToGame() {
+    // Extract session ID from URL
+    const sessionId = window.location.pathname.split('/').pop();
+    console.log('Connecting to session:', sessionId);
+
+    connectWebSocket(sessionId)
+        .then(socket => {
+            setUpSocket(socket);
+        });
 }
+
 
 function loadMenuPong(){
 	document.getElementById('joinSessionBtn').addEventListener('click', function() {
