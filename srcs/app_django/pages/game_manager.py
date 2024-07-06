@@ -7,6 +7,7 @@ class Game:
     def __init__(self, game_id):
         self.game_id = game_id  # Ensure the game_id is a valid string
         self.players = []
+        self.nb_players = 0
         self.ball_position = [0, 0]
         self.ball_velocity = [1, 1]
         self.player_1_position = [0]
@@ -15,9 +16,11 @@ class Game:
 
     def add_player(self, player):
         self.players.append(player)
+        self.nb_players += 1
 
     def remove_player(self, player):
         self.players.remove(player)
+        self.nb_players -= 1
 
     def update(self):
         
@@ -45,6 +48,7 @@ class Game:
                 'type': 'game_update',
                 'message': {
                     'state': self.state,
+                    'nb_players': self.nb_players,
                     'ball_position': self.ball_position,
                     'player_1_position': self.player_1_position,
                     # Add more game state information as needed

@@ -46,7 +46,7 @@ async function createGame ()
 
 function connectToGame() {
     // Extract session ID from URL
-    const sessionId = window.location.pathname.split('/').pop();
+    const sessionId = window.location.pathname.split('/')[2]
     console.log('Connecting to session:', sessionId);
 
     connectWebSocket(sessionId)
@@ -60,15 +60,7 @@ function loadMenuPong(){
 	document.getElementById('joinSessionBtn').addEventListener('click', function() {
 		console.log("ici");
 		const sessionId = document.getElementById('sessionIdInput').value;
-		fetch(`/join_session/${sessionId}/`)
-			.then(response => response.json())
-			.then(data => {
-				if (data.success) {
-					console.log('Joined session:', sessionId);
-				} else {
-					console.log('Error:', data.error);
-				}
-			});
+		loadContent('/pong/' + sessionId + '/');
 	});
 
 	document.getElementById('createSessionBtn').addEventListener('click', createGame);
