@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
     'chat',
+    'game',
     'channels'
 ]
 
@@ -96,11 +97,11 @@ DATABASES = {
         #python manage.py migrate
         # 'ENGINE':   'django.db.backends.postgresql',
         'ENGINE':   'django.db.backends.sqlite3',
-        'NAME':     config('DB_ACC_NAME'),
-        'USER':     config('DB_ACC_ADMIN'),
-        'PASSWORD': config('DB_ACC_PSWD'),
-        'HOST':     config('DB_ACC_HOST'),
-        'PORT':     config('DB_ACC_PORT'),
+        # 'NAME':     config('DB_ACC_NAME'),
+        # 'USER':     config('DB_ACC_ADMIN'),
+        # 'PASSWORD': config('DB_ACC_PSWD'),
+        # 'HOST':     config('DB_ACC_HOST'),
+        # 'PORT':     config('DB_ACC_PORT'),
     }
 
 }
@@ -142,14 +143,14 @@ APPEND_SLASH = False
 
 # STATIC FILES CONFIGURATION
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
-STATIC_ROOT = BASE_DIR / 'static'  # A directory named 'staticfiles' at your project's root
+STATIC_ROOT = 'static'  # A directory named 'staticfiles' at your project's root
 
 # Django automatically looks for a 'static' folder in each of your INSTALLED_APPS
 STATICFILES_DIRS = [
     # If you have any global static directories, list them here
-    BASE_DIR / 'static',
+    BASE_DIR / 'staticfiles',
 ]
 
 # Adding WhiteNoise for serving static files more efficiently
