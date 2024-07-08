@@ -22,10 +22,10 @@ from django.views.decorators.csrf import csrf_exempt
 def starting_page(request):
     if request.user.is_authenticated:
         print(f"Authenticated user: {request.user.username}")
-    if request.user.is_authenticated:
         # return render(request, 'base.html', {'username': request.user.username})
-         return render(request, 'pages/base.html')
+        return render(request, 'pages/base.html')
     else:
+        print(f"user not authenticated : {request}")
         return render(request, 'pages/partials/login.html')
 
 def pong(request):
