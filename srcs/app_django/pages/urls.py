@@ -5,15 +5,21 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
-    path("", starting_page, name="home"),
-    path("pong/", pong),
-	path("menuPong/", menuPong),
-    path("register/", register),
-    path("createUser", createUser),
-    path("home_page/", home_page),
-	path("login/", login),
-	path("logout/", logout),
-	path('api/login_status/', get_login_status, name='login_status'),
-    # path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    # path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh')
+  # navigation
+  path("", scene, name="home"),
+  path("home_page/", home_page),
+  path("menuPong/", menuPong),
+
+  # account
+  path("register/", register),
+  path("createUser", createUser),
+  path("login/", login),
+  path('api/login_status/', get_login_status, name='login_status'),
+  path("account/", account),
+  path("logout/", logout),
+
+  # Game
+  path('create_session/', create_session, name='create_session'),
+  path('join_session/<str:session_id>/', join_session, name='join_session'),
+  path("pong/<str:session_id>/", pong, name="pong_session"),  # Add this line
 ]

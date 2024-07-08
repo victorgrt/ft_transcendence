@@ -1,0 +1,59 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>FT_TRANSCENDENCE</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'pages/css/index.css' %}">
+    </head>
+    <body>
+        <div id="header">
+            <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">LOGIN</button>
+            <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">REGISTER</button>
+            <div id="username"> 
+                {{ user.username }}
+            </div>
+        </div>
+        <div id="content">
+            <!-- content des pages -->
+            <div class="login_form">
+                <h2>Registering</h2>
+                <form action="/login/" method="post">
+                    <div class="form-group">
+                        <label for="username">Your username:</label>
+                        <input type="username" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Your Password:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="scene"> 
+            <!-- scene 3d -->
+        </div>
+    </body>
+     <!-- THREE JS LIBRARY -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+     <!-- SCENE LOADER -->
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+     <!-- CAMERA CONTROLS -->
+     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+     <!-- ZOOM -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+     <!-- GAME SESSION SCRIPT -->
+     <script type="text/javascript" src="{% static 'pages/js/gameSession.js' %}"></script>
+    <!-- LOADING SCRIPT -->
+    <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
+    <!-- PONG SCRIPT??? -->
+    <!-- <script src="{% static 'pages/js/pong.js' %}" ></script> -->
+    <!-- SCENE SCRIPT -->
+    <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
+
+</html>

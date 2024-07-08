@@ -1,44 +1,55 @@
-document.addEventListener('DOMContentLoaded', function() {
-    function loadContent(url, pushState = true) {
-        console.log(url)
-        if (url == '/')
-            url = "/home_page"
+console.log("loaded script");
 
-        fetch(url)
-            .then(response => response.text())
-            .then(data => {
-                console.log("fected url : ", url);
-                const mainDiv = document.getElementById('main');
-                mainDiv.innerHTML = data;
+//pcq c une array
+const loginForm = document.getElementsByClassName("login_form")[0];
 
-                if (pushState) {
-                    history.pushState({url: url}, '', url);
-                }
-            })
-            .catch(error => console.error('Error loading content:', error));
-    }
+// const pongScene = document.getElementById("pongScene")[0];
 
-    function handleNavigation(event) {
-        event.preventDefault();
-        const url = event.target.getAttribute('href');
-        loadContent(url);
-    }
+function pongPageScripts () {
+    console.log("launchPongScript")
 
-    document.querySelectorAll('.nav, .button1, .button2').forEach(link => {
-        link.addEventListener('click', handleNavigation);
-    });
+    // connect to game
+    connectToGame();
 
-    window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.url) {
-            loadContent(event.state.url, false);
-        } else {
-            loadContent(document.location.pathname, false);
-        }
-    });
+}
 
-    // Initial load to handle direct access or page refresh
-    if (document.location.pathname !== '/') {
-        loadContent(document.location.pathname, false);
-    }
-});
-    
+const page_scripts = {
+    // 'gameSession' : loadGameSession,
+    'menuPong/' : loadMenuPong,
+    '/pong/' : pongPageScripts,
+}
+
+function loadContent(url, pushState = true) {
+    console.log(url)
+    if (url == '/')
+        url = ""
+
+    // if there is a trailing session id, remove it
+    if (url.includes('/pong/')) 
+        page_url = '/pong/'
+    else 
+        page_url = url
+
+    fetch(url)
+        .then(response => response.text())
+        .then(data => {
+            console.log("fetched url : ", url);
+            
+            // Update page content
+            const mainDiv = document.getElementById('content');
+            mainDiv.innerHTML = data;
+
+            // Change URL in browser address bar
+            if (pushState) {
+                history.pushState({url: url}, '', url);
+            }
+
+            // Load scripts for the page
+            if (page_scripts[page_url])
+              page_scripts[page_url]();
+            else
+                console.log("pas trouve chef");
+        })
+        .catch(error => console.error('Error loading content:', error));
+}
+

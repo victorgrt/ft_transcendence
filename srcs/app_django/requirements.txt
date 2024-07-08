@@ -11,5 +11,6 @@ tomli==2.0.1
 typing_extensions==4.12.2
 psycopg2-binary
 python-decouple
-django-bootstrap
-djangorestframework-simplejwt
+uvicorn 
+channels
+whitenoise

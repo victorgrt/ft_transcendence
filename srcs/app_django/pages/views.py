@@ -10,12 +10,24 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from .models import GameSession
+import uuid
 
+def create_session(request):
+    session_id = str(uuid.uuid4())
+    game_session = GameSession.objects.create(player1='player1', session_id=session_id, state='{}')
+    return JsonResponse({'session_id': session_id})
 
-# # Hello World
-# def home_page_view(request):
-#     print(request)
-#     return HttpResponse("Hello, World!")
+def join_session(request, session_id):
+    try:
+        game_session = GameSession.objects.get(session_id=session_id)
+        if game_session.player2:
+            return JsonResponse({'error': 'Session already full'}, status=400)
+        game_session.player2 = 'player2'
+        game_session.save()
+        return JsonResponse({'success': 'Joined game session'})
+    except GameSession.DoesNotExist:
+        return JsonResponse({'error': 'Session not found'}, status=404)
 
 
 #   ----            FRONT
@@ -23,17 +35,20 @@ def starting_page(request):
     if request.user.is_authenticated:
         print(f"Authenticated user: {request.user.username}")
         # return render(request, 'base.html', {'username': request.user.username})
-        return render(request, 'pages/base.html')
+        return render(request, 'pages/index.html', {'user': request.user})
     else:
         print(f"user not authenticated : {request}")
         return render(request, 'pages/partials/login.html')
 
-def pong(request):
-    return redirect('pages/partials/pong.html')
-    # return render(request, 'pages/partials/pong.html')
+def pong(request, session_id):
+    # return redirect('pages/partials/pong.html')
+    return render(request, 'pages/partials/lobby.html')
 
 def menuPong(request):
     return render(request, 'pages/partials/menuPong.html')
+
+def account(request):
+    return render(request, 'pages/partials/account.html')
 
 def home_page(request):
     return render(request, 'pages/partials/home_page.html')
@@ -136,3 +151,7 @@ def get_login_status(request):
         'email': user.email,
         'is_active': user.is_active
     })
+
+
+def scene(request):
+    return render(request, 'pages/index.html')

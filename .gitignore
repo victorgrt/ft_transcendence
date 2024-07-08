@@ -2,3 +2,7 @@
 *.o
 a.out
 *.pyc
+tuto_django/
+bruh/
+.venv/
+db_acc
