@@ -5,12 +5,12 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import CustomUser  # Adjust the import path according to your project structure
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import authenticate, login as django_login
+from django.contrib.sessions.models import Session
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-
-
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+
 
 # # Hello World
 # def home_page_view(request):
@@ -59,6 +59,8 @@ def createUser(request):
         print(password)
         user = CustomUser.objects.create_user(username=username, email=email, password=password)
         user.is_active = True
+        request.session['username'] = username
+        request.session.save()
         # user.is_staff = False
         user.save()
 
@@ -91,7 +93,7 @@ def login(request):
        
         # user = CustomUser.objects.get(username=username)
         # if user.is_active:
-        #     print("User is active")
+        #     print("User is active" )
         
         if username and password:
             print(f"Attempting to authenticate user: {username}")
@@ -101,6 +103,10 @@ def login(request):
             if user is not None:
                 print(f"Authentication successful for user: {username}")
                 print("Successfully logged in.")
+                django_login(request, user)
+                # set user-specific data in the session
+                request.session['username'] = username
+                request.session.save()
                 messages.success(request, 'You have successfully logged in.')
                 # return render(request, 'pages/partials/home_page.html')
                 return redirect('home')
@@ -116,6 +122,7 @@ def login(request):
 def logout(request):
     print('IN LOGOUT')
     django_logout(request)
+    Session.objects.filter(session_key=request.session.session_key).delete()
     return redirect('home')
 
 def get_login_status(request):

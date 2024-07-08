@@ -33,11 +33,14 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    #SESSION COOKIES
+    'django.contrib.sessions',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     # 'django.contrib.authchat',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
@@ -56,10 +59,20 @@ CHANNEL_LAYERS = {
     }
 }
 
+# SECRET_KEY = [
+#     'django-admin startproject'  # Generate a new secret key 
+# ]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+#'django.contrib.sessions.backends.cache'
+
 MIDDLEWARE = [
+    # SESSION COOKIES
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
