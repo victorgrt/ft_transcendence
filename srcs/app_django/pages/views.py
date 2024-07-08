@@ -20,12 +20,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 #   ----            FRONT
 def starting_page(request):
-    # if request.user.is_authenticated:
-    #     return render(request, 'base.html', {'username': request.user.username})
-    # else:
-    #     return render(request, 'pages/partials/login.html')
-
-    return render(request, 'pages/base.html')
+    if request.user.is_authenticated:
+        print(f"Authenticated user: {request.user.username}")
+    if request.user.is_authenticated:
+        # return render(request, 'base.html', {'username': request.user.username})
+         return render(request, 'pages/base.html')
+    else:
+        return render(request, 'pages/partials/login.html')
 
 def pong(request):
     return redirect('pages/partials/pong.html')
@@ -52,7 +53,13 @@ def createUser(request):
         # if CustomUser.objects.count() == 0:
         #     user = CustomUser.objects.create_superuser(username="jquil", email="jquil@jquil.com", password="admin")
         # else :
+        print("Creating user")
+        print(username)
+        print(email)
+        print(password)
         user = CustomUser.objects.create_user(username=username, email=email, password=password)
+        user.is_active = True
+        # user.is_staff = False
         user.save()
 
         return render(request, 'pages/partials/login.html')
@@ -64,21 +71,57 @@ def login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
 
-        # Authenticate the user
-        user = authenticate(request, username=username, password=password)
-        if request.user.is_authenticated:
-            return redirect('home')
-        if user is not None :
-            django_login(request, user)
-            return redirect('home')
-        else:
-            messages.error(request, 'Invalid email or password. Please try again.')
+        print(username)
+    #     print(password)
+    #     try:
+    #         user = CustomUser.objects.get(username=username)
+    #         if (user.check_password(password)):
+    #             print("Password is correct")
+    #             django_login(request, user)
+    #             print(f"User '{username}' found in the database.")
+    #             print(f"is_active: {user.is_active}")
+    #             print('redirecting to home')
+    #             return redirect('home')
+    #         else:
+    #             print("Password is correct")
+    #             return render(request, 'pages/partials/login.html')
+    #     except CustomUser.DoesNotExist:
+    #         print(f"User '{username}' does not exist in the database.")
+    # return render(request, 'pages/partials/login.html')
+       
+        # user = CustomUser.objects.get(username=username)
+        # if user.is_active:
+        #     print("User is active")
+        
+        if username and password:
+            print(f"Attempting to authenticate user: {username}")
+            # Authenticate user
+            user = authenticate(request, username=username, password=password)
 
-    # If not a POST request or authentication failed, show the login form
+            if user is not None:
+                print(f"Authentication successful for user: {username}")
+                print("Successfully logged in.")
+                messages.success(request, 'You have successfully logged in.')
+                # return render(request, 'pages/partials/home_page.html')
+                return redirect('home')
+            else:
+                print("failed to log in.")
+                messages.error(request, 'Invalid username or password. Please try again.')
+
+        else:
+            messages.error(request, 'Please provide both username and password.')
     return render(request, 'pages/partials/login.html')
+
+
+def logout(request):
+    print('IN LOGOUT')
+    django_logout(request)
+    return redirect('home')
 
 def get_login_status(request):
     user = request.user
+    print(user.username)
+    print(user.email)
 
     return JsonResponse({
         'is_logged_in': True,

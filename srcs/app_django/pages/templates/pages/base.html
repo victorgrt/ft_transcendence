@@ -18,7 +18,11 @@
             <h1>Welcome to FT_TRANSCENDENCE</h1>
             <a class="button button1" href="menuPong/">Play Game</a>
             <a class="button button2" href="register/">Create an account</a>
+            {% if user.is_authenticated %}
+            <a class="button button3" href="logout/">Disconnect</a>
+             {% else %}
             <a class="button button3" href="login/">Login</a>
+            {% endif %}
         </div>
         <div class="chat-container">
             <textarea id="chat-log" cols="100" rows="20" readonly></textarea><br>
@@ -28,4 +32,5 @@
     </div>
     <script src="{% static 'pages/js/pong.js' %}"></script>
     <script src="{% static 'pages/js/chat.js' %}"></script>
+    <script src="{% static 'pages/js/multi.js' %}"></script>
 </body>

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'pages',
     'chat',
+    'game',
     'channels'
 ]
 
@@ -94,7 +95,7 @@ DATABASES = {
         #Update database
         #python manage.py makemigrations
         #python manage.py migrate
-        # 'ENGINE':   'django.db.backends.postgresql',
+        #'ENGINE':   'django.db.backends.postgresql',
         'ENGINE':   'django.db.backends.sqlite3',
         'NAME':     config('DB_ACC_NAME'),
         'USER':     config('DB_ACC_ADMIN'),
@@ -147,14 +148,14 @@ APPEND_SLASH = False
 
 # STATIC FILES CONFIGURATION
 
-STATIC_URL = '/static/'
+STATIC_URL = '/staticfiles/'
 
-STATIC_ROOT = BASE_DIR / 'static'  # A directory named 'staticfiles' at your project's root
+STATIC_ROOT = 'static'  # A directory named 'staticfiles' at your project's root
 
 # Django automatically looks for a 'static' folder in each of your INSTALLED_APPS
 STATICFILES_DIRS = [
     # If you have any global static directories, list them here
-    BASE_DIR / 'static',
+    BASE_DIR / 'staticfiles',
 ]
 
 # Adding WhiteNoise for serving static files more efficiently
@@ -164,3 +165,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)

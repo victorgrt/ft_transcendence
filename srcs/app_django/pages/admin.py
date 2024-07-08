@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import CustomUser
 
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'username', 'is_active', 'is_superuser', 'last_login', 'register_date')
+    list_display = ('email', 'username', 'is_active', 'is_superuser', 'last_login', 'register_date', 'is_staff')
     list_display_links = ('email', 'username')
     search_fields = ('email', 'username')
     list_filter = ('is_active', 'is_superuser', 'register_date')
