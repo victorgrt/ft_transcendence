@@ -125,6 +125,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+AUTH_USER_MODEL = 'pages.CustomUser'
+
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
 #         'rest_framework_simplejwt.authentication.JWTAuthentication',
