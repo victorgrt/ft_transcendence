@@ -8,6 +8,7 @@ function setUpSocket(_socket)
 	_socket.onmessage = function(e) {
 	    const data = JSON.parse(e.data);
 	    console.log('Received message:', data);
+        
 	};
 }
 
@@ -38,7 +39,7 @@ async function createGame ()
     // setUpSocket(socket);
 		// console.log('Session created with ID:', data.session_id);
 		// window.location.href = '/pong/'
-		loadContent('/pong/' + data.session_id + '/');
+		loadContent('pong/' + data.session_id + '/');
 	} catch (error) {
 		console.error('Error creating session or connecting WebSocket:', error);
 	}

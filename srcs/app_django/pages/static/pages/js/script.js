@@ -25,12 +25,12 @@ function loadContent(url, pushState = true) {
         url = ""
 
     // if there is a trailing session id, remove it
-    if (url.includes('/pong/')) 
+    if (url.includes('pong/')) 
         page_url = '/pong/'
     else 
         page_url = url
 
-    fetch(url)
+    fetch('/partials/' + url)
         .then(response => response.text())
         .then(data => {
             console.log("fetched url : ", url);
