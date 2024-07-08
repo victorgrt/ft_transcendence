@@ -1,39 +1,14 @@
 {% load static %}
-<style>
-    body {
-        display: flex;
-        justify-content: space-between;
-        padding: 20px;
-    }
-    #left, #right {
-        width: 45%;
-    }
-    #left {
-        display: flex;
-        flex-direction: column;
-    }
-	.button {
-    display: inline-block;
-    padding: 15px 30px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    margin: 10px;
-    transition: background-color 0.3s ease;
-    font-size: 1.1em;
-    border: 2px solid transparent;
-	}
-    #user-info {
-        padding: 20px;
-        border: 1px solid #ccc;
-        border-radius: 5px;
-    }
-</style>
+<link rel="stylesheet" type="text/css" href="{% static 'pages/css/gameSession.css' %}">
+<script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
+
 <div id="left">
 	<a class="button" href="/pongIA/">IA</a>
 	<a class="button" href="/pong/">1v1</a>
 	<a class="button" href="/pong/">Tournois</a>
+    <button id="createSessionBtn">Create Game Session</button>
+	<button id="joinSessionBtn" href="/pong/">Join</button>
+    <input type="text" placeholder="Enter daronne ici" id="sessionIdInput"></input>
 </div>
 <div id="right">
     <div id="user-info">
@@ -42,23 +17,3 @@
         <p>Status: <span id="is_active">Loading...</span></p>
     </div>
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        fetch('/api/login_status/')
-            .then(response => response.json())
-            .then(data => {
-                if (data.is_logged_in) {
-                    document.getElementById('username').textContent = data.username;
-                    document.getElementById('email').textContent = data.email;
-                    document.getElementById('is_active').textContent = 'Connected';
-                } else {
-                    document.getElementById('username').textContent = 'N/A';
-                    document.getElementById('email').textContent = 'N/A';
-                    document.getElementById('is_active').textContent = 'Disconnected';
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching user info:', error);
-            });
-    });
-</script>

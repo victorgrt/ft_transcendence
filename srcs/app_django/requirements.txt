@@ -12,3 +12,6 @@ typing_extensions==4.12.2
 psycopg2-binary
 django-bootstrap
 python-decouple
+uvicorn 
+channels
+whitenoise

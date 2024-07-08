@@ -1,0 +1,113 @@
+@font-face {
+	font-family: "Arcades";
+	src: url('../../pages/static/fonts/arcade/Arcades.eot') format('embedded-opentype'),
+		 url('../../pages/static/fonts/arcade/Arcades.woff2') format('woff2'),
+		 url('../../pages/static/fonts/arcade/Arcades.woff') format('woff'),
+		 url('../../pages/static/fonts/arcade/Arcades.ttf') format('truetype');
+}
+
+html {
+	overflow: hidden;
+}
+
+body{
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+}
+
+
+#scene{
+	position: absolute;
+	top: 0;
+	z-index: -2;
+}
+	
+
+#content{
+	height: 100%;
+	width: 100%;
+}
+
+#header{
+	/* background:rgba(0,0,0,0.1); */
+  top: 0;
+  padding: 10px;
+	text-align: center;
+	align-items: center;
+	justify-content: center;
+	height: 5%;
+	width: 100%;
+	font-family: 'Arcade', Arial, Helvetica, sans-serif;
+	position: fixed;
+}
+
+button {
+	background: none;
+	padding: 1%;
+	border: 2px solid white;
+	border-radius: 1vh;
+	font: larger;
+	font-weight: bold;
+	margin-left: 5%;
+	margin-right: 5%;
+	text-decoration: none;
+	color: white;
+}
+
+.needed_hover:hover {
+	background-color: white;
+	color: black;
+	transition: 1s;
+	text-decoration: 2px solid underline overline;
+	/* text-decoration: 1px solid black; */
+	text-underline-offset: 5px;
+	box-shadow: 0 0 15px white;
+	transition: all .45s ease-Out;
+}
+
+
+/* CSS LOGIN FORM */
+    .login_form {
+		visibility: hidden;
+		max-width: 600px;
+        margin: auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+    }
+    .form-group {
+        margin-bottom: 15px;
+    }
+    label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    input[type="text"],
+    input[type="email"],
+    textarea {
+        width: calc(100% - 12px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        font-size: 14px;
+    }
+    textarea {
+        height: 100px;
+    }
+    input[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+    input[type="submit"]:hover {
+        background-color: #45a049;
+    }

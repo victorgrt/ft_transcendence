@@ -97,6 +97,7 @@ DATABASES = {
         #python manage.py migrate
         # 'ENGINE':   'django.db.backends.postgresql',
         'ENGINE':   'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
         # 'NAME':     config('DB_ACC_NAME'),
         # 'USER':     config('DB_ACC_ADMIN'),
         # 'PASSWORD': config('DB_ACC_PSWD'),

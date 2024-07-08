@@ -5,12 +5,12 @@ from .game_manager import game_manager
 class PongConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         game_id = self.scope['url_route']['kwargs']['game_id']
-        self.game_id = f"game_{game_id}"  # Ensure the game_id is a valid string
+        self.game_id = game_id
         print(f"Connecting to game {self.game_id}")
         self.game = game_manager.get_game(game_id)
 
         if not self.game:
-            self.game = game_manager.create_game()
+            self.game = game_manager.create_game(game_id)
 
         self.game.add_player(self)
         await self.channel_layer.group_add(self.game_id, self.channel_name)
@@ -28,6 +28,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
         # Handle player inputs and update game state
         # Example: Update player position, handle paddle movement, etc.
+        # print(f"Received message: {message} on game {self.game_id}")
         await self.channel_layer.group_send(
             self.game_id,
             {
@@ -42,5 +43,5 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     async def game_update(self, event):
         message = event['message']
-        print(f"Received message: {message}")
+        # print(f"Received message: {message}")
         await self.send(text_data=json.dumps({'game_state': message}))
