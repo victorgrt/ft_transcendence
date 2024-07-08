@@ -1,4 +1,11 @@
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin, Group, Permission
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, Group, Permission
+from django.contrib.auth.models import BaseUserManager
+from django.db import models
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+#dep: pip install Pillow (for loading images in db)
+
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
 from django.utils import timezone
 
@@ -10,36 +17,28 @@ class UserManager(BaseUserManager):
             raise ValueError('The Username field must be set')
         if not password:
             raise ValueError('The Password field must be set')
-
         email = self.normalize_email(email)
         user = self.model(username=username, email=email, avatar=avatar)
+        print(password)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_superuser(self, username, email, password=None, **extra_fields):
         extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_staff', True)
-
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-
         return self.create_user(username=username, email=email, password=password, **extra_fields)
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    username = models.CharField(max_length=150, unique=True)
+    username = models.CharField(max_length=150, unique=True, default="Monsieur Chibre")
     email = models.EmailField(unique=True)
-    avatar = models.ImageField(upload_to='img_avatars/', blank=True, null=True)
-    is_active = models.BooleanField(default=True)
-    is_staff = models.BooleanField(default=False)  # Add this field
+    password = models.CharField(max_length=150)
     register_date = models.DateTimeField(default=timezone.now)
+    avatar = models.ImageField(upload_to='img_avatars/')
+    is_active = models.BooleanField(default=True)
     last_login = models.DateTimeField(default=timezone.now)
-
+    # is_superuser = models.BooleanField(default=False)
     USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = ['email']
-
+    REQUIRED_FIELDS = ['username']
     groups = models.ManyToManyField(
         Group,
         related_name='customuser_groups',

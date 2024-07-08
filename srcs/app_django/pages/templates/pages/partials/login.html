@@ -69,28 +69,6 @@
             <input type="submit" value="Submit">
         </div>
     </form>
-    <script>
-        document.getElementById('login').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            fetch('/api/token/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password })
-            }).then(response => response.json())
-            .then(data => {
-                if (data.access) {
-                    localStorage.setItem('accessToken', data.access);
-                    window.location.href = '/home/'; // Redirect to homepage after login
-                } else {
-                    alert('Login failed!');
-                }
-            });
-        });
-    </script>
 </div>
 <!-- <form method="post">
     {% csrf_token %}
@@ -108,4 +86,3 @@
         {% endfor %}
     {% endif %}
 </form> -->
-

@@ -95,13 +95,13 @@ DATABASES = {
         #Update database
         #python manage.py makemigrations
         #python manage.py migrate
-        # 'ENGINE':   'django.db.backends.postgresql',
+        #'ENGINE':   'django.db.backends.postgresql',
         'ENGINE':   'django.db.backends.sqlite3',
-        # 'NAME':     config('DB_ACC_NAME'),
-        # 'USER':     config('DB_ACC_ADMIN'),
-        # 'PASSWORD': config('DB_ACC_PSWD'),
-        # 'HOST':     config('DB_ACC_HOST'),
-        # 'PORT':     config('DB_ACC_PORT'),
+        'NAME':     config('DB_ACC_NAME'),
+        'USER':     config('DB_ACC_ADMIN'),
+        'PASSWORD': config('DB_ACC_PSWD'),
+        'HOST':     config('DB_ACC_HOST'),
+        'PORT':     config('DB_ACC_PORT'),
     }
 
 }
@@ -125,11 +125,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     )
+# }
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -165,3 +165,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
