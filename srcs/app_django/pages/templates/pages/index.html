@@ -3,6 +3,13 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+		<script>
+			document.addEventListener('DOMContentLoaded', function() {
+			  document.getElementById('logoutButton').addEventListener('click', function() {
+				window.location.href = 'logout/';
+			  });
+			});
+		  </script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>FT_TRANSCENDENCE</title>
@@ -12,9 +19,17 @@
         <div id="header">
             <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">LOGIN</button>
             <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">REGISTER</button>
+			{% if user.is_authenticated %}
+			<button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
+			{% endif %}
             <div id="username"> 
                 {{ user.username }}
             </div>
+			<div id="user-avatar">
+				{% if user.is_authenticated %}
+				<img src="user_avatar/" alt="User Avatar">
+				{% endif %}
+			</div>
         </div>
         <div id="content">
             <!-- content des pages -->

@@ -65,6 +65,8 @@ def createUser(request):
         username = request.POST.get('username')
         email = request.POST.get('email')
         password = request.POST.get('password')
+        avatar = request.FILES.get('avatar')
+        
         # if CustomUser.objects.count() == 0:
         #     user = CustomUser.objects.create_superuser(username="jquil", email="jquil@jquil.com", password="admin")
         # else :
@@ -72,7 +74,7 @@ def createUser(request):
         print(username)
         print(email)
         print(password)
-        user = CustomUser.objects.create_user(username=username, email=email, password=password)
+        user = CustomUser.objects.create_user(username=username, email=email, password=password, is_superuser=False, is_staff=False, avatar=avatar)
         user.is_active = True
         request.session['username'] = username
         request.session.save()
@@ -133,6 +135,17 @@ def login(request):
             messages.error(request, 'Please provide both username and password.')
     return render(request, 'pages/partials/login.html')
 
+def user_avatar(request):
+    if request.user.is_authenticated:
+        try:
+            user_profile = CustomUser.objects.get(username=request.user.username)
+            avatar_url = user_profile.avatar.url
+        except CustomUser.DoesNotExist:
+            # URL for a default avatar if the user hasn't uploaded one
+            avatar_url = "{% static 'images/default_avatar.jpg' %}"
+    else:
+        avatar_url = None
+    return render(request, 'index.html', {'avatar_url': avatar_url})
 
 def logout(request):
     print('IN LOGOUT')

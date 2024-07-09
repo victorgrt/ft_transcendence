@@ -8,6 +8,8 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.db import models
 from django.utils import timezone
 
+
+
 class GameSession(models.Model):
     player1 = models.CharField(max_length=100, null=True, blank=True)
     player2 = models.CharField(max_length=100, null=True, blank=True)
@@ -16,7 +18,7 @@ class GameSession(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None, avatar=None):
+    def create_user(self, username, email, password=None, avatar=None, **extra_fields):
         if not email:
             raise ValueError('The Email field must be set')
         if not username:
@@ -25,7 +27,7 @@ class UserManager(BaseUserManager):
             raise ValueError('The Password field must be set')
 
         email = self.normalize_email(email)
-        user = self.model(username=username, email=email, avatar=avatar)
+        user = self.model(username=username, email=email, avatar=avatar, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user
