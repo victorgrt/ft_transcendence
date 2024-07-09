@@ -17,6 +17,9 @@ body{
 	height: 100vh;
 }
 
+#username{
+	color: white
+}
 
 #scene{
 	position: absolute;
