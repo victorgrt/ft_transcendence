@@ -1,3 +1,4 @@
+var ws;
 function launchGame()
 {
     console.log("PONG SCRIPT LOADED");
@@ -143,12 +144,66 @@ function launchGame()
     scene.add(leftWall);
     scene.add(rightWall);
 
-    let ballSpeedX = 0.05;
-    let ballSpeedZ = 0.05;
+    // var ws = new WebSocket("ws://localhost:8000/ws/pong/your_game_id/");
+    initializeWebSocket(self.gameId);
 
-    const paddleSpeed = 0.075; // Adjusted speed for smoother movements
-    const paddleLimitX = 2.3; // Horizontal limit for paddles
+    ws.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        const gameState = data.game_state;
 
+        ball.position.x = gameState.ball_position[0];
+        ball.position.z = gameState.ball_position[1];
+
+        paddle1.position.x = gameState.player_1_position;
+        paddle2.position.x = gameState.player_2_position;
+
+        score_player_1 = gameState.player_1_score;
+        score_player_2 = gameState.player_2_score;
+
+        updateScore();
+        updateScorePositions();
+    };
+
+    let keys = {};
+    document.addEventListener('keydown', function(e) {
+        keys[e.key] = true;
+        sendPaddleMovement();
+    });
+
+    document.addEventListener('keyup', function(e) {
+        delete keys[e.key];
+    });
+
+    function sendPaddleMovement()
+    {
+        if (ws.readyState === WebSocket.OPEN)
+        {
+            if ('w' in keys) {
+                ws.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'up' }));
+            }
+            if ('s' in keys) {
+                ws.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'down' }));
+            }
+            if ('ArrowUp' in keys) {
+                ws.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'up' }));
+            }
+            if ('ArrowDown' in keys) {
+                ws.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'down' }));
+            }
+        }
+        else
+            console.error("Websocket is not open", ws.readyState);
+    }
+
+    function animate() {
+        updateScorePositions(); // Update score positions based on paddle positions
+        controls.update();
+        renderer.render(scene, camera);
+        requestAnimationFrame(animate);
+        renderer.render(scene, camera);
+    }
+
+    animate();
     updateScore();
 
     function updateScore() {
@@ -157,95 +212,37 @@ function launchGame()
             updateScoreText();
         }
     }
+}
 
-    function animate() {
-        requestAnimationFrame(animate);
-
-        ball.position.x += ballSpeedX;
-        ball.position.z += ballSpeedZ;
-
-        if (ball.position.x >= 2.4 || ball.position.x <= -2.4) {
-            ballSpeedX = -ballSpeedX;
-        }
-
-        if (ball.position.z <= -4 || ball.position.z >= 4) {
-            if (ball.position.z <= -4) {
-                score_player_2++;
-                updateScore();
-                resetBall();
-            } else if (ball.position.z >= 4) {
-                score_player_1++;
-                updateScore();
-                resetBall();
-            }
-        }
-
-        if (ball.position.z >= paddle1.position.z - 0.1 && ball.position.z <= paddle1.position.z + 0.1 && ball.position.x >= paddle1.position.x - 0.4 && ball.position.x <= paddle1.position.x + 0.4) {
-            ballSpeedZ = -ballSpeedZ;
-            ball.position.z = paddle1.position.z - 0.1;
-            ballSpeedX *= 1.1;
-            ballSpeedZ *= 1.1;
-        }
-
-        if (ball.position.z >= paddle2.position.z - 0.1 && ball.position.z <= paddle2.position.z + 0.1 && ball.position.x >= paddle2.position.x - 0.4 && ball.position.x <= paddle2.position.x + 0.4) {
-            ballSpeedZ = -ballSpeedZ;
-            ball.position.z = paddle2.position.z + 0.1;
-        }
-
-        if (score_player_1 === 10 || score_player_2 === 10) {
-            score_player_1 = 0;
-            score_player_2 = 0;
-            updateScore();
-        }
-
-        updateScorePositions(); // Update score positions based on paddle positions
-        controls.update();
-        renderer.render(scene, camera);
+function initializeWebSocket(gameId)
+{
+    if (ws && ws.readyState === WebSocket.OPEN)
+    {
+        console.log("WebSocket connection already open.");
+        return;
     }
+    ws = new WebSocket("ws://localhost:8000/ws/pong/" + gameId + "/");
+    ws.onopen = function()
+    {
+        console.log("WebSocket connection opened.");
+    };
 
-    function resetBall() {
-        ball.position.x = 0;
-        ball.position.z = 0;
-        ballSpeedX = 0.05;
-        ballSpeedZ = 0.05;
-    }
+    ws.onmessage = function(event)
+    {
+        var data = JSON.parse(event.data);
+        handleWebSocketMessage(data);
+    };
 
-    let keys = {};
-    document.addEventListener('keydown', function(e) {
-        keys[e.key] = true;
-    });
+    ws.onclose = function()
+    {
+        console.log("WebSocket connection closed.");
+    };
 
-    document.addEventListener('keyup', function(e) {
-        delete keys[e.key];
-    });
-
-    function updatePaddles() {
-        if ('ArrowRight' in keys && paddle1.position.x > -paddleLimitX) {
-            paddle1.position.x -= paddleSpeed;
-        }
-        if ('ArrowLeft' in keys && paddle1.position.x < paddleLimitX) {
-            paddle1.position.x += paddleSpeed;
-        }
-        if ('d' in keys && paddle2.position.x > -paddleLimitX) {
-            paddle2.position.x -= paddleSpeed;
-        }
-        if ('a' in keys && paddle2.position.x < paddleLimitX) {
-            paddle2.position.x += paddleSpeed;
-        }
-
-        requestAnimationFrame(updatePaddles);
-    }
-
-    updatePaddles();
-
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
+    ws.onerror = function(error)
+    {
+        console.error("WebSocket error:", error);
+    };
+}
 
     var score_player_1 = 0;
     var score_player_2 = 0;
-
-    animate();
-}

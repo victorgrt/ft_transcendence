@@ -15,6 +15,7 @@ function setUpSocket(_socket)
 
 function connectWebSocket(sessionId) {
     return new Promise((resolve, reject) => {
+        //if (sessionId != )
         socket = new WebSocket('ws://' + window.location.host + '/ws/pong/' + sessionId + '/');
 
         socket.addEventListener('open', () => {
@@ -29,13 +30,13 @@ function connectWebSocket(sessionId) {
     });
 }
 
-async function createGame () 
+async function createGame ()
 {
 	console.log("createGame");
 	try {
 		const response = await fetch('/create_session/');
 		const data = await response.json();
-	
+
 		// const socket = await connectWebSocket(data.session_id);
     // setUpSocket(socket);
 		// console.log('Session created with ID:', data.session_id);

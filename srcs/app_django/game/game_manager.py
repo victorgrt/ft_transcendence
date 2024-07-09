@@ -31,7 +31,7 @@ class Game:
         self.player_1_score = 0
         self.player_2_score = 0
         self.game_over = False
-        self.state = "playing"  # waiting, playing, game_over
+        self.state = "waiting"  # waiting, playing, Player1 or Player2 for winner
 
     def defineNextBounce(self, x, y):
         x2 = x
@@ -60,6 +60,18 @@ class Game:
         self.ball_position[1] = 0
         self.ball_velocity[0] =  0.05
         self.ball_velocity[1] =  0.05
+
+    def movePaddle(self, player, direction) :
+        if player == 1 :
+            if direction == 'up' and self.player_1_position > 0 :
+                self.player_1_position -= self.paddleSpeed
+            elif direction == 'down' and self.player_1_position < self.fieldWidth :
+                self.player_1_position += self.paddleSpeed
+        elif player == 2 :
+            if direction == 'up' and self.player_2_position > 0 :
+                self.player_2_position -= self.paddleSpeed
+            elif direction == 'down' and self.player_2_position < self.fieldWidth :
+                self.player_2_position += self.paddleSpeed
 
     def update(self):
         if self.player_1_score == 3 or self.player_2_score == 3 :
@@ -95,7 +107,7 @@ class Game:
                 elif self.ball_position[1] >= 4:
                     self.player_1_score += 1
                     self.resetBall(2)
-                
+
             if(self.ball_position[1] >= self.player_1_position_z - 0.1 and self.ball_position[1] <= self.player_1_position_z + 0.1 and self.ball_position[0] >= self.player_1_position - 0.4 and self.ball_position[0] <= self.player_1_position + 0.4) :
                 self.dy = -self.dy
                 self.ball_position[1] = self.player_1_position_z - 0.1
@@ -106,8 +118,6 @@ class Game:
                 self.ball_position[1] = self.player_2_position_z - 0.1
                 self.ball_velocity[0] *= 1.1
                 self.ball_velocity[1] *= 1.1
-            
-
 
         if self.state == "waiting":
             # If there are enough players, start the game
@@ -166,13 +176,20 @@ class GameManager:
         if game_id in self.games:
             del self.games[game_id]
 
+    def handle_paddle_move(self, game_id, player, direction) :
+        with self.lock :
+            for game in self.games.values():
+                game = self.get_game(game_id)
+                if game :
+                    Game.movePaddle(game_id, player, direction)
+
     def update_games(self):
         while True:
             with self.lock:
                 for game in self.games.values():
                     game.update()
-            time.sleep(0.016)  # 60 FPS
-            # time.sleep(1)
+            # time.sleep(0.016)  # 60 FPS
+            time.sleep(1)
 
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)
