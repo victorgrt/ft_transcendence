@@ -62,7 +62,9 @@ function connectToGame() {
 function loadMenuPong(){
 	document.getElementById('joinSessionBtn').addEventListener('click', function() {
 		console.log("ici");
-		const sessionId = document.getElementById('sessionIdInput').value;
+        const sessionId = document.getElementById('game_id');
+		// const sessionId = document.getElementById('sessionIdInput').value;
+        console.log(sessionId);
 		loadContent('/pong/' + sessionId + '/');
 	});
 
