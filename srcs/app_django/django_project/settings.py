@@ -33,11 +33,14 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    #SESSION COOKIES
+    'django.contrib.sessions',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     # 'django.contrib.authchat',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
+    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
@@ -56,10 +59,20 @@ CHANNEL_LAYERS = {
     }
 }
 
+# SECRET_KEY = [
+#     'django-admin startproject'  # Generate a new secret key 
+# ]
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+#'django.contrib.sessions.backends.cache'
+
 MIDDLEWARE = [
+    # SESSION COOKIES
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
-    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -95,10 +108,9 @@ DATABASES = {
         #Update database
         #python manage.py makemigrations
         #python manage.py migrate
-        # 'ENGINE':   'django.db.backends.postgresql',
+        #'ENGINE':   'django.db.backends.postgresql',
         'ENGINE':   'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-        # 'NAME':     config('DB_ACC_NAME'),
+        'NAME':     config('DB_ACC_NAME'),
         # 'USER':     config('DB_ACC_ADMIN'),
         # 'PASSWORD': config('DB_ACC_PSWD'),
         # 'HOST':     config('DB_ACC_HOST'),
@@ -126,6 +138,16 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+
+AUTH_USER_MODEL = 'pages.CustomUser'
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_simplejwt.authentication.JWTAuthentication',
+#     )
+# }
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -161,3 +183,8 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
