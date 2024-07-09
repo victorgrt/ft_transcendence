@@ -35,8 +35,8 @@ def join_session(request, session_id):
 def starting_page(request):
     return render(request, 'pages/base.html')
 
-def pong(request):
-    return redirect('pages/partials/pong.html')
+def pong(request, session_id):
+    return render(request, 'pages/partials/pong.html')
 
 def pongIA(request):
     return render(request, 'pages/partials/pongIA.html')

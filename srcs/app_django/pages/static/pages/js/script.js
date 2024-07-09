@@ -10,7 +10,7 @@ function pongPageScripts () {
 
     // connect to game
     connectToGame();
-
+    launchGame();
 }
 
 const page_scripts = {
@@ -25,16 +25,16 @@ function loadContent(url, pushState = true) {
         url = ""
 
     // if there is a trailing session id, remove it
-    if (url.includes('/pong/')) 
+    if (url.includes('/pong/'))
         page_url = '/pong/'
-    else 
+    else
         page_url = url
 
     fetch(url)
         .then(response => response.text())
         .then(data => {
             console.log("fetched url : ", url);
-            
+
             // Update page content
             const mainDiv = document.getElementById('content');
             mainDiv.innerHTML = data;
