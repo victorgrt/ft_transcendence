@@ -29,18 +29,18 @@ function connectWebSocket(sessionId) {
     });
 }
 
-async function createGame () 
+async function createGame ()
 {
 	console.log("createGame");
 	try {
 		const response = await fetch('/create_session/');
 		const data = await response.json();
-	
+
 		// const socket = await connectWebSocket(data.session_id);
     // setUpSocket(socket);
 		// console.log('Session created with ID:', data.session_id);
 		// window.location.href = '/pong/'
-		loadContent('/pong/' + data.session_id + '/');
+		loadContent('pong/' + data.session_id + '/');
 	} catch (error) {
 		console.error('Error creating session or connecting WebSocket:', error);
 	}
