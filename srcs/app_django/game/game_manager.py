@@ -11,8 +11,8 @@ class Game:
         self.players = []
         self.nb_players = 0
         self.seed = seed(1),
-        self.dx = 0.05
-        self.dy = 0.05
+        self.dx = 0.05 + (random() * (0.02 + 0.02) - 0.02)
+        self.dy = 0.05 + (random() * (0.02 + 0.02) - 0.02)
         self.ball_velocity = [self.dx, self.dy]
         self.ballRadius = 10
         self.paddleWidth = 0.8
@@ -60,6 +60,8 @@ class Game:
         self.ball_position[1] = 0
         self.ball_velocity[0] =  0.05
         self.ball_velocity[1] =  0.05
+        if (x == 2) :
+            self.ball_velocity[0] *= -1
 
     def update(self):
         if self.player_1_score == 3 or self.player_2_score == 3 :
@@ -84,8 +86,19 @@ class Game:
 
             # Handle collision with walls
             if self.ball_position[0] >= 2.4 or self.ball_position[0] <= -2.4:
-                self.ball_velocity[0] = -self.ball_velocity[0]
+                self.ball_velocity[1] *= -1
                 # self.defineNextBounce()
+            # Handle collision with paddles
+            # if self.ball_position[0] - self.ballRadius <= self.player_1_position and self.ball_position[1] >= self.player_1_position and self.ball_position[1] <= self.player_1_position + self.paddleHeight :
+            #     self.ball_velocity[0] *= -1
+            #     self.ball_velocity[0] += 0.6
+            #     self.ball_position[0] += self.ballRadius
+            #     self.defineNextBounce()
+            # elif self.ball_position[0] + self.ballRadius >= self.player_2_position and self.ball_position[1] >= self.player_2_position and self.ball_position[1] <= self.player_2_position + self.paddleHeight :
+            #     self.ball_velocity[0] *= -1
+            #     self.ball_velocity[0] -= 0.6
+            #     self.ball_position[0] -= self.ballRadius
+            #     self.defineNextBounce()
 
             # Handle collision with paddles
             if self.ball_position[1] <= -4 or self.ball_position[1] >= 4:
@@ -95,7 +108,7 @@ class Game:
                 elif self.ball_position[1] >= 4:
                     self.player_1_score += 1
                     self.resetBall(2)
-                
+
             if(self.ball_position[1] >= self.player_1_position_z - 0.1 and self.ball_position[1] <= self.player_1_position_z + 0.1 and self.ball_position[0] >= self.player_1_position - 0.4 and self.ball_position[0] <= self.player_1_position + 0.4) :
                 self.dy = -self.dy
                 self.ball_position[1] = self.player_1_position_z - 0.1
@@ -106,7 +119,7 @@ class Game:
                 self.ball_position[1] = self.player_2_position_z - 0.1
                 self.ball_velocity[0] *= 1.1
                 self.ball_velocity[1] *= 1.1
-            
+
 
 
         if self.state == "waiting":
