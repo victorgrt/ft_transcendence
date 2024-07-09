@@ -5,8 +5,8 @@ function launchGame()
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
-    document.body.appendChild(renderer.domElement);
-    // document.getElementById("scene").appendChild(renderer, domElement);
+    document.getElementById("pongScene").appendChild(renderer.domElement);
+    //document.body.appendChild(renderer.domElement);
 
 
     const loader = new THREE.TextureLoader();
