@@ -255,7 +255,7 @@ function update()
       ball.positionVector.x = 100;
       ball.speedVector.dx += 0.6;
       if (ball.speedVector.dx < 0)
-      ball.speedVector.dx *= -1;
+        ball.speedVector.dx *= -1;
     }
     else
     {
@@ -271,7 +271,7 @@ function update()
         ball.positionVector.x = 1100;
         ball.speedVector.dx -= 0.6;
         if (ball.speedVector.dx > 0)
-        ball.speedVector.dx *= -1;
+          ball.speedVector.dx *= -1;
       }
       else
       {

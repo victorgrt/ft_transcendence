@@ -2,13 +2,15 @@ console.log("coucou theo")
 
 //SOCKET DE LA GAME SESSION
 var socket;
+var gamedata;
 
 function setUpSocket(_socket)
 {
 	_socket.onmessage = function(e) {
 	    const data = JSON.parse(e.data);
 	    console.log('Received message:', data);
-	};
+        gamedata = data;
+    };
 }
 
 function connectWebSocket(sessionId) {
