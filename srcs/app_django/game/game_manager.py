@@ -188,7 +188,7 @@ class GameManager:
             with self.lock:
                 for game in self.games.values():
                     game.update()
-            time.sleep(0.016)  # 60 FPS
+                time.sleep(0.016)  # 60 FPS
             # time.sleep(1)
 
 game_manager = GameManager()

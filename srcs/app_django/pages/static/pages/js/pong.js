@@ -89,6 +89,7 @@ function launchGame()
 
     document.addEventListener('keyup', function(e) {
         delete keys[e.key];
+        sendPaddleMovement();
     });
 
     function sendPaddleMovement()
