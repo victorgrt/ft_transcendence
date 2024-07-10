@@ -21,7 +21,7 @@ class Game:
         self.paddleSpeed = 0.075
         self.fieldHeight = -2.5
         self.fieldWidth = 2.5
-        self.ball_position = [self.fieldWidth / 2, self.fieldHeight / 2]#pas modifier
+        self.ball_position = [0, 0]
         self.ballNextBounce = [0, 0]#pas modifier
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.player_1_position = 0
@@ -188,8 +188,8 @@ class GameManager:
             with self.lock:
                 for game in self.games.values():
                     game.update()
-            # time.sleep(0.016)  # 60 FPS
-            time.sleep(1)
+            time.sleep(0.010)  # 60 FPS
+            # time.sleep(1)
 
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)
