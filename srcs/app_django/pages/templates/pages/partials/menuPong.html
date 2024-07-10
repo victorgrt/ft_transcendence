@@ -1,30 +1,12 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pong 42</title>
-    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/gameSession.css' %}">
-    <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
-</head>
-<body>
-    <div id="container">
-        <div id="header">
-            <p>Pong 42</p>
-        </div>
-        <div id="content">
-            <div id="content-wrapper">
-                <div class="left">
-                    <a class="custom-link needed_hover" href="/pongIA/">IA</a>
-                    <a class="custom-link needed_hover" href="/pong/">1v1</a>
-                    <a class="custom-link needed_hover" href="/pong/">Tournois</a>
-                    <button class="custom-button needed_hover" id="createSessionBtn">Create Game Session</button>
-                    <button class="custom-button needed_hover" id="joinSessionBtn" href="join_session/{{ user.id }}/">Join</button>
-                    <input type="text" placeholder="Enter daronne ici" id="sessionIdInput"></input>
-                </div>
-            </div>
-        </div>
+<div id="menuPong">
+    <div class="left">
+        <h1>Pong42</h1>
+        <button class="needed_hover" href="/pongIA/">IA</button >
+        <button class="needed_hover" href="/pong/">1v1</button >
+        <button class="needed_hover" href="/pong/">Tournois</button >
+        <button class="needed_hover" id="createSessionBtn">Create Game Session</button>
+        <button class="needed_hover" id="joinSessionBtn" href="join_session/{{ user.id }}/">Join</button>
+        <input type="text" placeholder="Enter daronne ici" id="sessionIdInput"></input>
     </div>
-</body>
-</html>
+</div>

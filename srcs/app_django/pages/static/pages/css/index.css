@@ -137,8 +137,6 @@ input[type="submit"]:hover {
 	background-color: #45a049;
 }
 
-
-
 .register_form {
 	visibility: hidden;
 	max-width: 600px;
@@ -160,5 +158,36 @@ input[type="submit"]:hover {
 }
 
 
-#goBackButton {
+/* GAME SESSION / MENUPONG */
+#username {
+	color: white;
+}
+
+
+#menuPong {
+	color: white;
+	background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+	padding: 40px; /* Increased padding */
+	border-radius: 20px; /* Increased border radius */
+	width: 60%; /* Set a fixed width */
+	height: 50%;
+}
+
+.left {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Center elements horizontally */
+}
+/* 
+a.custom-link {
+	font-size: 1.5rem; /* Increased font size */
+	/* margin-bottom: 20px; Increased margin */
+/* } */
+
+input[type="text"] {
+	font-size: 1.5rem; /* Increased font size */
+	padding: 10px; /* Increased padding */
+	margin-top: 20px; /* Increased margin */
+	border-radius: 5px; /* Border radius */
+	width: 80%; /* Adjust width as needed */
 }

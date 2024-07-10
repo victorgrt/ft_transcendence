@@ -1,3 +1,5 @@
+const menuPong = document.getElementById("menuPong");
+
 var scene, camera, renderer, loader, controls;
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
@@ -424,6 +426,11 @@ function zoomBack() {
     hideElement(loginForm);
     // else if (registerVisible === true)
     hideElement(registerForm);
+    // hideElement(menuPong);
+    const test = document.getElementById("menuPong");
+    test.style.visibility = 'hidden';
+    // console.log("here:",menuPong);
+    // menuPong.style.visibility = 'hidden';
     new TWEEN.Tween(camera.position)
         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
         .easing(TWEEN.Easing.Quadratic.InOut)
