@@ -123,6 +123,7 @@ class Game:
             # If there are enough players, start the game
             if len(self.players) >= 2:
               self.state = "playing"
+              print("Game started : %s" % self.game_id)
 
         self.send_game_state()
 
@@ -140,16 +141,16 @@ class Game:
                     'ball_velocity': self.ball_velocity,
                     'player_1_position': self.player_1_position,
                     'player_2_position': self.player_2_position,
-                    'dx' : self.dx,
-                    'dy': self.dy,
-                    'seed' : self.seed,
-                    'ballRadius' : self.ballRadius,
-                    'paddleWidth': self.paddleWidth,
-                    'paddleHeight': self.paddleHeight,
-                    'paddleSpeed': self.paddleSpeed,
-                    'fieldHeight': self.fieldHeight,
-                    'fieldWidth': self.fieldWidth,
-                    'ballNextBounce': self.ballNextBounce,
+                    # 'dx' : self.dx,
+                    # 'dy': self.dy,
+                    # 'seed' : self.seed,
+                    # 'ballRadius' : self.ballRadius,
+                    # 'paddleWidth': self.paddleWidth,
+                    # 'paddleHeight': self.paddleHeight,
+                    # 'paddleSpeed': self.paddleSpeed,
+                    # 'fieldHeight': self.fieldHeight,
+                    # 'fieldWidth': self.fieldWidth,
+                    # 'ballNextBounce': self.ballNextBounce,
                     'player_1_score': self.player_1_score,
                     'player_2_score': self.player_2_score,
                         # Add more game state information as needed
@@ -188,7 +189,7 @@ class GameManager:
             with self.lock:
                 for game in self.games.values():
                     game.update()
-            time.sleep(0.016)  # 60 FPS
+            time.sleep(0.1)  # 60 FPS
             # time.sleep(1)
 
 game_manager = GameManager()
