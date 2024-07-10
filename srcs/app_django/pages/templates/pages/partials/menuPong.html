@@ -1,19 +1,30 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'pages/css/gameSession.css' %}">
-<script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
-
-<div id="left">
-	<a class="button" href="/pongIA/">IA</a>
-	<a class="button" href="/pong/">1v1</a>
-	<a class="button" href="/pong/">Tournois</a>
-    <button id="createSessionBtn">Create Game Session</button>
-	<button id="joinSessionBtn" href="join_session/{{ user.id }}/">Join</button>
-    <input type="text" placeholder="Enter daronne ici" id="sessionIdInput"></input>
-</div>
-<div id="right">
-    <div id="user-info">
-        <p>Login: <span id="username">Loading...</span></p>
-        <p>Email: <span id="email">Loading...</span></p>
-        <p>Status: <span id="is_active">Loading...</span></p>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong 42</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/gameSession.css' %}">
+    <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="header">
+            <p>Pong 42</p>
+        </div>
+        <div id="content">
+            <div id="content-wrapper">
+                <div class="left">
+                    <a class="custom-link needed_hover" href="/pongIA/">IA</a>
+                    <a class="custom-link needed_hover" href="/pong/">1v1</a>
+                    <a class="custom-link needed_hover" href="/pong/">Tournois</a>
+                    <button class="custom-button needed_hover" id="createSessionBtn">Create Game Session</button>
+                    <button class="custom-button needed_hover" id="joinSessionBtn" href="join_session/{{ user.id }}/">Join</button>
+                    <input type="text" placeholder="Enter daronne ici" id="sessionIdInput"></input>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</body>
+</html>
