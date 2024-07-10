@@ -5,10 +5,13 @@
     <head>
 		<script>
 			document.addEventListener('DOMContentLoaded', function() {
-			  document.getElementById('logoutButton').addEventListener('click', function() {
-				window.location.href = 'logout/';
-			  });
-			});
+			  const element = document.getElementById('logoutButton'); 
+                if (element)
+                {
+                    element.addEventListener('click', function() {
+				    window.location.href = 'logout/';
+			    });}
+            });
 		  </script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +37,7 @@
         <div id="content">
             <!-- content des pages -->
             <div class="login_form">
-                <h2>Registering</h2>
+                <h2>Login</h2>
                 <form action="/login/" method="post">
                     <div class="form-group">
                         <label for="username">Your username:</label>
@@ -49,9 +52,36 @@
                     </div>
                 </form>
             </div>
+            <div class="register_form">
+                <h2>Registering</h2>
+                <form action="/createUser" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="username">Your User Name:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Your Password:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Your avatar:</label>
+                        <input type="file" id="avatar" name="avatar" accept=image/*>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
         </div>
         <div id="scene">
             <!-- scene 3d -->
+        </div>
+        <div id="footer">
+            <button id="goBackButton" class="needed_hover" onclick='zoomBack()'>> Go Back <</button>
         </div>
     </body>
      <!-- THREE JS LIBRARY -->

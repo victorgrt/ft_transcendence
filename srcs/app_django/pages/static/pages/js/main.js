@@ -6,19 +6,21 @@ var highlightedObject = null;
 var selected_object_name;
 var selecting_clickable;
 
+var initialControlPosition;
+
 function init() {
     scene = new THREE.Scene();
 
-	renderer = new THREE.WebGLRenderer({antialias:true});
+    renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
 
     camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.set(12,5,12);
+    camera.position.set(12, 5, 12);
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.update();
     renderer.outpuEncoding = THREE.RGBEEncoding;
-	renderer.toneMapping = THREE.ACESFilmicToneMapping;
-	renderer.toneMappingExposure = 1.25;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.25;
     document.getElementById('scene').appendChild(renderer.domElement);
     // document.body.appendChild(renderer.domElement);
     var light = new THREE.PointLight(0xffffff);
@@ -27,32 +29,32 @@ function init() {
 
     loader = new THREE.GLTFLoader();
     const sceneurl = "/staticfiles/pages/images/scene-18.gltf";
-	
+
     loader.load(
         sceneurl,
         function (gltf) {
             gltf.scene.traverse(function (child) {
                 if (child.isMesh && child.name === 'Plane003_3') {
-					// Réinitialiser les propriétés d'émission du matériau spécifique
-					child.material.emissive = new THREE.Color(0xED7F10); // Noir pour désactiver l'émission
-					child.material.emissiveIntensity = 1; // Aucune intensité d'émission
-					child.material.toneMapped = false; // Aucune intensité d'émission
-				}
-				gltf.scene.traverse(function (child) {
-				if (child.isLight) {
-					// Si l'objet est une lumière, ajustez ses propriétés
-					if (child instanceof THREE.DirectionalLight) {
-						child.intensity = 0.5; // Exemple: Réduire l'intensité d'une lumière directionnelle
-					} else if (child instanceof THREE.PointLight) {
-						child.intensity = 0.3; // Exemple: Réduire l'intensité d'une lumière ponctuelle
-					}
-		
-					if (child instanceof THREE.AmbientLight) {
-						// Si l'objet est une lumière ambiante, ajustez ses propriétés
-						child.intensity = 0.7; // Exemple: Réduire l'intensité de la lumière ambiante
-					}
-				}
-            });
+                    // Réinitialiser les propriétés d'émission du matériau spécifique
+                    child.material.emissive = new THREE.Color(0xED7F10); // Noir pour désactiver l'émission
+                    child.material.emissiveIntensity = 1; // Aucune intensité d'émission
+                    child.material.toneMapped = false; // Aucune intensité d'émission
+                }
+                gltf.scene.traverse(function (child) {
+                    if (child.isLight) {
+                        // Si l'objet est une lumière, ajustez ses propriétés
+                        if (child instanceof THREE.DirectionalLight) {
+                            child.intensity = 0.5; // Exemple: Réduire l'intensité d'une lumière directionnelle
+                        } else if (child instanceof THREE.PointLight) {
+                            child.intensity = 0.3; // Exemple: Réduire l'intensité d'une lumière ponctuelle
+                        }
+
+                        if (child instanceof THREE.AmbientLight) {
+                            // Si l'objet est une lumière ambiante, ajustez ses propriétés
+                            child.intensity = 0.7; // Exemple: Réduire l'intensité de la lumière ambiante
+                        }
+                    }
+                });
             });
             scene.add(gltf.scene);
 
@@ -75,7 +77,7 @@ function init() {
     // });
     console.log("charged ouais la zone");
     window.addEventListener('click', onClickScene);
-	document.addEventListener('mousemove', onMouseMove, false);
+    document.addEventListener('mousemove', onMouseMove, false);
     animate();
 }
 
@@ -99,13 +101,12 @@ function onMouseMove(event) {
         document.body.style.cursor = 'pointer';
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
-            if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2') && isZooming === false)
-            {
+            if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2') && isZooming === false) {
                 selected_object_name = intersect.object.name;
                 return intersect.object.name;
             }
         });
-        
+
         if (selectedObject) {
             selecting_clickable = true;
             var objectToHighlight = selectedObject.object;
@@ -113,15 +114,13 @@ function onMouseMove(event) {
             if (selectedObject.object.name === 'Plane003_2')
                 objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
             //ECRAN ORDINATEUR
-            else if (selectedObject.object.name === 'Plane009_2')
-            {
+            else if (selectedObject.object.name === 'Plane009_2') {
                 objectToHighlight.material.emissiveIntensity = 5; // Exemple: intensité d'émission pour la surbrillance
             }
             // Autres ajustements de surbrillance si nécessaire
             highlightedObject = objectToHighlight;
         }
-        else if (!selectedObject)
-        {
+        else if (!selectedObject) {
             selecting_clickable = false;
             document.body.style.cursor = 'default';
         }
@@ -145,7 +144,7 @@ function loadScript(url, callback) {
     script.type = "text/javascript";
     script.src = url;
 
-    script.onload = function() {
+    script.onload = function () {
         if (callback) callback();
     };
     document.head.appendChild(script);
@@ -173,12 +172,14 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
     console.log("ici");
     const duration = 2000;
     var targetPosition;
-    if (isZoomed)
-    {
+    if (isZoomed && selecting_clickable === true && (loginVisible || registerVisible) === false) {
         isZooming = true;
         console.log("LA : x:", clickCoordinates.x, "y:", clickCoordinates.y, "z:", clickCoordinates.z)
         if (loginVisible === true)
             hideElement(loginForm);
+        else if (registerVisible === true)
+            hideElement(registerForm);
+        hideElement(goBackButton);
         new TWEEN.Tween(camera.position)
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
@@ -194,48 +195,49 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
             })
             .start();
     }
-    else if (!isZoomed && selecting_clickable == true && isZooming == false)
-    {
+    else if (!isZoomed && selecting_clickable == true && isZooming == false) {
         isZooming = true;
         isZoomed = true;
         console.log("isZoomed : ", isZoomed);
         const zoomDistance = 2; // Zoom distance relative to the object (adjust as needed)
-
         // Calculate the direction from the camera to the clicked coordinates
         const direction = new THREE.Vector3();
         direction.subVectors(clickCoordinates, camera.position).normalize();
-        if (selected_object_name == "Plane009_2")
-        {
+        if (selected_object_name == "Plane009_2") {
             console.log("click :", clickCoordinates);
             targetPosition = new THREE.Vector3(2, 2.8, 0.02);
             new TWEEN.Tween(camera.position)
                 .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, duration)
                 .easing(TWEEN.Easing.Quadratic.InOut)
                 .onUpdate(() => {
-                    camera.lookAt(clickCoordinates);
+                    controls.target.x = clickCoordinates.x;
+                    controls.target.y = clickCoordinates.y;
+                    controls.target.z = clickCoordinates.z;
                 })
                 .onComplete(() => {
                     console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
                     isZooming = false;
+
                     controls.target.x = targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = -targetPosition.z;
                     console.log("HERE");
-                    if (redirect_flag === 0)
-                    {
+                    if (redirect_flag === 0) {
                         showElement(loginForm);
-                        console.log(loginForm);
-                        console.log(loginForm.style);
+                        hideElement(header);
+                        goBackButton.style.visibility = 'visible';
                     }
-                    else if (redirect_flag === 1)
-                        changeTemplate('register');
+                    else if (redirect_flag === 1) {
+                        showElement(registerForm);
+                        hideElement(header);
+                        goBackButton.style.visibility = 'visible';
+                    }
                 })
                 .start();
-            }
-            else if (selected_object_name == "Plane003_2")
-            {
-                targetPosition = new THREE.Vector3(1.75, 3.7, 2.5);
-                new TWEEN.Tween(camera.position)
+        }
+        else if (selected_object_name == "Plane003_2") {
+            targetPosition = new THREE.Vector3(1.75, 3.7, 2.5);
+            new TWEEN.Tween(camera.position)
                 .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
                 .easing(TWEEN.Easing.Quadratic.InOut)
                 .onUpdate(() => {
@@ -247,12 +249,11 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.x = -targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
-                    // changeTemplate('menuPong')
                     loadContent('menuPong/');
-                    
+                    showElement(goBackButton);
                 })
                 .start();
-            }
+        }
     }
 }
 
@@ -287,17 +288,16 @@ function getZoomState() {
     return zoomState === 'true';
 }
 
-window.addEventListener('beforeunload', function() {
+window.addEventListener('beforeunload', function () {
     localStorage.setItem('isReloaded', 'true');
 });
 
-window.addEventListener('pageshow', function(event) {
+window.addEventListener('pageshow', function (event) {
     const isReloaded = localStorage.getItem('isReloaded') === 'true';
     const isZoomed = getZoomState();
 
     //page was reloaded
-    if (isReloaded)
-    {
+    if (isReloaded) {
         if (isZoomed)
             return;
         else
@@ -318,9 +318,9 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-function goToLogin(){
+function goToLogin() {
     if (isZooming) return;
-    
+
     const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
 
     selecting_clickable = true;
@@ -328,7 +328,7 @@ function goToLogin(){
     zoomToCoordinates(clickCoordinates, 0);
 }
 
-function goToRegister(){
+function goToRegister() {
     if (isZooming) return;
     const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
 
@@ -337,7 +337,7 @@ function goToRegister(){
     zoomToCoordinates(clickCoordinates, 1);
 }
 
-function zoomToPC(){
+function zoomToPC() {
     if (isZooming) return;
 
     // Coordonnées fixes de l'objet vers lequel vous voulez zoomer
@@ -348,19 +348,96 @@ function zoomToPC(){
     zoomToCoordinates(clickCoordinates);
 }
 
-// Issues :
-// - weird camera moovement on complete of animation of zoom
-//Plane003_2 == aracade
-//Plane009 == pc
+function centerRegisterForm()
+{
 
-var loginVisible;
-function showElement(element){
-    element.style.visibility = 'visible';
-    loginVisible = true;
+    contentdiv.style.display = 'flex';
+    contentdiv.style.justify_content = 'center';
+    contentdiv.style.align_items = 'center';
+    
+    registerForm.style.width = '80%';
+
+    loginForm.style.position = 'absolute';
 }
 
 
-function hideElement(element){
+function centerLoginForm()
+{
+    contentdiv.style.display = 'flex';
+    contentdiv.style.justify_content = 'center';
+    contentdiv.style.align_items = 'center';
+    
+    loginForm.style.width = '50%';
+    loginForm.style.height = '40%';
+
+    registerForm.style.position = 'absolute';
+}
+
+var loginVisible;
+var registerVisible;
+function showElement(element) {
+    console.log("here:", element.className);
+    if (element.className === "register_form")
+    {
+        registerVisible = true;
+        centerRegisterForm();
+    }
+    if (element.className === "login_form")
+    {
+        loginVisible = true;
+        centerLoginForm();
+    }
+    element.style.visibility = 'visible';
+}
+
+function hideElement(element) {
+    if (element.className === "register_form")
+        registerVisible = true;
+    if (element.className === "login_form")
+        loginVisible = true;
     element.style.visibility = 'hidden';
-    loginVisible = false;
+}
+
+function resetStyleForms(){
+    // RESET register form style
+    contentdiv.style.removeProperty('display');
+    contentdiv.style.removeProperty('align_items');
+    contentdiv.style.removeProperty('justify_content');
+
+    registerForm.style.removeProperty('width');
+    loginForm.style.removeProperty('position');
+    
+    // RESET login form style
+    loginForm.style.removeProperty('width');
+    loginForm.style.removeProperty('height');
+    registerForm.style.removeProperty('position');
+}
+
+function zoomBack() {
+    resetStyleForms();
+    console.log("here GGGG");
+    let duration = 2000;
+    isZooming = true;
+    hideElement(goBackButton);
+    // if (loginVisible === true)
+    hideElement(loginForm);
+    // else if (registerVisible === true)
+    hideElement(registerForm);
+    new TWEEN.Tween(camera.position)
+        .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
+            camera.lookAt(initialCameraLookAt);
+        })
+        .onComplete(() => {
+            isZoomed = false;
+            isZooming = false;
+            localStorage.setItem('isZoomed', isZoomed);
+            controls.position = initialCameraPosition;
+            controls.target = initialCameraLookAt;
+            // camera.position = initialCameraPosition;
+            // camera.lookAt = initialCameraLookAt;
+            showElement(header);
+        })
+        .start();
 }

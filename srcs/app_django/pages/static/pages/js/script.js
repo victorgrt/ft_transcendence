@@ -2,7 +2,10 @@ console.log("loaded script");
 
 //pcq c une array
 const loginForm = document.getElementsByClassName("login_form")[0];
-
+const registerForm = document.getElementsByClassName("register_form")[0];
+const goBackButton = document.getElementById("footer");
+const header = document.getElementById("header");
+const contentdiv = document.getElementById("content");
 // const pongScene = document.getElementById("pongScene")[0];
 
 function pongPageScripts () {
