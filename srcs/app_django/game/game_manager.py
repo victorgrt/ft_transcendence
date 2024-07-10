@@ -188,8 +188,8 @@ class GameManager:
             with self.lock:
                 for game in self.games.values():
                     game.update()
-            # time.sleep(0.016)  # 60 FPS
-            time.sleep(1)
+            time.sleep(0.016)  # 60 FPS
+            # time.sleep(1)
 
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)

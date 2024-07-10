@@ -1,5 +1,3 @@
-console.log("coucou theo")
-
 //SOCKET DE LA GAME SESSION
 var socket;
 var gamedata;
@@ -8,8 +6,7 @@ function setUpSocket(_socket)
 {
   console.log("SETTING SOCKET UP");
 	_socket.onmessage = function(e) {
-	    const data = JSON.parse(e.data);
-	    console.log('Received message:', data);
+        const data = JSON.parse(e.data);
         gamedata = data;
     };
 }
@@ -37,11 +34,6 @@ async function createGame ()
 	try {
 		const response = await fetch('/create_session/');
 		const data = await response.json();
-
-		// const socket = await connectWebSocket(data.session_id);
-    // setUpSocket(socket);
-		// console.log('Session created with ID:', data.session_id);
-		// window.location.href = '/pong/'
 		loadContent('/pong/' + data.session_id + '/');
 	} catch (error) {
 		console.error('Error creating session or connecting WebSocket:', error);

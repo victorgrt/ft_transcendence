@@ -39,13 +39,7 @@ class PongConsumer(AsyncWebsocketConsumer):
             self.send(text_data=json.dumps({
                 'error': 'Key "message" not found in WebSocket'
             }))
-        # await self.channel_layer.group_send(
-        #     self.game_id,
-        #     {
-        #         'type': 'game_message',
-        #         'message': message
-        #     }
-        # )
+
 
     # async def game_message(self, event):
     #     message = event['message']
