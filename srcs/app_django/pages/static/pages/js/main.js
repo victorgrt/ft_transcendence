@@ -250,6 +250,7 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
                     loadContent('menuPong/');
+                    hideElement(header);
                     showElement(goBackButton);
                 })
                 .start();

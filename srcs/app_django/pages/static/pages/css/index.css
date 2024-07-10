@@ -1,42 +1,51 @@
 @font-face {
 	font-family: "Arcades";
 	src: url('../../pages/static/fonts/arcade/Arcades.eot') format('embedded-opentype'),
-		 url('../../pages/static/fonts/arcade/Arcades.woff2') format('woff2'),
-		 url('../../pages/static/fonts/arcade/Arcades.woff') format('woff'),
-		 url('../../pages/static/fonts/arcade/Arcades.ttf') format('truetype');
+		url('../../pages/static/fonts/arcade/Arcades.woff2') format('woff2'),
+		url('../../pages/static/fonts/arcade/Arcades.woff') format('woff'),
+		url('../../pages/static/fonts/arcade/Arcades.ttf') format('truetype');
 }
 
 html {
 	overflow: hidden;
 }
 
-body{
+body {
 	margin: 0;
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
 }
 
-#username{
+#username {
 	color: white
 }
 
-#scene{
+#scene {
 	position: absolute;
 	top: 0;
 	z-index: -2;
 }
-	
 
-#content{
+
+#content {
 	height: 100%;
 	width: 100%;
+	display: flex;
+	justify-content: center; /* Center horizontally */
+	align-items: center;
 }
 
-#header{
+.left {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Center elements horizontally */
+}
+
+#header {
 	/* background:rgba(0,0,0,0.1); */
-  top: 0;
-  padding: 10px;
+	top: 0;
+	padding: 10px;
 	text-align: center;
 	align-items: center;
 	justify-content: center;
@@ -59,6 +68,13 @@ button {
 	color: white;
 }
 
+#content-wrapper {
+	background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+	padding: 40px; /* Increased padding */
+	border-radius: 20px; /* Increased border radius */
+	width: 60%; /* Set a fixed width */
+}
+
 .needed_hover:hover {
 	background-color: white;
 	color: black;
@@ -72,45 +88,77 @@ button {
 
 
 /* CSS LOGIN FORM */
-    .login_form {
-		visibility: hidden;
-		max-width: 600px;
-        margin: auto;
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
-    }
-    .form-group {
-        margin-bottom: 15px;
-    }
-    label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    input[type="text"],
-    input[type="email"],
-    textarea {
-        width: calc(100% - 12px);
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        font-size: 14px;
-    }
-    textarea {
-        height: 100px;
-    }
-    input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    input[type="submit"]:hover {
-        background-color: #45a049;
-    }
+.login_form {
+	visibility: hidden;
+	max-width: 600px;
+	margin: auto;
+	background: #ffffff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+	width: calc(100% - 12px);
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+
+textarea {
+	height: 100px;
+}
+
+input[type="submit"] {
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+input[type="submit"]:hover {
+	background-color: #45a049;
+}
+
+
+
+.register_form {
+	visibility: hidden;
+	max-width: 600px;
+	margin: auto;
+	background: #ffffff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+}
+
+
+#footer {
+	visibility: hidden;
+	display: flex;
+	width: 100%;
+	position: absolute;
+	justify-content: center;
+	bottom: 0;
+}
+
+
+#goBackButton {
+}

@@ -20,8 +20,8 @@
     </head>
     <body>
         <div id="header">
-            <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">LOGIN</button>
-            <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">REGISTER</button>
+            <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN <</button>
+            <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <</button>
 			{% if user.is_authenticated %}
 			<button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
 			{% endif %}
