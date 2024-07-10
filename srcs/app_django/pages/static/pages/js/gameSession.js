@@ -6,6 +6,7 @@ var gamedata;
 
 function setUpSocket(_socket)
 {
+  console.log("SETTING SOCKET UP");
 	_socket.onmessage = function(e) {
 	    const data = JSON.parse(e.data);
 	    console.log('Received message:', data);
@@ -62,10 +63,10 @@ function connectToGame() {
 function loadMenuPong(){
 	document.getElementById('joinSessionBtn').addEventListener('click', function() {
 		console.log("ici");
-        const sessionId = document.getElementById('game_id');
-		// const sessionId = document.getElementById('sessionIdInput').value;
+        // const sessionId = document.getElementById('game_id');
+		    const sessionId = document.getElementById('sessionIdInput').value;
         console.log(sessionId);
-		loadContent('/pong/' + sessionId + '/');
+		    loadContent('/pong/' + sessionId + '/');
 	});
 
 	document.getElementById('createSessionBtn').addEventListener('click', createGame);
@@ -96,30 +97,3 @@ document.addEventListener('DOMContentLoaded', function() {
         loadContent(document.location.pathname, false);
     }
 });
-
-//game/multi/id
-
-
-
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     fetch('/api/login_status/')
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             if (data.is_logged_in) {
-    //                 document.getElementById('username').textContent = data.username;
-    //                 document.getElementById('email').textContent = data.email;
-    //                 document.getElementById('is_active').textContent = 'Connected';
-    //             } else {
-    //                 document.getElementById('username').textContent = 'N/A';
-    //                 document.getElementById('email').textContent = 'N/A';
-    //                 document.getElementById('is_active').textContent = 'Disconnected';
-    //             }
-    //         })
-            // .catch(error => {
-            //     console.error('Error fetching user info:', error);
-            // });
-    // });
-
-        // JavaScript pour le jeu Pong
-
-        // Logique du jeu Pong ici...
