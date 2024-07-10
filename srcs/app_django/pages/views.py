@@ -13,6 +13,11 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import GameSession
 import uuid
 
+def is_ajax(request):
+    return request.headers.get('x-requested-with') == 'XMLHttpRequest'
+
+#   ---------------- API ----------------
+
 def create_session(request):
     session_id = str(uuid.uuid4())
     game_session = GameSession.objects.create(player1='player1', session_id=session_id, state='{}')
@@ -30,7 +35,26 @@ def join_session(request, session_id):
         return JsonResponse({'error': 'Session not found'}, status=404)
 
 
-#   ----            FRONT
+#   ---------------- FRONT END ----------------
+
+# PARTIAL CONTENTS 
+def partial_content(request, page):
+    context = {}
+    if page == 'page1':
+        context['data'] = 'Page 1 content'
+        template = 'partials/page1.html'
+    elif page == 'page2':
+        context['data'] = 'Page 2 content'
+        template = 'partials/page2.html'
+    else:
+        return JsonResponse({'error': 'Page not found'}, status=404)
+
+    if request.is_ajax():
+        return render(request, template, context)
+    else:
+        return render(request, 'index.html', {'partial_template': template, 'context': context})
+
+# starting_page
 def starting_page(request):
     if request.user.is_authenticated:
         print(f"Authenticated user: {request.user.username}")
@@ -40,27 +64,39 @@ def starting_page(request):
         print(f"user not authenticated : {request}")
         return render(request, 'pages/partials/login.html')
 
-def pong(request, session_id):
-    return render(request, 'pages/partials/pong.html')
+def scene(request):
+    return render(request, 'pages/index.html')
 
+# game page
+def pong(request, session_id):
+    context = {'session_id': session_id}
+    if is_ajax(request):
+        return render(request, 'pages/partials/pong.html', context)
+    else:
+        return render(request, 'pages/index.html', {'partial_template': 'pages/partials/pong.html', 'context': session_id})
+
+# IA game page
 def pongIA(request):
     return render(request, 'pages/partials/pongIA.html')
     # return render(request, 'pages/partials/pong.html')
 
+# Game menu
 def menuPong(request):
     return render(request, 'pages/partials/menuPong.html')
 
+# Account page
 def account(request):
     return render(request, 'pages/partials/account.html')
 
-def home_page(request):
-    return render(request, 'pages/partials/home_page.html')
-
+# Chat page
 def chat(request):
     return render(request, 'pages/partials/chat.html')
 
 def register(request):
     return render(request, 'pages/partials/register.html')
+
+# --- full pages ---
+
 
 @csrf_exempt  # Only for demonstration; consider CSRF protection for production
 def createUser(request):
@@ -168,6 +204,3 @@ def get_login_status(request):
         'is_active': user.is_active
     })
 
-
-def scene(request):
-    return render(request, 'pages/index.html')

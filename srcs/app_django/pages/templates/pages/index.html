@@ -33,6 +33,13 @@
         </div>
         <div id="content">
             <!-- content des pages -->
+
+            {% if partial_template %}
+                {% include partial_template with data=context.data %}
+            {% else %}
+                <h1>Welcome to the Home Page</h1>
+            {% endif %}
+            
             <div class="login_form">
                 <h2>Registering</h2>
                 <form action="/login/" method="post">

@@ -5,9 +5,10 @@ from django.urls import path
 from .views import *
 
 urlpatterns = [
+  # path('partial/<str:page>/', partial_content, name='partial_content'),
+
   # navigation
   path("", scene, name="home"),
-  path("home_page/", home_page),
   path("menuPong/", menuPong),
 
   # account
