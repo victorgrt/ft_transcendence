@@ -59,7 +59,7 @@ body {
 .left {
 	display: flex;
 	flex-direction: column;
-	align-items: center; /* Center elements horizontally */
+	align-items: stretch; /* Center elements horizontally */
 }
 
 a.custom-link {
