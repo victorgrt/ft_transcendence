@@ -1,5 +1,3 @@
-const menuPong = document.getElementById("menuPong");
-
 var scene, camera, renderer, loader, controls;
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
@@ -221,14 +219,16 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.z = -targetPosition.z;
                     console.log("HERE");
                     if (redirect_flag === 0) {
-                        showElement(loginForm);
-                        hideElement(header);
-                        goBackButton.style.visibility = 'visible';
+                        ;
+                        // showElement(loginForm);
+                        // hideElement(header);
+                        // goBackButton.style.visibility = 'visible';
                     }
                     else if (redirect_flag === 1) {
-                        showElement(registerForm);
-                        hideElement(header);
-                        goBackButton.style.visibility = 'visible';
+                        ;
+                        // showElement(registerForm);
+                        // hideElement(header);
+                        // goBackButton.style.visibility = 'visible';
                     }
                 })
                 .start();
@@ -326,6 +326,7 @@ function goToLogin() {
     selecting_clickable = true;
     selected_object_name = "Plane009_2";
     zoomToCoordinates(clickCoordinates, 0);
+    showElement(loginForm);
 }
 
 function goToRegister() {
@@ -335,6 +336,7 @@ function goToRegister() {
     selecting_clickable = true;
     selected_object_name = "Plane009_2";
     zoomToCoordinates(clickCoordinates, 1);
+    showElement(registerForm);
 }
 
 function zoomToPC() {
@@ -392,6 +394,7 @@ function showElement(element) {
     }
     element.style.opacity = '1';
     element.style.visibility = 'visible';
+    console.log("showing element, ", element);
 }
 
 function hideElement(element) {
@@ -409,6 +412,8 @@ function resetStyleForms(){
     contentdiv.style.removeProperty('align_items');
     contentdiv.style.removeProperty('justify_content');
 
+    registerForm.style.visibility = '0';
+    registerForm.style.opactity = '0';
     registerForm.style.removeProperty('width');
     loginForm.style.removeProperty('position');
     
@@ -422,11 +427,10 @@ function zoomBack() {
     if (statsVisible === true)
     {
         hideElement(goBackButton);
-        // hideElement(statsDiv);
         statsDiv.style.visibility = '0';
         statsDiv.style.opacity = '0';
         statsVisible = false;
-        return;
+        return; //returns because no zoom back needed
     }
     if (friendsVisible === true)
     {
@@ -434,22 +438,27 @@ function zoomBack() {
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
         friendsVisible = false;
-        return;
+        return; //returns because no zoom back needed
     }
-    console.log("on passe dans zoomback");
-    resetStyleForms();
-    console.log("here GGGG");
-    let duration = 2000;
-    isZooming = true;
-    hideElement(goBackButton);
-    hideElement(loginForm);
-    hideElement(registerForm);
+    if (registerVisible === true)
+    {
+        hideElement(goBackButton);
+        registerForm.style.visibility = '0';
+        registerForm.style.opacity = '0';
+    }
+    if (loginVisible === true)
+    {
+        hideElement(goBackButton);
+        loginForm.style.visibility = '0';
+        loginForm.style.opacity = '0';
+    }
     if (menuPongVisible === true)
     {
         hideElement(menuPong);
         menuPongVisible = false;
     }
-    // const targetZoomBack = new THREE.Vector3(0, 0, 0);
+    let duration = 2000;
+    isZooming = true;
     console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
     new TWEEN.Tween(camera.position)
         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
@@ -482,6 +491,7 @@ function showStats(){
     statsDiv.style.opacity = '1';
     statsVisible = true;
     showElement(goBackButton);
+    statsVisible = true;
 }
 
 var friendsVisible = false;

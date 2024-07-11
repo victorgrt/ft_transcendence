@@ -8,7 +8,6 @@ const header = document.getElementById("header");
 const contentdiv = document.getElementById("content");
 const statsDiv = document.getElementById("user_stats");
 const friendsDiv = document.getElementById("friends")
-// const pongScene = document.getElementById("pongScene")[0];
 
 function pongPageScripts () {
     console.log("launchPongScript")

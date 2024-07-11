@@ -88,12 +88,14 @@ button {
 /* CSS LOGIN FORM */
 .login_form {
 	visibility: hidden;
+	opacity: 0;
 	max-width: 600px;
 	margin: auto;
 	background: #ffffff;
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+	transition: opacity 1.5s ease-out;
 }
 
 .form-group {
@@ -135,9 +137,11 @@ input[type="submit"]:hover {
 	background-color: #45a049;
 }
 
+/* REGISTER FORM */
 .register_form {
+	color:black;
 	opacity: 0;
-	transition: opacity 0.5s ease-out;
+	transition: opacity 2s ease-out;
 	visibility: hidden;
 	max-width: 600px;
 	margin: auto;
@@ -147,7 +151,14 @@ input[type="submit"]:hover {
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
 }
 
+#username {
+	color: black;
+	padding: 1%;
+	border: px solid black;
+	border-radius: 1vh;
+}
 
+/* FOOTER */
 #footer {
 	visibility: hidden;
 	display: flex;
@@ -159,14 +170,17 @@ input[type="submit"]:hover {
 
 
 /* GAME SESSION / MENUPONG */
-#username {
+#menuPong {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 1s ease-out;
+	border: 1px solid #f09d0a;
 	color: white;
-	margin: 5%;
-	padding: 1%;
-	border: 2px solid white;
-	border-radius: 1vh;
-	font: larger;
-	font-weight: bold;
+	background: rgb(0, 0, 0);
+	background: linear-gradient(90deg, rgba(240, 157, 100, 0.7) 0%, rgba(0,0,0,0.7) 50%, rgba(240,157,100,0.7) 100%);
+	border-radius: 20px;
+	width: 60%;
+	height: 45%;
 }
 
 .pong_title{
@@ -182,30 +196,11 @@ input[type="submit"]:hover {
              1px 25px 50px rgba(16, 16, 16, 0.2);
 }
 
-#menuPong {
-	border: 1px solid #f09d0a;
-	color: white;
-	background: rgb(0, 0, 0);
-	background: linear-gradient(90deg, rgba(240, 157, 100, 0.7) 0%, rgba(0,0,0,0.7) 50%, rgba(240,157,100,0.7) 100%);
-	/* background-color: rgba(0, 0, 0, 0.8); */
-	/* background: rgb(0, 0, 0, 0.7);
-	background: linear-gradient(90deg, rgba(240 157 10,0.5) 0%, rgba(0, 0, 0, 0.71) 50%, rgba(240 157 10,0.5) 100%); */
-	/* background-color: rgba(0, 0, 0, 0.7); Semi-transparent black background */
-	border-radius: 20px; /* Increased border radius */
-	width: 60%; /* Set a fixed width */
-	height: 45%;
-}
-
 .left {
 	display: flex;
 	flex-direction: column;
 	align-items: center; /* Center elements horizontally */
 }
-/* 
-a.custom-link {
-	font-size: 1.5rem; /* Increased font size */
-	/* margin-bottom: 20px; Increased margin */
-/* } */
 
 input[type="text"] {
 	font-size: 1.5rem; /* Increased font size */
@@ -214,7 +209,6 @@ input[type="text"] {
 	border-radius: 5px; /* Border radius */
 	width: 80%; /* Adjust width as needed */
 }
-
 
 .needed_hover2{
 	width: 50%;
@@ -235,7 +229,6 @@ input[type="text"] {
 }
 
 /* STATS */
-
 #user_stats{
 	opacity: 0;
 	transition: opacity 1s ease-out;
@@ -254,7 +247,6 @@ input[type="text"] {
 	text-align: center;
 	background: rgb(31,255,36);
 	background: linear-gradient(90deg, rgba(31,255,36,0.5) 0%, rgba(16,0,255,0.5) 50%, rgba(255,142,120,0.5) 100%);
-	/* background-color: rgba(0, 0, 0, 0.8); */
 }
 
 #stats_username{

@@ -59,7 +59,6 @@ function connectToGame() {
         });
 }
 
-
 function loadMenuPong(){
 	document.getElementById('joinSessionBtn').addEventListener('click', function() {
 		console.log("ici");
