@@ -20,22 +20,28 @@
     </head>
     <body>
         <div id="header">
+			{% if user.is_authenticated == False %}
             <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN <</button>
             <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <</button>
-			{% if user.is_authenticated %}
+			{% endif %}
+            {% if user.is_authenticated %}
+            <button class="needed_hover" id="statsButton" onclick="showStats()" src="{% static '/js/main.js' %}">{{ user.username }}</button>
+            {% endif %}
+            {% if user.is_authenticated %}
 			<button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
 			{% endif %}
-            <div id="username"> 
-                {{ user.username }}
-            </div>
-			<div id="user-avatar">
-				{% if user.is_authenticated %}
-				<img src="user_avatar/" alt="User Avatar">
-				{% endif %}
-			</div>
         </div>
         <div id="content">
             <!-- content des pages -->
+            {% if user.is_authenticated %}             
+            <div id="user_stats">
+                <ul id="stats"><img src="{% static 'pages/'%}{{user.avatar}}" id="avatar"></ul>
+                <ul id="stats_username"> {{ user.username }} </ul>
+                <ul id="stats"> 4 VICTOIRES </ul>
+                <ul id="stats"> 4 DEFAITES </ul>
+            </div>
+			{% endif %}
+
             <div class="login_form">
                 <h2>Login</h2>
                 <form action="/login/" method="post">
@@ -81,7 +87,7 @@
             <!-- scene 3d -->
         </div>
         <div id="footer">
-            <button id="goBackButton" class="needed_hover" onclick='zoomBack()'>> Go Back <</button>
+            <button id="goBackButton" class="needed_hover" onclick='zoomBack()' src="{% static '/js/main.js' %}">> Go Back <</button>
         </div>
     </body>
      <!-- THREE JS LIBRARY -->

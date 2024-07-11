@@ -168,10 +168,7 @@ console.log("isZoomed? ", isZoomed);
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
-// redirect_flag 0 : login
-// redirect_flag 1 : register
 function zoomToCoordinates(clickCoordinates, redirect_flag) {
-    console.log("ici");
     const duration = 2000;
     var targetPosition;
     if (isZoomed && selecting_clickable === true && (loginVisible || registerVisible) === false) {
@@ -192,8 +189,8 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                 isZoomed = false;
                 isZooming = false;
                 localStorage.setItem('isZoomed', isZoomed);
-                controls.position = initialCameraPosition;
-                controls.target = initialCameraLookAt;
+                camera.position.set = initialCameraPosition;
+                camera.lookAt = initialCameraLookAt;
             })
             .start();
     }
@@ -202,7 +199,6 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
         isZoomed = true;
         console.log("isZoomed : ", isZoomed);
         const zoomDistance = 2; // Zoom distance relative to the object (adjust as needed)
-        // Calculate the direction from the camera to the clicked coordinates
         const direction = new THREE.Vector3();
         direction.subVectors(clickCoordinates, camera.position).normalize();
         if (selected_object_name == "Plane009_2") {
@@ -252,6 +248,7 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
                     loadContent('menuPong/');
+                    menuPongVisible = true;
                     hideElement(header);
                     showElement(goBackButton);
                 })
@@ -378,6 +375,7 @@ function centerLoginForm()
 
 var loginVisible;
 var registerVisible;
+var menuPongVisible;
 function showElement(element) {
     console.log("here:", element.className);
     if (element.className === "register_form")
@@ -394,9 +392,9 @@ function showElement(element) {
 }
 
 function hideElement(element) {
-    if (element.className === "register_form")
+    if (element.classList.contains("register_form"))
         registerVisible = true;
-    if (element.className === "login_form")
+    if (element.classList.contains("login_form"))
         loginVisible = true;
     element.style.visibility = 'hidden';
 }
@@ -417,35 +415,51 @@ function resetStyleForms(){
 }
 
 function zoomBack() {
+    if (statsVisible === true)
+    {
+        hideElement(statsDiv);
+        statsVisible = false;
+        hideElement(goBackButton);
+        return;
+    }
+    console.log("on passe dans zoomback");
     resetStyleForms();
     console.log("here GGGG");
     let duration = 2000;
     isZooming = true;
     hideElement(goBackButton);
-    // if (loginVisible === true)
     hideElement(loginForm);
-    // else if (registerVisible === true)
     hideElement(registerForm);
-    // hideElement(menuPong);
-    const test = document.getElementById("menuPong");
-    test.style.visibility = 'hidden';
-    // console.log("here:",menuPong);
-    // menuPong.style.visibility = 'hidden';
+    if (menuPongVisible === true)
+    {
+        hideElement(menuPong);
+        menuPongVisible = false;
+    }
+    // const targetZoomBack = new THREE.Vector3(0, 0, 0);
+    console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
     new TWEEN.Tween(camera.position)
         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
         .easing(TWEEN.Easing.Quadratic.InOut)
         .onUpdate(() => {
             camera.lookAt(initialCameraLookAt);
+            // controls.target = clickCoordinates;
         })
         .onComplete(() => {
             isZoomed = false;
             isZooming = false;
             localStorage.setItem('isZoomed', isZoomed);
             controls.position = initialCameraPosition;
-            controls.target = initialCameraLookAt;
-            // camera.position = initialCameraPosition;
-            // camera.lookAt = initialCameraLookAt;
+            controls.position = new THREE.Vector3(12, 5, 12);
+            controls.target =  new THREE.Vector3(0, 0, 0);
             showElement(header);
+            console.log("apres:", initialCameraLookAt, initialCameraPosition);
         })
         .start();
+}
+
+var statsVisible = false;
+function showStats(){
+    statsDiv.style.visibility = 'visible';
+    statsVisible = true;
+    showElement(goBackButton);
 }

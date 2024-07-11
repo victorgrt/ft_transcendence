@@ -6,6 +6,7 @@ const registerForm = document.getElementsByClassName("register_form")[0];
 const goBackButton = document.getElementById("footer");
 const header = document.getElementById("header");
 const contentdiv = document.getElementById("content");
+const statsDiv = document.getElementById("user_stats");
 // const pongScene = document.getElementById("pongScene")[0];
 
 function pongPageScripts () {
