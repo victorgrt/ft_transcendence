@@ -26,8 +26,7 @@
 			{% endif %}
             {% if user.is_authenticated %}
             <button class="needed_hover" id="statsButton" onclick="showStats()" src="{% static '/js/main.js' %}">{{ user.username }}</button>
-            {% endif %}
-            {% if user.is_authenticated %}
+            <button class="needed_hover" id="friendsButton" onclick="showFriends()" src="{% static '/js/main.js' %}"> FRIENDS LIST</button>            
 			<button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
 			{% endif %}
         </div>
@@ -39,6 +38,38 @@
                 <ul id="stats_username"> {{ user.username }} </ul>
                 <ul id="stats"> 4 VICTOIRES </ul>
                 <ul id="stats"> 4 DEFAITES </ul>
+            </div>
+            <div id="friends">
+                <table id="friends_list">
+                    {% comment %}
+                    <!-- {% comment for each user.friends endcomment %} -->
+                    {% endcomment %}
+                    <tr>
+                        <th class="friend_username">Username</th>
+                        <th class="victories">Victoires</th>
+                        <th class="defeats">Defaites</th>
+                    </tr>
+                    <tr>
+                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/ign_DesertTree-1.jpg' %}"> Lucas</td>
+                        <td class="victories">99</td>
+                        <td class="defeats">0</td>
+                    </tr>
+                    <tr>
+                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/ign_DesertTree-1.jpg' %}"> Rururururuurururuururuurururuurururuurururuururuururururururu</td>
+                        <td class="victories">999999999999999999999999999999999999999999999999999999999999999999</td>
+                        <td class="defeats">100000000000000000000000000000000000000000000000000000000000000000000</td>
+                    </tr>
+                    <tr>
+                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/Robert_De_Niro.jpg' %}"> Lucas </td>
+                        <td class="victories">99</td>
+                        <td class="defeats">0</td>
+                    </tr>
+                    <tr>
+                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/Robert_De_Niro.jpg' %}"> Lucas </td>
+                        <td class="victories">99</td>
+                        <td class="defeats">0</td>
+                    </tr>
+                </table>
             </div>
 			{% endif %}
 

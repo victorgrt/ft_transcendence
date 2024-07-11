@@ -382,12 +382,15 @@ function showElement(element) {
     {
         registerVisible = true;
         centerRegisterForm();
+        showElement(goBackButton);
     }
     if (element.className === "login_form")
     {
         loginVisible = true;
         centerLoginForm();
+        showElement(goBackButton);
     }
+    element.style.opacity = '1';
     element.style.visibility = 'visible';
 }
 
@@ -396,6 +399,7 @@ function hideElement(element) {
         registerVisible = true;
     if (element.classList.contains("login_form"))
         loginVisible = true;
+    element.style.opacity = '0';
     element.style.visibility = 'hidden';
 }
 
@@ -417,9 +421,19 @@ function resetStyleForms(){
 function zoomBack() {
     if (statsVisible === true)
     {
-        hideElement(statsDiv);
-        statsVisible = false;
         hideElement(goBackButton);
+        // hideElement(statsDiv);
+        statsDiv.style.visibility = '0';
+        statsDiv.style.opacity = '0';
+        statsVisible = false;
+        return;
+    }
+    if (friendsVisible === true)
+    {
+        hideElement(goBackButton);
+        friendsDiv.style.visibility = '0';
+        friendsDiv.style.opacity = '0';
+        friendsVisible = false;
         return;
     }
     console.log("on passe dans zoomback");
@@ -459,7 +473,29 @@ function zoomBack() {
 
 var statsVisible = false;
 function showStats(){
+    if (statsVisible === true)
+    {
+        zoomBack();
+        return;
+    }
     statsDiv.style.visibility = 'visible';
+    statsDiv.style.opacity = '1';
     statsVisible = true;
     showElement(goBackButton);
+}
+
+var friendsVisible = false;
+function showFriends(){
+    if (friendsVisible === true)
+    {
+        hideElement(goBackButton);
+        friendsDiv.style.visibility = '0';
+        friendsDiv.style.opacity = '0';
+        friendsVisible = false;
+        return;
+    }
+    friendsDiv.style.visibility = 'visible';
+    friendsDiv.style.opacity = '1';
+    showElement(goBackButton);
+    friendsVisible = true;
 }

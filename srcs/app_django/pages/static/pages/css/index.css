@@ -136,6 +136,8 @@ input[type="submit"]:hover {
 }
 
 .register_form {
+	opacity: 0;
+	transition: opacity 0.5s ease-out;
 	visibility: hidden;
 	max-width: 600px;
 	margin: auto;
@@ -167,14 +169,31 @@ input[type="submit"]:hover {
 	font-weight: bold;
 }
 
+.pong_title{
+	text-shadow: 1px 1px 1px #f09d0a,
+             1px 2px 1px #f09d0a,
+             1px 3px 1px #f09d0a,
+             1px 4px 1px #f09d0a,
+             1px 5px 1px #f09d0a,
+             1px 6px 1px #f09d0a,
+             1px 10px 5px rgba(16, 16, 16, 0.5),
+             1px 15px 10px rgba(16, 16, 16, 0.4),
+             1px 20px 30px rgba(16, 16, 16, 0.3),
+             1px 25px 50px rgba(16, 16, 16, 0.2);
+}
 
 #menuPong {
+	border: 1px solid #f09d0a;
 	color: white;
-	background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
-	padding: 40px; /* Increased padding */
+	background: rgb(0, 0, 0);
+	background: linear-gradient(90deg, rgba(240, 157, 100, 0.7) 0%, rgba(0,0,0,0.7) 50%, rgba(240,157,100,0.7) 100%);
+	/* background-color: rgba(0, 0, 0, 0.8); */
+	/* background: rgb(0, 0, 0, 0.7);
+	background: linear-gradient(90deg, rgba(240 157 10,0.5) 0%, rgba(0, 0, 0, 0.71) 50%, rgba(240 157 10,0.5) 100%); */
+	/* background-color: rgba(0, 0, 0, 0.7); Semi-transparent black background */
 	border-radius: 20px; /* Increased border radius */
 	width: 60%; /* Set a fixed width */
-	height: 50%;
+	height: 45%;
 }
 
 .left {
@@ -197,7 +216,12 @@ input[type="text"] {
 }
 
 
-.needed_hover2 {
+.needed_hover2{
+	width: 50%;
+	border-color: white;
+}
+
+.needed_hover2:hover {
 	background-color: white;
 	color: black;
 	transition: 1s;
@@ -213,6 +237,9 @@ input[type="text"] {
 /* STATS */
 
 #user_stats{
+	opacity: 0;
+	transition: opacity 1s ease-out;
+
 	visibility: hidden;
 
 	color: white;
@@ -225,8 +252,8 @@ input[type="text"] {
     position: absolute;
 
 	text-align: center;
-background: rgb(31,255,36);
-background: linear-gradient(90deg, rgba(31,255,36,0.5) 0%, rgba(16,0,255,0.5) 50%, rgba(255,142,120,0.5) 100%);
+	background: rgb(31,255,36);
+	background: linear-gradient(90deg, rgba(31,255,36,0.5) 0%, rgba(16,0,255,0.5) 50%, rgba(255,142,120,0.5) 100%);
 	/* background-color: rgba(0, 0, 0, 0.8); */
 }
 
@@ -244,4 +271,45 @@ background: linear-gradient(90deg, rgba(31,255,36,0.5) 0%, rgba(16,0,255,0.5) 50
 
 #stats{
 	color:white;
+}
+
+/* FRIENDS LIST */
+#friends{
+	overflow-y: scroll;
+	border: 2px solid white;
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+	width: 50%;
+	height: 80%;
+}
+
+#friends_list{
+	color:white;
+	width: 100%;
+    overflow: hidden;
+}
+
+#friend_avatar{
+	width: 20%;
+}
+
+td{
+	max-width: 150px; 
+	word-wrap: break-word;
+	padding:1%;
+	border: 2px solid white;
+}
+
+.friend_username{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.victories{
+	background-color: rgba(0,128,0, 0.5);
+}
+
+.defeats{
+	background-color: rgba(255,0,0, 0.5);
+
 }
