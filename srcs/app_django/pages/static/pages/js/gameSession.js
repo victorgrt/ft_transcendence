@@ -60,9 +60,9 @@ function connectToGame() {
 }
 
 function loadMenuPong(){
+    console.log("coucou vivi");
 	document.getElementById('joinSessionBtn').addEventListener('click', function() {
 		console.log("ici");
-        // const sessionId = document.getElementById('game_id');
 		    const sessionId = document.getElementById('sessionIdInput').value;
         console.log(sessionId);
 		    loadContent('/pong/' + sessionId + '/');

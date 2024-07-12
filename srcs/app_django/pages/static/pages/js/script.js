@@ -7,7 +7,8 @@ const goBackButton = document.getElementById("footer");
 const header = document.getElementById("header");
 const contentdiv = document.getElementById("content");
 const statsDiv = document.getElementById("user_stats");
-const friendsDiv = document.getElementById("friends")
+const friendsDiv = document.getElementById("friends");
+const menuPongDiv = document.getElementById("menuPongDiv");
 
 function pongPageScripts () {
     console.log("launchPongScript")

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!-- SCRIPT TO LOGOUT -->
 		<script>
 			document.addEventListener('DOMContentLoaded', function() {
 			  const element = document.getElementById('logoutButton'); 
@@ -12,26 +13,29 @@
 				    window.location.href = 'logout/';
 			    });}
             });
-		  </script>
+		</script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>FT_TRANSCENDENCE</title>
         <link rel="stylesheet" type="text/css" href="{% static 'pages/css/index.css' %}">
     </head>
     <body>
+        <!-- HEADER -->
         <div id="header">
 			{% if user.is_authenticated == False %}
             <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN <</button>
             <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <</button>
 			{% endif %}
+            <!-- IF USER IS LOGGED THEN SHOW GOOD BUTTONS -->
             {% if user.is_authenticated %}
             <button class="needed_hover" id="statsButton" onclick="showStats()" src="{% static '/js/main.js' %}">{{ user.username }}</button>
             <button class="needed_hover" id="friendsButton" onclick="showFriends()" src="{% static '/js/main.js' %}"> FRIENDS LIST</button>            
 			<button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
 			{% endif %}
         </div>
+        <!-- MAIN CONTENT DIV -->
         <div id="content">
-            <!-- content des pages -->
+            <!-- SHOW STATS IF USER IS AUTH -->
             {% if user.is_authenticated %}             
             <div id="user_stats">
                 <ul id="stats"><img src="{% static 'pages/'%}{{user.avatar}}" id="avatar"></ul>
@@ -39,11 +43,9 @@
                 <ul id="stats"> 4 VICTOIRES </ul>
                 <ul id="stats"> 4 DEFAITES </ul>
             </div>
+            <!-- SHOW FRIENDS CONTENT IF USER IS AUTH -->
             <div id="friends">
                 <table id="friends_list">
-                    {% comment %}
-                    <!-- {% comment for each user.friends endcomment %} -->
-                    {% endcomment %}
                     <tr>
                         <th class="friend_username">Username</th>
                         <th class="victories">Victoires</th>
@@ -72,7 +74,7 @@
                 </table>
             </div>
 			{% endif %}
-
+            <!-- LOGIN FORM -->
             <div class="login_form">
                 <h2>Login</h2>
                 <form action="/login/" method="post">
@@ -89,6 +91,7 @@
                     </div>
                 </form>
             </div>
+            <!-- REGISTER FORM -->
             <div class="register_form">
                 <h2>Registering</h2>
                 <form action="/account/createUser" method="post" enctype="multipart/form-data">
@@ -113,11 +116,24 @@
                     </div>
                 </form>
             </div>
+            <!-- MENU PONG -->
+            <div id="menuPongDiv">
+                <div class="left">
+                    <h1 class="pong_title">42 PONG</h1>
+                    <button class="needed_hover2" href="/pongIA/">IA</button >
+                    <button class="needed_hover2" href="/pong/">1v1</button >
+                    <button class="needed_hover2" href="/pong/">Tournois</button >
+                    <button class="needed_hover2" id="createSessionBtn">Create Game Session</button>
+                    <button class="needed_hover2" id="joinSessionBtn" href="join_session/{{ user.id }}/">Join</button>
+                    <input type="text" placeholder="--> Enter Session ID Here <--" id="sessionIdInput"></input>
+                </div>
+            </div>
         </div>
         <div id="scene">
-            <!-- scene 3d -->
+            <!-- CANVAS FOR 3D SCENE -->
         </div>
         <div id="footer">
+            <!-- GO BACK BUTTON -->
             <button id="goBackButton" class="needed_hover" onclick='zoomBack()' src="{% static '/js/main.js' %}">> Go Back <</button>
         </div>
     </body>

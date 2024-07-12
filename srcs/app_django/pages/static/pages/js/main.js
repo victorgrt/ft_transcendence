@@ -247,8 +247,14 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.x = -targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
-                    loadContent('menuPong/');
+                    // loadContent('menuPong/');
                     menuPongVisible = true;
+                    showElement(menuPongDiv);
+                    // waitForElm('menuPong').then((elm) => {
+                    //     const element = document.getElementById("menuPong");
+                    //     element.style.opacity = '1';
+                    //     element.style.visibility = 'visible';
+                    // });
                     hideElement(header);
                     showElement(goBackButton);
                 })
@@ -256,6 +262,27 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
         }
     }
 }
+
+function waitForElm(selector) {
+    return new Promise(resolve => {
+        if (document.getElementById(selector)) {
+            return resolve(document.getElementById(selector));
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.getElementById(selector)) {
+                observer.disconnect();
+                resolve(document.getElementById(selector));
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
+
 
 let isZooming = false;
 window.addEventListener('click', onClickScene);
@@ -454,7 +481,7 @@ function zoomBack() {
     }
     if (menuPongVisible === true)
     {
-        hideElement(menuPong);
+        hideElement(menuPongDiv);
         menuPongVisible = false;
     }
     let duration = 2000;

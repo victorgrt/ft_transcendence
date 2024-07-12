@@ -170,7 +170,8 @@ input[type="submit"]:hover {
 
 
 /* GAME SESSION / MENUPONG */
-#menuPong {
+#menuPongDiv {
+position: absolute;
 	opacity: 0;
 	visibility: hidden;
 	transition: opacity 1s ease-out;
@@ -208,6 +209,7 @@ input[type="text"] {
 	margin-top: 20px; /* Increased margin */
 	border-radius: 5px; /* Border radius */
 	width: 80%; /* Adjust width as needed */
+	text-align: center;
 }
 
 .needed_hover2{
