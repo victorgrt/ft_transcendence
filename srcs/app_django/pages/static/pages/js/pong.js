@@ -124,17 +124,15 @@ function launchGame()
     function animate()
     {
         if (gamedata)
-            {
-                controls.update();
-                updateState();
-                renderer.render(scene, camera);
-                requestAnimationFrame(animate);
-                renderer.render(scene, camera);
-            }
+        {
+            // controls.update();
+            updateState();
+            renderer.render(scene, camera);
+        }
         requestAnimationFrame(animate);
     }
     animate();
 }
 
-    var score_player_1 = 0;
-    var score_player_2 = 0;
+var score_player_1 = 0;
+var score_player_2 = 0;

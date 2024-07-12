@@ -30,7 +30,11 @@ function loadContent(url, pushState = true) {
     else
         page_url = url
 
-    fetch(url)
+    fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
         .then(response => response.text())
         .then(data => {
             console.log("fetched url : ", url);
