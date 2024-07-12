@@ -5,10 +5,13 @@
     <head>
 		<script>
 			document.addEventListener('DOMContentLoaded', function() {
-			  document.getElementById('logoutButton').addEventListener('click', function() {
-				window.location.href = 'logout/';
-			  });
-			});
+			  const element = document.getElementById('logoutButton');
+                if (element)
+                {
+                    element.addEventListener('click', function() {
+				    window.location.href = 'logout/';
+			    });}
+            });
 		  </script>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,31 +20,61 @@
     </head>
     <body>
         <div id="header">
-            <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">LOGIN</button>
-            <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">REGISTER</button>
-			{% if user.is_authenticated %}
+			{% if user.is_authenticated == False %}
+            <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN <</button>
+            <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <</button>
+			{% endif %}
+            {% if user.is_authenticated %}
+            <button class="needed_hover" id="statsButton" onclick="showStats()" src="{% static '/js/main.js' %}">{{ user.username }}</button>
+            <button class="needed_hover" id="friendsButton" onclick="showFriends()" src="{% static '/js/main.js' %}"> FRIENDS LIST</button>
 			<button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
 			{% endif %}
-            <div id="username"> 
-                {{ user.username }}
-            </div>
-			<div id="user-avatar">
-				{% if user.is_authenticated %}
-				<img src="user_avatar/" alt="User Avatar">
-				{% endif %}
-			</div>
         </div>
         <div id="content">
             <!-- content des pages -->
+            {% if user.is_authenticated %}
+            <div id="user_stats">
+                <ul id="stats"><img src="{% static 'pages/'%}{{user.avatar}}" id="avatar"></ul>
+                <ul id="stats_username"> {{ user.username }} </ul>
+                <ul id="stats"> 4 VICTOIRES </ul>
+                <ul id="stats"> 4 DEFAITES </ul>
+            </div>
+            <div id="friends">
+                <table id="friends_list">
+                    {% comment %}
+                    <!-- {% comment for each user.friends endcomment %} -->
+                    {% endcomment %}
+                    <tr>
+                        <th class="friend_username">Username</th>
+                        <th class="victories">Victoires</th>
+                        <th class="defeats">Defaites</th>
+                    </tr>
+                    <tr>
+                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/ign_DesertTree-1.jpg' %}"> Lucas</td>
+                        <td class="victories">99</td>
+                        <td class="defeats">0</td>
+                    </tr>
+                    <tr>
+                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/ign_DesertTree-1.jpg' %}"> Rururururuurururuururuurururuurururuurururuururuururururururu</td>
+                        <td class="victories">999999999999999999999999999999999999999999999999999999999999999999</td>
+                        <td class="defeats">100000000000000000000000000000000000000000000000000000000000000000000</td>
+                    </tr>
+                    <tr>
+                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/Robert_De_Niro.jpg' %}"> Lucas </td>
+                        <td class="victories">99</td>
+                        <td class="defeats">0</td>
+                    </tr>
+                    <tr>
+                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/Robert_De_Niro.jpg' %}"> Lucas </td>
+                        <td class="victories">99</td>
+                        <td class="defeats">0</td>
+                    </tr>
+                </table>
+            </div>
+			{% endif %}
 
-            {% if partial_template %}
-                {% include partial_template with data=context.data %}
-            {% else %}
-                <h1>Welcome to the Home Page</h1>
-            {% endif %}
-            
             <div class="login_form">
-                <h2>Registering</h2>
+                <h2>Login</h2>
                 <form action="/login/" method="post">
                     <div class="form-group">
                         <label for="username">Your username:</label>
@@ -56,9 +89,36 @@
                     </div>
                 </form>
             </div>
+            <div class="register_form">
+                <h2>Registering</h2>
+                <form action="/account/createUser" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="username">Your User Name:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Your Password:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Your avatar:</label>
+                        <input type="file" id="avatar" name="avatar" accept=image/*>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
         </div>
         <div id="scene">
             <!-- scene 3d -->
+        </div>
+        <div id="footer">
+            <button id="goBackButton" class="needed_hover" onclick='zoomBack()' src="{% static '/js/main.js' %}">> Go Back <</button>
         </div>
     </body>
      <!-- THREE JS LIBRARY -->

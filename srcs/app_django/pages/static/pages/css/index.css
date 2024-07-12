@@ -1,42 +1,47 @@
 @font-face {
 	font-family: "Arcades";
 	src: url('../../pages/static/fonts/arcade/Arcades.eot') format('embedded-opentype'),
-		 url('../../pages/static/fonts/arcade/Arcades.woff2') format('woff2'),
-		 url('../../pages/static/fonts/arcade/Arcades.woff') format('woff'),
-		 url('../../pages/static/fonts/arcade/Arcades.ttf') format('truetype');
+		url('../../pages/static/fonts/arcade/Arcades.woff2') format('woff2'),
+		url('../../pages/static/fonts/arcade/Arcades.woff') format('woff'),
+		url('../../pages/static/fonts/arcade/Arcades.ttf') format('truetype');
 }
 
 html {
 	overflow: hidden;
 }
 
-body{
+body {
 	margin: 0;
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
 }
 
-#username{
-	color: white
-}
-
-#scene{
+#scene {
 	position: absolute;
 	top: 0;
 	z-index: -2;
 }
-	
 
-#content{
+
+#content {
 	height: 100%;
 	width: 100%;
+	display: flex;
+	justify-content: center; /* Center horizontally */
+	align-items: center;
 }
 
-#header{
+.left {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Center elements horizontally */
+}
+
+#header {
 	/* background:rgba(0,0,0,0.1); */
-  top: 0;
-  padding: 10px;
+	top: 0;
+	padding: 10px;
 	text-align: center;
 	align-items: center;
 	justify-content: center;
@@ -44,6 +49,8 @@ body{
 	width: 100%;
 	font-family: 'Arcade', Arial, Helvetica, sans-serif;
 	position: fixed;
+	color : white;
+	display: flex;
 }
 
 button {
@@ -59,6 +66,13 @@ button {
 	color: white;
 }
 
+#content-wrapper {
+	background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+	padding: 40px; /* Increased padding */
+	border-radius: 20px; /* Increased border radius */
+	width: 60%; /* Set a fixed width */
+}
+
 .needed_hover:hover {
 	background-color: white;
 	color: black;
@@ -72,45 +86,222 @@ button {
 
 
 /* CSS LOGIN FORM */
-    .login_form {
-		visibility: hidden;
-		max-width: 600px;
-        margin: auto;
-        background: #ffffff;
-        padding: 20px;
-        border-radius: 5px;
-        box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
-    }
-    .form-group {
-        margin-bottom: 15px;
-    }
-    label {
-        display: block;
-        font-weight: bold;
-        margin-bottom: 5px;
-    }
-    input[type="text"],
-    input[type="email"],
-    textarea {
-        width: calc(100% - 12px);
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-        font-size: 14px;
-    }
-    textarea {
-        height: 100px;
-    }
-    input[type="submit"] {
-        background-color: #4CAF50;
-        color: white;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-    }
-    input[type="submit"]:hover {
-        background-color: #45a049;
-    }
+.login_form {
+	visibility: hidden;
+	opacity: 0;
+	max-width: 600px;
+	margin: auto;
+	background: #ffffff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+	transition: opacity 1.5s ease-out;
+}
+
+.form-group {
+	margin-bottom: 15px;
+}
+
+label {
+	display: block;
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+	width: calc(100% - 12px);
+	padding: 8px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+	font-size: 14px;
+}
+
+textarea {
+	height: 100px;
+}
+
+input[type="submit"] {
+	background-color: #4CAF50;
+	color: white;
+	padding: 10px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+input[type="submit"]:hover {
+	background-color: #45a049;
+}
+
+/* REGISTER FORM */
+.register_form {
+	color:black;
+	opacity: 0;
+	transition: opacity 2s ease-out;
+	visibility: hidden;
+	max-width: 600px;
+	margin: auto;
+	background: #ffffff;
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+}
+
+#username {
+	color: black;
+	padding: 1%;
+	border: px solid black;
+	border-radius: 1vh;
+}
+
+/* FOOTER */
+#footer {
+	visibility: hidden;
+	display: flex;
+	width: 100%;
+	position: absolute;
+	justify-content: center;
+	bottom: 0;
+}
+
+
+/* GAME SESSION / MENUPONG */
+#menuPong {
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 1s ease-out;
+	border: 1px solid #f09d0a;
+	color: white;
+	background: rgb(0, 0, 0);
+	background: linear-gradient(90deg, rgba(240, 157, 100, 0.7) 0%, rgba(0,0,0,0.7) 50%, rgba(240,157,100,0.7) 100%);
+	border-radius: 20px;
+	width: 60%;
+	height: 45%;
+}
+
+.pong_title{
+	text-shadow: 1px 1px 1px #f09d0a,
+             1px 2px 1px #f09d0a,
+             1px 3px 1px #f09d0a,
+             1px 4px 1px #f09d0a,
+             1px 5px 1px #f09d0a,
+             1px 6px 1px #f09d0a,
+             1px 10px 5px rgba(16, 16, 16, 0.5),
+             1px 15px 10px rgba(16, 16, 16, 0.4),
+             1px 20px 30px rgba(16, 16, 16, 0.3),
+             1px 25px 50px rgba(16, 16, 16, 0.2);
+}
+
+.left {
+	display: flex;
+	flex-direction: column;
+	align-items: center; /* Center elements horizontally */
+}
+
+input[type="text"] {
+	font-size: 1.5rem; /* Increased font size */
+	padding: 10px; /* Increased padding */
+	margin-top: 20px; /* Increased margin */
+	border-radius: 5px; /* Border radius */
+	width: 80%; /* Adjust width as needed */
+}
+
+.needed_hover2{
+	width: 50%;
+	border-color: white;
+}
+
+.needed_hover2:hover {
+	background-color: white;
+	color: black;
+	transition: 1s;
+	text-decoration: 2px solid underline overline;
+	/* text-decoration: 1px solid black; */
+	text-underline-offset: 5px;
+	box-shadow: 0 0 15px white;
+	transition: all .45s ease-Out;
+	width: 50%;
+	margin: 1%;
+}
+
+/* STATS */
+#user_stats{
+	opacity: 0;
+	transition: opacity 1s ease-out;
+
+	visibility: hidden;
+
+	color: white;
+	font-size: large;
+	font-weight: bold;
+
+	border: 2px solid white;
+	border-radius: 1vh;
+    width: 50%;
+    position: absolute;
+
+	text-align: center;
+	background: rgb(31,255,36);
+	background: linear-gradient(90deg, rgba(31,255,36,0.5) 0%, rgba(16,0,255,0.5) 50%, rgba(255,142,120,0.5) 100%);
+}
+
+#stats_username{
+	font-size: xx-large;
+	text-decoration: underline overline;
+	text-decoration-style: double;
+	text-underline-offset: 1vh;
+}
+
+#avatar{
+	width: 30%;
+	border: 1.5px solid white;
+}
+
+#stats{
+	color:white;
+}
+
+/* FRIENDS LIST */
+#friends{
+	overflow-y: scroll;
+	border: 2px solid white;
+	position: absolute;
+	visibility: hidden;
+	opacity: 0;
+	width: 50%;
+	height: 80%;
+}
+
+#friends_list{
+	color:white;
+	width: 100%;
+    overflow: hidden;
+}
+
+#friend_avatar{
+	width: 20%;
+}
+
+td{
+	max-width: 150px; 
+	word-wrap: break-word;
+	padding:1%;
+	border: 2px solid white;
+}
+
+.friend_username{
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.victories{
+	background-color: rgba(0,128,0, 0.5);
+}
+
+.defeats{
+	background-color: rgba(255,0,0, 0.5);
+
+}

@@ -1,35 +1,30 @@
-/* ATTENTION ON DOIT PAS TOUCHER AU BODY */
-body {
-	display: flex;
-	justify-content: space-between;
-	padding: 20px;
+#username {
+	color: white;
 }
 
-#left,
-#right {
-	width: 45%;
+
+#menuPong {
+	background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+	padding: 40px; /* Increased padding */
+	border-radius: 20px; /* Increased border radius */
+	width: 60%; /* Set a fixed width */
 }
 
-#left {
+.left {
 	display: flex;
 	flex-direction: column;
+	align-items: center; /* Center elements horizontally */
 }
 
-.button {
-	display: inline-block;
-	padding: 15px 30px;
-	background-color: #007bff;
-	color: white;
-	text-decoration: none;
-	border-radius: 8px;
-	margin: 10px;
-	transition: background-color 0.3s ease;
-	font-size: 1.1em;
-	border: 2px solid transparent;
+a.custom-link {
+	font-size: 1.5rem; /* Increased font size */
+	margin-bottom: 20px; /* Increased margin */
 }
 
-#user-info {
-	padding: 20px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
+input[type="text"] {
+	font-size: 1.5rem; /* Increased font size */
+	padding: 10px; /* Increased padding */
+	margin-top: 20px; /* Increased margin */
+	border-radius: 5px; /* Border radius */
+	width: 80%; /* Adjust width as needed */
 }

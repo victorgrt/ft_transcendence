@@ -21,7 +21,7 @@ class Game:
         self.paddleSpeed = 0.075
         self.fieldHeight = -2.5
         self.fieldWidth = 2.5
-        self.ball_position = [self.fieldWidth / 2, self.fieldHeight / 2]#pas modifier
+        self.ball_position = [0, 0]
         self.ballNextBounce = [0, 0]#pas modifier
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.player_1_position = 0
