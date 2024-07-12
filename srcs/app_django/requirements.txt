@@ -14,3 +14,4 @@ python-decouple
 uvicorn 
 channels
 whitenoise
+django-avatar

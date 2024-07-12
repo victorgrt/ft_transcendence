@@ -356,7 +356,7 @@ function centerRegisterForm()
     contentdiv.style.display = 'flex';
     contentdiv.style.justify_content = 'center';
     contentdiv.style.align_items = 'center';
-    
+
     registerForm.style.width = '80%';
 
     loginForm.style.position = 'absolute';
@@ -368,7 +368,7 @@ function centerLoginForm()
     contentdiv.style.display = 'flex';
     contentdiv.style.justify_content = 'center';
     contentdiv.style.align_items = 'center';
-    
+
     loginForm.style.width = '50%';
     loginForm.style.height = '40%';
 
@@ -416,7 +416,7 @@ function resetStyleForms(){
     registerForm.style.opactity = '0';
     registerForm.style.removeProperty('width');
     loginForm.style.removeProperty('position');
-    
+
     // RESET login form style
     loginForm.style.removeProperty('width');
     loginForm.style.removeProperty('height');

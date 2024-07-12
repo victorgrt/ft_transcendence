@@ -9,7 +9,7 @@
                 if (element)
                 {
                     element.addEventListener('click', function() {
-				    window.location.href = 'logout/';
+				    window.location.href = 'account/logout/';
 			    });}
             });
 		  </script>
@@ -28,6 +28,16 @@
             <button class="needed_hover" id="statsButton" onclick="showStats()" src="{% static '/js/main.js' %}">{{ user.username }}</button>
             <button class="needed_hover" id="friendsButton" onclick="showFriends()" src="{% static '/js/main.js' %}"> FRIENDS LIST</button>
 			<button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
+			<form method="POST" action="/account/settings/" enctype="account/form-data" class="settingsForm">
+				{% csrf_token %}
+				<label for="new_username">Username:</label>
+				<input type="text" name="new_username" id="new_username" required>
+
+				<label for="new_avatar">Avatar:</label>
+				<input type="file" name="new_avatar" id="new_avatar" required>
+
+				<button type="submit">Update Profile</button>
+			</form>
 			{% endif %}
         </div>
         <div id="content">
@@ -75,7 +85,7 @@
 
             <div class="login_form">
                 <h2>Login</h2>
-                <form action="/login/" method="post">
+                <form action="/account/login/" method="post">
                     <div class="form-group">
                         <label for="username">Your username:</label>
                         <input type="username" id="username" name="username" required>
