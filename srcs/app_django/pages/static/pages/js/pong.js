@@ -1,4 +1,5 @@
 console.log("PONG SCRIPT LOADED");
+function pong() {
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -246,3 +247,4 @@ var score_player_1 = 0;
 var score_player_2 = 0;
 
 animate();
+}

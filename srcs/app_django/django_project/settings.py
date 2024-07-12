@@ -29,6 +29,11 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# For charging files (avatars, images, etc.)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static',]
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Application definition
 
@@ -46,7 +51,9 @@ INSTALLED_APPS = [
     'pages',
     'chat',
     'game',
-    'channels'
+    'channels',
+    'account',
+    # 'avatar'
 ]
 
 WSGI_APPLICATION = 'django_project.wsgi.application'
@@ -141,7 +148,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-AUTH_USER_MODEL = 'pages.CustomUser'
+AUTH_USER_MODEL = 'account.CustomUser'
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
