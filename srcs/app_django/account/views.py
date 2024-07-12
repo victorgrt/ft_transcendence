@@ -73,27 +73,6 @@ def login(request):
         password = request.POST.get('password')
 
         print(username)
-    #     print(password)
-    #     try:
-    #         user = CustomUser.objects.get(username=username)
-    #         if (user.check_password(password)):
-    #             print("Password is correct")
-    #             django_login(request, user)
-    #             print(f"User '{username}' found in the database.")
-    #             print(f"is_active: {user.is_active}")
-    #             print('redirecting to home')
-    #             return redirect('home')
-    #         else:
-    #             print("Password is correct")
-    #             return render(request, 'pages/partials/login.html')
-    #     except CustomUser.DoesNotExist:
-    #         print(f"User '{username}' does not exist in the database.")
-    # return render(request, 'pages/partials/login.html')
-
-        # user = CustomUser.objects.get(username=username)
-        # if user.is_active:
-        #     print("User is active" )
-
         if username and password:
             print(f"Attempting to authenticate user: {username}")
             # Authenticate user

@@ -28,13 +28,9 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        print(text_data_json)
-        print(text_data)
+        # print(text_data_json)
+        # print(text_data)
         action = text_data_json['action']
-
-        # Handle player inputs and update game state
-        # Example: Update player position, handle paddle movement, etc.
-        # print(f"Received message: {message} on game {self.game_id}")
         if action == 'move_paddle' :
             player = text_data_json['player']
             direction = text_data_json['direction']
@@ -43,11 +39,6 @@ class PongConsumer(AsyncWebsocketConsumer):
             self.send(text_data=json.dumps({
                 'error': 'Key "message" not found in WebSocket'
             }))
-
-
-    # async def game_message(self, event):
-    #     message = event['message']
-    #     await self.send(text_data=json.dumps({'message': message}))
 
     async def game_update(self, event):
         message = event['message']
