@@ -250,6 +250,7 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     // loadContent('menuPong/');
                     menuPongVisible = true;
                     showElement(menuPongDiv);
+                    loadMenuPong();
                     // waitForElm('menuPong').then((elm) => {
                     //     const element = document.getElementById("menuPong");
                     //     element.style.opacity = '1';
