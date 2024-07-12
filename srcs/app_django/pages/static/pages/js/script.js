@@ -6,6 +6,7 @@ const contentdiv = document.getElementById("content");
 const statsDiv = document.getElementById("user_stats");
 const friendsDiv = document.getElementById("friends");
 const menuPongDiv = document.getElementById("menuPongDiv");
+const paramsDiv = document.getElementById("change_prof");
 
 console.log("loaded script");
 
