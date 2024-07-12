@@ -115,7 +115,8 @@ def login(request):
 
         else:
             messages.error(request, 'Please provide both username and password.')
-    return render(request, 'pages/partials/login.html')
+    return redirect('home')
+    
 
 def user_avatar(request):
     if request.user.is_authenticated:
