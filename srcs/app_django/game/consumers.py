@@ -49,6 +49,4 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def game_update(self, event):
         message = event['message']
         # Assuming event['timestamp'] is a UNIX timestamp
-        
-        print(f"Received message: {message} at time : {datetime.datetime.now().time()}")
         await self.send(text_data=json.dumps({'game_state': message}))

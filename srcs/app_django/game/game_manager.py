@@ -79,6 +79,8 @@ class Game:
                 self.state = "Player1"
             else :
                 self.state = "Player2"
+            self.send_game_state()
+            return
         if self.state == "playing":
             #   --- Handle paddle move
               # if (wPressed1 && self.player_1_position > 0)
@@ -189,6 +191,8 @@ class GameManager:
             with self.lock:
                 for game in self.games.values():
                     game.update()
+            time.sleep(0.1)
+            # time.sleep(1)
 
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)
