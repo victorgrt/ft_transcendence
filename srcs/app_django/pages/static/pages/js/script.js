@@ -6,12 +6,12 @@ const contentdiv = document.getElementById("content");
 const statsDiv = document.getElementById("user_stats");
 const friendsDiv = document.getElementById("friends");
 const paramsDiv = document.getElementById("change_prof");
+const menuPongDiv = document.getElementById("menuPongDiv");
+const notifsDiv = document.getElementById("notifications");
 
 console.log("loaded script");
 
-//pcq c une array
-
-// const pongScene = document.getElementById("pongScene")[0];
+console.log("loaded script");
 
 function pongPageScripts () {
     console.log("launchPongScript")
@@ -39,7 +39,11 @@ function loadContent(url, pushState = true) {
     else
         page_url = url
 
-    fetch(url)
+    fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
         .then(response => response.text())
         .then(data => {
             console.log("fetched url : ", url);

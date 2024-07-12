@@ -29,9 +29,9 @@ def settings(request):
 		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists():
 			messages.error(request, 'Username already taken. Please choose a different one.')
 			return redirect('home')
-		print('new username:', new_username) 
+		print('new username:', new_username)
 		user.username = new_username
-		print('new username in user:', user.username) 
+		print('new username in user:', user.username)
 		user.avatar = new_avatar
 		user.save()
 		messages.success(request, 'Your profile was successfully updated.')
@@ -39,7 +39,7 @@ def settings(request):
 		return redirect('home')
     	# Handle non-POST requests, maybe redirect or return an error
 	return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
-  
+
 
 @csrf_exempt  # Only for demonstration; consider CSRF protection for production
 def createUser(request):
@@ -48,7 +48,7 @@ def createUser(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         avatar = request.FILES.get('avatar')
-        
+
         # if CustomUser.objects.count() == 0:
         #     user = CustomUser.objects.create_superuser(username="jquil", email="jquil@jquil.com", password="admin")
         # else :
@@ -73,27 +73,6 @@ def login(request):
         password = request.POST.get('password')
 
         print(username)
-    #     print(password)
-    #     try:
-    #         user = CustomUser.objects.get(username=username)
-    #         if (user.check_password(password)):
-    #             print("Password is correct")
-    #             django_login(request, user)
-    #             print(f"User '{username}' found in the database.")
-    #             print(f"is_active: {user.is_active}")
-    #             print('redirecting to home')
-    #             return redirect('home')
-    #         else:
-    #             print("Password is correct")
-    #             return render(request, 'pages/partials/login.html')
-    #     except CustomUser.DoesNotExist:
-    #         print(f"User '{username}' does not exist in the database.")
-    # return render(request, 'pages/partials/login.html')
-       
-        # user = CustomUser.objects.get(username=username)
-        # if user.is_active:
-        #     print("User is active" )
-        
         if username and password:
             print(f"Attempting to authenticate user: {username}")
             # Authenticate user
@@ -116,7 +95,6 @@ def login(request):
         else:
             messages.error(request, 'Please provide both username and password.')
     return redirect('home')
-    
 
 def user_avatar(request):
     if request.user.is_authenticated:
@@ -155,7 +133,7 @@ def send_friend_request(request):
 			# return HttpResponse("Friend request sent")
 			return JsonResponse({"message": "Friend request sent successfully."}, status=200)
 		return JsonResponse({"message": "Friend request sent successfully."}, status=200)
-			
+
 	# # to_user = CustomUser.objects.get(username=username)
 	# FriendRequest, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
 	# if created:
@@ -172,7 +150,7 @@ def accept_friend_request(request, requestID):
 		return HttpResponse('Friend request accepted')
 	else:
 		return HttpResponse('Friend request not accepted')
-	
+
 def logout(request):
     print('IN LOGOUT')
     django_logout(request)

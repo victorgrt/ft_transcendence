@@ -247,15 +247,9 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.x = -targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
-                    // loadContent('menuPong/');
                     menuPongVisible = true;
                     showElement(menuPongDiv);
                     loadMenuPong();
-                    // waitForElm('menuPong').then((elm) => {
-                    //     const element = document.getElementById("menuPong");
-                    //     element.style.opacity = '1';
-                    //     element.style.visibility = 'visible';
-                    // });
                     hideElement(header);
                     showElement(goBackButton);
                 })
@@ -384,7 +378,7 @@ function centerRegisterForm()
     contentdiv.style.display = 'flex';
     contentdiv.style.justify_content = 'center';
     contentdiv.style.align_items = 'center';
-    
+
     registerForm.style.width = '80%';
 
     loginForm.style.position = 'absolute';
@@ -396,7 +390,7 @@ function centerLoginForm()
     contentdiv.style.display = 'flex';
     contentdiv.style.justify_content = 'center';
     contentdiv.style.align_items = 'center';
-    
+
     loginForm.style.width = '50%';
     loginForm.style.height = '40%';
 
@@ -443,7 +437,7 @@ function resetStyleForms(){
     registerForm.style.opactity = '0';
     registerForm.style.removeProperty('width');
     loginForm.style.removeProperty('position');
-    
+
     // RESET login form style
     loginForm.style.removeProperty('width');
     loginForm.style.removeProperty('height');
@@ -453,7 +447,6 @@ function resetStyleForms(){
 function zoomBack() {
     if (statsVisible === true)
     {
-        hideElement(goBackButton);
         statsDiv.style.visibility = '0';
         statsDiv.style.opacity = '0';
         statsVisible = false;
@@ -461,7 +454,6 @@ function zoomBack() {
     }
     if (friendsVisible === true)
     {
-        hideElement(goBackButton);
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
         friendsVisible = false;
@@ -469,13 +461,11 @@ function zoomBack() {
     }
     if (registerVisible === true)
     {
-        hideElement(goBackButton);
         registerForm.style.visibility = '0';
         registerForm.style.opacity = '0';
     }
     if (loginVisible === true)
     {
-        hideElement(goBackButton);
         loginForm.style.visibility = '0';
         loginForm.style.opacity = '0';
     }
@@ -492,6 +482,16 @@ function zoomBack() {
         paramsVisible = false;
         return;
     }
+    if (notifsVisible === true)
+    {
+        hideElement(goBackButton);
+        notifsDiv.style.visibility = 'hidden';
+        notifsDiv.style.opacity = '0';
+        notifsVisible = false;
+        showElement(notifbtn);
+        return;
+    }
+    hideElement(goBackButton);
     let duration = 2000;
     isZooming = true;
     console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
@@ -562,4 +562,14 @@ function showParams()
     paramsVisible = true;
     showElement(goBackButton);
     console.log("tg");
+}
+
+var notifsVisible = false;
+function showNotifs(){
+    const notifbtn = document.getElementById("notifbtn");
+    hideElement(notifbtn);
+    notifsDiv.style.visibility = 'visible';
+    notifsDiv.style.opacity = '1';
+    notifsVisible = true;
+    showElement(goBackButton);
 }
