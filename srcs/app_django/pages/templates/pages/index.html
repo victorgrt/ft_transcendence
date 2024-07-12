@@ -82,7 +82,40 @@
                 </table>
             </div>
 			{% endif %}
-
+			<title>Notification Receiver</title>
+			<style>
+				h1 {
+					color: white;
+					background-color: black; /* Ensure visibility */
+				}
+			</style>
+			<script>
+				document.addEventListener('DOMContentLoaded', function() {
+					// Replace 'ws://127.0.0.1:8000/ws/public_room/' with your WebSocket URL
+					const ws = new WebSocket('ws://127.0.0.1:8000/ws/public_room/');
+		
+					ws.onmessage = function(event) {
+						const data = JSON.parse(event.data);
+						const message = data.message;
+						// Display the message
+						document.getElementById('notifications').innerHTML += `<p>${message}</p>`;
+					};
+		
+					ws.onopen = function(event) {
+						console.log('Connection opened');
+						// You can send a message to the server if needed
+						// ws.send(JSON.stringify({ message: 'Hello Server!' }));
+					};
+		
+					ws.onerror = function(error) {
+						console.error('WebSocket Error: ', error);
+					};
+		
+					ws.onclose = function(event) {
+						console.log('Connection closed');
+					};
+				});
+			</script>
             <div class="login_form">
                 <h2>Login</h2>
                 <form action="/account/login/" method="post">

@@ -12,6 +12,9 @@ urlpatterns = [
 
   # account
 	path('account/', include("account.urls")),
+ 
+  # notification
+	path('notification/', include("notification.urls")),
 
   # Game
   path('create_session/', create_session, name='create_session'),

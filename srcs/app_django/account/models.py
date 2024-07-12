@@ -9,22 +9,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 from django.db import models
 from django.utils import timezone
 
-# Create your models here.
-class FriendRequest(models.Model):
-	from_user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="from_user")
-	to_user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="to_user")
 
-
-class Notification(models.Model):
-    to_user = models.ForeignKey('CustomUser', related_name='received_notifications', on_delete=models.CASCADE)
-    from_user = models.ForeignKey('CustomUser', related_name='sent_notifications', on_delete=models.CASCADE)
-    message = models.CharField(max_length=255)
-    timestamp = models.DateTimeField(default=timezone.now)
-    read = models.BooleanField(default=False)
-
-    def __str__(self):
-        return f'From {self.from_user.username} to {self.to_user.username}: {self.message}'
-    
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, avatar=None, **extra_fields):
         if not email:

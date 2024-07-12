@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 # from .models import GameSession
-from .models import FriendRequest
-from .models import Notification
+from notification.models import FriendRequest
+from notification.models import Notification
 import uuid
 
 
@@ -28,7 +28,7 @@ def settings(request):
   		# Check if the new username already exists
 		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists():
 			messages.error(request, 'Username already taken. Please choose a different one.')
-			return redirect('home')
+			return redirect('home') 
 		print('new username:', new_username) 
 		user.username = new_username
 		print('new username in user:', user.username) 
@@ -71,28 +71,6 @@ def login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
-        print(username)
-    #     print(password)
-    #     try:
-    #         user = CustomUser.objects.get(username=username)
-    #         if (user.check_password(password)):
-    #             print("Password is correct")
-    #             django_login(request, user)
-    #             print(f"User '{username}' found in the database.")
-    #             print(f"is_active: {user.is_active}")
-    #             print('redirecting to home')
-    #             return redirect('home')
-    #         else:
-    #             print("Password is correct")
-    #             return render(request, 'pages/partials/login.html')
-    #     except CustomUser.DoesNotExist:
-    #         print(f"User '{username}' does not exist in the database.")
-    # return render(request, 'pages/partials/login.html')
-       
-        # user = CustomUser.objects.get(username=username)
-        # if user.is_active:
-        #     print("User is active" )
         
         if username and password:
             print(f"Attempting to authenticate user: {username}")
@@ -117,7 +95,6 @@ def login(request):
             messages.error(request, 'Please provide both username and password.')
     return redirect('home')
     
-
 def user_avatar(request):
     if request.user.is_authenticated:
         try:
