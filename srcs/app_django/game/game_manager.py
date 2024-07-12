@@ -61,25 +61,26 @@ class Game:
         self.ball_velocity[0] =  0.05
         self.ball_velocity[1] =  0.05
 
-    def movePaddle(self, player, direction) :
+    def movePaddle(self, game_id, player, direction) :
         if player == 1 :
-            if direction == 'up' and self.player_1_position > 0 :
+            if direction == 'left' and self.player_1_position > -4 :
                 self.player_1_position -= self.paddleSpeed
-            elif direction == 'down' and self.player_1_position < self.fieldWidth :
+            elif direction == 'right' and self.player_1_position < self.fieldWidth :
                 self.player_1_position += self.paddleSpeed
         elif player == 2 :
-            if direction == 'up' and self.player_2_position > 0 :
+            if direction == 'left' and self.player_2_position > -4 :
                 self.player_2_position -= self.paddleSpeed
-            elif direction == 'down' and self.player_2_position < self.fieldWidth :
+            elif direction == 'right' and self.player_2_position < self.fieldWidth :
                 self.player_2_position += self.paddleSpeed
 
     def update(self):
-        if self.player_1_score == 3 or self.player_2_score == 3 :
+        if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
             if self.player_1_score == 3 :
                 self.state = "Player1"
+                self.send_game_state()
             else :
                 self.state = "Player2"
-            self.send_game_state()
+                self.send_game_state()
             return
         if self.state == "playing":
             #   --- Handle paddle move
@@ -120,14 +121,14 @@ class Game:
                 self.ball_position[1] = self.player_2_position_z - 0.1
                 self.ball_velocity[0] *= 1.1
                 self.ball_velocity[1] *= 1.1
+            self.send_game_state()
 
         if self.state == "waiting":
             # If there are enough players, start the game
             if len(self.players) >= 2:
               self.state = "playing"
               print("Game started : %s" % self.game_id)
-
-        self.send_game_state()
+            self.send_game_state()
 
     def send_game_state(self):
         # print("Sending game state to group %s" % self.game_id)
@@ -181,10 +182,8 @@ class GameManager:
 
     def handle_paddle_move(self, game_id, player, direction) :
         with self.lock :
-            for game in self.games.values():
-                game = self.get_game(game_id)
-                if game :
-                    Game.movePaddle(game_id, player, direction)
+            game = self.get_game(game_id)
+            game.movePaddle(game_id, player, direction)
 
     def update_games(self):
         while True:

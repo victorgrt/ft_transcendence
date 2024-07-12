@@ -94,20 +94,21 @@ function launchGame()
 
     function sendPaddleMovement()
     {
-        if (socket.readyState === WebSocket.OPEN)
-        {
-            if ('w' in keys)
-                socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'up' }));
-            if ('s' in keys)
-                socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'down' }));
-            if ('ArrowUp' in keys)
-                socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'up' }));
-            if ('ArrowDown' in keys)
-                socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'down' }));
-        }
-        else
-            console.error("Websocket is not open", socket.readyState);
+        console.log(socket);
+        if ('a' in keys)
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left' }));
+        if ('d' in keys)
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right' }));
+        if ('ArrowLeft' in keys)
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left' }));
+        if ('ArrowRight' in keys)
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right' }));
     }
+
+    // function identifie()
+    // {
+    //     // socket.send(JSON.stringify({ identifie: localStorage.))
+    // }
 
     function updateState()
     {
