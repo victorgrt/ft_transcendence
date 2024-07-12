@@ -425,7 +425,6 @@ function resetStyleForms(){
 function zoomBack() {
     if (statsVisible === true)
     {
-        hideElement(goBackButton);
         statsDiv.style.visibility = '0';
         statsDiv.style.opacity = '0';
         statsVisible = false;
@@ -433,7 +432,6 @@ function zoomBack() {
     }
     if (friendsVisible === true)
     {
-        hideElement(goBackButton);
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
         friendsVisible = false;
@@ -441,13 +439,11 @@ function zoomBack() {
     }
     if (registerVisible === true)
     {
-        hideElement(goBackButton);
         registerForm.style.visibility = '0';
         registerForm.style.opacity = '0';
     }
     if (loginVisible === true)
     {
-        hideElement(goBackButton);
         loginForm.style.visibility = '0';
         loginForm.style.opacity = '0';
     }
@@ -456,6 +452,15 @@ function zoomBack() {
         hideElement(menuPong);
         menuPongVisible = false;
     }
+    if (paramsVisible === true)
+    {
+        hideElement(goBackButton)
+        paramsDiv.style.visibility = '0';
+        paramsDiv.style.opacity = '0';
+        paramsVisible = false;
+        return;
+    }
+    hideElement(goBackButton);
     let duration = 2000;
     isZooming = true;
     console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
@@ -507,4 +512,24 @@ function showFriends(){
     friendsDiv.style.opacity = '1';
     showElement(goBackButton);
     friendsVisible = true;
+}
+
+var paramsVisible = false;
+function showParams(){
+    console.log("coucou");
+    if (paramsVisible === true)
+    {
+        // hideElement(paramsDiv);
+        hideElement(goBackButton)
+        paramsDiv.style.visibility = '0';
+        paramsDiv.style.opacity = '0';
+        paramsVisible = false;
+        paramsVisible = false;
+        return;
+    }
+    paramsDiv.style.visibility = 'visible';
+    paramsDiv.style.opacity = '1';
+    paramsVisible = true;
+    showElement(goBackButton);
+    console.log("tg");
 }

@@ -2,149 +2,174 @@
 
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-		<script>
-			document.addEventListener('DOMContentLoaded', function() {
-			  const element = document.getElementById('logoutButton'); 
-                if (element)
-                {
-                    element.addEventListener('click', function() {
-				    window.location.href = 'account/logout/';
-			    });}
-            });
-		  </script>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>FT_TRANSCENDENCE</title>
-        <link rel="stylesheet" type="text/css" href="{% static 'pages/css/index.css' %}">
-    </head>
-    <body>
-        <div id="header">
-			{% if user.is_authenticated == False %}
-            <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN <</button>
-            <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <</button>
-			{% endif %}
-            {% if user.is_authenticated %}
-            <button class="needed_hover" id="statsButton" onclick="showStats()" src="{% static '/js/main.js' %}">{{ user.username }}</button>
-            <button class="needed_hover" id="friendsButton" onclick="showFriends()" src="{% static '/js/main.js' %}"> FRIENDS LIST</button>            
-			<button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
-			<form method="POST" action="/account/settings/" enctype="account/form-data" class="settingsForm">
-				{% csrf_token %}
-				<label for="new_username">Username:</label>
-				<input type="text" name="new_username" id="new_username" required>
-				
-				<label for="new_avatar">Avatar:</label>
-				<input type="file" name="new_avatar" id="new_avatar" required>
-				
-				<button type="submit">Update Profile</button>
-			</form>
-			{% endif %}
-        </div>
-        <div id="content">
-            <!-- content des pages -->
-            {% if user.is_authenticated %}             
-            <div id="user_stats">
-                <ul id="stats"><img src="{% static 'pages/'%}{{user.avatar}}" id="avatar"></ul>
-                <ul id="stats_username"> {{ user.username }} </ul>
-                <ul id="stats"> 4 VICTOIRES </ul>
-                <ul id="stats"> 4 DEFAITES </ul>
-            </div>
-            <div id="friends">
-                <table id="friends_list">
-                    {% comment %}
-                    <!-- {% comment for each user.friends endcomment %} -->
-                    {% endcomment %}
-                    <tr>
-                        <th class="friend_username">Username</th>
-                        <th class="victories">Victoires</th>
-                        <th class="defeats">Defaites</th>
-                    </tr>
-                    <tr>
-                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/ign_DesertTree-1.jpg' %}"> Lucas</td>
-                        <td class="victories">99</td>
-                        <td class="defeats">0</td>
-                    </tr>
-                    <tr>
-                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/ign_DesertTree-1.jpg' %}"> Rururururuurururuururuurururuurururuurururuururuururururururu</td>
-                        <td class="victories">999999999999999999999999999999999999999999999999999999999999999999</td>
-                        <td class="defeats">100000000000000000000000000000000000000000000000000000000000000000000</td>
-                    </tr>
-                    <tr>
-                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/Robert_De_Niro.jpg' %}"> Lucas </td>
-                        <td class="victories">99</td>
-                        <td class="defeats">0</td>
-                    </tr>
-                    <tr>
-                        <td class="friend_username"><img id="friend_avatar" src="{% static 'pages/img_avatars/Robert_De_Niro.jpg' %}"> Lucas </td>
-                        <td class="victories">99</td>
-                        <td class="defeats">0</td>
-                    </tr>
-                </table>
-            </div>
-			{% endif %}
 
-            <div class="login_form">
-                <h2>Login</h2>
-                <form action="/account/login/" method="post">
-                    <div class="form-group">
-                        <label for="username">Your username:</label>
-                        <input type="username" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Your Password:</label>
-                        <input type="password" id="password" name="password">
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Submit">
-                    </div>
+<head>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const element = document.getElementById('logoutButton');
+            if (element) {
+                element.addEventListener('click', function () {
+                    window.location.href = 'account/logout/';
+                });
+            }
+        });
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FT_TRANSCENDENCE</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/index.css' %}">
+
+</head>
+
+<body>
+    <div id="header">
+        {% if user.is_authenticated == False %}
+        <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN << /button>
+                <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <<
+                        /button>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <button class="needed_hover" id="statsButton" onclick="showStats()"
+                            src="{% static '/js/main.js' %}">{{ user.username }}</button>
+                        <button class="needed_hover" id="friendsButton" onclick="showFriends()"
+                            src="{% static '/js/main.js' %}"> FRIENDS LIST</button>
+                        <button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
+                        <button id="param_btn" onclick='showParams()'><img id="param_img"
+                                src="{% static '/pages/images/parametres.png' %}"></button>
+                        {% endif %}
+    </div>
+    <div id="content">
+        <!-- content des pages -->
+        {% if user.is_authenticated %}
+        <div id="change_prof">
+            <div id="top">
+                <img id="old_avatar" src="{% static 'pages/images/Robert_De_Niro.jpg' %}">
+                <form method="POST" action="/account/settings/" enctype="account/form-data" class="settingsForm">
+                    {% csrf_token %}
+                    <input type="file" name="new_avatar" id="new_avatar">
+                    <hr id="sep">
+                    </hr>
+                    <h2 id="old_username">{{ user.username }}</h2>
+                    <input type="text" name="new_username" id="new_username" placeholder="New Username">
+            </div>
+            <div id="bottom">
+                <button type="submit" id="update_profile">Update Profile</button>
                 </form>
             </div>
-            <div class="register_form">
-                <h2>Registering</h2>
-                <form action="/account/createUser" method="post" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="username">Your User Name:</label>
-                        <input type="text" id="username" name="username" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="email">Your Email:</label>
-                        <input type="email" id="email" name="email" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Your Password:</label>
-                        <input type="password" id="password" name="password">
-                    </div>
-                    <div class="form-group">
-                        <label for="avatar">Your avatar:</label>
-                        <input type="file" id="avatar" name="avatar" accept=image/*>
-                    </div>
-                    <div class="form-group">
-                        <input type="submit" value="Submit">
-                    </div>
-                </form>
-            </div>
         </div>
-        <div id="scene">
-            <!-- scene 3d -->
+        {% endif %}
+        {% if user.is_authenticated %}
+        <div id="user_stats">
+            <ul id="stats"><img src="{% static 'pages/'%}{{user.avatar}}" id="avatar"></ul>
+            <ul id="stats_username"> {{ user.username }} </ul>
+            <ul id="stats"> 4 VICTOIRES </ul>
+            <ul id="stats"> 4 DEFAITES </ul>
         </div>
-        <div id="footer">
-            <button id="goBackButton" class="needed_hover" onclick='zoomBack()' src="{% static '/js/main.js' %}">> Go Back <</button>
+        <div id="friends">
+            <table id="friends_list">
+                {% comment %}
+                <!-- {% comment for each user.friends endcomment %} -->
+                {% endcomment %}
+                <tr>
+                    <th class="friend_username">Username</th>
+                    <th class="victories">Victoires</th>
+                    <th class="defeats">Defaites</th>
+                </tr>
+                <tr>
+                    <td class="friend_username"><img id="friend_avatar"
+                            src="{% static 'pages/img_avatars/ign_DesertTree-1.jpg' %}"> Lucas</td>
+                    <td class="victories">99</td>
+                    <td class="defeats">0</td>
+                </tr>
+                <tr>
+                    <td class="friend_username"><img id="friend_avatar"
+                            src="{% static 'pages/img_avatars/ign_DesertTree-1.jpg' %}">
+                        Rururururuurururuururuurururuurururuurururuururuururururururu</td>
+                    <td class="victories">999999999999999999999999999999999999999999999999999999999999999999</td>
+                    <td class="defeats">100000000000000000000000000000000000000000000000000000000000000000000</td>
+                </tr>
+                <tr>
+                    <td class="friend_username"><img id="friend_avatar"
+                            src="{% static 'pages/img_avatars/Robert_De_Niro.jpg' %}"> Lucas </td>
+                    <td class="victories">99</td>
+                    <td class="defeats">0</td>
+                </tr>
+                <tr>
+                    <td class="friend_username"><img id="friend_avatar"
+                            src="{% static 'pages/img_avatars/Robert_De_Niro.jpg' %}"> Lucas </td>
+                    <td class="victories">99</td>
+                    <td class="defeats">0</td>
+                </tr>
+            </table>
         </div>
-    </body>
-     <!-- THREE JS LIBRARY -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-     <!-- SCENE LOADER -->
-     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-     <!-- CAMERA CONTROLS -->
-     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
-     <!-- ZOOM -->
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
-     <!-- GAME SESSION SCRIPT -->
-     <script type="text/javascript" src="{% static 'pages/js/gameSession.js' %}"></script>
-    <!-- LOADING SCRIPT -->
-    <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
-    <!-- PONG SCRIPT??? -->
-    <script src="{% static 'pages/js/pong.js' %}" ></script>
-    <!-- SCENE SCRIPT -->
-    <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
+        {% endif %}
+
+        <div class="login_form">
+            <h2>Login</h2>
+            <form action="/account/login/" method="post">
+                <div class="form-group">
+                    <label for="username">Your username:</label>
+                    <input type="username" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Your Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+        <div class="register_form">
+            <h2>Registering</h2>
+            <form action="/account/createUser" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="username">Your User Name:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Your Password:</label>
+                    <input type="password" id="password" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="avatar">Your avatar:</label>
+                    <input type="file" id="avatar" name="avatar" accept=image/*>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div id="scene">
+        <!-- scene 3d -->
+    </div>
+    <div id="footer">
+        <button id="goBackButton" class="needed_hover" onclick='zoomBack()' src="{% static '/js/main.js' %}">> Go Back
+            << /button>
+    </div>
+</body>
+<!-- THREE JS LIBRARY -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- SCENE LOADER -->
+<script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<!-- CAMERA CONTROLS -->
+<script type="text/javascript"
+    src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<!-- ZOOM -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+<!-- GAME SESSION SCRIPT -->
+<script type="text/javascript" src="{% static 'pages/js/gameSession.js' %}"></script>
+<!-- LOADING SCRIPT -->
+<script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
+<!-- PONG SCRIPT??? -->
+<script src="{% static 'pages/js/pong.js' %}"></script>
+<!-- SCENE SCRIPT -->
+<script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
+
 </html>
