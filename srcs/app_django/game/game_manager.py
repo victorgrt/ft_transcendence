@@ -9,6 +9,7 @@ class Game:
     def __init__(self, game_id):
         self.game_id = game_id  # Ensure the game_id is a valid string
         self.players = []
+        self.consumers = []
         self.nb_players = 0
         self.seed = seed(1),
         self.dx = 0.05
@@ -49,6 +50,7 @@ class Game:
 
     def add_player(self, player):
         self.players.append(player)
+        self.consumers.append(player)
         self.nb_players += 1
 
     def remove_player(self, player):
@@ -128,35 +130,31 @@ class Game:
         self.send_game_state()
 
     def send_game_state(self):
-        # print("Sending game state to group %s" % self.game_id)
-        channel_layer = get_channel_layer()
-        async_to_sync(channel_layer.group_send)(
-            self.game_id,
-            {
-                'type': 'game_update',
-                'message': {
-                    'state': self.state,
-                    'nb_players': self.nb_players,
-                    'ball_position': self.ball_position,
-                    'ball_velocity': self.ball_velocity,
-                    'player_1_position': self.player_1_position,
-                    'player_2_position': self.player_2_position,
-                    # 'dx' : self.dx,
-                    # 'dy': self.dy,
-                    # 'seed' : self.seed,
-                    # 'ballRadius' : self.ballRadius,
-                    # 'paddleWidth': self.paddleWidth,
-                    # 'paddleHeight': self.paddleHeight,
-                    # 'paddleSpeed': self.paddleSpeed,
-                    # 'fieldHeight': self.fieldHeight,
-                    # 'fieldWidth': self.fieldWidth,
-                    # 'ballNextBounce': self.ballNextBounce,
-                    'player_1_score': self.player_1_score,
-                    'player_2_score': self.player_2_score,
-                        # Add more game state information as needed
-                }
-            }
-        )
+        print("Sending game state to group %s" % self.game_id)
+        for i in range(len(self.consumers)):
+            async_to_sync(self.consumers[i].send_game_state_directly)(
+                {
+                        'state': self.state,
+                        'nb_players': self.nb_players,
+                        'ball_position': self.ball_position,
+                        'ball_velocity': self.ball_velocity,
+                        'player_1_position': self.player_1_position,
+                        'player_2_position': self.player_2_position,
+                        # 'dx' : self.dx,
+                        # 'dy': self.dy,
+                        # 'seed' : self.seed,
+                        # 'ballRadius' : self.ballRadius,
+                        # 'paddleWidth': self.paddleWidth,
+                        # 'paddleHeight': self.paddleHeight,
+                        # 'paddleSpeed': self.paddleSpeed,
+                        # 'fieldHeight': self.fieldHeight,
+                        # 'fieldWidth': self.fieldWidth,
+                        # 'ballNextBounce': self.ballNextBounce,
+                        'player_1_score': self.player_1_score,
+                        'player_2_score': self.player_2_score,
+                            # Add more game state information as needed
+                    }
+            )
 
 class GameManager:
     def __init__(self):
@@ -164,18 +162,20 @@ class GameManager:
         self.lock = threading.Lock()
 
     def create_game(self, game_id):
-        # Here, check that the game_id is unique
-        print("Creating game n %d" % (len(self.games) + 1))
-        game = Game(game_id)
-        self.games[game_id] = game
-        return game
+        with self.lock:
+            # Here, check that the game_id is unique
+            print("Creating game n %d" % (len(self.games) + 1))
+            game = Game(game_id)
+            self.games[game_id] = game
+            return game
 
     def get_game(self, game_id):
         return self.games.get(game_id)
 
     def remove_game(self, game_id):
-        if game_id in self.games:
-            del self.games[game_id]
+        with self.lock:
+            if game_id in self.games:
+                del self.games[game_id]
 
     def handle_paddle_move(self, game_id, player, direction) :
         with self.lock :
@@ -186,9 +186,14 @@ class GameManager:
 
     def update_games(self):
         while True:
+            start_time = time.time()
+            print("Updating games. Time : %s" % start_time)
             with self.lock:
                 for game in self.games.values():
                     game.update()
+            elapsed = time.time() - start_time
+            sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
+            time.sleep(sleep_time);
 
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)

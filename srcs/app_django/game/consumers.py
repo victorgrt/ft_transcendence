@@ -4,6 +4,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from .game_manager import game_manager
 
 class PongConsumer(AsyncWebsocketConsumer):
+
     async def connect(self):
         game_id = self.scope['url_route']['kwargs']['game_id']
         self.game_id = game_id
@@ -12,16 +13,18 @@ class PongConsumer(AsyncWebsocketConsumer):
 
         if not self.game:
             self.game = game_manager.create_game(game_id)
-
+        is_connected = True;
         self.game.add_player(self)
         await self.channel_layer.group_add(self.game_id, self.channel_name)
         await self.accept()
+
 
     async def disconnect(self, close_code):
         self.game.remove_player(self)
         if not self.game.players:
             game_manager.remove_game(self.game_id)
-        await self.channel_layer.group_discard(self.game_id, self.channel_name)
+        is_connected = False;
+        await self.channel_layer.group_discard(self.game_id, self.channel_name);
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -52,3 +55,9 @@ class PongConsumer(AsyncWebsocketConsumer):
         
         print(f"Received message: {message} at time : {datetime.datetime.now().time()}")
         await self.send(text_data=json.dumps({'game_state': message}))
+
+    async def send_game_state_directly(self, state):
+        # print ("state : ", state)
+        print(f"Sending state {state} at time : {datetime.datetime.now().time()}")
+        if is_connected:
+            await self.send(text_data=json.dumps({'game_state': state}))
