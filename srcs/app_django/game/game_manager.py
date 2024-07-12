@@ -133,7 +133,7 @@ class Game:
             self.send_game_state()
 
     def send_game_state(self):
-        print("Sending game state to group %s" % self.game_id)
+        # print("Sending game state to group %s" % self.game_id)
         for i in range(len(self.consumers)):
             async_to_sync(self.consumers[i].send_game_state_directly)(
                 {
@@ -188,7 +188,7 @@ class GameManager:
     def update_games(self):
         while True:
             start_time = time.time()
-            print("Updating games. Time : %s" % start_time)
+            # print("Updating games. Time : %s" % start_time)
             with self.lock:
                 for game in self.games.values():
                     game.update()

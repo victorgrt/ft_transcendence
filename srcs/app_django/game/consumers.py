@@ -13,7 +13,6 @@ class PongConsumer(AsyncWebsocketConsumer):
 
         if not self.game:
             self.game = game_manager.create_game(game_id)
-        is_connected = True;
         self.game.add_player(self)
         await self.channel_layer.group_add(self.game_id, self.channel_name)
         await self.accept()
@@ -23,7 +22,6 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.game.remove_player(self)
         if not self.game.players:
             game_manager.remove_game(self.game_id)
-        is_connected = False;
         await self.channel_layer.group_discard(self.game_id, self.channel_name);
 
     async def receive(self, text_data):
@@ -49,6 +47,8 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     async def send_game_state_directly(self, state):
         # print ("state : ", state)
-        print(f"Sending state {state} at time : {datetime.datetime.now().time()}")
-        if is_connected:
+        # print(f"Sending state {state} at time : {datetime.datetime.now().time()}")
+        try :
             await self.send(text_data=json.dumps({'game_state': state}))
+        except Exception as e :
+            print(f"Error while sending game state : {e}")
