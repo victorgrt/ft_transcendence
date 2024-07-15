@@ -14,6 +14,9 @@ urlpatterns = [
   # account
 	path('account/', include("account.urls")),
 
+  # notifs
+  path('send-notification/', send_notification, name='send_notification'),
+  
   # Game
   path('create_session/', create_session, name='create_session'),
   path('join_session/<str:session_id>/', join_session, name='join_session'),

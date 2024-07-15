@@ -14,6 +14,10 @@ from account.models import FriendRequest
 from account.models import Notification
 import uuid
 
+#notifs par chatgpt
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 def is_ajax(request):
     return request.headers.get('x-requested-with') == 'XMLHttpRequest'
 
@@ -92,4 +96,32 @@ def menuPong(request):
 def chat(request):
     return render(request, 'pages/partials/chat.html')
 
+@csrf_exempt
+def send_notification(request):
+    if request.method == 'POST':
+        pseudo = request.POST.get('pseudo')
+        notification_type = request.POST.get('notification_type')
+        
+        try:
+            user = CustomUser.objects.get(username=pseudo)
+            
+            # Logique pour envoyer la notification à l'utilisateur
+            # Par exemple, en utilisant un modèle de notification
+            # Notification.objects.create(user=user, message=notification_type)
+            
+            # Envoi de la notification via WebSocket
+            channel_layer = get_channel_layer()
+            room_name = f'notification_{user.username}'
+            async_to_sync(channel_layer.group_send)(
+                room_name,
+                {
+                    'type': 'notification_message',
+                    'message': notification_type
+                }
+            )
 
+            # Réponse de succès
+            return JsonResponse({'status': 'success', 'message': 'Notification sent successfully.'})
+        except CustomUser.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'User not found.'})
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'})

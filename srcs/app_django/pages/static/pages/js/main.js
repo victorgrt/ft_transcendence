@@ -1,3 +1,4 @@
+
 var scene, camera, renderer, loader, controls;
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
@@ -329,17 +330,6 @@ window.addEventListener('pageshow', function (event) {
     }
 });
 
-//=== CHANGE PAGE ===//
-function changeTemplate(templateName) {
-    const currentUrl = window.location.href;
-    const newUrl = `${currentUrl}${templateName}/`;
-    loadContent(newUrl);
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function goToLogin() {
     if (isZooming) return;
 
@@ -450,14 +440,12 @@ function zoomBack() {
         statsDiv.style.visibility = '0';
         statsDiv.style.opacity = '0';
         statsVisible = false;
-        return; //returns because no zoom back needed
     }
     if (friendsVisible === true)
     {
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
         friendsVisible = false;
-        return; //returns because no zoom back needed
     }
     if (registerVisible === true)
     {
@@ -476,22 +464,22 @@ function zoomBack() {
     }
     if (paramsVisible === true)
     {
-        hideElement(goBackButton);
         paramsDiv.style.visibility = 'hidden';
         paramsDiv.style.opacity = '0';
         paramsVisible = false;
-        return;
+
     }
-    if (notifsVisible === true)
-    {
-        hideElement(goBackButton);
-        notifsDiv.style.visibility = 'hidden';
-        notifsDiv.style.opacity = '0';
-        notifsVisible = false;
-        showElement(notifbtn);
-        return;
-    }
+    // if (notifsVisible === true)
+    // {
+    //     notifsDiv.style.visibility = 'hidden';
+    //     notifsDiv.style.opacity = '0';
+    //     notifsVisible = false;
+    //     showElement(notifbtn);
+    // }
     hideElement(goBackButton);
+    if (isZoomed === false)
+        return; //returns because no zoom back needed
+
     let duration = 2000;
     isZooming = true;
     console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
@@ -571,5 +559,88 @@ function showNotifs(){
     notifsDiv.style.visibility = 'visible';
     notifsDiv.style.opacity = '1';
     notifsVisible = true;
-    showElement(goBackButton);
 }
+
+// HANDLE NOTIFICATIONS
+function acceptNotif(){
+    console.log("accept notification here!");
+}
+
+function declineNotif(){
+    console.log("decline notif here!");
+}
+
+function hideNotifs(){
+    console.log("closing notifications div")
+    notifsDiv.style.visibility = '0';
+    notifsDiv.style.opacity = '0';
+    showElement(notifbtn);
+}
+
+// function handleSendNotif(){
+//         // Récupérer la valeur de l'input
+//         var inputVal = document.getElementById("inputnotif").value;
+//         // Récupérer la valeur du select
+//         var selectVal = document.getElementById("selectnotif").value;
+//         alert("Notification sent to " + inputVal + ": " + selectVal);
+//         // Afficher les valeurs dans la console
+//         console.log("PSEUDO:", inputVal);
+//         console.log("Notification Type:", selectVal);
+// }
+
+
+$(document).ready(function() {
+    $('#sendbtn').click(function(e) {
+        e.preventDefault();  // Empêche le formulaire de se soumettre normalement
+        
+        var formData = {
+            'pseudo': $('#inputnotif').val(),
+            'notification_type': $('#selectnotif').val(),
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+        };
+        
+        $.ajax({
+            type: 'POST',
+            url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
+            data: formData,
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(response) {
+                alert('Error: ' + response.statusText);
+            }
+        });
+    });
+});
+
+// function sendNotification() {
+//     var formData = {
+//         'pseudo': document.getElementById("inputnotif").value,
+//         'notification_type': document.getElementById("selectnotif").value,
+//         'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value
+//     };
+
+//     var test = '{% url "send_notifications" %}' ;
+//     console.log(test);
+//     console.log('{% url "send_notifications" %}')
+
+//     $.ajax({
+//         type: 'POST',
+//         url: 'send-notification/',
+//         data: formData,
+//         success: function(response) {
+//             if (response.status === 'success') {
+//                 alert(response.message);
+//             } else {
+//                 alert(response.message);
+//             }
+//         },
+//         error: function(response) {
+//             alert('An error occurred.');
+//         }
+//     });
+// }

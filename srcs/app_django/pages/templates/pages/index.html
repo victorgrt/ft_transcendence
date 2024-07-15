@@ -1,9 +1,9 @@
 {% load static %}
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const element = document.getElementById('logoutButton');
@@ -53,7 +53,9 @@
         {% if user.is_authenticated %}
         <div id="change_prof">
             <div id="top">
-                <img id="old_avatar" src="{% static 'pages/images/Robert_De_Niro.jpg' %}">
+                {% if user.avatar %}
+                    <img id="old_avatar" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}">
+                {% endif %}
                 <form method="POST" action="/account/settings/" enctype="account/form-data" class="settingsForm">
                     {% csrf_token %}
                     <input type="file" name="new_avatar" id="new_avatar">
@@ -92,31 +94,72 @@
                 </form>
             </div>
         </div>
-        <button id="notifbtn" class="needed_hover" onclick="showNotifs()">> NOTIFICATIONS <</button>
+        <button id="notifbtn" class="needed_hover" onclick="showNotifs()" src="{% static 'pages/js/main.js' %}">> NOTIFICATIONS <</button>
         <div id="notifications">
             <h2 id="notiftitle">NOTIFICATIONS</h2>
+            <button id="closeNotifs" onclick="hideNotifs()" class="needed_hover">CLOSE</button>
+            <script>
+                var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+                var ws_path = ws_scheme + '://' + window.location.host + '/ws/notifications/';
+                var websocket = new WebSocket(ws_path);
+        
+                websocket.onmessage = function(event) {
+                    var data = JSON.parse(event.data);
+                    alert('Notification received: ' + data.message);
+                    // Vous pouvez personnaliser l'affichage de la notification ici
+                };
+            </script>
+            <div id="sendnotifs">
+                <form id="notifform">
+                    {% csrf_token %}
+                    <input type="text" placeholder="PSEUDO" id="inputnotif" name="pseudo">
+                    <select name="notification_type" id="selectnotif">
+                        <option value="">Please Select</option>
+                        <option value="play with">play with</option>
+                        <option value="friend request">friend request</option>
+                    </select>
+                </form>
+                <button id="sendbtn" class="needed_hover">SEND</button>
+            </div>
             <table id="notiftable">
                 <tr>
-                    <td id="test">FROM</td>
-                    <td id="test">TO</td>
-                    <td id="test">ACCEPT</td>
-                    <td id="test">DECLINE</td>
+                    <td id="notiftd">FROM</td>
+                    <td id="notiftd">TYPE</td>
+                    <td id="notiftd">ACCEPT</td>
+                    <td id="notiftd">DECLINE</td>
                 </tr>
                 <tr>
-                    <td id="test"></td>
-                    <td id="test"></td>
-                    <td id="test"></td>
-                    <td id="test"></td>
+                    <td id="notiftd">Lucas</td>
+                    <td id="notiftd">Friends</td>
+                    <td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>
+                    <td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>
+                </tr>
+                <tr>
+                    <td id="notiftd">Ruru</td>
+                    <td id="notiftd">Play</td>
+                    <td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>
+                    <td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>
                 </tr>
             </table>
         </div>
         {% endif %}
         {% if user.is_authenticated %}
         <div id="user_stats">
-            <ul id="stats"><img src="{% static 'pages/'%}{{user.avatar}}" id="avatar"></ul>
-            <ul id="stats_username"> {{ user.username }} </ul>
-            <ul id="stats"> 4 VICTOIRES </ul>
-            <ul id="stats"> 4 DEFAITES </ul>
+            <div id="leftstats">
+                {% if user.avatar %}
+                    <ul id="stats"><img src="{% static '/pages/img_avatars/' %}{{ user.get_avatar_name }}" id="avatar"></ul>
+                {% endif %}
+            </div>
+            <div id="rightstats">
+                <ul id="stats_username"> {{ user.username }} </ul>
+                {% if user.friends %}
+                    <ul id="stats"> 0 amis </ul>
+                {% else %}
+                    <ul id="stats"> {{ user.friends }} amis </ul>
+                {% endif %}
+                <ul id="stats"> {{ user.win }} </ul>
+                <ul id="stats"> {{ user.lost }} </ul>
+            </div>
         </div>
         <div id="friends">
             <table id="friends_list">
