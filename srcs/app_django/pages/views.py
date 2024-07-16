@@ -101,7 +101,7 @@ def send_notification(request):
     if request.method == 'POST':
         pseudo = request.POST.get('pseudo')
         notification_type = request.POST.get('notification_type')
-        
+        _from = request.POST.get('from_user')
         try:
             user = CustomUser.objects.get(username=pseudo)
             
@@ -116,7 +116,8 @@ def send_notification(request):
                 room_name,
                 {
                     'type': 'notification_message',
-                    'message': notification_type
+                    'message': notification_type,
+                    'from_user': _from 
                 }
             )
 

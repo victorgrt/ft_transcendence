@@ -590,14 +590,20 @@ function hideNotifs(){
 
 
 $(document).ready(function() {
+    console.log("on passe ici?");
     $('#sendbtn').click(function(e) {
         e.preventDefault();  // Empêche le formulaire de se soumettre normalement
         
         var formData = {
             'pseudo': $('#inputnotif').val(),
             'notification_type': $('#selectnotif').val(),
-            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+            'from_user': $('#from_user').text(),
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
         };
+
+        //retrieve user_name sender
+        var test = $('#from_user').text();
+        console.log("from : ", test);
         
         $.ajax({
             type: 'POST',
@@ -605,6 +611,8 @@ $(document).ready(function() {
             data: formData,
             success: function(response) {
                 if (response.status === 'success') {
+                    console.log("la mon reuf");
+
                     alert(response.message);
                 } else {
                     alert(response.message);
@@ -617,30 +625,4 @@ $(document).ready(function() {
     });
 });
 
-// function sendNotification() {
-//     var formData = {
-//         'pseudo': document.getElementById("inputnotif").value,
-//         'notification_type': document.getElementById("selectnotif").value,
-//         'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value
-//     };
 
-//     var test = '{% url "send_notifications" %}' ;
-//     console.log(test);
-//     console.log('{% url "send_notifications" %}')
-
-//     $.ajax({
-//         type: 'POST',
-//         url: 'send-notification/',
-//         data: formData,
-//         success: function(response) {
-//             if (response.status === 'success') {
-//                 alert(response.message);
-//             } else {
-//                 alert(response.message);
-//             }
-//         },
-//         error: function(response) {
-//             alert('An error occurred.');
-//         }
-//     });
-// }

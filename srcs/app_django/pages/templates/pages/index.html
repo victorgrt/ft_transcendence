@@ -24,18 +24,18 @@
 <body>
     <div id="header">
         {% if user.is_authenticated == False %}
-        <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN < </button>
-                <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <</button>
-                        {% endif %}
-                        {% if user.is_authenticated %}
-                        <button class="needed_hover" id="statsButton" onclick="showStats()"
-                            src="{% static '/js/main.js' %}">{{ user.username }}</button>
-                        <button class="needed_hover" id="friendsButton" onclick="showFriends()"
-                            src="{% static '/js/main.js' %}"> FRIENDS LIST</button>
-                        <button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
-                        <button id="param_btn" onclick='showParams()'><img id="param_img"
-                                src="{% static '/pages/images/parametres.png' %}"></button>
-                        {% endif %}
+            <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN < </button>
+            <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <</button>
+        {% endif %}
+        {% if user.is_authenticated %}
+        <button class="needed_hover" id="statsButton" onclick="showStats()"
+            src="{% static '/js/main.js' %}">{{ user.username }}</button>
+        <button class="needed_hover" id="friendsButton" onclick="showFriends()"
+            src="{% static '/js/main.js' %}"> FRIENDS LIST</button>
+        <button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
+        <button id="param_btn" onclick='showParams()'><img id="param_img"
+                src="{% static '/pages/images/parametres.png' %}"></button>
+        {% endif %}
     </div>
     <!-- content des pages -->
     <div id="content">
@@ -55,8 +55,10 @@
             <div id="top">
                 {% if user.avatar %}
                     <img id="old_avatar" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}">
+                {% else %}
+                    <img id="old_avatar" src="{% static '/pages/img_avatars/None.jpg' %}">
                 {% endif %}
-                <form method="POST" action="/account/settings/" enctype="account/form-data" class="settingsForm">
+                <form method="POST" action="/account/settings/" enctype="multipart/form-data" class="settingsForm">
                     {% csrf_token %}
                     <input type="file" name="new_avatar" id="new_avatar">
                     <hr id="sep">
@@ -102,14 +104,61 @@
                 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
                 var ws_path = ws_scheme + '://' + window.location.host + '/ws/notifications/';
                 var websocket = new WebSocket(ws_path);
-        
+            
+                websocket.onopen = function(event) {
+                    console.log("WebSocket is open now.");
+                };
+            
+                websocket.onclose = function(event) {
+                    console.log("WebSocket is closed now.");
+                };
+            
+                websocket.onerror = function(event) {
+                    console.error("WebSocket error observed:", event);
+                };
+            
                 websocket.onmessage = function(event) {
                     var data = JSON.parse(event.data);
-                    alert('Notification received: ' + data.message);
-                    // Vous pouvez personnaliser l'affichage de la notification ici
+                    console.log("Notification received:", data);
+                    alert('Notification received: ' + data);
+                    // addNotification(data);
+                };
+
+                function sendNotificationSocket(username){
+                    console.log("from : ", username);
+                }
+
+                document.getElementById('sendbtn').onclick = function() {
+                    console.log("puis on passe ici??");
+                    var pseudo = document.getElementById('inputnotif').value;
+                    var notificationType = document.getElementById('selectnotif').value;
+                    var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+            
+                    fetch('/send_notification/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: new URLSearchParams({
+                            'pseudo': pseudo,
+                            'notification_type': notificationType,
+                        })
+                    }).then(response => response.json()).then(data => {
+                        console.log("Notification send response:", data);
+                        if (data.status === 'success') {
+                            alert('Notification sent successfully.');
+                        } else {
+                            alert('Error sending notification: ' + data.message);
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                    });
                 };
             </script>
+            
             <div id="sendnotifs">
+                <p id="from_user" style="color:red;">{{user.username}}</p>
                 <form id="notifform">
                     {% csrf_token %}
                     <input type="text" placeholder="PSEUDO" id="inputnotif" name="pseudo">
@@ -119,7 +168,7 @@
                         <option value="friend request">friend request</option>
                     </select>
                 </form>
-                <button id="sendbtn" class="needed_hover">SEND</button>
+                <button id="sendbtn" class="needed_hover" onclick="sendNotificationSocket('{{ user.username }}')">SEND</button>
             </div>
             <table id="notiftable">
                 <tr>

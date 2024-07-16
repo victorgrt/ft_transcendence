@@ -25,21 +25,27 @@ def settings(request):
 		new_username = request.POST.get('new_username')
 		new_avatar = request.FILES.get('new_avatar')
 		user = request.user
-  		# Check if the new username already exists
-		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists():
-			messages.error(request, 'Username already taken. Please choose a different one.')
-			return redirect('home')
-		print('new username:', new_username)
-		user.username = new_username
-		print('new username in user:', user.username)
-		user.avatar = new_avatar
-		user.save()
-		messages.success(request, 'Your profile was successfully updated.')
-		# JsonResponse({'status': 'success', 'message': 'Profile updated successfully'})
-		return redirect('home')
-    	# Handle non-POST requests, maybe redirect or return an error
-	return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
 
+		# Check if the new username already exists
+		print("USER NAME :'", new_username, "'")
+		print("NEW AVATAR :", new_avatar)
+
+		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists() and new_username:
+			messages.error(request, 'Username already taken. Please choose a different one.')
+			print("ON RETURN LA")
+			return redirect('home')
+
+		if new_username:
+			print("COUCOU ON EST LAAAAAAAAAAAAa")
+			user.username = new_username
+
+		if new_avatar:
+			print("COUCOU ON EST ICI")
+			user.avatar = new_avatar
+
+		user.save()
+	print("ON SORT DIRECTEMENT")
+	return redirect('home')
 
 @csrf_exempt  # Only for demonstration; consider CSRF protection for production
 def createUser(request):
