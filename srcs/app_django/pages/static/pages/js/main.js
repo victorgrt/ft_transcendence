@@ -99,7 +99,7 @@ function onMouseMove(event) {
     }
     // Mettre en surbrillance l'objet spécifique
     if (intersects.length > 0) {
-        document.body.style.cursor = 'pointer';
+        // document.body.style.cursor = 'pointer';
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
             if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2') && isZooming === false) {
@@ -123,7 +123,7 @@ function onMouseMove(event) {
         }
         else if (!selectedObject) {
             selecting_clickable = false;
-            document.body.style.cursor = 'default';
+            // document.body.style.cursor = 'default';
         }
     }
 }

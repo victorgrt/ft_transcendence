@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import CustomUser  # Adjust the import path according to your project structure
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import authenticate, login as django_login
 from django.contrib.sessions.models import Session
-from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
@@ -74,33 +74,34 @@ def createUser(request):
 
 @csrf_exempt
 def login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    
+    username = request.POST.get('username')
+    password = request.POST.get('password')
 
-        print(username)
-        if username and password:
-            print(f"Attempting to authenticate user: {username}")
-            # Authenticate user
-            user = authenticate(request, username=username, password=password)
+    print(username)
+    if username and password:
+        print(f"Attempting to authenticate user: {username}")
+        # Authenticate user
+        user = authenticate(request, username=username, password=password)
 
-            if user is not None:
-                print(f"Authentication successful for user: {username}")
-                print("Successfully logged in.")
-                django_login(request, user)
-                # set user-specific data in the session
-                request.session['username'] = username
-                request.session.save()
-                messages.success(request, 'You have successfully logged in.')
-                # return render(request, 'pages/partials/home_page.html')
-                return redirect('home')
-            else:
-                print("failed to log in.")
-                messages.error(request, 'Invalid username or password. Please try again.')
-
+        if user is not None:
+            print(f"Authentication successful for user: {username}")
+            print("Successfully logged in.")
+            django_login(request, user)
+            # set user-specific data in the session
+            request.session['username'] = username
+            request.session.save()
+            messages.success(request, 'You have successfully logged in.')
+            # return render(request, 'pages/partials/home_page.html')
+            return redirect('home')
         else:
-            messages.error(request, 'Please provide both username and password.')
-    return redirect('home')
+            print("failed to log in.")
+            messages.error(request, 'Invalid username or password. Please try again.')
+            # return error 
+            return JsonResponse({"message": "Invalid username or password. Please try again."}, status=401)
+    else:
+        messages.error(request, 'Please provide both username and password.')
+        return JsonResponse({"message": "Please provide both username and password."}, status=401)
 
 def user_avatar(request):
     if request.user.is_authenticated:
