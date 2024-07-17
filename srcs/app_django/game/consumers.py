@@ -68,7 +68,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
         if not self.game:
             self.game = game_manager.create_game(game_id)
-        self.game.add_player(self)
+        self.game.add_player(self, user)
         await self.channel_layer.group_add(self.game_id, self.channel_name)
         await self.accept()
 
@@ -107,3 +107,9 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps({'game_state': state}))
         except Exception as e :
             print(f"Error while sending game state : {e}")
+
+    async def game_over(self, event):
+        message = event['message']
+        print("Game n° %s is over" % self.game_id)
+        print("Winner : % s" % message)
+        await self.send(text_data=json.dumps({'game_over': message}))
