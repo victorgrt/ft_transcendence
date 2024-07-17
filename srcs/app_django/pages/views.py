@@ -136,3 +136,37 @@ def send_notification(request):
         except CustomUser.DoesNotExist:
             return JsonResponse({'status': 'error', 'message': 'User not found.'})
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'})
+
+
+@csrf_exempt
+def accept_friend_request(request):
+    if request.method == 'POST':
+        notification_id = request.POST.get('notification_id')
+        # int_notif_id = int(notification_id)
+
+        try:
+            print("NOTIFS ID", notification_id)
+            # Récupérer la notification spécifique
+            # notification = Notification.objects.get(id=int_notif_id)
+            notification = Notification.objects.get(id=notification_id)
+            
+            # Récupérer l'utilisateur destinataire de l'invitation
+            to_user = notification.to_user
+            
+            # Récupérer l'utilisateur qui a envoyé l'invitation
+            from_user = notification.from_user_username
+            
+            # Ajouter from_user à la liste d'amis de to_user
+            to_user.friends.add(from_user)
+            
+            # Supprimer la notification après l'acceptation
+            notification.delete()
+
+            # Réponse de succès
+            return JsonResponse({'status': 'success', 'message': 'Friend request accepted.'})
+        except Notification.DoesNotExist:
+            return JsonResponse({'status': 'error', 'message': 'Notification not found.'})
+        except Exception as e:
+            return JsonResponse({'status': 'error', 'message': str(e)})
+
+    return JsonResponse({'status': 'error', 'message': 'Invalid request.'})

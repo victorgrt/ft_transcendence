@@ -563,6 +563,7 @@ function showNotifs(){
 
 // HANDLE NOTIFICATIONS
 function acceptNotif(obj){
+    console.log("OBJ : ", obj)
     console.log("accept notification here!");
     var value = $(obj).val();
     console.log("value:", value);
@@ -581,7 +582,28 @@ function acceptNotif(obj){
     {
         console.log("FRIEND");
         //logique de ajouter en amis
-
+        var notificationId = obj.className;  // Adapter selon votre implémentation
+        let test = parseInt(notificationId);
+        // Envoyer une requête Ajax pour informer le serveur que l'invitation est acceptée
+        $.ajax({
+            url: '/accept-friend-request/',  // URL de votre vue Django pour accepter une demande d'ami
+            type: 'POST',
+            data: {
+                notification_id: test  // ID de la notification à accepter
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Gérer la réponse si nécessaire
+                    console.log('Friend request accepted successfully');
+                } else {
+                    // Gérer les erreurs ou autres cas
+                    console.error('Error accepting friend request:', response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
         //delete notif
         var id_to_delete = obj.className;
         var element = document.getElementById(id_to_delete);
