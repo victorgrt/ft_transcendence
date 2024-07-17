@@ -15,16 +15,16 @@ class FriendRequest(models.Model):
 	from_user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="from_user")
 	to_user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="to_user")
 
-
 class Notification(models.Model):
     to_user = models.ForeignKey('CustomUser', related_name='received_notifications', on_delete=models.CASCADE)
-    from_user = models.ForeignKey('CustomUser', related_name='sent_notifications', on_delete=models.CASCADE)
+    from_user_username = models.CharField(max_length=150, default="default_sender")  # Champ pour le nom d'utilisateur de l'envoyeur
+    type_of_notification = models.CharField(max_length=100)
     message = models.CharField(max_length=255)
-    timestamp = models.DateTimeField(default=timezone.now)
     read = models.BooleanField(default=False)
 
     def __str__(self):
-        return f'From {self.from_user.username} to {self.to_user.username}: {self.message}'
+        return f'From {self.from_user_username} to {self.to_user.username}: {self.message}'
+
     
 class UserManager(BaseUserManager):
     def create_user(self, username, email, password=None, avatar=None, **extra_fields):
@@ -64,6 +64,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 	friends = models.ManyToManyField("CustomUser", blank=True, related_name="friendships")
 	win = models.IntegerField(default=0)
 	lost = models.IntegerField(default=0)
+	nb_notifs = models.IntegerField(default=0)
   
 
 	USERNAME_FIELD = 'username'

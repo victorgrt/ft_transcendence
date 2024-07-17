@@ -101,23 +101,33 @@ def send_notification(request):
     if request.method == 'POST':
         pseudo = request.POST.get('pseudo')
         notification_type = request.POST.get('notification_type')
-        _from = request.POST.get('from_user')
+        from_user_username = request.POST.get('from_user')  # Nom d'utilisateur de l'envoyeur
+        
         try:
-            user = CustomUser.objects.get(username=pseudo)
+            to_user = CustomUser.objects.get(username=pseudo)
+            # from_user_username = request.user.username  # Utilisez ceci si l'envoyeur est l'utilisateur authentifié
             
-            # Logique pour envoyer la notification à l'utilisateur
-            # Par exemple, en utilisant un modèle de notification
-            # Notification.objects.create(user=user, message=notification_type)
+            # Créer la notification
+            Notification.objects.create(
+                to_user=to_user,
+                from_user_username=from_user_username,
+                type_of_notification=notification_type,
+                message=f'{from_user_username} wants to {notification_type}'
+            )
             
+            # Incrémenter le champ nb_notifs de l'utilisateur destinataire
+            to_user.nb_notifs += 1
+            to_user.save()
+
             # Envoi de la notification via WebSocket
             channel_layer = get_channel_layer()
-            room_name = f'notification_{user.username}'
+            room_name = f'notification_{to_user.username}'
             async_to_sync(channel_layer.group_send)(
                 room_name,
                 {
                     'type': 'notification_message',
                     'message': notification_type,
-                    'from_user': _from 
+                    'from_user': from_user_username  # Envoyer le nom d'utilisateur comme chaîne de caractères
                 }
             )
 

@@ -604,7 +604,7 @@ $(document).ready(function() {
         //retrieve user_name sender
         var test = $('#from_user').text();
         console.log("from : ", test);
-        
+        console.log(formData);
         $.ajax({
             type: 'POST',
             url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
@@ -612,7 +612,6 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     console.log("la mon reuf");
-
                     alert(response.message);
                 } else {
                     alert(response.message);
@@ -625,4 +624,21 @@ $(document).ready(function() {
     });
 });
 
+function handleNotification(data)
+{
+    // console.log("HERERERE:", data);
+    console.log("data received:", data);
+    var type = "default";
+    if (data.message === "play with")
+        type = "play"
+    else if (data.message === "friends request")
+        type = "friend"
+    
+    document.getElementById("notiftable").innerHTML += 
+    '<tr>' +
+    '<td id="notiftd">' + data.from_user + '</td>' +
+    '<td id="notiftd">' + type + '</td>' +
+    '<td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>' +
+    '<td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>';
+}
 

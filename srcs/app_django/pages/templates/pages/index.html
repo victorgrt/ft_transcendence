@@ -118,10 +118,10 @@
                 };
             
                 websocket.onmessage = function(event) {
+                    console.log(event.data);
                     var data = JSON.parse(event.data);
-                    console.log("Notification received:", data);
-                    alert('Notification received: ' + data);
-                    // addNotification(data);
+                    alert('Notification received from ' + data.from_user);
+                    handleNotification(data);
                 };
 
                 function sendNotificationSocket(username){
@@ -133,7 +133,8 @@
                     var pseudo = document.getElementById('inputnotif').value;
                     var notificationType = document.getElementById('selectnotif').value;
                     var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            
+                    var fromUser = document.querySelector('from_user').textContent;
+
                     fetch('/send_notification/', {
                         method: 'POST',
                         headers: {
@@ -143,11 +144,13 @@
                         body: new URLSearchParams({
                             'pseudo': pseudo,
                             'notification_type': notificationType,
+                            'from_user': fromUser,
                         })
                     }).then(response => response.json()).then(data => {
                         console.log("Notification send response:", data);
                         if (data.status === 'success') {
-                            alert('Notification sent successfully.');
+                            // alert('Notification sent successfully.');
+                            console.log("here : ", data);
                         } else {
                             alert('Error sending notification: ' + data.message);
                         }
@@ -177,18 +180,14 @@
                     <td id="notiftd">ACCEPT</td>
                     <td id="notiftd">DECLINE</td>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td id="notiftd">Lucas</td>
                     <td id="notiftd">Friends</td>
                     <td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>
                     <td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>
-                </tr>
-                <tr>
-                    <td id="notiftd">Ruru</td>
-                    <td id="notiftd">Play</td>
-                    <td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>
-                    <td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>
-                </tr>
+                </tr> -->
+                    <!-- <p>From: {{ notification.from_user }}</p>
+                    <p>Message: {{ notification.message }}</p> -->
             </table>
         </div>
         {% endif %}
