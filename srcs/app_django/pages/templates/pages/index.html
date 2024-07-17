@@ -135,6 +135,12 @@
                     var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
                     var fromUser = document.querySelector('from_user').textContent;
 
+                    if (notificationType === "")
+                    {
+                        console.log("EMPTY MA GUEULE");
+                        return ;
+                    }
+
                     fetch('/send_notification/', {
                         method: 'POST',
                         headers: {
@@ -165,7 +171,7 @@
                 <form id="notifform">
                     {% csrf_token %}
                     <input type="text" placeholder="PSEUDO" id="inputnotif" name="pseudo">
-                    <select name="notification_type" id="selectnotif">
+                    <select name="notification_type" id="selectnotif" required>
                         <option value="">Please Select</option>
                         <option value="play with">play with</option>
                         <option value="friend request">friend request</option>
@@ -180,14 +186,7 @@
                     <td id="notiftd">ACCEPT</td>
                     <td id="notiftd">DECLINE</td>
                 </tr>
-                <!-- <tr>
-                    <td id="notiftd">Lucas</td>
-                    <td id="notiftd">Friends</td>
-                    <td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>
-                    <td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>
-                </tr> -->
-                    <!-- <p>From: {{ notification.from_user }}</p>
-                    <p>Message: {{ notification.message }}</p> -->
+                <p id="nb_notifs">{{user.nb_notifs}}</p>
             </table>
         </div>
         {% endif %}

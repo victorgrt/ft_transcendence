@@ -515,3 +515,15 @@ selectnotif{
 	border-color: red;
 }
 
+#notiftd_from_notif{
+	width: 25%;
+}
+
+#notiftd_fype {
+	width: 25%;
+}
+
+#nb_notifs{
+	visibility: hidden;
+	position: absolute;
+}

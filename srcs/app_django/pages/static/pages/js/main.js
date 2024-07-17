@@ -562,31 +562,54 @@ function showNotifs(){
 }
 
 // HANDLE NOTIFICATIONS
-function acceptNotif(){
+function acceptNotif(obj){
     console.log("accept notification here!");
+    var value = $(obj).val();
+    console.log("value:", value);
+    if (value === 'play')
+    {
+        console.log("PLAY");
+        //logique de rejoindre la game
+        
+        //delete notif
+        var id_to_delete = obj.className;
+        var element = document.getElementById(id_to_delete);
+        element.remove();
+        return ;
+    }
+    else if (value === 'friend')
+    {
+        console.log("FRIEND");
+        //logique de ajouter en amis
+
+        //delete notif
+        var id_to_delete = obj.className;
+        var element = document.getElementById(id_to_delete);
+        element.remove();
+        return;
+    }
+    else
+    {
+        var id_to_delete = obj.className;
+        var element = document.getElementById(id_to_delete);
+        element.remove();
+        alert("WRONG NOTIF DUDE");
+    }
 }
 
-function declineNotif(){
-    console.log("decline notif here!");
+function declineNotif(obj){
+    console.log(obj);
+    var id_to_delete = obj.className;
+    var element = document.getElementById(id_to_delete);
+    element.remove();
 }
 
 function hideNotifs(){
     console.log("closing notifications div")
-    notifsDiv.style.visibility = '0';
+    notifsDiv.style.visibility = 'hidden';
     notifsDiv.style.opacity = '0';
     showElement(notifbtn);
 }
-
-// function handleSendNotif(){
-//         // Récupérer la valeur de l'input
-//         var inputVal = document.getElementById("inputnotif").value;
-//         // Récupérer la valeur du select
-//         var selectVal = document.getElementById("selectnotif").value;
-//         alert("Notification sent to " + inputVal + ": " + selectVal);
-//         // Afficher les valeurs dans la console
-//         console.log("PSEUDO:", inputVal);
-//         console.log("Notification Type:", selectVal);
-// }
 
 
 $(document).ready(function() {
@@ -601,10 +624,12 @@ $(document).ready(function() {
             'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
         };
 
-        //retrieve user_name sender
-        var test = $('#from_user').text();
-        console.log("from : ", test);
-        console.log(formData);
+        if (formData.notification_type === "" || formData.pseudo === "")
+        {
+            console.log("EMPTY ????");
+            return ;
+        }
+
         $.ajax({
             type: 'POST',
             url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
@@ -612,6 +637,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     console.log("la mon reuf");
+                    compteur_notifs++;
                     alert(response.message);
                 } else {
                     alert(response.message);
@@ -626,19 +652,18 @@ $(document).ready(function() {
 
 function handleNotification(data)
 {
-    // console.log("HERERERE:", data);
+    console.log("compteur :", compteur_notifs);
     console.log("data received:", data);
     var type = "default";
     if (data.message === "play with")
         type = "play"
-    else if (data.message === "friends request")
+    else if (data.message === "friend request")
         type = "friend"
-    
     document.getElementById("notiftable").innerHTML += 
-    '<tr>' +
-    '<td id="notiftd">' + data.from_user + '</td>' +
-    '<td id="notiftd">' + type + '</td>' +
-    '<td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>' +
-    '<td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>';
+    '<tr id="' + compteur_notifs + "\">" +
+    '<td id="notiftd_from_notif">' + data.from_user + '</td>' +
+    '<td id="notiftd_fype">' + type + '</td>' +
+    '<td id="notiftd_from_notif"><button class="' + compteur_notifs + "\"" + 'id="notifaccept" value="' + type + '" onclick="acceptNotif(this)">V</button></td>' +
+    '<td id="notiftd_from_notif"><button class="' + compteur_notifs + "\"" + 'id="notifdecline" onclick="declineNotif(this)">X</button></td>';
 }
 
