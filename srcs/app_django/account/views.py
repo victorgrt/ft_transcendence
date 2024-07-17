@@ -93,7 +93,7 @@ def login(request):
             request.session.save()
             messages.success(request, 'You have successfully logged in.')
             # return render(request, 'pages/partials/home_page.html')
-            return redirect('home')
+            return JsonResponse({"message": "Successfully logged in."}, status=200)
         else:
             print("failed to log in.")
             messages.error(request, 'Invalid username or password. Please try again.')

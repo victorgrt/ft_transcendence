@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
           redirect: 'manual' // Prevent automatic redirection
       })
       .then(response => {
+        console.log(response)
           if (!response.ok) {
               throw new Error('Network response was not ok');
           }
@@ -24,12 +25,11 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(data => {
           // Handle success, redirect or update UI accordingly
           console.log(data);
-          // window.location.href = '/path-to-redirect-after-success'; // Adjust as needed
+          window.location.href = '/'; // Adjust as needed
       })
       .catch(error => {
           console.error('There was a problem with the fetch operation:', error);
-
-
+          
           // Display error message
           loginError.textContent = 'Invalid credentials. Please try again.';
       });
