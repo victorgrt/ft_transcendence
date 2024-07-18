@@ -74,35 +74,6 @@ def createUser(request):
 
 @csrf_exempt
 def login(request):
-<<<<<<< HEAD
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-        
-        if username and password:
-            print(f"Attempting to authenticate user: {username}")
-            # Authenticate user
-            user = authenticate(request, username=username, password=password)
-
-            if user is not None:
-                print(f"Authentication successful for user: {username}")
-                print("Successfully logged in.")
-                django_login(request, user)
-                # set user-specific data in the session
-                request.session['username'] = username
-                request.session.save()
-                messages.success(request, 'You have successfully logged in.')
-                # return render(request, 'pages/partials/home_page.html')
-                return redirect('home')
-            else:
-                print("failed to log in.")
-                messages.error(request, 'Invalid username or password. Please try again.')
-
-        else:
-            messages.error(request, 'Please provide both username and password.')
-    return redirect('home')
-    
-=======
     
     username = request.POST.get('username')
     password = request.POST.get('password')
@@ -120,19 +91,20 @@ def login(request):
             # set user-specific data in the session
             request.session['username'] = username
             request.session.save()
-            messages.success(request, 'You have successfully logged in.')
+            return redirect('home')
+            # print("After login")
+            # messages.success(request, 'You have successfully logged in.')
             # return render(request, 'pages/partials/home_page.html')
-            return JsonResponse({"message": "Successfully logged in."}, status=200)
+            # return JsonResponse({"message": "Successfully logged in."}, status=200)
         else:
             print("failed to log in.")
-            messages.error(request, 'Invalid username or password. Please try again.')
+            # messages.error(request, 'Invalid username or password. Please try again.')
             # return error 
             return JsonResponse({"message": "Invalid username or password. Please try again."}, status=401)
     else:
         messages.error(request, 'Please provide both username and password.')
         return JsonResponse({"message": "Please provide both username and password."}, status=401)
 
->>>>>>> origin/game_history
 def user_avatar(request):
     if request.user.is_authenticated:
         try:

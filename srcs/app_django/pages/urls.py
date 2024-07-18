@@ -13,9 +13,12 @@ urlpatterns = [
 
   # account
 	path('account/', include("account.urls")),
+	
+	# notification 
+	# path('notification/', include("notification.routing")),
  
-  # notification
-	path('notification/', include("notification.urls")),
+#   # notification
+# 	path('notification/', include("notification.urls")),
 
   # notifs
   path('send-notification/', send_notification, name='send_notification'),
