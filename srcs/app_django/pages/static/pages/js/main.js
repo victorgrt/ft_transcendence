@@ -184,9 +184,9 @@ function zoomToCoordinates(clickCoordinates) {
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
                 // camera.lookAt(initialCameraLookAt);
-                camera.target.x = clickCoordinates.x;
-                camera.target.y = clickCoordinates.y;
-                camera.target.z = clickCoordinates.z;
+                controls.target = clickCoordinates;
+                // camera.target.set.y = clickCoordinates.y;
+                // camera.target.set.z = clickCoordinates.z;
 
             })
             .onComplete(() => {
@@ -521,7 +521,11 @@ function zoomBack() {
         .easing(TWEEN.Easing.Quadratic.InOut)
         .onUpdate(() => {
             if (clickCoordinates != null)
-                controls.target = clickCoordinates;
+            {
+                controls.target.x = clickCoordinates.x;
+                controls.target.y = clickCoordinates.y;
+                controls.target.z = clickCoordinates.z;
+            }
         })
         .onComplete(() => {
             isZoomed = false;

@@ -347,12 +347,51 @@ position: absolute;
 }
 
 input[type="text"] {
-	font-size: 1.5rem; /* Increased font size */
-	padding: 10px; /* Increased padding */
-	margin-top: 20px; /* Increased margin */
-	border-radius: 5px; /* Border radius */
-	width: 80%; /* Adjust width as needed */
-	text-align: center;
+	/* font-size: 1.5rem; /* Increased font size */
+	/* padding: 10px; Increased padding */
+	/* margin-top: 20px; Increased margin */
+	/* border-radius: 5px; Border radius */
+	/* width: 80%; Adjust width as needed */
+	/* text-align: center; */ 
+	box-sizing: border-box;
+    width: 100%;
+    font-size: 16px;
+    border: px solid black;
+    border-radius: 1vh;
+    background-color: gray;
+    color: white;
+}
+
+input[type="email"] {
+	/* font-size: 1.5rem; /* Increased font size */
+	/* padding: 10px; Increased padding */
+	/* margin-top: 20px; Increased margin */
+	/* border-radius: 5px; Border radius */
+	/* width: 80%; Adjust width as needed */
+	/* text-align: center; */ 
+	box-sizing: border-box;
+    width: 100%;
+    font-size: 16px;
+    border: px solid black;
+    border-radius: 1vh;
+    background-color: gray;
+    color: white;
+}
+
+input[type="password"] {
+	/* font-size: 1.5rem; /* Increased font size */
+	/* padding: 10px; Increased padding */
+	/* margin-top: 20px; Increased margin */
+	/* border-radius: 5px; Border radius */
+	/* width: 80%; Adjust width as needed */
+	/* text-align: center; */ 
+	box-sizing: border-box;
+    width: 100%;
+    font-size: 16px;
+    border: px solid black;
+    border-radius: 1vh;
+    background-color: gray;
+    color: white;
 }
 
 .needed_hover2{
