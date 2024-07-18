@@ -42,22 +42,6 @@ def join_session(request, session_id):
 
 #   ---------------- FRONT END ----------------
 
-# PARTIAL CONTENTS
-def partial_content(request, page):
-    context = {}
-    if page == 'page1':
-        context['data'] = 'Page 1 content'
-        template = 'partials/page1.html'
-    elif page == 'page2':
-        context['data'] = 'Page 2 content'
-        template = 'partials/page2.html'
-    else:
-        return JsonResponse({'error': 'Page not found'}, status=404)
-
-    if request.is_ajax():
-        return render(request, template, context)
-    else:
-        return render(request, 'index.html', {'partial_template': template, 'context': context})
 
 # starting_page
 def starting_page(request):

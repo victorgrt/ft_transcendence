@@ -11,10 +11,10 @@ function setUpSocket(_socket)
     };
 }
 
-function connectWebSocket(sessionId) {
+function connectWebSocket(gameId) {
     return new Promise((resolve, reject) => {
-        //if (sessionId != )
-        socket = new WebSocket('ws://' + window.location.host + '/ws/pong/' + sessionId + '/');
+
+        socket = new WebSocket('ws://' + window.location.host + '/ws/pong/' + gameId + '/');
 
         socket.addEventListener('open', () => {
             console.log('WebSocket connection established');
@@ -42,10 +42,10 @@ async function createGame ()
 
 function connectToGame() {
     // Extract session ID from URL
-    const sessionId = window.location.pathname.split('/')[2]
-    console.log('Connecting to session:', sessionId);
+    const gameId = window.location.pathname.split('/')[2]
+    console.log('Connecting to game:', gameId);
 
-    connectWebSocket(sessionId)
+    connectWebSocket(gameId)
         .then(socket => {
             setUpSocket(socket);
         });

@@ -17,6 +17,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FT_TRANSCENDENCE</title>
+
+    
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/index.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'pages/images/42logo.jpg' %}">
 </head>
@@ -246,47 +248,49 @@
             </table>
         </div>
         {% endif %}
-
-        <div class="login_form">
-            <h2>Login</h2>
-            <form action="/account/login/" method="post">
-                <div class="form-group">
-                    <label for="username">Your username:</label>
-                    <input type="username" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Your Password:</label>
-                    <input type="password" id="password" name="password">
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Submit">
-                </div>
-            </form>
-        </div>
-        <div class="register_form">
-            <h2>Registering</h2>
-            <form action="/account/createUser" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="username">Your User Name:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Your Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Your Password:</label>
-                    <input type="password" id="password" name="password">
-                </div>
-                <div class="form-group">
-                    <label for="avatar">Your avatar:</label>
-                    <input type="file" id="avatar" name="avatar" accept=image/*>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Submit">
-                </div>
-            </form>
-        </div>
+        {% if not user.is_authenticated %}
+            <div class="login_form">
+                <h2 class="pong_title" style="font-size: 30px;margin-bottom: 30px;">LOGIN</h2>
+                <form id="loginForm" action="/account/login/" method="post">
+                    <div class="form-group">
+                        <label for="username" class="account-form-label">Username</label>
+                        <input class="account-form-input" type="username" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="account-form-label">Password</label>
+                        <input class="account-form-input" type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="LOGIN">
+                    </div>
+                </form>
+                <div id="loginError"></div>
+            </div>
+            <div class="register_form">
+                <h2>Registering</h2>
+                <form action="/account/createUser" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="username">Your User Name:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Your Password:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Your avatar:</label>
+                        <input type="file" id="avatar" name="avatar" accept=image/*>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+        {% endif %}
     </div>
     <div id="scene">
         <!-- scene 3d -->
@@ -311,6 +315,8 @@
 <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
 <!-- PONG SCRIPT??? -->
 <script src="{% static 'pages/js/pong.js' %}"></script>
+<!-- LOGIN FORM SCRIPT -->
+<script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
 <!-- SCENE SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
 

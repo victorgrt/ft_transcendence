@@ -15,6 +15,7 @@ body {
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
+  font-family: 'Arcade', Arial, Helvetica, sans-serif;
 }
 
 #scene {
@@ -120,7 +121,7 @@ body {
 
 #old_username{
     margin-top: 10%;
-    font-size: xx-large;
+    font-size: 18px;
 }
 
 #new_username{
@@ -194,11 +195,29 @@ button {
 	opacity: 0;
 	max-width: 600px;
 	margin: auto;
-	background: #ffffff;
+	border: 2px solid rgba(40, 40, 40, 1);
+	color: white;
+	background-color: rgba(24, 24, 24, 1);
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
 	transition: opacity 1.5s ease-out;
+
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
+}
+
+#loginForm
+{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.account-form-label
+{
+  font-size:14px;
 }
 
 .form-group {
@@ -227,13 +246,25 @@ textarea {
 }
 
 input[type="submit"] {
-	background-color: #4CAF50;
+  width:100%;
+	background: linear-gradient(90deg, rgba(65,56,255,1) 0%, rgba(0,213,255,1) 100%);
+  background: linear-gradient(90deg, rgba(243,33,105,1) 0%, rgba(245,133,41,1) 50%, rgba(255,214,0,1) 100%);
+  /* background: linear-gradient(90deg, rgba(193,33,105,1) 0%, rgba(145,83,41,1) 50%, rgba(155,114,0,1) 100%); */
 	color: white;
+  font-weight: bold;
 	padding: 10px 20px;
 	border: none;
-	border-radius: 4px;
+	border-radius: 50px;
 	cursor: pointer;
 	font-size: 16px;
+  transition: background 0.4s, box-shadow 0.4s; /* Smooth transition for hover effect */
+}
+
+input[type="submit"]:hover {
+  transform: scale(1.05); /* Slightly increase size */
+  background: linear-gradient(90deg, rgba(243,33,105,1) 0%, rgba(245,133,41,1) 50%, rgba(255,214,0,1) 100%);
+  box-shadow: 0 0 15px rgba(255,255,255,0.6); /* Subtle glow effect */
+  /* background: linear-gradient(90deg, rgba(255,214,0,1) 0%, rgba(245,133,41,1) 50%, rgba(243,33,105,1) 100%); */
 }
 
 input[type="submit"]:hover {
@@ -248,18 +279,27 @@ input[type="submit"]:hover {
 	visibility: hidden;
 	max-width: 600px;
 	margin: auto;
-	background: #ffffff;
+	border: 2px solid rgba(40, 40, 40, 1);
+	color: white;
+	background-color: rgba(24, 24, 24, 1);
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
 }
 
-#username {
-	color: black;
-	padding: 1%;
+.account-form-input
+{
+  box-sizing:border-box;
+  width:100%;
+  font-size: 16px;
+  color: black;
+  padding: 5%;
 	border: px solid black;
 	border-radius: 1vh;
+  background-color: gray;
+  color: white;
 }
+
 
 /* FOOTER */
 #footer {

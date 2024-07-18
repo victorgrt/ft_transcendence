@@ -48,13 +48,14 @@ class Game:
         self.ballNextBounce[0] = x2
         self.ballNextBounce[1] = y2
 
-    def add_player(self, player):
-        self.players.append(player)
+    def add_player(self, player, user):
+        self.players.append(user)
         self.consumers.append(player)
         self.nb_players += 1
 
     def remove_player(self, player):
         self.players.remove(player)
+        self.consumers.remove(player)
         self.nb_players -= 1
 
     def resetBall(self, x):
@@ -77,12 +78,18 @@ class Game:
 
     def update(self):
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
-            if self.player_1_score == 3 :
-                self.state = "Player1"
-                self.send_game_state()
-            else :
-                self.state = "Player2"
-                self.send_game_state()
+            winner = "Player1" if self.player_1_score == 3 else "Player2"
+            self.state = winner
+            # Send game over message 
+            async_to_sync(get_channel_layer().group_send)(
+                self.game_id,
+                {
+                    'type': 'game_over',
+                    'message': {
+                        'winner': winner
+                    }
+                }
+            )
             return
         if self.state == "playing":
             #   --- Handle paddle move

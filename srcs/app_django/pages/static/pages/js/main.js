@@ -8,7 +8,7 @@ var selected_object_name;
 var selecting_clickable;
 
 var initialControlPosition;
-
+var clickCoordinates = null;
 function init() {
     scene = new THREE.Scene();
 
@@ -99,7 +99,7 @@ function onMouseMove(event) {
     }
     // Mettre en surbrillance l'objet spécifique
     if (intersects.length > 0) {
-        document.body.style.cursor = 'pointer';
+        // document.body.style.cursor = 'pointer';
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
             if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2') && isZooming === false) {
@@ -123,7 +123,7 @@ function onMouseMove(event) {
         }
         else if (!selectedObject) {
             selecting_clickable = false;
-            document.body.style.cursor = 'default';
+            // document.body.style.cursor = 'default';
         }
     }
 }
@@ -167,10 +167,11 @@ console.log("isZoomed? ", isZoomed);
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
-function zoomToCoordinates(clickCoordinates, redirect_flag) {
+function zoomToCoordinates(clickCoordinates) {
     const duration = 2000;
     var targetPosition;
-    if (isZoomed && selecting_clickable === true && (loginVisible || registerVisible) === false) {
+    if (isZoomed && selecting_clickable === true && (loginVisible && registerVisible) === false) {
+        console.log("here babe")
         isZooming = true;
         console.log("LA : x:", clickCoordinates.x, "y:", clickCoordinates.y, "z:", clickCoordinates.z)
         if (loginVisible === true)
@@ -182,9 +183,18 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
-                camera.lookAt(initialCameraLookAt);
+                // camera.lookAt(initialCameraLookAt);
+                camera.target.x = clickCoordinates.x;
+                camera.target.y = clickCoordinates.y;
+                camera.target.z = clickCoordinates.z;
+
             })
             .onComplete(() => {
+                if (loginVisible || registerVisible)
+                {
+                    hideElement(loginForm);
+                    hideElement(registerForm);
+                }
                 isZoomed = false;
                 isZooming = false;
                 localStorage.setItem('isZoomed', isZoomed);
@@ -215,22 +225,23 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
                     isZooming = false;
 
-                    controls.target.x = targetPosition.x;
-                    controls.target.y = targetPosition.y;
-                    controls.target.z = -targetPosition.z;
-                    console.log("HERE");
-                    if (redirect_flag === 0) {
-                        ;
-                        // showElement(loginForm);
-                        // hideElement(header);
-                        // goBackButton.style.visibility = 'visible';
-                    }
-                    else if (redirect_flag === 1) {
-                        ;
-                        // showElement(registerForm);
-                        // hideElement(header);
-                        // goBackButton.style.visibility = 'visible';
-                    }
+                    controls.target.x = clickCoordinates.x;
+                    controls.target.y = clickCoordinates.y;
+                    controls.target.z = clickCoordinates.z;
+
+                    // loginVisible.removeProperty('position');
+                    loginForm.style.visibility = 'visible';
+                    loginForm.style.opacity = '1';
+                    loginForm.style.width = '40%';
+                    loginForm.style.position = 'relative';
+                    loginVisible = true;
+
+                    registerForm.style.visibility = 'visible';
+                    registerForm.style.opacity ='1';
+                    registerForm.style.width = '40%';
+                    registerForm.style.position = 'relative';
+                    registerVisible = true
+                    showElement(goBackButton);
                 })
                 .start();
         }
@@ -299,7 +310,7 @@ function onClickScene(event) {
 
     if (intersects.length > 0) {
         const intersection = intersects[0];
-        const clickCoordinates = intersection.point;
+        clickCoordinates = intersection.point;
         zoomToCoordinates(clickCoordinates);
     }
 }
@@ -332,34 +343,71 @@ window.addEventListener('pageshow', function (event) {
 
 function goToLogin() {
     if (isZooming) return;
-
-    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
-
-    selecting_clickable = true;
-    selected_object_name = "Plane009_2";
-    zoomToCoordinates(clickCoordinates, 0);
-    showElement(loginForm);
+    if (isZoomed === false)
+        zoomToPC();
+    if (registerVisible === true)
+    {   
+        registerForm.style.visibility = 'hidden';
+        registerForm.style.opacity = '0';
+        resetStyleForms();
+        registerVisible = false;
+    }    
+    loginVisible = true;
+    centerLoginForm();
+    showElement(goBackButton);
+    loginForm.style.opacity = '1';
+    loginForm.style.visibility = 'visible';
 }
 
 function goToRegister() {
     if (isZooming) return;
-    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
-
-    selecting_clickable = true;
-    selected_object_name = "Plane009_2";
-    zoomToCoordinates(clickCoordinates, 1);
-    showElement(registerForm);
+    if (isZoomed === false)
+        zoomToPC();
+    if (loginVisible === true)
+    {
+        loginForm.style.visibility = 'hidden';
+        loginForm.style.opacity = '0';
+        resetStyleForms();
+        loginVisible = false;
+    }
+    registerVisible = true;
+    centerRegisterForm();
+    showElement(goBackButton);
+    registerForm.style.opacity = '1';
+    registerForm.style.visibility = 'visible';
 }
 
 function zoomToPC() {
+
     if (isZooming) return;
-
-    // Coordonnées fixes de l'objet vers lequel vous voulez zoomer
-    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
-
-    selecting_clickable = true;
-    selected_object_name = "Plane009_2";
-    zoomToCoordinates(clickCoordinates);
+    if (isZoomed === false)
+    {
+        var clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
+        isZooming = true;
+        isZoomed = true;
+        var dur = 2000;
+        //position we want to be
+        targetPosition = new THREE.Vector3(2, 2.8, 0.02);
+        //position we want to look at
+        hardClickCoordinates = new THREE.Vector3(1.8, 2.8, -2.3);
+        new TWEEN.Tween(camera.position)
+            .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, dur)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate(() => {
+                controls.target.x = hardClickCoordinates.x;
+                controls.target.y = hardClickCoordinates.y;
+                controls.target.z = hardClickCoordinates.z;
+            })
+        .onComplete(() => {
+            console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
+            isZooming = false;
+            controls.target.x = hardClickCoordinates.x;
+            controls.target.y = hardClickCoordinates.y;
+            controls.target.z = hardClickCoordinates.z;
+            showElement(goBackButton);
+        })
+        .start();
+    }
 }
 
 function centerRegisterForm()
@@ -370,6 +418,7 @@ function centerRegisterForm()
     contentdiv.style.align_items = 'center';
 
     registerForm.style.width = '80%';
+    // registerForm.style.position = 'absolute';
 
     loginForm.style.position = 'absolute';
 }
@@ -390,20 +439,8 @@ function centerLoginForm()
 var loginVisible;
 var registerVisible;
 var menuPongVisible;
-function showElement(element) {
-    console.log("here:", element.className);
-    if (element.className === "register_form")
-    {
-        registerVisible = true;
-        centerRegisterForm();
-        showElement(goBackButton);
-    }
-    if (element.className === "login_form")
-    {
-        loginVisible = true;
-        centerLoginForm();
-        showElement(goBackButton);
-    }
+function showElement(element)
+{
     element.style.opacity = '1';
     element.style.visibility = 'visible';
 }
@@ -417,6 +454,7 @@ function hideElement(element) {
     element.style.visibility = 'hidden';
 }
 
+// SEEMS LIKE NOT NEEDED BUT KEEP IT HERE JUST IN CASE
 function resetStyleForms(){
     // RESET register form style
     contentdiv.style.removeProperty('display');
@@ -426,10 +464,10 @@ function resetStyleForms(){
     registerForm.style.visibility = '0';
     registerForm.style.opactity = '0';
     registerForm.style.removeProperty('width');
-    loginForm.style.removeProperty('position');
 
     // RESET login form style
     loginForm.style.removeProperty('width');
+    loginForm.style.removeProperty('position');
     loginForm.style.removeProperty('height');
     registerForm.style.removeProperty('position');
 }
@@ -451,11 +489,13 @@ function zoomBack() {
     {
         registerForm.style.visibility = '0';
         registerForm.style.opacity = '0';
+        registerVisible = false;
     }
     if (loginVisible === true)
     {
         loginForm.style.visibility = '0';
         loginForm.style.opacity = '0';
+        registerVisible = false;
     }
     if (menuPongVisible === true)
     {
@@ -469,13 +509,6 @@ function zoomBack() {
         paramsVisible = false;
 
     }
-    // if (notifsVisible === true)
-    // {
-    //     notifsDiv.style.visibility = 'hidden';
-    //     notifsDiv.style.opacity = '0';
-    //     notifsVisible = false;
-    //     showElement(notifbtn);
-    // }
     hideElement(goBackButton);
     if (isZoomed === false)
         return; //returns because no zoom back needed
@@ -487,8 +520,8 @@ function zoomBack() {
         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
         .easing(TWEEN.Easing.Quadratic.InOut)
         .onUpdate(() => {
-            camera.lookAt(initialCameraLookAt);
-            // controls.target = clickCoordinates;
+            if (clickCoordinates != null)
+                controls.target = clickCoordinates;
         })
         .onComplete(() => {
             isZoomed = false;
@@ -498,7 +531,6 @@ function zoomBack() {
             controls.position = new THREE.Vector3(12, 5, 12);
             controls.target =  new THREE.Vector3(0, 0, 0);
             showElement(header);
-            console.log("apres:", initialCameraLookAt, initialCameraPosition);
         })
         .start();
 }
