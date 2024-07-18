@@ -36,6 +36,12 @@ async def get_user_from_session_key(session_key):
         return None
 
 class PongConsumer(AsyncWebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.game = None  # Initialize self.game to None
+        self.game_id = None  # Initialize self.game_id to None
+        self.user = None  # Initialize self.player to None
+        self.is_added_to_group = False  # Initialize self.player to None
 
     async def connect(self):
         
@@ -65,19 +71,23 @@ class PongConsumer(AsyncWebsocketConsumer):
         self.game_id = game_id
         print(f"Connecting to game {self.game_id}")
         self.game = game_manager.get_game(game_id)
+        self.user = user
 
         if not self.game:
             self.game = game_manager.create_game(game_id)
         self.game.add_player(self, user)
         await self.channel_layer.group_add(self.game_id, self.channel_name)
+        self.is_added_to_group = True
         await self.accept()
 
 
     async def disconnect(self, close_code):
-        self.game.remove_player(self)
-        if not self.game.players:
-            game_manager.remove_game(self.game_id)
-        await self.channel_layer.group_discard(self.game_id, self.channel_name);
+        if self.game:
+            self.game.remove_player(self)
+        # if not self.game.players:
+        #     game_manager.remove_game(self.game_id)
+        if self.is_added_to_group:
+            await self.channel_layer.group_discard(self.game_id, self.channel_name);
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)

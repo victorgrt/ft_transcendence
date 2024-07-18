@@ -54,7 +54,7 @@ class Game:
         self.nb_players += 1
 
     def remove_player(self, player):
-        self.players.remove(player)
+        # self.players.remove(player)
         self.consumers.remove(player)
         self.nb_players -= 1
 
