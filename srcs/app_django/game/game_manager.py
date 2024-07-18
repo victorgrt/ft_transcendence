@@ -27,6 +27,8 @@ class Game:
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.player_1_position = 0
         self.player_2_position = 0
+        self.move_1 = 0
+        self.move_2 = 0
         self.player_1_position_z = 3.5
         self.player_2_position_z = -3.5
         self.player_1_score = 0
@@ -53,8 +55,8 @@ class Game:
         self.consumers.append(player)
         self.nb_players += 1
 
-    def remove_player(self, player):
-        self.players.remove(player)
+    def remove_player(self, player, user):
+        self.players.remove(user)
         self.consumers.remove(player)
         self.nb_players -= 1
 
@@ -65,22 +67,26 @@ class Game:
         self.ball_velocity[1] =  0.05
 
     def movePaddle(self, game_id, player, direction) :
+        print(direction)
         if player == 1 :
             if direction == 'left' and self.player_1_position > -4 :
-                self.player_1_position -= self.paddleSpeed
+                self.move_1 = -1
             elif direction == 'right' and self.player_1_position < self.fieldWidth :
-                self.player_1_position += self.paddleSpeed
+                self.move_1 = 1
+            elif direction == 'null':
+                self.move_1 = 0
         elif player == 2 :
             if direction == 'left' and self.player_2_position > -4 :
-                self.player_2_position -= self.paddleSpeed
+                self.move_2 = -1
             elif direction == 'right' and self.player_2_position < self.fieldWidth :
-                self.player_2_position += self.paddleSpeed
-
+                self.move_2 = 1
+            elif direction == 'null':
+                self.move_2 = 0
     def update(self):
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
             winner = "Player1" if self.player_1_score == 3 else "Player2"
             self.state = winner
-            # Send game over message 
+            # Send game over message
             async_to_sync(get_channel_layer().group_send)(
                 self.game_id,
                 {
@@ -92,6 +98,15 @@ class Game:
             )
             return
         if self.state == "playing":
+            if (self.move_1 != 0):
+                if (self.move_1 > 0):
+                    self.player_1_position += self.paddleSpeed
+                elif (self.move_1 < 0):
+                    self.player_1_position -= self.paddleSpeed
+            if (self.move_2 > 0):
+                self.player_2_position += self.paddleSpeed
+            if (self.move_2 < 0):
+                self.player_2_position -= self.paddleSpeed
             #   --- Handle paddle move
               # if (wPressed1 && self.player_1_position > 0)
                 # self.player_1_position -= self.paddleSpeed
@@ -123,21 +138,39 @@ class Game:
             if(self.ball_position[1] >= self.player_1_position_z - 0.1 and self.ball_position[1] <= self.player_1_position_z + 0.1 and self.ball_position[0] >= self.player_1_position - 0.4 and self.ball_position[0] <= self.player_1_position + 0.4) :
                 self.dy = -self.dy
                 self.ball_position[1] = self.player_1_position_z - 0.1
-                self.ball_velocity[0] *= 1.1
+                self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
             if(self.ball_position[1] >= self.player_2_position_z - 0.1 and self.ball_position[1] <= self.player_2_position_z + 0.1 and self.ball_position[0] >= self.player_2_position - 0.4 and self.ball_position[0] <= self.player_2_position + 0.4) :
                 self.dy = -self.dy
                 self.ball_position[1] = self.player_2_position_z - 0.1
-                self.ball_velocity[0] *= 1.1
+                self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
             self.send_game_state()
+
+        def gameCountDown(self):
+            countdown = 3
+            while countdown > 0:
+                async_to_sync(get_channel_layer().group_send)(
+                    self.game_id,
+                    {
+                        'type': 'countdown',
+                        'message': {
+                            'countdown': countdown
+                        }
+                    }
+                )
+                time.sleep(1)  # Wait for 1 second
+                countdown -= 1
 
         if self.state == "waiting":
             # If there are enough players, start the game
             if len(self.players) >= 2:
+              self.send_game_state()
+              gameCountDown(self)
               self.state = "playing"
-              print("Game started : %s" % self.game_id)
+            #   print("Game started : %s" % self.game_id)
             self.send_game_state()
+
 
     def send_game_state(self):
         # print("Sending game state to group %s" % self.game_id)
@@ -150,6 +183,7 @@ class Game:
                         'ball_velocity': self.ball_velocity,
                         'player_1_position': self.player_1_position,
                         'player_2_position': self.player_2_position,
+                        'player_id': i + 1,
                         # 'dx' : self.dx,
                         # 'dy': self.dy,
                         # 'seed' : self.seed,

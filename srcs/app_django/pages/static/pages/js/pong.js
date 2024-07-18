@@ -50,10 +50,6 @@ function launchGame()
     controls.minDistance = 5; // Minimum zoom distance
     controls.maxDistance = 100; // Maximum zoom distance
 
-    camera.position.set(0, 3, -7); // Position behind the red paddle
-    camera.lookAt(0, 0, 0); // The camera looks at the center of the scene
-    controls.update(); // Update controls after setting the camera position
-
     const paddleGeometry = new THREE.BoxGeometry(0.8, 0.2, 0.2); // Adjust paddle geometry to make them horizontal
     const paddleMaterial = new THREE.MeshPhysicalMaterial({ color: 0x00ffff });
     const paddleMaterial2 = new THREE.MeshPhysicalMaterial({ color: 0xff0000 });
@@ -84,31 +80,28 @@ function launchGame()
     let keys = {};
     document.addEventListener('keydown', function(e) {
         keys[e.key] = true;
-        sendPaddleMovement();
+        sendPaddleMovement("down");
     });
 
     document.addEventListener('keyup', function(e) {
         delete keys[e.key];
-        sendPaddleMovement();
+        sendPaddleMovement("up");
     });
 
-    function sendPaddleMovement()
+    function sendPaddleMovement(state)
     {
+        if (state == "up")
+            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'null' }));
         console.log(socket);
         if ('a' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left' }));
-        if ('d' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right' }));
-        if ('ArrowLeft' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left' }));
-        if ('ArrowRight' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'left' }));
+        else if ('d' in keys)
+            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'right' }));
+        else if ('ArrowLeft' in keys)
+            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'left' }));
+        else if ('ArrowRight' in keys)
+            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'right' }));
     }
-
-    // function identifie()
-    // {
-    //     // socket.send(JSON.stringify({ identifie: localStorage.))
-    // }
 
     function updateState()
     {
@@ -126,14 +119,28 @@ function launchGame()
     {
         if (gamedata)
         {
-            // controls.update();
-            updateState();
-            renderer.render(scene, camera);
+            if (set_camera == 0)
+            {
+                id = gamedata.game_state.player_id
+                if (id == 2)
+                    pov_camera = -7
+                else if (id == 1)
+                    pov_camera = 7
+                camera.position.set(0, 3, pov_camera); // Position behind the red paddle
+                camera.lookAt(0, 0, 0); // The camera looks at the center of the scene
+                controls.update(); // Update controls after setting the camera position
+                set_camera = 1
+            }
+        updateState();
+        renderer.render(scene, camera);
         }
         requestAnimationFrame(animate);
     }
     animate();
 }
 
+var id;
+var pov_camera;
+var set_camera = 0;
 var score_player_1 = 0;
 var score_player_2 = 0;
