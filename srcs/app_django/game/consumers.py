@@ -72,6 +72,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         print(f"Connecting to game {self.game_id}")
         self.game = game_manager.get_game(game_id)
         self.user = user
+        print(user.id)
 
         if not self.game:
             self.game = game_manager.create_game(game_id)
