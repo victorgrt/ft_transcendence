@@ -15,6 +15,7 @@ body {
 	padding: 0;
 	width: 100vw;
 	height: 100vh;
+  font-family: 'Arcade', Arial, Helvetica, sans-serif;
 }
 
 #scene {
@@ -53,7 +54,110 @@ body {
 	display: flex;
 }
 
+#param_img {
+	width: 100%;
+	transition: transform 2s ease ;
+}
+
+#param_img:hover{
+	transform: rotate(360deg);
+}
+
+#param_btn {
+	border: 0;
+    width: 5%;
+    margin: 0;	
+}
+
+/* change profile settings div */
+#change_prof{
+	transition: opacity 2s ease-out;
+	visibility: hidden;
+	opacity: 0;
+	background-color: rgba(24, 24, 24, 1);
+	color: white;
+	border: 2px solid rgba(40, 40, 40, 1);
+	border-radius: 10%;
+	position: absolute;
+	right: 0;
+    top: 0;
+    margin-top: 5%;
+    margin-right: 20%;
+	height: 50%;
+	width: 15%;
+	display: flex;
+	flex-direction: column;
+}
+
+#top{
+	height: 85%;
+	width: 100%;
+	margin-bottom: 15%;
+	text-align: center;
+}
+
+#old_avatar{
+	margin-top: 10%;
+
+    width: 50%;
+    border-radius: 100%;
+    height: 35%;
+    object-fit: cover;
+
+	border: 2px solid rgba(40, 40, 40, 1);
+	box-shadow: 1px 12px 10px black;
+}
+
+#new_avatar{
+    margin-top: 5%;
+    padding: 0;
+	margin-bottom: 5%;
+    margin-left: 15%;
+}
+
+#sep{
+	border : 2px double rgb(40, 40, 40);
+}
+
+#old_username{
+    margin-top: 10%;
+    font-size: 18px;
+}
+
+#new_username{
+	color: white;
+	border: 2px solid rgba(18, 18, 18, 1);
+	background-color: rgba(40, 40, 40, 1);
+	padding: 0;
+    font-size: large;
+    margin: 0;
+	text-align: center;
+}
+
+#bottom {
+	display: flex;
+	align-items: center;
+    justify-content: center;
+	height: 15%;
+	width: 100%;
+	align-items: center;
+}
+
+#update_profile{
+	margin-bottom: 10%;
+	border: 2px solid rgba(40, 40, 40, 1);
+	width: 50%;
+	height: 100%;
+    margin: 0;
+}
+
+#update_profile:hover {
+	background-color: rgba(40, 40, 40, 1);
+	box-shadow: 1 1 20px #141414;
+}
+
 button {
+	cursor: pointer;
 	background: none;
 	padding: 1%;
 	border: 2px solid white;
@@ -91,11 +195,29 @@ button {
 	opacity: 0;
 	max-width: 600px;
 	margin: auto;
-	background: #ffffff;
+  border: 2px solid rgba(40, 40, 40, 1);
+  color: white;
+  background-color: rgba(24, 24, 24, 1);
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
 	transition: opacity 1.5s ease-out;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#loginForm
+{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.account-form-label
+{
+  font-size:14px;
 }
 
 .form-group {
@@ -124,13 +246,25 @@ textarea {
 }
 
 input[type="submit"] {
-	background-color: #4CAF50;
+  width:100%;
+	background: linear-gradient(90deg, rgba(65,56,255,1) 0%, rgba(0,213,255,1) 100%);
+  background: linear-gradient(90deg, rgba(243,33,105,1) 0%, rgba(245,133,41,1) 50%, rgba(255,214,0,1) 100%);
+  /* background: linear-gradient(90deg, rgba(193,33,105,1) 0%, rgba(145,83,41,1) 50%, rgba(155,114,0,1) 100%); */
 	color: white;
+  font-weight: bold;
 	padding: 10px 20px;
 	border: none;
-	border-radius: 4px;
+	border-radius: 50px;
 	cursor: pointer;
 	font-size: 16px;
+  transition: background 0.4s, box-shadow 0.4s; /* Smooth transition for hover effect */
+}
+
+input[type="submit"]:hover {
+  transform: scale(1.05); /* Slightly increase size */
+  background: linear-gradient(90deg, rgba(243,33,105,1) 0%, rgba(245,133,41,1) 50%, rgba(255,214,0,1) 100%);
+  box-shadow: 0 0 15px rgba(255,255,255,0.6); /* Subtle glow effect */
+  /* background: linear-gradient(90deg, rgba(255,214,0,1) 0%, rgba(245,133,41,1) 50%, rgba(243,33,105,1) 100%); */
 }
 
 input[type="submit"]:hover {
@@ -151,12 +285,19 @@ input[type="submit"]:hover {
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
 }
 
-#username {
-	color: black;
-	padding: 1%;
+.account-form-input
+{
+  box-sizing:border-box;
+  width:100%;
+  font-size: 16px;
+  color: black;
+  padding: 5%;
 	border: px solid black;
 	border-radius: 1vh;
+  background-color: gray;
+  color: white;
 }
+
 
 /* FOOTER */
 #footer {
@@ -170,14 +311,15 @@ input[type="submit"]:hover {
 
 
 /* GAME SESSION / MENUPONG */
-#menuPong {
+#menuPongDiv {
+position: absolute;
 	opacity: 0;
 	visibility: hidden;
 	transition: opacity 1s ease-out;
-	border: 1px solid #f09d0a;
+	border: 2px solid rgba(40, 40, 40, 1);
+
 	color: white;
-	background: rgb(0, 0, 0);
-	background: linear-gradient(90deg, rgba(240, 157, 100, 0.7) 0%, rgba(0,0,0,0.7) 50%, rgba(240,157,100,0.7) 100%);
+	background-color: rgba(24, 24, 24, 1);
 	border-radius: 20px;
 	width: 60%;
 	height: 45%;
@@ -208,6 +350,7 @@ input[type="text"] {
 	margin-top: 20px; /* Increased margin */
 	border-radius: 5px; /* Border radius */
 	width: 80%; /* Adjust width as needed */
+	text-align: center;
 }
 
 .needed_hover2{
@@ -239,41 +382,62 @@ input[type="text"] {
 	font-size: large;
 	font-weight: bold;
 
-	border: 2px solid white;
+	border: 2px solid rgba(40, 40, 40, 1);
 	border-radius: 1vh;
     width: 50%;
     position: absolute;
 
 	text-align: center;
-	background: rgb(31,255,36);
-	background: linear-gradient(90deg, rgba(31,255,36,0.5) 0%, rgba(16,0,255,0.5) 50%, rgba(255,142,120,0.5) 100%);
+	/* background: rgb(31,255,36); */
+	/* background: linear-gradient(90deg, rgba(31,255,36,0.5) 0%, rgba(16,0,255,0.5) 50%, rgba(255,142,120,0.5) 100%); */
+	background-color: rgba(24, 24, 24, 0.95);
+	display: flex;
+}
+
+#leftstats
+{
+	width: 50%;
+    border: 2px solid rgba(40, 40, 40, 1);
+
+}
+
+
+#avatar{
+	width: 90%;
+	border-radius: 10%;
+	border: 1.5px solid rgb(16, 16, 16);
+}
+
+#rightstats{
+	width: 50%;
+    border: 2px solid rgba(40, 40, 40, 1);
+
 }
 
 #stats_username{
+	padding: 0;
 	font-size: xx-large;
 	text-decoration: underline overline;
 	text-decoration-style: double;
 	text-underline-offset: 1vh;
 }
 
-#avatar{
-	width: 30%;
-	border: 1.5px solid white;
-}
 
 #stats{
 	color:white;
+	padding: 0;
 }
 
 /* FRIENDS LIST */
 #friends{
 	overflow-y: scroll;
-	border: 2px solid white;
 	position: absolute;
 	visibility: hidden;
 	opacity: 0;
 	width: 50%;
 	height: 80%;
+	border: 2px solid rgba(40, 40, 40, 1);
+    background-color: rgba(24, 24, 24, 0.9);
 }
 
 #friends_list{
@@ -305,3 +469,87 @@ td{
 	background-color: rgba(255,0,0, 0.5);
 
 }
+
+#notifbtn{
+	z-index: 1;
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	margin: 0;
+	width: 20%;
+}
+
+#notifications{
+	border: 2px solid rgba(40, 40, 40, 1);
+    background-color: rgba(24, 24, 24, 1);
+	visibility: hidden;
+	opacity: 0;
+	text-align: center;
+	position: absolute;
+	width: 20%;
+	height: 40%;
+	right: 0;
+	bottom: 0; 
+	overflow-y: scroll;
+	border-radius: 10%;
+}
+
+#notiftitle{
+	font-size: medium;
+	color:white;
+	text-align: center;
+}
+
+#closeNotifs{
+	width: 30%;
+    padding: 3%;
+}
+
+#sendnotifs
+{
+	width: 100%;
+    height: 20%;
+    border: 1px solid white;
+	display: flex;
+	margin-bottom: 2%;
+}
+
+#notifform{
+
+}
+
+#inputnotif{
+	width: 50%;
+	font-size: small;
+	padding: 0;
+}
+
+#sendbtn{
+	font-size: small;
+	padding: 0;
+	margin: 0;
+}
+
+selectnotif{
+	width: 50%;
+}
+
+#notiftable{
+	color: white;
+    overflow: hidden;
+}
+
+#notiftd{
+	width: 25%;
+}
+
+#notifaccept{
+	color: green;
+	border-color: green;
+}
+
+#notifdecline{
+	color: red;
+	border-color: red;
+}
+

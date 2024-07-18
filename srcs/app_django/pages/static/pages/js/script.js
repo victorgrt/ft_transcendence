@@ -4,21 +4,21 @@ const goBackButton = document.getElementById("footer");
 const header = document.getElementById("header");
 const contentdiv = document.getElementById("content");
 const statsDiv = document.getElementById("user_stats");
-const friendsDiv = document.getElementById("friends")
+const friendsDiv = document.getElementById("friends");
+const paramsDiv = document.getElementById("change_prof");
+const menuPongDiv = document.getElementById("menuPongDiv");
+const notifsDiv = document.getElementById("notifications");
 
 console.log("loaded script");
 
-//pcq c une array
-
-
-// const pongScene = document.getElementById("pongScene")[0];
+console.log("loaded script");
 
 function pongPageScripts () {
     console.log("launchPongScript")
 
     // connect to game
     connectToGame();
-
+    launchGame();
 }
 
 
@@ -34,16 +34,20 @@ function loadContent(url, pushState = true) {
         url = ""
 
     // if there is a trailing session id, remove it
-    if (url.includes('/pong/')) 
+    if (url.includes('/pong/'))
         page_url = '/pong/'
-    else 
+    else
         page_url = url
 
-    fetch(url)
+    fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
         .then(response => response.text())
         .then(data => {
             console.log("fetched url : ", url);
-            
+
             // Update page content
             const mainDiv = document.getElementById('content');
             mainDiv.innerHTML = data;

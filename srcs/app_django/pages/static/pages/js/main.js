@@ -1,3 +1,4 @@
+
 var scene, camera, renderer, loader, controls;
 var raycaster = new THREE.Raycaster();
 var mouse = new THREE.Vector2();
@@ -98,7 +99,7 @@ function onMouseMove(event) {
     }
     // Mettre en surbrillance l'objet spécifique
     if (intersects.length > 0) {
-        document.body.style.cursor = 'pointer';
+        // document.body.style.cursor = 'pointer';
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
             if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2') && isZooming === false) {
@@ -122,7 +123,7 @@ function onMouseMove(event) {
         }
         else if (!selectedObject) {
             selecting_clickable = false;
-            document.body.style.cursor = 'default';
+            // document.body.style.cursor = 'default';
         }
     }
 }
@@ -247,8 +248,9 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     controls.target.x = -targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
-                    loadContent('menuPong/');
                     menuPongVisible = true;
+                    showElement(menuPongDiv);
+                    loadMenuPong();
                     hideElement(header);
                     showElement(goBackButton);
                 })
@@ -256,6 +258,27 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
         }
     }
 }
+
+function waitForElm(selector) {
+    return new Promise(resolve => {
+        if (document.getElementById(selector)) {
+            return resolve(document.getElementById(selector));
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.getElementById(selector)) {
+                observer.disconnect();
+                resolve(document.getElementById(selector));
+            }
+        });
+
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
+}
+
 
 let isZooming = false;
 window.addEventListener('click', onClickScene);
@@ -307,17 +330,6 @@ window.addEventListener('pageshow', function (event) {
     }
 });
 
-//=== CHANGE PAGE ===//
-function changeTemplate(templateName) {
-    const currentUrl = window.location.href;
-    const newUrl = `${currentUrl}${templateName}/`;
-    loadContent(newUrl);
-}
-
-function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function goToLogin() {
     if (isZooming) return;
 
@@ -356,7 +368,7 @@ function centerRegisterForm()
     contentdiv.style.display = 'flex';
     contentdiv.style.justify_content = 'center';
     contentdiv.style.align_items = 'center';
-    
+
     registerForm.style.width = '80%';
 
     loginForm.style.position = 'absolute';
@@ -368,7 +380,7 @@ function centerLoginForm()
     contentdiv.style.display = 'flex';
     contentdiv.style.justify_content = 'center';
     contentdiv.style.align_items = 'center';
-    
+
     loginForm.style.width = '50%';
     loginForm.style.height = '40%';
 
@@ -415,7 +427,7 @@ function resetStyleForms(){
     registerForm.style.opactity = '0';
     registerForm.style.removeProperty('width');
     loginForm.style.removeProperty('position');
-    
+
     // RESET login form style
     loginForm.style.removeProperty('width');
     loginForm.style.removeProperty('height');
@@ -425,37 +437,49 @@ function resetStyleForms(){
 function zoomBack() {
     if (statsVisible === true)
     {
-        hideElement(goBackButton);
         statsDiv.style.visibility = '0';
         statsDiv.style.opacity = '0';
         statsVisible = false;
-        return; //returns because no zoom back needed
     }
     if (friendsVisible === true)
     {
-        hideElement(goBackButton);
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
         friendsVisible = false;
-        return; //returns because no zoom back needed
     }
     if (registerVisible === true)
     {
-        hideElement(goBackButton);
         registerForm.style.visibility = '0';
         registerForm.style.opacity = '0';
     }
     if (loginVisible === true)
     {
-        hideElement(goBackButton);
         loginForm.style.visibility = '0';
         loginForm.style.opacity = '0';
     }
     if (menuPongVisible === true)
     {
-        hideElement(menuPong);
+        hideElement(menuPongDiv);
         menuPongVisible = false;
     }
+    if (paramsVisible === true)
+    {
+        paramsDiv.style.visibility = 'hidden';
+        paramsDiv.style.opacity = '0';
+        paramsVisible = false;
+
+    }
+    // if (notifsVisible === true)
+    // {
+    //     notifsDiv.style.visibility = 'hidden';
+    //     notifsDiv.style.opacity = '0';
+    //     notifsVisible = false;
+    //     showElement(notifbtn);
+    // }
+    hideElement(goBackButton);
+    if (isZoomed === false)
+        return; //returns because no zoom back needed
+
     let duration = 2000;
     isZooming = true;
     console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
@@ -508,3 +532,97 @@ function showFriends(){
     showElement(goBackButton);
     friendsVisible = true;
 }
+
+var paramsVisible = false;
+function showParams()
+{
+    console.log("coucou");
+    if (paramsVisible === true)
+    {
+        hideElement(goBackButton)
+        paramsDiv.style.visibility = '0';
+        paramsDiv.style.opacity = '0';
+        paramsVisible = false;
+        return;
+    }
+    paramsDiv.style.visibility = 'visible';
+    paramsDiv.style.opacity = '1';
+    paramsVisible = true;
+    showElement(goBackButton);
+    console.log("tg");
+}
+
+var notifsVisible = false;
+function showNotifs(){
+    const notifbtn = document.getElementById("notifbtn");
+    hideElement(notifbtn);
+    notifsDiv.style.visibility = 'visible';
+    notifsDiv.style.opacity = '1';
+    notifsVisible = true;
+}
+
+// HANDLE NOTIFICATIONS
+function acceptNotif(){
+    console.log("accept notification here!");
+}
+
+function declineNotif(){
+    console.log("decline notif here!");
+}
+
+function hideNotifs(){
+    console.log("closing notifications div")
+    notifsDiv.style.visibility = '0';
+    notifsDiv.style.opacity = '0';
+    showElement(notifbtn);
+}
+
+// function handleSendNotif(){
+//         // Récupérer la valeur de l'input
+//         var inputVal = document.getElementById("inputnotif").value;
+//         // Récupérer la valeur du select
+//         var selectVal = document.getElementById("selectnotif").value;
+//         alert("Notification sent to " + inputVal + ": " + selectVal);
+//         // Afficher les valeurs dans la console
+//         console.log("PSEUDO:", inputVal);
+//         console.log("Notification Type:", selectVal);
+// }
+
+
+$(document).ready(function() {
+    console.log("on passe ici?");
+    $('#sendbtn').click(function(e) {
+        e.preventDefault();  // Empêche le formulaire de se soumettre normalement
+        
+        var formData = {
+            'pseudo': $('#inputnotif').val(),
+            'notification_type': $('#selectnotif').val(),
+            'from_user': $('#from_user').text(),
+            'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+        };
+
+        //retrieve user_name sender
+        var test = $('#from_user').text();
+        console.log("from : ", test);
+        
+        $.ajax({
+            type: 'POST',
+            url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
+            data: formData,
+            success: function(response) {
+                if (response.status === 'success') {
+                    console.log("la mon reuf");
+
+                    alert(response.message);
+                } else {
+                    alert(response.message);
+                }
+            },
+            error: function(response) {
+                alert('Error: ' + response.statusText);
+            }
+        });
+    });
+});
+
+

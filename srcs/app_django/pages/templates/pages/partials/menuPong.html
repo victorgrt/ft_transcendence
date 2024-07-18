@@ -1,19 +1,1 @@
 {% load static %}
-<link rel="stylesheet" type="text/css" href="{% static 'pages/css/gameSession.css' %}">
-<script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
-
-<div id="left">
-	<a class="button" href="/pong/">IA</a>
-	<a class="button" href="/pong/">1v1</a>
-	<a class="button" href="/pong/">Tournois</a>
-    <button id="createSessionBtn">Create Game Session</button>
-	<button id="joinSessionBtn" href="/pong/">Join</button>
-    <input type="text" placeholder="Enter daronne ici" id="sessionIdInput"></input>
-</div>
-<div id="right">
-    <div id="user-info">
-        <p>Login: <span id="username">Loading...</span></p>
-        <p>Email: <span id="email">Loading...</span></p>
-        <p>Status: <span id="is_active">Loading...</span></p>
-    </div>
-</div>

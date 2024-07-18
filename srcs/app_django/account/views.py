@@ -1,12 +1,12 @@
 from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from .models import CustomUser  # Adjust the import path according to your project structure
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth import authenticate, login as django_login
 from django.contrib.sessions.models import Session
-from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
@@ -25,21 +25,27 @@ def settings(request):
 		new_username = request.POST.get('new_username')
 		new_avatar = request.FILES.get('new_avatar')
 		user = request.user
-  		# Check if the new username already exists
-		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists():
+
+		# Check if the new username already exists
+		print("USER NAME :'", new_username, "'")
+		print("NEW AVATAR :", new_avatar)
+
+		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists() and new_username:
 			messages.error(request, 'Username already taken. Please choose a different one.')
-			return redirect('home') 
-		print('new username:', new_username) 
-		user.username = new_username
-		print('new username in user:', user.username) 
-		user.avatar = new_avatar
+			print("ON RETURN LA")
+			return redirect('home')
+
+		if new_username:
+			print("COUCOU ON EST LAAAAAAAAAAAAa")
+			user.username = new_username
+
+		if new_avatar:
+			print("COUCOU ON EST ICI")
+			user.avatar = new_avatar
+
 		user.save()
-		messages.success(request, 'Your profile was successfully updated.')
-		# JsonResponse({'status': 'success', 'message': 'Profile updated successfully'})
-		return redirect('home')
-    	# Handle non-POST requests, maybe redirect or return an error
-	return JsonResponse({'status': 'error', 'message': 'Invalid request'}, status=400)
-  
+	print("ON SORT DIRECTEMENT")
+	return redirect('home')
 
 @csrf_exempt  # Only for demonstration; consider CSRF protection for production
 def createUser(request):
@@ -48,7 +54,7 @@ def createUser(request):
         email = request.POST.get('email')
         password = request.POST.get('password')
         avatar = request.FILES.get('avatar')
-        
+
         # if CustomUser.objects.count() == 0:
         #     user = CustomUser.objects.create_superuser(username="jquil", email="jquil@jquil.com", password="admin")
         # else :
@@ -68,6 +74,7 @@ def createUser(request):
 
 @csrf_exempt
 def login(request):
+<<<<<<< HEAD
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -95,6 +102,37 @@ def login(request):
             messages.error(request, 'Please provide both username and password.')
     return redirect('home')
     
+=======
+    
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+
+    print(username)
+    if username and password:
+        print(f"Attempting to authenticate user: {username}")
+        # Authenticate user
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            print(f"Authentication successful for user: {username}")
+            print("Successfully logged in.")
+            django_login(request, user)
+            # set user-specific data in the session
+            request.session['username'] = username
+            request.session.save()
+            messages.success(request, 'You have successfully logged in.')
+            # return render(request, 'pages/partials/home_page.html')
+            return JsonResponse({"message": "Successfully logged in."}, status=200)
+        else:
+            print("failed to log in.")
+            messages.error(request, 'Invalid username or password. Please try again.')
+            # return error 
+            return JsonResponse({"message": "Invalid username or password. Please try again."}, status=401)
+    else:
+        messages.error(request, 'Please provide both username and password.')
+        return JsonResponse({"message": "Please provide both username and password."}, status=401)
+
+>>>>>>> origin/game_history
 def user_avatar(request):
     if request.user.is_authenticated:
         try:
@@ -132,7 +170,7 @@ def send_friend_request(request):
 			# return HttpResponse("Friend request sent")
 			return JsonResponse({"message": "Friend request sent successfully."}, status=200)
 		return JsonResponse({"message": "Friend request sent successfully."}, status=200)
-			
+
 	# # to_user = CustomUser.objects.get(username=username)
 	# FriendRequest, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
 	# if created:
@@ -149,7 +187,7 @@ def accept_friend_request(request, requestID):
 		return HttpResponse('Friend request accepted')
 	else:
 		return HttpResponse('Friend request not accepted')
-	
+
 def logout(request):
     print('IN LOGOUT')
     django_logout(request)

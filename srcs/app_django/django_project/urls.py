@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("pages.urls")),
+    # url(r'^ws/', include(routing.websocket_urlpatterns)),
     # account 
     # path('account/', include("account.urls")),
 ]

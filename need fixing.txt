@@ -1,0 +1,2 @@
+REGISTER:
+	- quand email deja utilisee -> crash
