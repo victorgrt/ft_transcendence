@@ -11,8 +11,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 # from .models import GameSession
-from .models import FriendRequest
-from .models import Notification
+from notification.models import FriendRequest
+from notification.models import Notification
 import uuid
 
 
@@ -32,17 +32,11 @@ def settings(request):
 
 		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists() and new_username:
 			messages.error(request, 'Username already taken. Please choose a different one.')
-			print("ON RETURN LA")
-			return redirect('home')
-
-		if new_username:
-			print("COUCOU ON EST LAAAAAAAAAAAAa")
-			user.username = new_username
-
-		if new_avatar:
-			print("COUCOU ON EST ICI")
-			user.avatar = new_avatar
-
+			return redirect('home') 
+		print('new username:', new_username) 
+		user.username = new_username
+		print('new username in user:', user.username) 
+		user.avatar = new_avatar
 		user.save()
 	print("ON SORT DIRECTEMENT")
 	return redirect('home')
