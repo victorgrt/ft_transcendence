@@ -85,12 +85,14 @@ def login(request):
             # set user-specific data in the session
             request.session['username'] = username
             request.session.save()
-            messages.success(request, 'You have successfully logged in.')
+            return redirect('home')
+            # print("After login")
+            # messages.success(request, 'You have successfully logged in.')
             # return render(request, 'pages/partials/home_page.html')
-            return JsonResponse({"message": "Successfully logged in."}, status=200)
+            # return JsonResponse({"message": "Successfully logged in."}, status=200)
         else:
             print("failed to log in.")
-            messages.error(request, 'Invalid username or password. Please try again.')
+            # messages.error(request, 'Invalid username or password. Please try again.')
             # return error 
             return JsonResponse({"message": "Invalid username or password. Please try again."}, status=401)
     else:
