@@ -85,7 +85,7 @@ def login(request):
             # set user-specific data in the session
             request.session['username'] = username
             request.session.save()
-            return redirect('home')
+            return JsonResponse({"message": "Successfully logged in."}, status=200)
             # print("After login")
             # messages.success(request, 'You have successfully logged in.')
             # return render(request, 'pages/partials/home_page.html')
