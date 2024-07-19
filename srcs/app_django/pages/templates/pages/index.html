@@ -75,7 +75,7 @@
             <!-- REGISTER FORM -->
             <div class="register_form">
                 <h2>Registering</h2>
-                <form action="/account/createUser" method="post" enctype="multipart/form-data">
+                <form id="registerForm" action="/account/createUser" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="username">Your User Name:</label>
                         <input type="text" id="username" name="username" required>
@@ -93,8 +93,9 @@
                         <input type="file" id="avatar" name="avatar" accept=image/*>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Submit">
+                        <input type="submit" value="REGISTER">
                     </div>
+                    <div id="registerError"></div>
                 </form>
             </div>
         </div>
@@ -268,7 +269,7 @@
             </div>
             <div class="register_form">
                 <h2>Registering</h2>
-                <form action="/account/createUser" method="post" enctype="multipart/form-data">
+                <form id="registerForm" action="/account/createUser" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="username">Your User Name:</label>
                         <input type="text" id="username" name="username" required>
@@ -289,6 +290,7 @@
                         <input type="submit" value="Submit">
                     </div>
                 </form>
+                    <div id="registerError"></div>
             </div>
         {% endif %}
     </div>
@@ -309,15 +311,21 @@
     src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 <!-- ZOOM -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+<!-- SCENE SCRIPT -->
+<script type="text/javascript" src="{% static 'pages/js/scene.js' %}"></script>
 <!-- GAME SESSION SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/gameSession.js' %}"></script>
+<!-- GLOBALS SCRIPT -->
+<script type="text/javascript" src="{% static 'pages/js/globals.js' %}"></script>
 <!-- LOADING SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
 <!-- PONG SCRIPT??? -->
 <script src="{% static 'pages/js/pong.js' %}"></script>
 <!-- LOGIN FORM SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
-<!-- SCENE SCRIPT -->
+<!-- REGISTER FORM SCRIPT -->
+<script type="text/javascript" src="{% static 'pages/js/handleRegisterForm.js' %}"></script>
+<!-- MAIN SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
 
 </html>
