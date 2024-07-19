@@ -11,9 +11,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 # from .models import GameSession
-from notification.models import FriendRequest
-from notification.models import Notification
+# from notification.models import FriendRequest
+# from notification.models import Notification
 import uuid
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 
 # def register(request):
@@ -49,9 +51,6 @@ def createUser(request):
         password = request.POST.get('password')
         avatar = request.FILES.get('avatar')
 
-        # if CustomUser.objects.count() == 0:
-        #     user = CustomUser.objects.create_superuser(username="jquil", email="jquil@jquil.com", password="admin")
-        # else :
         print("Creating user")
         print(username)
         print(email)
@@ -63,7 +62,8 @@ def createUser(request):
         # user.is_staff = False
         user.save()
 
-        return render(request, 'account/login.html')
+        # return render(request, 'account/login.html')
+        return redirect('home')
     return HttpResponse("This endpoint expects a POST request.")
 
 @csrf_exempt

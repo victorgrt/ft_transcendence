@@ -8,7 +8,7 @@ var selected_object_name;
 var selecting_clickable;
 
 var initialControlPosition;
-
+var clickCoordinates = null;
 function init() {
     scene = new THREE.Scene();
 
@@ -162,17 +162,18 @@ window.addEventListener('resize', () => {
 
 //=== ZOOM INTO OBJECTS ===//
 let isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom
-console.log("isZoomed? ", isZoomed);
 
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
-function zoomToCoordinates(clickCoordinates, redirect_flag) {
+function zoomToCoordinates(clickCoordinates) {
     const duration = 2000;
     var targetPosition;
-    if (isZoomed && selecting_clickable === true && (loginVisible || registerVisible) === false) {
+    if (isZoomed && selecting_clickable === true) {
+        if (loginVisible === true || registerVisible === true)
+            return ;
+        console.log("HERE BABYBOY")
         isZooming = true;
-        console.log("LA : x:", clickCoordinates.x, "y:", clickCoordinates.y, "z:", clickCoordinates.z)
         if (loginVisible === true)
             hideElement(loginForm);
         else if (registerVisible === true)
@@ -182,14 +183,23 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
-                camera.lookAt(initialCameraLookAt);
+                // camera.lookAt(initialCameraLookAt);
+                controls.target = clickCoordinates;
+                // camera.target.set.y = clickCoordinates.y;
+                // camera.target.set.z = clickCoordinates.z;
+
             })
             .onComplete(() => {
+                if (loginVisible || registerVisible)
+                {
+                    hideElement(loginForm);
+                    hideElement(registerForm);
+                }
                 isZoomed = false;
                 isZooming = false;
                 localStorage.setItem('isZoomed', isZoomed);
-                camera.position.set = initialCameraPosition;
-                camera.lookAt = initialCameraLookAt;
+                // camera.position.set = initialCameraPosition;
+                // camera.lookAt = initialCameraLookAt;
             })
             .start();
     }
@@ -215,22 +225,23 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
                     console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
                     isZooming = false;
 
-                    controls.target.x = targetPosition.x;
-                    controls.target.y = targetPosition.y;
-                    controls.target.z = -targetPosition.z;
-                    console.log("HERE");
-                    if (redirect_flag === 0) {
-                        ;
-                        // showElement(loginForm);
-                        // hideElement(header);
-                        // goBackButton.style.visibility = 'visible';
-                    }
-                    else if (redirect_flag === 1) {
-                        ;
-                        // showElement(registerForm);
-                        // hideElement(header);
-                        // goBackButton.style.visibility = 'visible';
-                    }
+                    controls.target.x = clickCoordinates.x;
+                    controls.target.y = clickCoordinates.y;
+                    controls.target.z = clickCoordinates.z;
+
+                    // loginVisible.removeProperty('position');
+                    loginForm.style.visibility = 'visible';
+                    loginForm.style.opacity = '1';
+                    loginForm.style.width = '40%';
+                    loginForm.style.position = 'relative';
+                    loginVisible = true;
+
+                    registerForm.style.visibility = 'visible';
+                    registerForm.style.opacity ='1';
+                    registerForm.style.width = '40%';
+                    registerForm.style.position = 'relative';
+                    registerVisible = true
+                    showElement(goBackButton);
                 })
                 .start();
         }
@@ -259,33 +270,12 @@ function zoomToCoordinates(clickCoordinates, redirect_flag) {
     }
 }
 
-function waitForElm(selector) {
-    return new Promise(resolve => {
-        if (document.getElementById(selector)) {
-            return resolve(document.getElementById(selector));
-        }
-
-        const observer = new MutationObserver(mutations => {
-            if (document.getElementById(selector)) {
-                observer.disconnect();
-                resolve(document.getElementById(selector));
-            }
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    });
-}
-
-
 let isZooming = false;
 window.addEventListener('click', onClickScene);
 
 function onClickScene(event) {
     console.log("isZooming :", isZooming);
-    if (isZooming)
+    if (isZooming === true || isZoomed === true)
         return;
     // Calculate the click coordinates in 3D space
     const mouse = new THREE.Vector2(
@@ -299,7 +289,7 @@ function onClickScene(event) {
 
     if (intersects.length > 0) {
         const intersection = intersects[0];
-        const clickCoordinates = intersection.point;
+        clickCoordinates = intersection.point;
         zoomToCoordinates(clickCoordinates);
     }
 }
@@ -331,35 +321,69 @@ window.addEventListener('pageshow', function (event) {
 });
 
 function goToLogin() {
-    if (isZooming) return;
-
-    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
-
-    selecting_clickable = true;
-    selected_object_name = "Plane009_2";
-    zoomToCoordinates(clickCoordinates, 0);
-    showElement(loginForm);
+    if (isZoomed === false && isZooming === false)
+        zoomToPC();
+    if (registerVisible === true)
+    {   
+        registerForm.style.visibility = 'hidden';
+        registerForm.style.opacity = '0';
+        resetStyleForms();
+        registerVisible = false;
+    }    
+    loginVisible = true;
+    centerLoginForm();
+    loginForm.style.opacity = '1';
+    loginForm.style.visibility = 'visible';
+    loginForm.style.z_index = '2';
+    // showElement(goBackButton);
 }
 
 function goToRegister() {
     if (isZooming) return;
-    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
-
-    selecting_clickable = true;
-    selected_object_name = "Plane009_2";
-    zoomToCoordinates(clickCoordinates, 1);
-    showElement(registerForm);
+    if (isZoomed === false && isZooming === false)
+        zoomToPC();
+    if (loginVisible === true)
+    {
+        loginForm.style.visibility = 'hidden';
+        loginForm.style.opacity = '0';
+        resetStyleForms();
+        loginVisible = false;
+    }
+    registerVisible = true;
+    centerRegisterForm();
+    registerForm.style.opacity = '1';
+    registerForm.style.visibility = 'visible';
+    registerForm.style.z_index = '2';
+    // showElement(goBackButton);
 }
 
 function zoomToPC() {
-    if (isZooming) return;
 
-    // Coordonnées fixes de l'objet vers lequel vous voulez zoomer
-    const clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
-
-    selecting_clickable = true;
-    selected_object_name = "Plane009_2";
-    zoomToCoordinates(clickCoordinates);
+    var clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
+    isZooming = true;
+    isZoomed = true;
+    var dur = 2000;
+    //position we want to be
+    targetPosition = new THREE.Vector3(2, 2.8, 0.02);
+    //position we want to look at
+    hardClickCoordinates = new THREE.Vector3(1.8, 2.8, -2.3);
+    new TWEEN.Tween(camera.position)
+        .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, dur)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
+            controls.target.x = hardClickCoordinates.x;
+            controls.target.y = hardClickCoordinates.y;
+            controls.target.z = hardClickCoordinates.z;
+        })
+    .onComplete(() => {
+        console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
+        isZooming = false;
+        controls.target.x = hardClickCoordinates.x;
+        controls.target.y = hardClickCoordinates.y;
+        controls.target.z = hardClickCoordinates.z;
+        showElement(goBackButton);
+    })
+    .start();
 }
 
 function centerRegisterForm()
@@ -370,6 +394,7 @@ function centerRegisterForm()
     contentdiv.style.align_items = 'center';
 
     registerForm.style.width = '80%';
+    // registerForm.style.position = 'absolute';
 
     loginForm.style.position = 'absolute';
 }
@@ -390,22 +415,12 @@ function centerLoginForm()
 var loginVisible;
 var registerVisible;
 var menuPongVisible;
-function showElement(element) {
-    console.log("here:", element.className);
-    if (element.className === "register_form")
-    {
-        registerVisible = true;
-        centerRegisterForm();
-        showElement(goBackButton);
-    }
-    if (element.className === "login_form")
-    {
-        loginVisible = true;
-        centerLoginForm();
-        showElement(goBackButton);
-    }
+function showElement(element)
+{
     element.style.opacity = '1';
     element.style.visibility = 'visible';
+    element.style.z_index = '2';
+    console.log("z_index_value:", element.style.z_index);
 }
 
 function hideElement(element) {
@@ -415,8 +430,10 @@ function hideElement(element) {
         loginVisible = true;
     element.style.opacity = '0';
     element.style.visibility = 'hidden';
+    element.style.z_index = '-2';
 }
 
+// SEEMS LIKE NOT NEEDED BUT KEEP IT HERE JUST IN CASE
 function resetStyleForms(){
     // RESET register form style
     contentdiv.style.removeProperty('display');
@@ -426,10 +443,10 @@ function resetStyleForms(){
     registerForm.style.visibility = '0';
     registerForm.style.opactity = '0';
     registerForm.style.removeProperty('width');
-    loginForm.style.removeProperty('position');
 
     // RESET login form style
     loginForm.style.removeProperty('width');
+    loginForm.style.removeProperty('position');
     loginForm.style.removeProperty('height');
     registerForm.style.removeProperty('position');
 }
@@ -439,23 +456,29 @@ function zoomBack() {
     {
         statsDiv.style.visibility = '0';
         statsDiv.style.opacity = '0';
+        statsDiv.style.z_index = '-2';
         statsVisible = false;
     }
     if (friendsVisible === true)
     {
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
+        friendsDiv.style.z_index = '-2';
         friendsVisible = false;
     }
     if (registerVisible === true)
     {
+        registerForm.style.z_index = '-2';
         registerForm.style.visibility = '0';
         registerForm.style.opacity = '0';
+        registerVisible = false;
     }
     if (loginVisible === true)
     {
+        loginForm.style.z_index = '-2';   
         loginForm.style.visibility = '0';
         loginForm.style.opacity = '0';
+        registerVisible = false;
     }
     if (menuPongVisible === true)
     {
@@ -464,18 +487,12 @@ function zoomBack() {
     }
     if (paramsVisible === true)
     {
+        paramsDiv.style.z_index = '-2';
         paramsDiv.style.visibility = 'hidden';
         paramsDiv.style.opacity = '0';
         paramsVisible = false;
 
     }
-    // if (notifsVisible === true)
-    // {
-    //     notifsDiv.style.visibility = 'hidden';
-    //     notifsDiv.style.opacity = '0';
-    //     notifsVisible = false;
-    //     showElement(notifbtn);
-    // }
     hideElement(goBackButton);
     if (isZoomed === false)
         return; //returns because no zoom back needed
@@ -485,20 +502,33 @@ function zoomBack() {
     console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
     new TWEEN.Tween(camera.position)
         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
-        .easing(TWEEN.Easing.Quadratic.InOut)
+        .easing(TWEEN.Easing.Back.InOut)
         .onUpdate(() => {
-            camera.lookAt(initialCameraLookAt);
-            // controls.target = clickCoordinates;
+            if (clickCoordinates != null)
+            {
+                controls.target.x = clickCoordinates.x;
+                controls.target.y = clickCoordinates.y;
+                controls.target.z = clickCoordinates.z;
+            }
+            else
+            {
+                controls.target.x = initialCameraLookAt.x;
+                controls.target.y = initialCameraLookAt.y;
+                controls.target.z = initialCameraLookAt.z;
+            }
         })
         .onComplete(() => {
             isZoomed = false;
             isZooming = false;
             localStorage.setItem('isZoomed', isZoomed);
-            controls.position = initialCameraPosition;
             controls.position = new THREE.Vector3(12, 5, 12);
-            controls.target =  new THREE.Vector3(0, 0, 0);
+            controls.target.x = initialCameraLookAt.x;
+            controls.target.y = initialCameraLookAt.y;
+            controls.target.z = initialCameraLookAt.z;
+            // const endRotation = new THREE.Quaternion( 0, 0, 0 );
+            // camera.applyQuaternion(endRotation); // Apply endRotation
+            console.log("quaternion applied");
             showElement(header);
-            console.log("apres:", initialCameraLookAt, initialCameraPosition);
         })
         .start();
 }
@@ -512,6 +542,7 @@ function showStats(){
     }
     statsDiv.style.visibility = 'visible';
     statsDiv.style.opacity = '1';
+    statsDiv.style.z_index = '2';
     statsVisible = true;
     showElement(goBackButton);
     statsVisible = true;
@@ -527,6 +558,7 @@ function showFriends(){
         friendsVisible = false;
         return;
     }
+    friendsDiv.style.z_index = '2';
     friendsDiv.style.visibility = 'visible';
     friendsDiv.style.opacity = '1';
     showElement(goBackButton);
@@ -545,6 +577,7 @@ function showParams()
         paramsVisible = false;
         return;
     }
+    paramsDiv.style.z_index = '2';
     paramsDiv.style.visibility = 'visible';
     paramsDiv.style.opacity = '1';
     paramsVisible = true;
@@ -559,34 +592,80 @@ function showNotifs(){
     notifsDiv.style.visibility = 'visible';
     notifsDiv.style.opacity = '1';
     notifsVisible = true;
+    notifsDiv.style.z_index = '2';
 }
 
 // HANDLE NOTIFICATIONS
-function acceptNotif(){
+function acceptNotif(obj){
+    console.log("OBJ : ", obj)
     console.log("accept notification here!");
+    var value = $(obj).val();
+    console.log("value:", value);
+    if (value === 'play')
+    {
+        console.log("PLAY");
+        //logique de rejoindre la game
+        
+        //delete notif
+        var id_to_delete = obj.className;
+        var element = document.getElementById(id_to_delete);
+        element.remove();
+        return ;
+    }
+    else if (value === 'friend')
+    {
+        console.log("FRIEND");
+        //logique de ajouter en amis
+        var notificationId = obj.className;  // Adapter selon votre implémentation
+        let test = parseInt(notificationId);
+        // Envoyer une requête Ajax pour informer le serveur que l'invitation est acceptée
+        $.ajax({
+            url: '/accept-friend-request/',  // URL de votre vue Django pour accepter une demande d'ami
+            type: 'POST',
+            data: {
+                notification_id: test  // ID de la notification à accepter
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    // Gérer la réponse si nécessaire
+                    console.log('Friend request accepted successfully');
+                } else {
+                    // Gérer les erreurs ou autres cas
+                    console.error('Error accepting friend request:', response.message);
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+        //delete notif
+        var id_to_delete = obj.className;
+        var element = document.getElementById(id_to_delete);
+        element.remove();
+        return;
+    }
+    else
+    {
+        var id_to_delete = obj.className;
+        var element = document.getElementById(id_to_delete);
+        element.remove();
+        alert("WRONG NOTIF DUDE");
+    }
 }
 
-function declineNotif(){
-    console.log("decline notif here!");
+function declineNotif(obj){
+    console.log(obj);
+    var id_to_delete = obj.className;
+    var element = document.getElementById(id_to_delete);
+    element.remove();
 }
 
 function hideNotifs(){
     console.log("closing notifications div")
-    notifsDiv.style.visibility = '0';
+    notifsDiv.style.visibility = 'hidden';
     notifsDiv.style.opacity = '0';
     showElement(notifbtn);
 }
-
-// function handleSendNotif(){
-//         // Récupérer la valeur de l'input
-//         var inputVal = document.getElementById("inputnotif").value;
-//         // Récupérer la valeur du select
-//         var selectVal = document.getElementById("selectnotif").value;
-//         alert("Notification sent to " + inputVal + ": " + selectVal);
-//         // Afficher les valeurs dans la console
-//         console.log("PSEUDO:", inputVal);
-//         console.log("Notification Type:", selectVal);
-// }
 
 
 $(document).ready(function() {
@@ -601,10 +680,12 @@ $(document).ready(function() {
             'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
         };
 
-        //retrieve user_name sender
-        var test = $('#from_user').text();
-        console.log("from : ", test);
-        
+        if (formData.notification_type === "" || formData.pseudo === "")
+        {
+            console.log("EMPTY ????");
+            return ;
+        }
+
         $.ajax({
             type: 'POST',
             url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
@@ -612,7 +693,7 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.status === 'success') {
                     console.log("la mon reuf");
-
+                    compteur_notifs++;
                     alert(response.message);
                 } else {
                     alert(response.message);
@@ -625,4 +706,20 @@ $(document).ready(function() {
     });
 });
 
+function handleNotification(data)
+{
+    console.log("compteur :", compteur_notifs);
+    console.log("data received:", data);
+    var type = "default";
+    if (data.message === "play with")
+        type = "play"
+    else if (data.message === "friend request")
+        type = "friend"
+    document.getElementById("notiftable").innerHTML += 
+    '<tr id="' + compteur_notifs + "\">" +
+    '<td id="notiftd_from_notif">' + data.from_user + '</td>' +
+    '<td id="notiftd_fype">' + type + '</td>' +
+    '<td id="notiftd_from_notif"><button class="' + compteur_notifs + "\"" + 'id="notifaccept" value="' + type + '" onclick="acceptNotif(this)">V</button></td>' +
+    '<td id="notiftd_from_notif"><button class="' + compteur_notifs + "\"" + 'id="notifdecline" onclick="declineNotif(this)">X</button></td>';
+}
 

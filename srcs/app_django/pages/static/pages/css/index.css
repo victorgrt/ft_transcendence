@@ -195,17 +195,17 @@ button {
 	opacity: 0;
 	max-width: 600px;
 	margin: auto;
-  border: 2px solid rgba(40, 40, 40, 1);
-  color: white;
-  background-color: rgba(24, 24, 24, 1);
+	border: 2px solid rgba(40, 40, 40, 1);
+	color: white;
+	background-color: rgba(24, 24, 24, 1);
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
 	transition: opacity 1.5s ease-out;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  	display: flex;
+  	flex-direction: column;
+  	align-items: center;
 }
 
 #loginForm
@@ -279,7 +279,9 @@ input[type="submit"]:hover {
 	visibility: hidden;
 	max-width: 600px;
 	margin: auto;
-	background: #ffffff;
+	border: 2px solid rgba(40, 40, 40, 1);
+	color: white;
+	background-color: rgba(24, 24, 24, 1);
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
@@ -312,7 +314,8 @@ input[type="submit"]:hover {
 
 /* GAME SESSION / MENUPONG */
 #menuPongDiv {
-position: absolute;
+	z-index: 2;
+	position: absolute;
 	opacity: 0;
 	visibility: hidden;
 	transition: opacity 1s ease-out;
@@ -345,12 +348,51 @@ position: absolute;
 }
 
 input[type="text"] {
-	font-size: 1.5rem; /* Increased font size */
-	padding: 10px; /* Increased padding */
-	margin-top: 20px; /* Increased margin */
-	border-radius: 5px; /* Border radius */
-	width: 80%; /* Adjust width as needed */
-	text-align: center;
+	/* font-size: 1.5rem; /* Increased font size */
+	/* padding: 10px; Increased padding */
+	/* margin-top: 20px; Increased margin */
+	/* border-radius: 5px; Border radius */
+	/* width: 80%; Adjust width as needed */
+	/* text-align: center; */ 
+	box-sizing: border-box;
+    width: 100%;
+    font-size: 16px;
+    border: px solid black;
+    border-radius: 1vh;
+    background-color: gray;
+    color: white;
+}
+
+input[type="email"] {
+	/* font-size: 1.5rem; /* Increased font size */
+	/* padding: 10px; Increased padding */
+	/* margin-top: 20px; Increased margin */
+	/* border-radius: 5px; Border radius */
+	/* width: 80%; Adjust width as needed */
+	/* text-align: center; */ 
+	box-sizing: border-box;
+    width: 100%;
+    font-size: 16px;
+    border: px solid black;
+    border-radius: 1vh;
+    background-color: gray;
+    color: white;
+}
+
+input[type="password"] {
+	/* font-size: 1.5rem; /* Increased font size */
+	/* padding: 10px; Increased padding */
+	/* margin-top: 20px; Increased margin */
+	/* border-radius: 5px; Border radius */
+	/* width: 80%; Adjust width as needed */
+	/* text-align: center; */ 
+	box-sizing: border-box;
+    width: 100%;
+    font-size: 16px;
+    border: px solid black;
+    border-radius: 1vh;
+    background-color: gray;
+    color: white;
 }
 
 .needed_hover2{
@@ -553,3 +595,15 @@ selectnotif{
 	border-color: red;
 }
 
+#notiftd_from_notif{
+	width: 25%;
+}
+
+#notiftd_fype {
+	width: 25%;
+}
+
+#nb_notifs{
+	visibility: hidden;
+	position: absolute;
+}

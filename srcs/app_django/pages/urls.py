@@ -19,7 +19,7 @@ urlpatterns = [
 
   # notifs
   path('send-notification/', send_notification, name='send_notification'),
-  
+  path('accept-friend-request/', accept_friend_request),
   # Game
   path("pong/<str:session_id>/", pong, name="pong_session"),  # Add this line
 ]

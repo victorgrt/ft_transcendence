@@ -20,8 +20,7 @@
 
     
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/index.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/account.css' %}">
-
+    <link rel="icon" type="image/x-icon" href="{% static 'pages/images/42logo.jpg' %}">
 </head>
 
 <body>
@@ -121,10 +120,10 @@
                 };
             
                 websocket.onmessage = function(event) {
+                    console.log(event.data);
                     var data = JSON.parse(event.data);
-                    console.log("Notification received:", data);
-                    alert('Notification received: ' + data);
-                    // addNotification(data);
+                    alert('Notification received from ' + data.from_user);
+                    handleNotification(data);
                 };
 
                 function sendNotificationSocket(username){
@@ -136,7 +135,14 @@
                     var pseudo = document.getElementById('inputnotif').value;
                     var notificationType = document.getElementById('selectnotif').value;
                     var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
-            
+                    var fromUser = document.querySelector('from_user').textContent;
+
+                    if (notificationType === "")
+                    {
+                        console.log("EMPTY MA GUEULE");
+                        return ;
+                    }
+
                     fetch('/send_notification/', {
                         method: 'POST',
                         headers: {
@@ -146,11 +152,13 @@
                         body: new URLSearchParams({
                             'pseudo': pseudo,
                             'notification_type': notificationType,
+                            'from_user': fromUser,
                         })
                     }).then(response => response.json()).then(data => {
                         console.log("Notification send response:", data);
                         if (data.status === 'success') {
-                            alert('Notification sent successfully.');
+                            // alert('Notification sent successfully.');
+                            console.log("here : ", data);
                         } else {
                             alert('Error sending notification: ' + data.message);
                         }
@@ -165,7 +173,7 @@
                 <form id="notifform">
                     {% csrf_token %}
                     <input type="text" placeholder="PSEUDO" id="inputnotif" name="pseudo">
-                    <select name="notification_type" id="selectnotif">
+                    <select name="notification_type" id="selectnotif" required>
                         <option value="">Please Select</option>
                         <option value="play with">play with</option>
                         <option value="friend request">friend request</option>
@@ -180,18 +188,7 @@
                     <td id="notiftd">ACCEPT</td>
                     <td id="notiftd">DECLINE</td>
                 </tr>
-                <tr>
-                    <td id="notiftd">Lucas</td>
-                    <td id="notiftd">Friends</td>
-                    <td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>
-                    <td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>
-                </tr>
-                <tr>
-                    <td id="notiftd">Ruru</td>
-                    <td id="notiftd">Play</td>
-                    <td id="notiftd"><button id="notifaccept" onclick="acceptNotif()">V</button></td>
-                    <td id="notiftd"><button id="notifdecline" onclick="declineNotif()">X</button></td>
-                </tr>
+                <p id="nb_notifs">{{user.nb_notifs}}</p>
             </table>
         </div>
         {% endif %}
@@ -251,48 +248,49 @@
             </table>
         </div>
         {% endif %}
-
-        <div class="login_form">
-            <h2 class="pong_title" style="font-size: 30px;margin-bottom: 30px;">LOGIN</h2>
-            <form id="loginForm" action="/account/login/" method="post">
-                <div class="form-group">
-                    <label for="username" class="account-form-label">Username</label>
-                    <input class="account-form-input" type="username" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password" class="account-form-label">Password</label>
-                    <input class="account-form-input" type="password" id="password" name="password">
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="LOGIN">
-                </div>
-            </form>
-            <div id="loginError"></div>
-        </div>
-        <div class="register_form">
-            <h2>Registering</h2>
-            <form action="/account/createUser" method="post" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="username">Your User Name:</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="email">Your Email:</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Your Password:</label>
-                    <input type="password" id="password" name="password">
-                </div>
-                <div class="form-group">
-                    <label for="avatar">Your avatar:</label>
-                    <input type="file" id="avatar" name="avatar" accept=image/*>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Submit">
-                </div>
-            </form>
-        </div>
+        {% if not user.is_authenticated %}
+            <div class="login_form">
+                <h2 class="pong_title" style="font-size: 30px;margin-bottom: 30px;">LOGIN</h2>
+                <form id="loginForm" action="/account/login/" method="post">
+                    <div class="form-group">
+                        <label for="username" class="account-form-label">Username</label>
+                        <input class="account-form-input" type="username" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password" class="account-form-label">Password</label>
+                        <input class="account-form-input" type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="LOGIN">
+                    </div>
+                </form>
+                <div id="loginError"></div>
+            </div>
+            <div class="register_form">
+                <h2>Registering</h2>
+                <form action="/account/createUser" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="username">Your User Name:</label>
+                        <input type="text" id="username" name="username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Your Password:</label>
+                        <input type="password" id="password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Your avatar:</label>
+                        <input type="file" id="avatar" name="avatar" accept=image/*>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Submit">
+                    </div>
+                </form>
+            </div>
+        {% endif %}
     </div>
     <div id="scene">
         <!-- scene 3d -->
