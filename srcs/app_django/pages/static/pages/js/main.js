@@ -162,7 +162,6 @@ window.addEventListener('resize', () => {
 
 //=== ZOOM INTO OBJECTS ===//
 let isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom
-console.log("isZoomed? ", isZoomed);
 
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
@@ -170,10 +169,11 @@ const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la 
 function zoomToCoordinates(clickCoordinates) {
     const duration = 2000;
     var targetPosition;
-    if (isZoomed && selecting_clickable === true && (loginVisible && registerVisible) === false) {
-        console.log("here babe")
+    if (isZoomed && selecting_clickable === true) {
+        if (loginVisible === true || registerVisible === true)
+            return ;
+        console.log("HERE BABYBOY")
         isZooming = true;
-        console.log("LA : x:", clickCoordinates.x, "y:", clickCoordinates.y, "z:", clickCoordinates.z)
         if (loginVisible === true)
             hideElement(loginForm);
         else if (registerVisible === true)
@@ -198,8 +198,8 @@ function zoomToCoordinates(clickCoordinates) {
                 isZoomed = false;
                 isZooming = false;
                 localStorage.setItem('isZoomed', isZoomed);
-                camera.position.set = initialCameraPosition;
-                camera.lookAt = initialCameraLookAt;
+                // camera.position.set = initialCameraPosition;
+                // camera.lookAt = initialCameraLookAt;
             })
             .start();
     }
@@ -270,33 +270,12 @@ function zoomToCoordinates(clickCoordinates) {
     }
 }
 
-function waitForElm(selector) {
-    return new Promise(resolve => {
-        if (document.getElementById(selector)) {
-            return resolve(document.getElementById(selector));
-        }
-
-        const observer = new MutationObserver(mutations => {
-            if (document.getElementById(selector)) {
-                observer.disconnect();
-                resolve(document.getElementById(selector));
-            }
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    });
-}
-
-
 let isZooming = false;
 window.addEventListener('click', onClickScene);
 
 function onClickScene(event) {
     console.log("isZooming :", isZooming);
-    if (isZooming)
+    if (isZooming === true || isZoomed === true)
         return;
     // Calculate the click coordinates in 3D space
     const mouse = new THREE.Vector2(
@@ -342,8 +321,7 @@ window.addEventListener('pageshow', function (event) {
 });
 
 function goToLogin() {
-    if (isZooming) return;
-    if (isZoomed === false)
+    if (isZoomed === false && isZooming === false)
         zoomToPC();
     if (registerVisible === true)
     {   
@@ -354,14 +332,15 @@ function goToLogin() {
     }    
     loginVisible = true;
     centerLoginForm();
-    showElement(goBackButton);
     loginForm.style.opacity = '1';
     loginForm.style.visibility = 'visible';
+    loginForm.style.z_index = '2';
+    // showElement(goBackButton);
 }
 
 function goToRegister() {
     if (isZooming) return;
-    if (isZoomed === false)
+    if (isZoomed === false && isZooming === false)
         zoomToPC();
     if (loginVisible === true)
     {
@@ -372,42 +351,39 @@ function goToRegister() {
     }
     registerVisible = true;
     centerRegisterForm();
-    showElement(goBackButton);
     registerForm.style.opacity = '1';
     registerForm.style.visibility = 'visible';
+    registerForm.style.z_index = '2';
+    // showElement(goBackButton);
 }
 
 function zoomToPC() {
 
-    if (isZooming) return;
-    if (isZoomed === false)
-    {
-        var clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
-        isZooming = true;
-        isZoomed = true;
-        var dur = 2000;
-        //position we want to be
-        targetPosition = new THREE.Vector3(2, 2.8, 0.02);
-        //position we want to look at
-        hardClickCoordinates = new THREE.Vector3(1.8, 2.8, -2.3);
-        new TWEEN.Tween(camera.position)
-            .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, dur)
-            .easing(TWEEN.Easing.Quadratic.InOut)
-            .onUpdate(() => {
-                controls.target.x = hardClickCoordinates.x;
-                controls.target.y = hardClickCoordinates.y;
-                controls.target.z = hardClickCoordinates.z;
-            })
-        .onComplete(() => {
-            console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
-            isZooming = false;
+    var clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
+    isZooming = true;
+    isZoomed = true;
+    var dur = 2000;
+    //position we want to be
+    targetPosition = new THREE.Vector3(2, 2.8, 0.02);
+    //position we want to look at
+    hardClickCoordinates = new THREE.Vector3(1.8, 2.8, -2.3);
+    new TWEEN.Tween(camera.position)
+        .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, dur)
+        .easing(TWEEN.Easing.Quadratic.InOut)
+        .onUpdate(() => {
             controls.target.x = hardClickCoordinates.x;
             controls.target.y = hardClickCoordinates.y;
             controls.target.z = hardClickCoordinates.z;
-            showElement(goBackButton);
         })
-        .start();
-    }
+    .onComplete(() => {
+        console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
+        isZooming = false;
+        controls.target.x = hardClickCoordinates.x;
+        controls.target.y = hardClickCoordinates.y;
+        controls.target.z = hardClickCoordinates.z;
+        showElement(goBackButton);
+    })
+    .start();
 }
 
 function centerRegisterForm()
@@ -443,6 +419,8 @@ function showElement(element)
 {
     element.style.opacity = '1';
     element.style.visibility = 'visible';
+    element.style.z_index = '2';
+    console.log("z_index_value:", element.style.z_index);
 }
 
 function hideElement(element) {
@@ -452,6 +430,7 @@ function hideElement(element) {
         loginVisible = true;
     element.style.opacity = '0';
     element.style.visibility = 'hidden';
+    element.style.z_index = '-2';
 }
 
 // SEEMS LIKE NOT NEEDED BUT KEEP IT HERE JUST IN CASE
@@ -477,22 +456,26 @@ function zoomBack() {
     {
         statsDiv.style.visibility = '0';
         statsDiv.style.opacity = '0';
+        statsDiv.style.z_index = '-2';
         statsVisible = false;
     }
     if (friendsVisible === true)
     {
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
+        friendsDiv.style.z_index = '-2';
         friendsVisible = false;
     }
     if (registerVisible === true)
     {
+        registerForm.style.z_index = '-2';
         registerForm.style.visibility = '0';
         registerForm.style.opacity = '0';
         registerVisible = false;
     }
     if (loginVisible === true)
     {
+        loginForm.style.z_index = '-2';   
         loginForm.style.visibility = '0';
         loginForm.style.opacity = '0';
         registerVisible = false;
@@ -504,6 +487,7 @@ function zoomBack() {
     }
     if (paramsVisible === true)
     {
+        paramsDiv.style.z_index = '-2';
         paramsDiv.style.visibility = 'hidden';
         paramsDiv.style.opacity = '0';
         paramsVisible = false;
@@ -518,7 +502,7 @@ function zoomBack() {
     console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
     new TWEEN.Tween(camera.position)
         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
-        .easing(TWEEN.Easing.Quadratic.InOut)
+        .easing(TWEEN.Easing.Back.InOut)
         .onUpdate(() => {
             if (clickCoordinates != null)
             {
@@ -526,14 +510,24 @@ function zoomBack() {
                 controls.target.y = clickCoordinates.y;
                 controls.target.z = clickCoordinates.z;
             }
+            else
+            {
+                controls.target.x = initialCameraLookAt.x;
+                controls.target.y = initialCameraLookAt.y;
+                controls.target.z = initialCameraLookAt.z;
+            }
         })
         .onComplete(() => {
             isZoomed = false;
             isZooming = false;
             localStorage.setItem('isZoomed', isZoomed);
-            controls.position = initialCameraPosition;
             controls.position = new THREE.Vector3(12, 5, 12);
-            controls.target =  new THREE.Vector3(0, 0, 0);
+            controls.target.x = initialCameraLookAt.x;
+            controls.target.y = initialCameraLookAt.y;
+            controls.target.z = initialCameraLookAt.z;
+            // const endRotation = new THREE.Quaternion( 0, 0, 0 );
+            // camera.applyQuaternion(endRotation); // Apply endRotation
+            console.log("quaternion applied");
             showElement(header);
         })
         .start();
@@ -548,6 +542,7 @@ function showStats(){
     }
     statsDiv.style.visibility = 'visible';
     statsDiv.style.opacity = '1';
+    statsDiv.style.z_index = '2';
     statsVisible = true;
     showElement(goBackButton);
     statsVisible = true;
@@ -563,6 +558,7 @@ function showFriends(){
         friendsVisible = false;
         return;
     }
+    friendsDiv.style.z_index = '2';
     friendsDiv.style.visibility = 'visible';
     friendsDiv.style.opacity = '1';
     showElement(goBackButton);
@@ -581,6 +577,7 @@ function showParams()
         paramsVisible = false;
         return;
     }
+    paramsDiv.style.z_index = '2';
     paramsDiv.style.visibility = 'visible';
     paramsDiv.style.opacity = '1';
     paramsVisible = true;
@@ -595,6 +592,7 @@ function showNotifs(){
     notifsDiv.style.visibility = 'visible';
     notifsDiv.style.opacity = '1';
     notifsVisible = true;
+    notifsDiv.style.z_index = '2';
 }
 
 // HANDLE NOTIFICATIONS
