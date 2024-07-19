@@ -65,7 +65,6 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 	win = models.IntegerField(default=0)
 	lost = models.IntegerField(default=0)
 	nb_notifs = models.IntegerField(default=0)
-  
 
 	USERNAME_FIELD = 'username'
 	REQUIRED_FIELDS = ['email']

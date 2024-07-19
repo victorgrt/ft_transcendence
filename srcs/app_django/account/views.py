@@ -69,7 +69,7 @@ def createUser(request):
         user.save()
 
         # return render(request, 'account/login.html')
-        return redirect('home')
+        return JsonResponse({"message": "Successfully Registered."}, status=200)
     return HttpResponse("This endpoint expects a POST request.")
 
 @csrf_exempt

@@ -423,15 +423,13 @@ input[type="password"] {
 	color: white;
 	font-size: large;
 	font-weight: bold;
+	text-align: center;
 
 	border: 2px solid rgba(40, 40, 40, 1);
 	border-radius: 1vh;
     width: 50%;
-    position: absolute;
+	position: absolute;
 
-	text-align: center;
-	/* background: rgb(31,255,36); */
-	/* background: linear-gradient(90deg, rgba(31,255,36,0.5) 0%, rgba(16,0,255,0.5) 50%, rgba(255,142,120,0.5) 100%); */
 	background-color: rgba(24, 24, 24, 0.95);
 	display: flex;
 }
@@ -472,6 +470,7 @@ input[type="password"] {
 
 /* FRIENDS LIST */
 #friends{
+	z-index: -1;
 	overflow-y: scroll;
 	position: absolute;
 	visibility: hidden;
