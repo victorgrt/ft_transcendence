@@ -596,16 +596,16 @@ function showNotifs(){
 }
 
 // HANDLE NOTIFICATIONS
-function acceptNotif(obj){
-    console.log("OBJ : ", obj)
-    console.log("accept notification here!");
-    var value = $(obj).val();
-    console.log("value:", value);
-    if (value === 'play')
+function acceptNotif(data){
+
+    console.log("Accepting notif:", data);
+    if (data.notification_type === 'play')
     {
         console.log("PLAY");
         //logique de rejoindre la game
         
+        window.location.href = '/pong/' + data.data.session_id + '/';
+
         //delete notif
         var id_to_delete = obj.className;
         var element = document.getElementById(id_to_delete);
@@ -686,6 +686,32 @@ $(document).ready(function() {
             return ;
         }
 
+        // If type is play with, send request to join game
+        if (formData.notification_type === "play with")
+        {
+            console.log("PLAY WITH");
+            $.ajax({
+                type: 'POST',
+                url: '/send_play_request/',  // L'URL doit correspondre à celle définie dans urls.py
+                data: {
+                    'to_username': formData.pseudo,
+                },
+                headers: {
+                    'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+                }
+                ,
+                success: function(response) {
+                    console.log(response);
+                    compteur_notifs++;
+                    window.location.href = '/pong/' + response.session_id + '/';
+                },
+                error: function(response) {
+                    alert('Error: ' + response.statusText);
+                }
+            });
+            return;
+        }
+
         $.ajax({
             type: 'POST',
             url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
@@ -712,14 +738,52 @@ function handleNotification(data)
     console.log("data received:", data);
     var type = "default";
     if (data.message === "play with")
-        type = "play"
+        type = "play";
     else if (data.message === "friend request")
-        type = "friend"
-    document.getElementById("notiftable").innerHTML += 
-    '<tr id="' + compteur_notifs + "\">" +
-    '<td id="notiftd_from_notif">' + data.from_user + '</td>' +
-    '<td id="notiftd_fype">' + type + '</td>' +
-    '<td id="notiftd_from_notif"><button class="' + compteur_notifs + "\"" + 'id="notifaccept" value="' + type + '" onclick="acceptNotif(this)">V</button></td>' +
-    '<td id="notiftd_from_notif"><button class="' + compteur_notifs + "\"" + 'id="notifdecline" onclick="declineNotif(this)">X</button></td>';
+        type = "friend";
+
+    // Create table row
+    var tr = document.createElement("tr");
+    tr.id = compteur_notifs;
+
+    // Create 'from user' data cell
+    var tdFromUser = document.createElement("td");
+    tdFromUser.id = "notiftd_from_notif";
+    tdFromUser.textContent = data.from_user;
+
+    // Create 'type' data cell
+    var tdType = document.createElement("td");
+    tdType.id = "notiftd_type";
+    tdType.textContent = type;
+
+    // Create 'accept' button cell
+    var tdAccept = document.createElement("td");
+    tdAccept.id = "notiftd_from_notif";
+    var acceptButton = document.createElement("button");
+    acceptButton.className = compteur_notifs;
+    acceptButton.id = "notifaccept";
+    acceptButton.value = type;
+    acceptButton.textContent = "V";
+    acceptButton.onclick = function() { acceptNotif(data); };
+    tdAccept.appendChild(acceptButton);
+
+    // Create 'decline' button cell
+    var tdDecline = document.createElement("td");
+    tdDecline.id = "notiftd_from_notif";
+    var declineButton = document.createElement("button");
+    declineButton.className = compteur_notifs;
+    declineButton.id = "notifdecline";
+    declineButton.textContent = "X";
+    declineButton.onclick = function() { declineNotif(data); };
+    tdDecline.appendChild(declineButton);
+
+    // Append cells to row
+    tr.appendChild(tdFromUser);
+    tr.appendChild(tdType);
+    tr.appendChild(tdAccept);
+    tr.appendChild(tdDecline);
+
+    // Append row to table
+    document.getElementById("notiftable").appendChild(tr);
 }
 

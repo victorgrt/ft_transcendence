@@ -6,6 +6,7 @@ from .models import GameSession
 import uuid
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from pages.services.notifications_service import send_notification_service
 
 # Create your views here.
 # Add record to the MatchHistory model. 
@@ -39,4 +40,32 @@ def join_session(request, session_id):
         return JsonResponse({'success': 'Joined game session'})
     except GameSession.DoesNotExist:
         return JsonResponse({'error': 'Session not found'}, status=404)
+
+@csrf_exempt
+def send_play_request (request):
+    # Extract data from the request
+    to_username = request.POST.get('to_username')
+    from_username = request.user.username
+
+    to_user = CustomUser.objects.get(username=to_username)
+    from_user = CustomUser.objects.get(username=from_username)
+
+    if not to_user or not from_user:
+        return JsonResponse({'error': 'user not found'}, status=404)
+
+    # Try to create game session
+    try :
+        session_id = str(uuid.uuid4())
+        game_session = GameSession.objects.create(player1=from_username, player2=to_username, session_id=session_id, state='{}')
+    except Exception as e:
+        return JsonResponse({'error': 'Failed to create game session'}, status=500)
+    print ('Game session created')
+    # If successful, send a notification to the recipient
+    notification_data = {
+        'session_id': session_id
+    }
+    send_notification_service('play', to_user, from_user, notification_data)
+    print('Notification sent')
+    # Last, return the session_id
+    return JsonResponse({'session_id': session_id}, status=200)
 
