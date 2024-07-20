@@ -19,9 +19,13 @@ def finished_match(request):
     print(winner_id)
     print(loser_id)
 
+    # Create a new record in the MatchHistory model
     user_winner = get_user_model().objects.get(id=winner_id)
     user_loser = get_user_model().objects.get(id=loser_id)
     new_match = MatchHistory.objects.create(winner=user_winner, loser=user_loser)
+    
+    # Save the record
+    new_match.save()
 
     return JsonResponse({'success': 'Match history saved'})
 

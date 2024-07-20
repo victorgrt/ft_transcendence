@@ -12,6 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 # from notification.models import FriendRequest
 from account.models import Notification
 import uuid
+from game.models import MatchHistory
+
 
 #notifs par chatgpt
 from channels.layers import get_channel_layer
@@ -23,13 +25,24 @@ def is_ajax(request):
 
 #   ---------------- FRONT END ----------------
 
+# To move elsewhere
+def get_user_match_history(user):
+    won_matches = MatchHistory.objects.filter(winner=user)
+    lost_matches = MatchHistory.objects.filter(loser=user)
+    match_history = won_matches | lost_matches
+    match_history = match_history.order_by('-date')
+    print ('match history : ')
+    print (match_history)
+    return match_history
 
 # starting_page
 def starting_page(request):
     if request.user.is_authenticated:
         print(f"Authenticated user: {request.user.username}")
         # return render(request, 'base.html', {'username': request.user.username})
-        return render(request, 'pages/index.html', {'user': request.user})
+        match_history = get_user_match_history(request.user)
+
+        return render(request, 'pages/index.html', {'user': request.user, 'match_history': match_history})
     else:
         print(f"user not authenticated : {request}")
         return render(request, 'pages/partials/login.html')

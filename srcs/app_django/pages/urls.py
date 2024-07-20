@@ -8,7 +8,7 @@ urlpatterns = [
   # path('partial/<str:page>/', partial_content, name='partial_content'),
 
   # navigation
-  path("", scene, name="home"),
+  path("", starting_page, name="home"),
   path("menuPong/", menuPong),
 
   # account

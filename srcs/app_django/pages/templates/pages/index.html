@@ -291,6 +291,27 @@
                 </form>
             </div>
         {% endif %}
+
+        <!-- GAME HISTORY  -->
+        {% if user.is_authenticated %}
+        <h2>Match History</h2>
+        <ul>
+            {% for match in match_history %}
+                <li>
+                    <strong>Winner:</strong> {{ match.winner.username }} - 
+                    <strong>Loser:</strong> {{ match.loser.username }} - 
+                    <strong>Date:</strong> {{ match.date|date:"Y-m-d H:i" }}
+                    {% if match.game %}
+                        - <strong>Game Session ID:</strong> {{ match.game.session_id }}
+                    {% endif %}
+                    <br>
+                    <strong>Scores:</strong> {{ match.player_1_score }} - {{ match.player_2_score }}
+                </li>
+            {% empty %}
+                <li>No match history found.</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
     </div>
     <div id="scene">
         <!-- scene 3d -->
