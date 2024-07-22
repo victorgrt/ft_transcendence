@@ -503,20 +503,6 @@ function zoomBack() {
         .start();
 }
 
-var statsVisible = false;
-function showStats(){
-    if (statsVisible === true)
-    {
-        zoomBack();
-        return;
-    }
-    statsDiv.style.visibility = 'visible';
-    statsDiv.style.opacity = '1';
-    statsVisible = true;
-    showElement(goBackButton);
-    statsVisible = true;
-}
-
 var friendsVisible = false;
 function showFriends(){
     if (friendsVisible === true)

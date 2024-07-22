@@ -1,4 +1,3 @@
-from django.shortcuts import render
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -9,7 +8,6 @@ from django.contrib.auth import authenticate, login as django_login
 from django.contrib.sessions.models import Session
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.views.decorators.csrf import csrf_exempt
 # from .models import GameSession
 from notification.models import FriendRequest
 from notification.models import Notification
@@ -47,30 +45,25 @@ def settings(request):
 	print("ON SORT DIRECTEMENT")
 	return redirect('home')
 
-@csrf_exempt  # Only for demonstration; consider CSRF protection for production
+@csrf_exempt
 def createUser(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        avatar = request.FILES.get('avatar')
-
-        # if CustomUser.objects.count() == 0:
-        #     user = CustomUser.objects.create_superuser(username="jquil", email="jquil@jquil.com", password="admin")
-        # else :
-        print("Creating user")
-        print(username)
-        print(email)
-        print(password)
-        user = CustomUser.objects.create_user(username=username, email=email, password=password, is_superuser=False, is_staff=False, avatar=avatar)
-        user.is_active = True
-        request.session['username'] = username
-        request.session.save()
-        # user.is_staff = False
-        user.save()
-
-        return render(request, 'account/login.html')
-    return HttpResponse("This endpoint expects a POST request.")
+	if request.method == 'POST':
+		username = request.POST.get('username')
+		email = request.POST.get('email')
+		if CustomUser.objects.filter(username=username).exists():
+			return JsonResponse({'success': False, 'message': 'Username is already taken.'})
+		if CustomUser.objects.filter(email=email).exists():
+			return JsonResponse({'success': False, 'message': 'Email is already registered.'})
+		password = request.POST.get('password')
+		avatar = request.FILES.get('avatar')
+		user = CustomUser.objects.create_user(username=username, email=email, password=password, is_superuser=False, is_staff=False, avatar=avatar)
+		user.is_active = True
+		request.session['username'] = username
+		request.session.save()
+		user.save()
+		login(request)
+		return JsonResponse({'success': True, 'message': 'Registered successfully'})
+	return HttpResponse("This endpoint expects a POST request.")
 
 @csrf_exempt
 def login(request):
@@ -86,16 +79,16 @@ def login(request):
 
         if user is not None:
             print(f"Authentication successful for user: {username}")
-            print("Successfully logged in.")
             django_login(request, user)
             # set user-specific data in the session
             request.session['username'] = username
             request.session.save()
-            return redirect('home')
-            # print("After login")
+            print("Successfully logged in.")
+            # return redirect('home')
+            print("After login")
             # messages.success(request, 'You have successfully logged in.')
             # return render(request, 'pages/partials/home_page.html')
-            # return JsonResponse({"message": "Successfully logged in."}, status=200)
+            return JsonResponse({"message": "Successfully logged in."}, status=200)
         else:
             print("failed to log in.")
             # messages.error(request, 'Invalid username or password. Please try again.')
@@ -161,10 +154,12 @@ def accept_friend_request(request, requestID):
 		return HttpResponse('Friend request not accepted')
 
 def logout(request):
-    print('IN LOGOUT')
-    django_logout(request)
-    Session.objects.filter(session_key=request.session.session_key).delete()
-    return redirect('home')
+	print('IN LOGOUT')
+	django_logout(request)
+	Session.objects.filter(session_key=request.session.session_key).delete()
+	return JsonResponse({'success': True, 'message': 'Logged out successfully'})
+    # return JsonResponse({"message": "Successfully logged out."}, status=200)
+    # return redirect('home')
 
 def get_login_status(request):
     user = request.user

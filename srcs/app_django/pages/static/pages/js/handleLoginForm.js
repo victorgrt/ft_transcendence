@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
       })
       .then(response => {
         console.log(response)
-          if (!response.ok) {
+          if (!response.ok) {P
               throw new Error('Network response was not ok');
           }
           return response.json(); // Assuming the server responds with JSON
