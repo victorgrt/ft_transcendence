@@ -1,173 +1,22 @@
+console.log("main script is loaded")
 
-var scene, camera, renderer, loader, controls;
-var raycaster = new THREE.Raycaster();
-var mouse = new THREE.Vector2();
+var loginVisible;
+var registerVisible;
+var menuPongVisible;
+var notifsVisible = false;
+var paramsVisible = false;
+var statsVisible = false;
+var friendsVisible = false;
 
-var highlightedObject = null;
-var selected_object_name;
-var selecting_clickable;
-
-var initialControlPosition;
-var clickCoordinates = null;
-function init() {
-    scene = new THREE.Scene();
-
-    renderer = new THREE.WebGLRenderer({ antialias: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-
-    camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.set(12, 5, 12);
-    controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.update();
-    renderer.outpuEncoding = THREE.RGBEEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
-    document.getElementById('scene').appendChild(renderer.domElement);
-    // document.body.appendChild(renderer.domElement);
-    var light = new THREE.PointLight(0xffffff);
-    light.position.set(10, 10, 10);
-    scene.add(light);
-
-    loader = new THREE.GLTFLoader();
-    const sceneurl = "/staticfiles/pages/images/scene-18.gltf";
-
-    loader.load(
-        sceneurl,
-        function (gltf) {
-            gltf.scene.traverse(function (child) {
-                if (child.isMesh && child.name === 'Plane003_3') {
-                    // Réinitialiser les propriétés d'émission du matériau spécifique
-                    child.material.emissive = new THREE.Color(0xED7F10); // Noir pour désactiver l'émission
-                    child.material.emissiveIntensity = 1; // Aucune intensité d'émission
-                    child.material.toneMapped = false; // Aucune intensité d'émission
-                }
-                gltf.scene.traverse(function (child) {
-                    if (child.isLight) {
-                        // Si l'objet est une lumière, ajustez ses propriétés
-                        if (child instanceof THREE.DirectionalLight) {
-                            child.intensity = 0.5; // Exemple: Réduire l'intensité d'une lumière directionnelle
-                        } else if (child instanceof THREE.PointLight) {
-                            child.intensity = 0.3; // Exemple: Réduire l'intensité d'une lumière ponctuelle
-                        }
-
-                        if (child instanceof THREE.AmbientLight) {
-                            // Si l'objet est une lumière ambiante, ajustez ses propriétés
-                            child.intensity = 0.7; // Exemple: Réduire l'intensité de la lumière ambiante
-                        }
-                    }
-                });
-            });
-            scene.add(gltf.scene);
-
-        },
-        function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% chargé');
-        },
-        function (error) {
-            console.error('Erreur lors du chargement du modèle glTF', error);
-        }
-    );
-    // const loader_image = new THREE.TextureLoader();
-    //     loader_image.load('pages/static/images/background-space.jpg', function(texture) {
-    //     texture.minFilter = THREE.LinearFilter; // Use linear filter for minification
-    //     texture.magFilter = THREE.LinearFilter; // Use linear filter for magnification
-    //     texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); // Use maximum anisotropy
-
-    //     // Option 1: Set as background
-    //     scene.background = texture;
-    // });
-    console.log("charged ouais la zone");
-    window.addEventListener('click', onClickScene);
-    document.addEventListener('mousemove', onMouseMove, false);
-    animate();
-}
-
-function onMouseMove(event) {
-    // Mettre à jour la position du pointeur de la souris
-    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-    mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-    // Mettre à jour le rayon de projection pour la souris
-    raycaster.setFromCamera(mouse, camera);
-
-    // Trouver les intersections avec les objets de la scène
-    var intersects = raycaster.intersectObjects(scene.children, true);
-    // Réinitialiser l'objet surligné précédent
-    if (highlightedObject) {
-        highlightedObject.material.emissiveIntensity = 1; // Réinitialiser l'intensité d'émission
-        highlightedObject = null;
-    }
-    // Mettre en surbrillance l'objet spécifique
-    if (intersects.length > 0) {
-        // document.body.style.cursor = 'pointer';
-        var selectedObject = intersects.find(function (intersect) {
-            // Check si l'utilisteur est sur un objet cliquable
-            if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2') && isZooming === false) {
-                selected_object_name = intersect.object.name;
-                return intersect.object.name;
-            }
-        });
-
-        if (selectedObject) {
-            selecting_clickable = true;
-            var objectToHighlight = selectedObject.object;
-            //ARCADE MACHINE
-            if (selectedObject.object.name === 'Plane003_2')
-                objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
-            //ECRAN ORDINATEUR
-            else if (selectedObject.object.name === 'Plane009_2') {
-                objectToHighlight.material.emissiveIntensity = 5; // Exemple: intensité d'émission pour la surbrillance
-            }
-            // Autres ajustements de surbrillance si nécessaire
-            highlightedObject = objectToHighlight;
-        }
-        else if (!selectedObject) {
-            selecting_clickable = false;
-            // document.body.style.cursor = 'default';
-        }
-    }
-}
-
-function animate() {
-    requestAnimationFrame(animate);
-    if (controls) {
-        controls.update(); // Mettre à jour les contrôles OrbitControls à chaque frame
-    }
-    TWEEN.update(); // Mise à jour de TWEEN
-    renderer.render(scene, camera);
-}
-
-init();
-
-//=== LAUNCH SCRIPT ===//
-function loadScript(url, callback) {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src = url;
-
-    script.onload = function () {
-        if (callback) callback();
-    };
-    document.head.appendChild(script);
-}
-
-//=== RESIZE WINDOW ===//
-window.addEventListener('resize', () => {
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    renderer.setSize(width, height);
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-});
-
-//=== ZOOM INTO OBJECTS ===//
-let isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom
+let isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom;
+let isZooming = false;
 
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
+const duration = 2000; //Duree du zoom
 
+//=== ZOOM INTO OBJECTS ===//
 function zoomToCoordinates(clickCoordinates) {
-    const duration = 2000;
     var targetPosition;
     if (isZoomed && selecting_clickable === true) {
         if (loginVisible === true || registerVisible === true)
@@ -183,10 +32,7 @@ function zoomToCoordinates(clickCoordinates) {
             .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
             .easing(TWEEN.Easing.Quadratic.InOut)
             .onUpdate(() => {
-                // camera.lookAt(initialCameraLookAt);
                 controls.target = clickCoordinates;
-                // camera.target.set.y = clickCoordinates.y;
-                // camera.target.set.z = clickCoordinates.z;
 
             })
             .onComplete(() => {
@@ -230,17 +76,23 @@ function zoomToCoordinates(clickCoordinates) {
                     controls.target.z = clickCoordinates.z;
 
                     // loginVisible.removeProperty('position');
-                    loginForm.style.visibility = 'visible';
-                    loginForm.style.opacity = '1';
-                    loginForm.style.width = '40%';
-                    loginForm.style.position = 'relative';
-                    loginVisible = true;
-
-                    registerForm.style.visibility = 'visible';
-                    registerForm.style.opacity ='1';
-                    registerForm.style.width = '40%';
-                    registerForm.style.position = 'relative';
-                    registerVisible = true
+                    console.log(loginForm);
+                    if (loginForm != undefined)
+                    {
+                        loginForm.style.visibility = 'visible';
+                        loginForm.style.opacity = '1';
+                        loginForm.style.width = '40%';
+                        loginForm.style.position = 'relative';
+                        loginVisible = true;
+                    }
+                    if (registerForm != undefined)
+                    {
+                        registerForm.style.visibility = 'visible';
+                        registerForm.style.opacity ='1';
+                        registerForm.style.width = '40%';
+                        registerForm.style.position = 'relative';
+                        registerVisible = true
+                    }
                     showElement(goBackButton);
                 })
                 .start();
@@ -270,55 +122,6 @@ function zoomToCoordinates(clickCoordinates) {
     }
 }
 
-let isZooming = false;
-window.addEventListener('click', onClickScene);
-
-function onClickScene(event) {
-    console.log("isZooming :", isZooming);
-    if (isZooming === true || isZoomed === true)
-        return;
-    // Calculate the click coordinates in 3D space
-    const mouse = new THREE.Vector2(
-        (event.clientX / window.innerWidth) * 2 - 1,
-        -(event.clientY / window.innerHeight) * 2 + 1
-    );
-    // Use Raycaster to detect intersections with scene objects
-    const raycaster = new THREE.Raycaster();
-    raycaster.setFromCamera(mouse, camera);
-    const intersects = raycaster.intersectObjects(scene.children, true);
-
-    if (intersects.length > 0) {
-        const intersection = intersects[0];
-        clickCoordinates = intersection.point;
-        zoomToCoordinates(clickCoordinates);
-    }
-}
-
-
-//=== ZOOM BACK IF GO BACK ===//
-function getZoomState() {
-    const zoomState = localStorage.getItem('isZoomed');
-    return zoomState === 'true';
-}
-
-window.addEventListener('beforeunload', function () {
-    localStorage.setItem('isReloaded', 'true');
-});
-
-window.addEventListener('pageshow', function (event) {
-    const isReloaded = localStorage.getItem('isReloaded') === 'true';
-    const isZoomed = getZoomState();
-
-    //page was reloaded
-    if (isReloaded) {
-        if (isZoomed)
-            return;
-        else
-            zoomToCoordinates(initialCameraPosition);
-        // Clear the reload flag
-        localStorage.removeItem('isReloaded');
-    }
-});
 
 function goToLogin() {
     if (isZoomed === false && isZooming === false)
@@ -332,14 +135,10 @@ function goToLogin() {
     }    
     loginVisible = true;
     centerLoginForm();
-    loginForm.style.opacity = '1';
-    loginForm.style.visibility = 'visible';
-    loginForm.style.z_index = '2';
-    // showElement(goBackButton);
+    showElement(loginForm);
 }
 
 function goToRegister() {
-    if (isZooming) return;
     if (isZoomed === false && isZooming === false)
         zoomToPC();
     if (loginVisible === true)
@@ -362,13 +161,12 @@ function zoomToPC() {
     var clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
     isZooming = true;
     isZoomed = true;
-    var dur = 2000;
     //position we want to be
     targetPosition = new THREE.Vector3(2, 2.8, 0.02);
     //position we want to look at
     hardClickCoordinates = new THREE.Vector3(1.8, 2.8, -2.3);
     new TWEEN.Tween(camera.position)
-        .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, dur)
+        .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, duration)
         .easing(TWEEN.Easing.Quadratic.InOut)
         .onUpdate(() => {
             controls.target.x = hardClickCoordinates.x;
@@ -412,15 +210,11 @@ function centerLoginForm()
     registerForm.style.position = 'absolute';
 }
 
-var loginVisible;
-var registerVisible;
-var menuPongVisible;
 function showElement(element)
 {
     element.style.opacity = '1';
     element.style.visibility = 'visible';
     element.style.z_index = '2';
-    console.log("z_index_value:", element.style.z_index);
 }
 
 function hideElement(element) {
@@ -431,6 +225,7 @@ function hideElement(element) {
     element.style.opacity = '0';
     element.style.visibility = 'hidden';
     element.style.z_index = '-2';
+    console.log("z_index assigne :", element.style.z_index);
 }
 
 // SEEMS LIKE NOT NEEDED BUT KEEP IT HERE JUST IN CASE
@@ -452,54 +247,26 @@ function resetStyleForms(){
 }
 
 function zoomBack() {
-    if (statsVisible === true)
-    {
-        statsDiv.style.visibility = '0';
-        statsDiv.style.opacity = '0';
-        statsDiv.style.z_index = '-2';
-        statsVisible = false;
-    }
-    if (friendsVisible === true)
-    {
-        friendsDiv.style.visibility = '0';
-        friendsDiv.style.opacity = '0';
-        friendsDiv.style.z_index = '-2';
-        friendsVisible = false;
-    }
     if (registerVisible === true)
     {
-        registerForm.style.z_index = '-2';
-        registerForm.style.visibility = '0';
-        registerForm.style.opacity = '0';
+        hideElement(registerForm);
         registerVisible = false;
     }
     if (loginVisible === true)
     {
-        loginForm.style.z_index = '-2';   
-        loginForm.style.visibility = '0';
-        loginForm.style.opacity = '0';
-        registerVisible = false;
+        hideElement(loginForm);
+        loginVisible = false;
     }
     if (menuPongVisible === true)
     {
         hideElement(menuPongDiv);
         menuPongVisible = false;
     }
-    if (paramsVisible === true)
-    {
-        paramsDiv.style.z_index = '-2';
-        paramsDiv.style.visibility = 'hidden';
-        paramsDiv.style.opacity = '0';
-        paramsVisible = false;
-
-    }
     hideElement(goBackButton);
     if (isZoomed === false)
         return; //returns because no zoom back needed
 
-    let duration = 2000;
     isZooming = true;
-    console.log("initial avt zoom:", initialCameraLookAt, initialCameraPosition);
     new TWEEN.Tween(camera.position)
         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
         .easing(TWEEN.Easing.Back.InOut)
@@ -525,74 +292,74 @@ function zoomBack() {
             controls.target.x = initialCameraLookAt.x;
             controls.target.y = initialCameraLookAt.y;
             controls.target.z = initialCameraLookAt.z;
-            // const endRotation = new THREE.Quaternion( 0, 0, 0 );
-            // camera.applyQuaternion(endRotation); // Apply endRotation
-            console.log("quaternion applied");
             showElement(header);
         })
         .start();
 }
 
-var statsVisible = false;
+
+// SHOW ELEMENT //
 function showStats(){
     if (statsVisible === true)
     {
-        zoomBack();
-        return;
+        hideElement(statsDiv);
+        statsVisible = false;
+        return ;
     }
-    statsDiv.style.visibility = 'visible';
-    statsDiv.style.opacity = '1';
-    statsDiv.style.z_index = '2';
-    statsVisible = true;
-    showElement(goBackButton);
+    showElement(statsDiv);
+    // statsDiv.style.visibility = 'visible';
+    // statsDiv.style.opacity = '1';
+    // statsDiv.style.z_index = '2';
     statsVisible = true;
 }
 
-var friendsVisible = false;
 function showFriends(){
+    const element = document.getElementById("friends_list");
     if (friendsVisible === true)
     {
         hideElement(goBackButton);
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
+        friendsDiv.style.z_index = '-2';
+        element.style.z_index = '-2';
         friendsVisible = false;
         return;
     }
-    friendsDiv.style.z_index = '2';
-    friendsDiv.style.visibility = 'visible';
-    friendsDiv.style.opacity = '1';
-    showElement(goBackButton);
+    showElement(friendsDiv);
+    element.style.z_index = '2';
+    // friendsDiv.style.z_index = '2';
+    // friendsDiv.style.visibility = 'visible';
+    // friendsDiv.style.opacity = '1';
     friendsVisible = true;
 }
 
-var paramsVisible = false;
 function showParams()
 {
-    console.log("coucou");
     if (paramsVisible === true)
     {
         hideElement(goBackButton)
         paramsDiv.style.visibility = '0';
         paramsDiv.style.opacity = '0';
+        paramsDiv.style.z_index = '-2';
         paramsVisible = false;
         return;
     }
-    paramsDiv.style.z_index = '2';
-    paramsDiv.style.visibility = 'visible';
-    paramsDiv.style.opacity = '1';
+    showElement(paramsDiv);
+    // paramsDiv.style.z_index = '2';
+    // paramsDiv.style.visibility = 'visible';
+    // paramsDiv.style.opacity = '1';
     paramsVisible = true;
-    showElement(goBackButton);
-    console.log("tg");
 }
 
-var notifsVisible = false;
-function showNotifs(){
+function showNotifs()
+{
     const notifbtn = document.getElementById("notifbtn");
     hideElement(notifbtn);
-    notifsDiv.style.visibility = 'visible';
-    notifsDiv.style.opacity = '1';
+    showElement(notifsDiv); 
+    // notifsDiv.style.visibility = 'visible';
+    // notifsDiv.style.opacity = '1';
+    // notifsDiv.style.z_index = '2';
     notifsVisible = true;
-    notifsDiv.style.z_index = '2';
 }
 
 // HANDLE NOTIFICATIONS
