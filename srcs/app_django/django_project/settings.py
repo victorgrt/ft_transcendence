@@ -53,10 +53,11 @@ INSTALLED_APPS = [
     'game',
     'channels',
     'account',
+    # 'notification',
     # 'avatar'
 ]
 
-WSGI_APPLICATION = 'django_project.wsgi.application'
+# WSGI_APPLICATION = 'django_project.wsgi.application'
 
 ASGI_APPLICATION = 'django_project.asgi.application'
 

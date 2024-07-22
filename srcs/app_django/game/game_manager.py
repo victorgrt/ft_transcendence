@@ -1,9 +1,13 @@
 import threading
 import time
+from time import sleep
+import requests
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 from random import seed
 from random import random
+from django.middleware.csrf import get_token
+from django.test import Client
 
 class Game:
     def __init__(self, game_id):
@@ -54,7 +58,7 @@ class Game:
         self.nb_players += 1
 
     def remove_player(self, player):
-        self.players.remove(player)
+        # self.players.remove(player)
         self.consumers.remove(player)
         self.nb_players -= 1
 
@@ -80,6 +84,7 @@ class Game:
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
             winner = "Player1" if self.player_1_score == 3 else "Player2"
             self.state = winner
+
             # Send game over message 
             async_to_sync(get_channel_layer().group_send)(
                 self.game_id,
@@ -90,7 +95,17 @@ class Game:
                     }
                 }
             )
-            return
+
+            # Send request to save game history
+            requests.post('http://localhost:8000/game/finished_match/', data={
+                # 'game_id': self.game_id,
+                # 'player_1_score': self.player_1_score,
+                # 'player_2_score': self.player_2_score,
+                'winner_id': self.players[0].id,
+                'loser_id': self.players[1].id
+            })
+
+            return 
         if self.state == "playing":
             #   --- Handle paddle move
               # if (wPressed1 && self.player_1_position > 0)

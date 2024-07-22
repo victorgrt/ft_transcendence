@@ -42,10 +42,12 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     async def notification_message(self, event):
         message = event['message']
         from_user = event['from_user']
+        from_user_id = event['from_user_id']
         print(f"Sending message: {message}")
         print(f"From user: {from_user}")
 
         await self.send(text_data=json.dumps({
             'message': message,
             'from_user': from_user,
+            'from_user_id': from_user_id
         }))

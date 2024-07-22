@@ -9,8 +9,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
-from .models import GameSession
-from account.models import FriendRequest
+# from notification.models import FriendRequest
 from account.models import Notification
 import uuid
 
@@ -20,24 +19,6 @@ from asgiref.sync import async_to_sync
 
 def is_ajax(request):
     return request.headers.get('x-requested-with') == 'XMLHttpRequest'
-
-#   ---------------- API ----------------
-
-def create_session(request):
-    session_id = str(uuid.uuid4())
-    game_session = GameSession.objects.create(player1='player1', session_id=session_id, state='{}')
-    return JsonResponse({'session_id': session_id})
-
-def join_session(request, session_id):
-    try:
-        game_session = GameSession.objects.get(session_id=session_id)
-        if game_session.player2:
-            return JsonResponse({'error': 'Session already full'}, status=400)
-        game_session.player2 = 'player2'
-        game_session.save()
-        return JsonResponse({'success': 'Joined game session'})
-    except GameSession.DoesNotExist:
-        return JsonResponse({'error': 'Session not found'}, status=404)
 
 
 #   ---------------- FRONT END ----------------
@@ -89,6 +70,7 @@ def send_notification(request):
         
         try:
             to_user = CustomUser.objects.get(username=pseudo)
+            from_user = CustomUser.objects.get(username=from_user_username)
             # from_user_username = request.user.username  # Utilisez ceci si l'envoyeur est l'utilisateur authentifié
             
             # Créer la notification
@@ -111,7 +93,8 @@ def send_notification(request):
                 {
                     'type': 'notification_message',
                     'message': notification_type,
-                    'from_user': from_user_username  # Envoyer le nom d'utilisateur comme chaîne de caractères
+                    'from_user': from_user_username,  # Envoyer le nom d'utilisateur comme chaîne de caractères
+                    'from_user_id': from_user.id  
                 }
             )
 

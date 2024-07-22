@@ -10,10 +10,6 @@ from django.db import models
 from django.utils import timezone
 # from django.core.files.storage import FileSystemStorage
 
-# Create your models here.
-class FriendRequest(models.Model):
-	from_user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="from_user")
-	to_user = models.ForeignKey("CustomUser", on_delete=models.CASCADE, related_name="to_user")
 
 class Notification(models.Model):
     to_user = models.ForeignKey('CustomUser', related_name='received_notifications', on_delete=models.CASCADE)
