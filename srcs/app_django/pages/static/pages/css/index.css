@@ -606,3 +606,8 @@ selectnotif{
 	visibility: hidden;
 	position: absolute;
 }
+
+#boot_toast{
+	position: absolute;
+	z-index: 10;
+}

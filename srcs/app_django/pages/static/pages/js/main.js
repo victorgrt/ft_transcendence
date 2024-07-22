@@ -483,6 +483,7 @@ function handleNotification(data)
         type = "play"
     else if (data.message === "friend request")
         type = "friend"
+    showToast(data);
     document.getElementById("notiftable").innerHTML += 
     '<tr id="' + compteur_notifs + "\">" +
     '<td id="notiftd_from_notif">' + data.from_user + '</td>' +
@@ -490,3 +491,91 @@ function handleNotification(data)
     '<td id="notiftd_from_notif"><button class="' + compteur_notifs + "\"" + 'id="notifaccept" value="' + type + '" onclick="acceptNotif(this)">V</button></td>' +
     '<td id="notiftd_from_notif"><button class="' + compteur_notifs + "\"" + 'id="notifdecline" onclick="declineNotif(this)">X</button></td>';
 }
+
+function showToast(data){
+    console.log("data:", data);
+    const toastEl = document.createElement('div');
+    toastEl.className = 'toast';
+    toastEl.role = 'alert';
+    toastEl.setAttribute('aria-live', 'assertive');
+    toastEl.setAttribute('aria-atomic', 'true');
+    toastEl.dataset.bsAutohide = 'false';
+
+    // Toast header
+    const toastHeader = document.createElement('div');
+    toastHeader.className = 'toast-header text-white bg-dark bg-gradient';
+    const strongEl = document.createElement('strong');
+    strongEl.className = 'me-auto';
+    strongEl.textContent = 'FT_TRANSCENDENCE';
+    toastHeader.appendChild(strongEl);
+
+    const closeButton = document.createElement('button');
+    closeButton.type = 'button';
+    closeButton.className = 'btn-close';
+    closeButton.dataset.bsDismiss = 'toast';
+    closeButton.setAttribute('aria-label', 'Close');
+    toastHeader.appendChild(closeButton);
+
+    // Toast body
+    const sender = data.from_user;
+    const toastBody = document.createElement('div');
+    toastBody.className = 'toast-body text-white bg-secondary bg-gradient';
+    toastBody.innerHTML += 'You have got a notification from ' + sender + '!' +
+        '<div class="mt-2 pt-2 border-top">\
+            <button type="button" class="btn btn-primary btn-sm" data-bs-dismiss="toast" onclick="showNotifs()">Show</button>\
+            <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="toast">Close</button>\
+        </div>';
+
+    toastEl.appendChild(toastHeader);
+    toastEl.appendChild(toastBody);
+
+    // Prepend the toast to the container and show it
+    document.querySelector('.toast-container').prepend(toastEl);
+    const toastInstance = new bootstrap.Toast(toastEl);
+    toastInstance.show(); 
+}
+
+//     showToastButton.addEventListener('click', function () {
+//         // Create a new toast element
+//         const toastEl = document.createElement('div');
+//         toastEl.className = 'toast';
+//         toastEl.role = 'alert';
+//         toastEl.setAttribute('aria-live', 'assertive');
+//         toastEl.setAttribute('aria-atomic', 'true');
+//         toastEl.dataset.bsAutohide = 'false';
+
+//         // Toast header
+//         const toastHeader = document.createElement('div');
+//         toastHeader.className = 'toast-header text-white bg-dark bg-gradient';
+//         const strongEl = document.createElement('strong');
+//         strongEl.className = 'me-auto';
+//         strongEl.textContent = 'FT_TRANSCENDENCE';
+//         toastHeader.appendChild(strongEl);
+
+//         const closeButton = document.createElement('button');
+//         closeButton.type = 'button';
+//         closeButton.className = 'btn-close';
+//         closeButton.dataset.bsDismiss = 'toast';
+//         closeButton.setAttribute('aria-label', 'Close');
+//         toastHeader.appendChild(closeButton);
+
+//         // Toast body
+//         const toastBody = document.createElement('div');
+//         toastBody.className = 'toast-body text-white bg-secondary bg-gradient';
+//         toastBody.innerHTML = `
+//             You've got a notification!
+//             <div class="mt-2 pt-2 border-top">
+//                 <button type="button" class="btn btn-primary btn-sm">Take action</button>
+//                 <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="toast">Close</button>
+//             </div>
+//         `;
+
+//         toastEl.appendChild(toastHeader);
+//         toastEl.appendChild(toastBody);
+
+//         // Prepend the toast to the container and show it
+//         toastContainer.prepend(toastEl);
+//         const toastInstance = new bootstrap.Toast(toastEl);
+//         toastInstance.show();
+//     });
+// });
