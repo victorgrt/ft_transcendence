@@ -28,6 +28,8 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         message = text_data_json['message']
         from_user = text_data_json['from_user']
 
+        print(f"Received message: {message}")
+
         # Send message to room group
         await self.channel_layer.group_send(
             self.room_group_name,
@@ -40,14 +42,16 @@ class NotificationConsumer(AsyncWebsocketConsumer):
 
     # Receive message from room group
     async def notification_message(self, event):
-        message = event['message']
+        # message = event['message']
         from_user = event['from_user']
-        from_user_id = event['from_user_id']
-        print(f"Sending message: {message}")
+        data = event['data']
+        notification_type = event['notification_type']
+        print(f"Sending message: {data}")
+        print (f"Notification type: {notification_type}")
         print(f"From user: {from_user}")
 
         await self.send(text_data=json.dumps({
-            'message': message,
+            'notification_type': notification_type,
             'from_user': from_user,
-            'from_user_id': from_user_id
+            'data': data,
         }))

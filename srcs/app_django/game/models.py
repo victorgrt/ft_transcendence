@@ -14,16 +14,21 @@ class GameSession(models.Model):
     created_at = models.DateTimeField(default=timezone.now)
 
 class MatchHistory(models.Model):
+    player_1 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='matches_as_player_1',
+        on_delete=models.CASCADE
+    )
+    player_2 = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='matches_as_player_2',
+        on_delete=models.CASCADE
+    )    
     winner = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         related_name='won_matches',
         on_delete=models.CASCADE
     )
-    loser = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='lost_matches',
-        on_delete=models.CASCADE
-    )    
     game = models.ForeignKey(
         'GameSession',
         related_name='matches',
