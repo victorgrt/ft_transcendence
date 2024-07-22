@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
 # from notification.models import FriendRequest
 from account.models import Notification
 import uuid
@@ -27,12 +28,19 @@ def is_ajax(request):
 
 # To move elsewhere
 def get_user_match_history(user):
-    won_matches = MatchHistory.objects.filter(winner=user)
-    lost_matches = MatchHistory.objects.filter(loser=user)
-    match_history = won_matches | lost_matches
-    match_history = match_history.order_by('-date')
-    print ('match history : ')
-    print (match_history)
+    # Filter matches where the user was either player_1 or player_2
+    matches = MatchHistory.objects.filter(Q(player_1=user) | Q(player_2=user))
+    # Order by date
+    match_history = matches.order_by('-date')
+
+    # Set match user won
+    for match in match_history:
+        if match.winner == user:
+            match.user_won = True
+        else:
+            match.user_won = False
+    print('match history : ')
+    print(match_history)
     return match_history
 
 # starting_page
@@ -45,7 +53,7 @@ def starting_page(request):
         return render(request, 'pages/index.html', {'user': request.user, 'match_history': match_history})
     else:
         print(f"user not authenticated : {request}")
-        return render(request, 'pages/partials/login.html')
+        return  render(request, 'pages/index.html')
 
 def scene(request):
     return render(request, 'pages/index.html')

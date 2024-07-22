@@ -13,17 +13,25 @@ from pages.services.notifications_service import send_notification_service
 @csrf_exempt
 def finished_match(request):
     # Extract data from the request
+    player_1_id = request.POST.get('player_1_id')
+    player_2_id = request.POST.get('player_2_id')
     winner_id = request.POST.get('winner_id')
-    loser_id = request.POST.get('loser_id')
+    player_1_score = request.POST.get('player_1_score')
+    player_2_score = request.POST.get('player_2_score')
+
     print("winner_id")
     print(winner_id)
-    print(loser_id)
+    print(player_1_id)
+    print(player_2_id)
+    print(player_1_score)
+    print(player_2_score)
 
     # Create a new record in the MatchHistory model
     user_winner = get_user_model().objects.get(id=winner_id)
-    user_loser = get_user_model().objects.get(id=loser_id)
-    new_match = MatchHistory.objects.create(winner=user_winner, loser=user_loser)
-    
+    user_player_1 = get_user_model().objects.get(id=player_1_id)
+    user_player_2 = get_user_model().objects.get(id=player_2_id)
+    new_match = MatchHistory.objects.create(winner=user_winner, player_1=user_player_1, player_2=user_player_2, player_1_score=player_1_score, player_2_score=player_2_score)
+
     # Save the record
     new_match.save()
 

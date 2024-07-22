@@ -98,11 +98,12 @@ class Game:
 
             # Send request to save game history
             requests.post('http://localhost:8000/game/finished_match/', data={
-                # 'game_id': self.game_id,
-                # 'player_1_score': self.player_1_score,
-                # 'player_2_score': self.player_2_score,
+                'game_id': self.game_id,
+                'player_1_id': self.players[0].id,
+                'player_2_id': self.players[1].id,
+                'player_1_score': self.player_1_score,
+                'player_2_score': self.player_2_score,
                 'winner_id': self.players[0].id,
-                'loser_id': self.players[1].id
             })
 
             return 
