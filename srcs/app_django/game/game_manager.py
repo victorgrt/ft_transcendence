@@ -104,19 +104,9 @@ class Game:
                 elif (self.move_1 < 0):
                     self.player_1_position -= self.paddleSpeed
             if (self.move_2 > 0):
-                self.player_2_position += self.paddleSpeed
-            if (self.move_2 < 0):
                 self.player_2_position -= self.paddleSpeed
-            #   --- Handle paddle move
-              # if (wPressed1 && self.player_1_position > 0)
-                # self.player_1_position -= self.paddleSpeed
-              # else if (sPressed1 && self.player_1_position < canvas.height - self.paddleHeight)
-                # self.player_1_position += self.paddleSpeed
-              # if (wPressed2 && self.player_2_position > 0)
-                # self.player_2_position -= self.paddleSpeed
-              # else if (sPressed2 && self.player_2_position < canvas.height - self.paddleHeight)
-                # self.player_2_position += self.paddleSpeed
-
+            if (self.move_2 < 0):
+                self.player_2_position += self.paddleSpeed
             # Handle ball move
             self.ball_position[0] += self.ball_velocity[0]
             self.ball_position[1] += self.ball_velocity[1]
