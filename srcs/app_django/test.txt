@@ -1,0 +1,613 @@
+INFO:     127.0.0.1:35206 - "GET / HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:35206 - "GET / HTTP/1.1" 500 Internal Server Error
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:50120 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50148 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50160 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50126 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50166 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50136 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50148 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50126 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50160 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50120 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50120 - "GET /staticfiles/pages/images/42logo.jpg HTTP/1.1" 404 Not Found
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:50170 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50170 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50172 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 200 OK
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:50172 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50172 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33462 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33502 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33478 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50170 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33486 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50172 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33478 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33462 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33502 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33502 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 200 OK
+Creating user
+jquil1
+jquil1@gmail.com
+psw
+INFO:     127.0.0.1:34124 - "POST /account/createUser HTTP/1.1" 200 OK
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:34124 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34124 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34136 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34142 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34146 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34160 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34150 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34124 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34136 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34142 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34146 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34146 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+Creating user
+jquil2
+jquil2@gmail.com
+psw
+INFO:     127.0.0.1:39816 - "POST /account/createUser HTTP/1.1" 200 OK
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:39816 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39816 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39840 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39822 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39854 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39850 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39836 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39816 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39822 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39854 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39840 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39840 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 200 OK
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:52156 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52156 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52160 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52176 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52210 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52192 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52206 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52156 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52160 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52176 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52210 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52210 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52216 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52216 - "GET /pong/fbc7f7bf-8e54-4648-a72f-fa31931a1166/ HTTP/1.1" 200 OK
+None
+Authentication failed. Closing connection.
+INFO:     127.0.0.1:52216 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52230 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:52230 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52230 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52216 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:52216 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52216 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57438 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52230 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57442 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57458 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57472 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57438 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57442 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52216 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52230 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52230 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:52230 - "GET /admin/ HTTP/1.1" 302 Found
+INFO:     127.0.0.1:52230 - "GET /admin/login/?next=/admin/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52230 - "GET /staticfiles/admin/css/base.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57480 - "GET /staticfiles/admin/css/login.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57490 - "GET /staticfiles/admin/js/theme.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57478 - "GET /staticfiles/admin/css/nav_sidebar.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57488 - "GET /staticfiles/admin/css/responsive.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57474 - "GET /staticfiles/admin/css/dark_mode.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57488 - "GET /staticfiles/admin/js/nav_sidebar.js HTTP/1.1" 200 OK
+jquil1
+Attempting to authenticate user: jquil1
+Authentication successful for user: jquil1
+Successfully logged in.
+INFO:     127.0.0.1:34728 - "POST /account/login/ HTTP/1.1" 200 OK
+Authenticated user: jquil1
+INFO:     127.0.0.1:34728 - "GET / HTTP/1.1" 500 Internal Server Error
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:59346 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59346 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59354 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59380 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59368 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59394 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59392 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59354 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59346 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59380 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59368 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59368 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+Creating user
+jquil
+jquil@jquil.com
+psw
+INFO:     127.0.0.1:57570 - "POST /account/createUser HTTP/1.1" 200 OK
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:57570 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57570 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57578 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57592 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57600 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57618 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57616 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57570 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57592 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57578 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57600 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57600 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+Creating user
+lbou
+lbou@lbou.com
+psw
+INFO:     127.0.0.1:43416 - "POST /account/createUser HTTP/1.1" 200 OK
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:43416 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43416 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43472 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43432 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43448 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43436 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43464 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43416 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43448 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43472 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43432 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43432 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49550 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49550 - "GET /pong/60e6ae04-23cd-453e-81ae-b086ff9a0c52/ HTTP/1.1" 200 OK
+None
+Authentication failed. Closing connection.
+INFO:     127.0.0.1:49550 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49566 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:39720 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39720 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39736 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:39736 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39736 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39720 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39750 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39766 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39754 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39760 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39720 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39736 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39766 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39750 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:39750 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+jquil
+Attempting to authenticate user: jquil
+Authentication successful for user: jquil
+Successfully logged in.
+INFO:     127.0.0.1:36476 - "POST /account/login/ HTTP/1.1" 200 OK
+Authenticated user: jquil
+match history : 
+<QuerySet []>
+INFO:     127.0.0.1:36476 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:36484 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36496 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36510 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36522 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36530 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36496 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36484 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36510 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36522 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36530 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36484 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36510 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36496 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:36476 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:36496 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50666 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50666 - "GET /pong/0fd0b882-2e42-4f50-a139-c89bcbc86ba9/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 0fd0b882-2e42-4f50-a139-c89bcbc86ba9
+INFO:     127.0.0.1:50666 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:50690 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+Authenticated user: jquil
+match history : 
+<QuerySet []>
+INFO:     127.0.0.1:33166 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33174 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33178 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33166 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+Authenticated user: jquil
+match history : 
+<QuerySet []>
+INFO:     127.0.0.1:33166 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33166 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33192 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33174 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33212 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33196 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33192 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33166 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33174 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33196 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33212 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33192 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33166 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33174 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33178 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:33178 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33222 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33222 - "GET /pong/ad2b7cf9-dee5-43f9-98d2-701da0e7a6d3/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game ad2b7cf9-dee5-43f9-98d2-701da0e7a6d3
+Creating game n 1
+INFO:     127.0.0.1:33222 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33240 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43472 - "GET /pong/ad2b7cf9-dee5-43f9-98d2-701da0e7a6d3/ HTTP/1.1" 200 OK
+None
+Authentication failed. Closing connection.
+INFO:     127.0.0.1:43472 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43472 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:43484 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43484 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60002 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+user not authenticated : <ASGIRequest: GET '/'>
+INFO:     127.0.0.1:60002 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60002 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60014 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60050 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60046 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60030 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:43484 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60002 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60050 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60014 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60046 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60046 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 200 OK
+lbou
+Attempting to authenticate user: lbou
+Authentication successful for user: lbou
+Successfully logged in.
+INFO:     127.0.0.1:33988 - "POST /account/login/ HTTP/1.1" 200 OK
+Authenticated user: lbou
+match history : 
+<QuerySet []>
+INFO:     127.0.0.1:33988 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:33988 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33990 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33996 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34018 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34008 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33988 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33990 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33996 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34008 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33988 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34018 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33990 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:33996 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34002 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:34002 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46642 - "GET /pong/ad2b7cf9-dee5-43f9-98d2-701da0e7a6d3/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46642 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+lbou@lbou.com
+Connecting to game ad2b7cf9-dee5-43f9-98d2-701da0e7a6d3
+INFO:     127.0.0.1:46654 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+Received message: {'countdown': 3} at time : 13:26:56.956988
+Received message: {'countdown': 3} at time : 13:26:56.957325
+Received message: {'countdown': 2} at time : 13:26:57.961160
+Received message: {'countdown': 2} at time : 13:26:57.962214
+Received message: {'countdown': 1} at time : 13:26:58.965188
+Received message: {'countdown': 1} at time : 13:26:58.965488
+right
+null
+right
+null
+right
+null
+left
+null
+left
+null
+left
+null
+left
+null
+left
+null
+left
+null
+right
+null
+right
+null
+right
+null
+right
+right
+null
+right
+null
+left
+null
+right
+null
+right
+null
+left
+null
+left
+null
+left
+null
+left
+null
+left
+null
+right
+null
+left
+null
+left
+null
+right
+null
+right
+null
+left
+null
+right
+null
+right
+null
+left
+null
+right
+null
+left
+null
+Game n° ad2b7cf9-dee5-43f9-98d2-701da0e7a6d3 is over
+Winner : {'winner': 'Player1'}
+Game n° ad2b7cf9-dee5-43f9-98d2-701da0e7a6d3 is over
+Winner : {'winner': 'Player1'}
+winner_id
+1
+1
+2
+3
+2
+INFO:     127.0.0.1:39190 - "POST /game/finished_match/ HTTP/1.1" 200 OK
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (1)>]>
+INFO:     127.0.0.1:60146 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60166 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60172 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60152 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60146 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (1)>]>
+INFO:     127.0.0.1:34510 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34510 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34510 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34530 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34514 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34536 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34532 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34532 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34530 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34536 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34514 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34510 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34512 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:34514 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34510 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34512 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34514 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56414 - "POST /send_play_request/ HTTP/1.1" 500 Internal Server Error
+Game session created
+Sending message: {'session_id': 'e3801593-b192-4559-93f1-80655b1cca90'}Notification sent to jquil from jquil
+
+Notification type: playNotification sent
+
+From user: jquil
+INFO:     127.0.0.1:42084 - "POST /send_play_request/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42084 - "GET /pong/e3801593-b192-4559-93f1-80655b1cca90/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42084 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42108 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42110 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42094 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:42110 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42110 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42094 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42108 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42084 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42124 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42140 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42110 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42094 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42108 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42108 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42108 - "GET /pong/e3801593-b192-4559-93f1-80655b1cca90/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game e3801593-b192-4559-93f1-80655b1cca90
+Creating game n 2
+INFO:     127.0.0.1:42108 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:42094 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+Game session created
+Sending message: {'session_id': 'c1a0c994-8324-460a-b9d1-aa81d47a2e23'}Notification sent to lbou from jquil
+Notification sent
+
+Notification type: play
+From user: jquil
+INFO:     127.0.0.1:56448 - "POST /send_play_request/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /pong/c1a0c994-8324-460a-b9d1-aa81d47a2e23/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56448 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56470 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56462 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56484 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56472 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56448 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56462 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56470 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56484 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56472 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56448 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56462 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56470 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56456 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56456 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56456 - "GET /pong/c1a0c994-8324-460a-b9d1-aa81d47a2e23/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game c1a0c994-8324-460a-b9d1-aa81d47a2e23
+Creating game n 3
+INFO:     127.0.0.1:56456 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56470 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+Authenticated user: lbou
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (1)>]>
+INFO:     127.0.0.1:56514 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56514 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56524 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56536 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56542 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+Authenticated user: lbou
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (1)>]>
+INFO:     127.0.0.1:56542 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:56536 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56542 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56524 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56554 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56560 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56542 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56536 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56524 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56560 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56554 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56542 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56536 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56524 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56560 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56514 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56560 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 200 OK
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (1)>]>
+INFO:     127.0.0.1:41388 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41428 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41420 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41388 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41448 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41442 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41388 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41448 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41428 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41420 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41442 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41388 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41442 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41420 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41428 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41404 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:41404 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+Game session created
+Sending message: {'session_id': '893c6fe4-bcbe-4282-85b0-43dc64cb1768'}Notification sent to lbou from jquil
+
+Notification type: playNotification sent
+
+From user: jquil
+INFO:     127.0.0.1:34196 - "POST /send_play_request/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34196 - "GET /pong/893c6fe4-bcbe-4282-85b0-43dc64cb1768/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34212 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34224 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34236 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34240 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34252 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34212 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34224 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34236 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34212 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34252 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34240 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34224 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34236 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34196 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:34196 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34196 - "GET /pong/893c6fe4-bcbe-4282-85b0-43dc64cb1768/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 893c6fe4-bcbe-4282-85b0-43dc64cb1768
+Creating game n 4
+INFO:     127.0.0.1:34236 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34196 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54192 - "GET /pong/893c6fe4-bcbe-4282-85b0-43dc64cb1768/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54192 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54194 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54204 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54204 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54194 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54192 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54204 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54228 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54226 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54210 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54194 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54192 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54204 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54226 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54226 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54204 - "GET /pong/893c6fe4-bcbe-4282-85b0-43dc64cb1768/ HTTP/1.1" 200 OK
+lbou@lbou.com
+Connecting to game 893c6fe4-bcbe-4282-85b0-43dc64cb1768
+INFO:     127.0.0.1:54204 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54192 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+Received message: {'countdown': 3} at time : 13:29:16.799655
+Received message: {'countdown': 3} at time : 13:29:16.800688
+Received message: {'countdown': 2} at time : 13:29:17.804660
+Received message: {'countdown': 2} at time : 13:29:17.805219
+Received message: {'countdown': 1} at time : 13:29:18.808727
+Received message: {'countdown': 1} at time : 13:29:18.809067
+Game n° 893c6fe4-bcbe-4282-85b0-43dc64cb1768 is over
+Winner : {'winner': 'Player1'}
+Game n° 893c6fe4-bcbe-4282-85b0-43dc64cb1768 is over
+Winner : {'winner': 'Player1'}
+winner_id
+1
+1
+2
+3
+0
+INFO:     127.0.0.1:39170 - "POST /game/finished_match/ HTTP/1.1" 200 OK
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (2)>, <MatchHistory: MatchHistory object (1)>]>
+INFO:     127.0.0.1:37224 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37224 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37942 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37958 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37970 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37974 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37224 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37942 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37958 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37970 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37974 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37224 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37942 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37974 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37958 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:37232 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:37224 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
