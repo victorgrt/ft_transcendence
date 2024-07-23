@@ -90,7 +90,6 @@ class Game:
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
             winner = self.players[0].id if self.player_1_score == 3 else self.players[1].id
             self.state = winner
-
             # Send game over message
             async_to_sync(get_channel_layer().group_send)(
                 self.game_id,
