@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'game',
     'channels',
     'account',
-    # 'notification',
+    'notification',
     # 'avatar'
 ]
 

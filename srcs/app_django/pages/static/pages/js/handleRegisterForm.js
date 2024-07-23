@@ -1,9 +1,10 @@
 document.addEventListener('DOMContentLoaded', function ()
 {
-	const form = document.getElementById('register')
+	const form = document.getElementById('registerForm')
 	const registerError = document.getElementById('registerError');
 	if (form)
 	{
+		console.log("in register_form"),
 		form.addEventListener('submit', function (event)
 		{
 			event.preventDefault();
@@ -17,23 +18,15 @@ document.addEventListener('DOMContentLoaded', function ()
 					'X-CSRFToken': getCookie('csrftoken')
 				},
 				body: formData,
+				redirect: 'manual'
 			})
 			.then(response => response.json())
 			.then(data => 
 			{
-				if (data.success) 
-				{
-					// Handle successful registration
-					console.log("Registration successful");
-					// alert(data.message);
-					window.location.href = '/';
-				} 
-				else 
-				{
-					// Handle registration failure
-					console.log("Registration failed");
-					alert(data.message);
-				}
+				console.log("Registration successful");
+				// alert(data.message);
+				window.location.href = '/';
+
 			})
 			.catch(error => 
 			{

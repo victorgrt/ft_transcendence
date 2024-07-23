@@ -53,9 +53,9 @@ def createUser(request):
 		username = request.POST.get('username')
 		email = request.POST.get('email')
 		if CustomUser.objects.filter(username=username).exists():
-			return JsonResponse({'success': False, 'message': 'Username is already taken.'})
+			return JsonResponse({'success': False, 'message': 'Username is already taken.'}, status=409)
 		if CustomUser.objects.filter(email=email).exists():
-			return JsonResponse({'success': False, 'message': 'Email is already registered.'})
+			return JsonResponse({'success': False, 'message': 'Email is already registered.'},  status=409)
 		password = request.POST.get('password')
 		avatar = request.FILES.get('avatar')
 		user = CustomUser.objects.create_user(username=username, email=email, password=password, is_superuser=False, is_staff=False, avatar=avatar)
@@ -64,8 +64,8 @@ def createUser(request):
 		request.session.save()
 		user.save()
 		# login(request)
-		return JsonResponse({'success': True, 'message': 'Registered successfully'})
-	return HttpResponse("This endpoint expects a POST request.")
+		return JsonResponse({'success': True, 'message': 'Registered successfully'},  status=200)
+	return HttpResponse("This endpoint expects a POST request.",  status=405)
 
 @csrf_exempt
 def login(request):

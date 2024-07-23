@@ -14,8 +14,8 @@ class FriendRequest(models.Model):
 	to_user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name="to_user")
 
 class Notification(models.Model):
-    to_user = models.ForeignKey(CustomUser, related_name='received_notifications', on_delete=models.CASCADE)
-    from_user = models.ForeignKey(CustomUser, related_name='sent_notifications', on_delete=models.CASCADE)
+    to_user = models.ForeignKey(CustomUser, related_name='received_notifications2', on_delete=models.CASCADE)
+    from_user = models.ForeignKey(CustomUser, related_name='sent_notifications2', on_delete=models.CASCADE)
     message = models.CharField(max_length=255)
     timestamp = models.DateTimeField(default=timezone.now)
     read = models.BooleanField(default=False)
