@@ -117,6 +117,18 @@ class Game:
                 # self.defineNextBounce()
 
             # Handle collision with paddles
+            if(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.6 and self.ball_position[0] >= self.player_1_position - 0.4 and self.ball_position[0] <= self.player_1_position + 0.4) :
+                self.dy = -self.dy
+                self.ball_position[1] = self.player_1_position_z - 0.1
+                self.ball_velocity[1] = -self.ball_velocity[1]
+                self.ball_velocity[1] *= 1.1
+            if(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.6 and (self.ball_position[0] >= self.player_2_position - 0.4 and self.ball_position[0] <= self.player_2_position + 0.4)) :
+                self.dy = -self.dy
+                self.ball_position[1] = self.player_2_position_z + 0.1
+                self.ball_velocity[1] = -self.ball_velocity[1]
+                self.ball_velocity[1] *= 1.1
+
+            # Detect goal
             if self.ball_position[1] <= -4 or self.ball_position[1] >= 4:
                 if self.ball_position[1] <= -4 :
                     self.player_2_score += 1
@@ -124,17 +136,6 @@ class Game:
                 elif self.ball_position[1] >= 4:
                     self.player_1_score += 1
                     self.resetBall(2)
-
-            if(self.ball_position[1] >= self.player_1_position_z - 0.1 and self.ball_position[1] <= self.player_1_position_z + 0.1 and self.ball_position[0] >= self.player_1_position - 0.4 and self.ball_position[0] <= self.player_1_position + 0.4) :
-                self.dy = -self.dy
-                self.ball_position[1] = self.player_1_position_z - 0.1
-                self.ball_velocity[1] = -self.ball_velocity[1]
-                self.ball_velocity[1] *= 1.1
-            if(self.ball_position[1] >= self.player_2_position_z - 0.1 and self.ball_position[1] <= self.player_2_position_z + 0.1 and self.ball_position[0] >= self.player_2_position - 0.4 and self.ball_position[0] <= self.player_2_position + 0.4) :
-                self.dy = -self.dy
-                self.ball_position[1] = self.player_2_position_z - 0.1
-                self.ball_velocity[1] = -self.ball_velocity[1]
-                self.ball_velocity[1] *= 1.1
             self.send_game_state()
 
         def gameCountDown(self):
