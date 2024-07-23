@@ -115,6 +115,37 @@ function launchGame()
         score_player_2 = gamedata.game_state.player_2_score;
     };
 
+    let countdownText;
+
+    function createCountdownText(text)
+    {
+        if (!font) return;
+        const geometry = new THREE.TextGeometry(text,
+        {
+            font: font,
+            size: 1,
+            height: 0.1
+        });
+
+        const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        if (countdownText)
+            scene.remove(countdownText);
+
+        countdownText = new THREE.Mesh(geometry, material);
+        countdownText.position.set(0, 2, 0); // Position it at the center of the scene
+        scene.add(countdownText);
+    }
+
+    function updateCountdown(count)
+    {
+        if (count > 0)
+            createCountdownText(count.toString());
+        else
+            createCountdownText("START");
+    }
+
+    let currentCountdown = 3;
+
     function animate()
     {
         if (gamedata)
@@ -131,8 +162,17 @@ function launchGame()
                 controls.update(); // Update controls after setting the camera position
                 set_camera = 1
             }
-        updateState();
-        renderer.render(scene, camera);
+            updateState();
+            renderer.render(scene, camera);
+            if (gamedata.game_state.nb_players == 2)
+            {
+                console.log("YES")
+                updateCountdown(currentCountdown);
+                currentCountdown--;
+                if (currentCountdown < 0)
+                    countdown = false;
+                setTimeout(() => { animate(); }, 1000);
+            }
         }
         requestAnimationFrame(animate);
     }
@@ -144,3 +184,4 @@ var pov_camera;
 var set_camera = 0;
 var score_player_1 = 0;
 var score_player_2 = 0;
+var countdown = true;

@@ -60,7 +60,6 @@ function init() {
 
         },
         function (xhr) {
-            console.log((xhr.loaded / xhr.total * 100) + '% chargé');
         },
         function (error) {
             console.error('Erreur lors du chargement du modèle glTF', error);
@@ -75,7 +74,6 @@ function init() {
     //     // Option 1: Set as background
     //     scene.background = texture;
     // });
-    console.log("charged ouais la zone");
     window.addEventListener('click', onClickScene);
     document.addEventListener('mousemove', onMouseMove, false);
     animate();
@@ -162,7 +160,6 @@ window.addEventListener('resize', () => {
 window.addEventListener('click', onClickScene);
 
 function onClickScene(event) {
-    console.log("isZooming :", isZooming);
     if (isZooming === true || isZoomed === true)
         return;
     // Calculate the click coordinates in 3D space
