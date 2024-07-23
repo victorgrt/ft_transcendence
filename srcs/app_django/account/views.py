@@ -11,9 +11,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 # from .models import GameSession
-from .models import FriendRequest
-from .models import Notification
+# from notification.models import FriendRequest
+# from notification.models import Notification
 import uuid
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 
 # def register(request):
@@ -55,9 +57,6 @@ def createUser(request):
         password = request.POST.get('password')
         avatar = request.FILES.get('avatar')
 
-        # if CustomUser.objects.count() == 0:
-        #     user = CustomUser.objects.create_superuser(username="jquil", email="jquil@jquil.com", password="admin")
-        # else :
         print("Creating user")
         print(username)
         print(email)
@@ -69,7 +68,8 @@ def createUser(request):
         # user.is_staff = False
         user.save()
 
-        return render(request, 'account/login.html')
+        # return render(request, 'account/login.html')
+        return JsonResponse({"message": "Successfully Registered."}, status=200)
     return HttpResponse("This endpoint expects a POST request.")
 
 @csrf_exempt
@@ -91,12 +91,14 @@ def login(request):
             # set user-specific data in the session
             request.session['username'] = username
             request.session.save()
-            messages.success(request, 'You have successfully logged in.')
-            # return render(request, 'pages/partials/home_page.html')
             return JsonResponse({"message": "Successfully logged in."}, status=200)
+            # print("After login")
+            # messages.success(request, 'You have successfully logged in.')
+            # return render(request, 'pages/partials/home_page.html')
+            # return JsonResponse({"message": "Successfully logged in."}, status=200)
         else:
             print("failed to log in.")
-            messages.error(request, 'Invalid username or password. Please try again.')
+            # messages.error(request, 'Invalid username or password. Please try again.')
             # return error 
             return JsonResponse({"message": "Invalid username or password. Please try again."}, status=401)
     else:

@@ -1,6 +1,5 @@
 //SOCKET DE LA GAME SESSION
-var socket;
-var gamedata;
+
 
 function setUpSocket(_socket)
 {

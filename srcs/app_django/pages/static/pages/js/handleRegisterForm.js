@@ -1,16 +1,16 @@
-console.log("handleLoginForm script loaded");
+console.log("handleRegisterForm script loaded");
 document.addEventListener('DOMContentLoaded', function() {
 
   // Get elements 
-  const loginForm = document.getElementById('loginForm');
-  const loginError = document.getElementById('loginError');
+  const registerForm = document.getElementById('registerForm');
+  const registerError = document.getElementById('registerError');
 
   // Handle form submission
-  if (loginForm != undefined)
+  if (registerForm != undefined)
   {
-    loginForm.addEventListener('submit', function(e) {
+    registerForm.addEventListener('submit', function(e) {
         e.preventDefault(); // Prevent default form submission
-  
+        console.log("coucou les sangs");
         const formData = new FormData(this);
         fetch(this.action, {
             method: 'POST',
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .then(response => {
           console.log(response)
-            if (!response.ok) {
+            if (!response) {
                 throw new Error('Network response was not ok');
             }
             return response.json(); // Assuming the server responds with JSON
@@ -27,13 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
         .then(data => {
             // Handle success, redirect or update UI accordingly
             console.log(data);
+            console.log("cccccccccccccccccccccccc")
             window.location.href = '/'; // Adjust as needed
         })
         .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-            
+            console.log("Error detected");
             // Display error message
-            loginError.textContent = 'Invalid credentials. Please try again.';
+            registerError.textContent = 'This username is already taken. Please take an other one <3   ';
         });
     });
     }
