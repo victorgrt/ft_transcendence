@@ -560,7 +560,7 @@ function hideNotifs(){
     console.log("closing notifications div")
     notifsDiv.style.visibility = '0';
     notifsDiv.style.opacity = '0';
-    showElement(notifbtn);
+    ment(notifbtn);
 }
 
 // function handleSendNotif(){

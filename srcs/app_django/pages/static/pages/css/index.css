@@ -432,8 +432,8 @@ input[type="text"] {
 #friends{
 	overflow-y: scroll;
 	position: absolute;
-	visibility: hidden;
-	opacity: 0;
+	visibility: visible;
+	opacity: 100;
 	width: 50%;
 	height: 80%;
 	border: 2px solid rgba(40, 40, 40, 1);

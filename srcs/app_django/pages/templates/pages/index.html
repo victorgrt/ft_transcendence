@@ -19,6 +19,7 @@
 		{% else %}
 			<button class="needed_hover" id="logoutButton">LOGOUT</button>
 			<button class="needed_hover" id="statsButton" onclick='showStats()'>{{ user.username }}</button>
+			<button class="needed_hover" id="friendsButton" onclick='goToFriends()'>FRIENDS</button>
         {% endif %}
 	</div>
 	<!-- USER STATS -->
@@ -26,6 +27,8 @@
 	data-avatar="{{ user.get_avatar_name }}" data-friends="{{ user.friends }}"
 	data-win="{{ user.win }}" data-lost="{{ user.lost }}"> 
 	</div>
+	<!-- FRIENDS -->
+	<div id="friends"> </div>
     <!-- content des pages -->
     <div id="content">
         <div id="menuPongDiv">
@@ -110,6 +113,9 @@
 <script type="text/javascript" src="{% static 'pages/js/handleRegisterForm.js' %}"></script>
 <!-- LOGOUT SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/handleLogout.js' %}"></script>
+<!-- FRIENDS -->
+<script type="text/javascript" src="{% static 'pages/js/handleFriends.js' %}"></script>
+
 <!-- SCENE SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
 <!-- SHOW STATS USER -->

@@ -4,7 +4,7 @@ function showStats(){
     if (statsVisible === true)
     {
         zoomBack();
-		// statsDiv.style.visibility = 'hidden'
+		statsDiv.style.visibility = 'hidden'
 		statsVisible = false;
         return;
     }
@@ -15,7 +15,6 @@ function showStats(){
 		statsVisible = true;
 		updateUIForStats() 
 		showElement(goBackButton);
-
 	}
 }
 
@@ -32,9 +31,9 @@ function updateUIForStats()
 	const win = userDiv.getAttribute('data-win');
 	const lost = userDiv.getAttribute('data-lost');
 
-    userDiv.innerHTML = 
+    userDiv.innerHTML =
 	`
-		 <div id="leftstats">
+		<div id="leftstats">
 			${avatar ? `<ul id="stats"><img src="staticfiles/pages/img_avatars/${avatar}" id="avatar"></ul>` : ''}
 		</div>
 		<div id="rightstats">
@@ -43,6 +42,5 @@ function updateUIForStats()
 			<ul id="stats">${win}</ul>
 			<ul id="stats">${lost}</ul>
 		</div>
-    `
-	;
+    `;
 }
