@@ -1,3 +1,4 @@
+{% load static %}
 <div id="header">
     {% if user.is_authenticated == False %}
         <button class="needed_hover" onclick='goToLogin()'>LOGIN</button>

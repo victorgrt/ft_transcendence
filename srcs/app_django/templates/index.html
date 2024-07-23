@@ -14,13 +14,9 @@
 </div>
 
 {% if user.is_authenticated %}
-    {% include 'partials/user_stats.html' %}
-    {% include 'partials/change_profile.html' %}
-    {% include 'partials/notifications.html' %}
-    {% include 'partials/match_history.html' %}
-    {% include 'partials/friends.html' %}
+
+    {% include 'partials/changeProfile.html' %}
 {% else %}
-    {% include 'partials/login_form.html' %}
-    {% include 'partials/register_form.html' %}
+
 {% endif %}
 {% endblock %}
