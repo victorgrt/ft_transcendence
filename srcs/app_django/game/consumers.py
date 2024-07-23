@@ -36,48 +36,59 @@ async def get_user_from_session_key(session_key):
         return None
 
 class PongConsumer(AsyncWebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.game = None  # Initialize self.game to None
+        self.game_id = None  # Initialize self.game_id to None
+        self.user = None  # Initialize self.player to None
+        self.is_added_to_group = False  # Initialize self.player to None
 
     async def connect(self):
-        
+
         # Authenticate the user
         cookies_header = next((value for (key, value) in self.scope['headers'] if key == b'cookie'), None)
-        user = None  # Initialize user as None
+        self.user = None  # Initialize user as None
         if cookies_header:
             cookies = dict(cookie.split(b"=") for cookie in cookies_header.split(b"; "))
             session_key = cookies.get(b'sessionid')
             if session_key:
                 session_key = session_key.decode('utf-8')  # Ensure session_key is a string
-                user = await get_user_from_session_key(session_key)
-                print(user)
+                self.user = await get_user_from_session_key(session_key)
+                print(self.user)
             else:
                 print("Session key not found in cookies")
         else:
             print("No cookies found")
 
         # If user is not found, reject the connection
-        if not user:
+        if not self.user:
             print("Authentication failed. Closing connection.")
             await self.close()
             return  # Stop further execution
-        
-        # Extract the game_id 
+
+        # Extract the game_id
         game_id = self.scope['url_route']['kwargs']['game_id']
         self.game_id = game_id
         print(f"Connecting to game {self.game_id}")
         self.game = game_manager.get_game(game_id)
+        # self.user = user
+        # print(user.id)
 
         if not self.game:
             self.game = game_manager.create_game(game_id)
-        self.game.add_player(self, user)
+        self.game.add_player(self, self.user)
         await self.channel_layer.group_add(self.game_id, self.channel_name)
+        self.is_added_to_group = True
         await self.accept()
 
 
     async def disconnect(self, close_code):
-        self.game.remove_player(self)
-        if not self.game.players:
-            game_manager.remove_game(self.game_id)
-        await self.channel_layer.group_discard(self.game_id, self.channel_name);
+        if self.game:
+            self.game.remove_player(self)
+        # if not self.game.players:
+        #     game_manager.remove_game(self.game_id)
+        if self.is_added_to_group:
+            await self.channel_layer.group_discard(self.game_id, self.channel_name);
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -96,9 +107,14 @@ class PongConsumer(AsyncWebsocketConsumer):
     async def game_update(self, event):
         message = event['message']
         # Assuming event['timestamp'] is a UNIX timestamp
-        
+
         print(f"Received message: {message} at time : {datetime.datetime.now().time()}")
         await self.send(text_data=json.dumps({'game_state': message}))
+
+    async def countdown(self, event):
+        message = event['message']
+        print(f"Received message: {message} at time : {datetime.datetime.now().time()}")
+        await self.send(text_data=json.dumps({'countdown': message}))
 
     async def send_game_state_directly(self, state):
         # print ("state : ", state)

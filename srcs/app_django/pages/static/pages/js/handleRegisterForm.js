@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function ()
 {
 	const form = document.getElementById('register')
+	const registerError = document.getElementById('registerError');
 	if (form)
 	{
 		form.addEventListener('submit', function (event)
@@ -38,7 +39,9 @@ document.addEventListener('DOMContentLoaded', function ()
 			{
 				console.error('Error:', error);
 				alert('An error occurred during registration.');
+				registerError.textContent = 'This username is already taken. Please take an other one <3   ';
 			});
+
 		});
 	}
 });

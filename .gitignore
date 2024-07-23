@@ -5,4 +5,7 @@ a.out
 tuto_django/
 bruh/
 .venv/
-db_accz
+db_acc
+*.jpg
+000*
+001*

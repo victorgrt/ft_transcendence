@@ -1,13 +1,18 @@
 //SOCKET DE LA GAME SESSION
-var socket;
-var gamedata;
+
 
 function setUpSocket(_socket)
 {
   console.log("SETTING SOCKET UP");
 	_socket.onmessage = function(e) {
+        // console.log(e.data.game_state)
+        // if ('game_state' in e.data)
         const data = JSON.parse(e.data);
-        gamedata = data;
+        if (data.hasOwnProperty('game_state'))
+        {
+            // if (e.data == "waiting" || e.data == "playing")
+            gamedata = data;
+        }
     };
 }
 

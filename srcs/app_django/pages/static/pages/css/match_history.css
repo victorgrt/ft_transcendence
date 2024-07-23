@@ -1,0 +1,82 @@
+.match_history_container
+{
+  position:absolute;
+  width:400px;
+  left: 5%;
+  height: 70%;
+	border: 2px solid rgba(40, 40, 40, 1);
+	color: white;
+	background-color: rgba(24, 24, 24, 1);
+	padding: 20px;
+	border-radius: 5px;
+	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+}
+
+.match_history_list
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.match_history_item
+{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding:5px;
+}
+
+.match_history_item:hover 
+{
+  background-color: rgba(40, 40, 40, 1);
+}
+
+.match_history_win_icon
+{
+  width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.match_history_username
+{
+  font-size: 16px;
+  width:17%;
+}
+
+.match_history_score
+{
+  font-size: 22px;
+  font-weight: bold;
+  width:17%;
+}
+
+.match_history_date
+{
+  font-size: 14px;
+  color: gray;
+  width:17%;
+}
+
+#match_history_score_left
+{
+  text-align: right;
+}
+
+#match_history_score_right
+{
+  text-align: left;
+}
+
+.fight-icon
+{
+  width: 35px;
+  height: 35px;
+  margin-right:7px;
+  margin-left:7px;
+}

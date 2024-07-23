@@ -12,6 +12,8 @@ from django.contrib import messages
 from notification.models import FriendRequest
 from notification.models import Notification
 import uuid
+from django.core.exceptions import ValidationError
+from django.db import IntegrityError
 
 
 # def register(request):
@@ -61,7 +63,7 @@ def createUser(request):
 		request.session['username'] = username
 		request.session.save()
 		user.save()
-		login(request)
+		# login(request)
 		return JsonResponse({'success': True, 'message': 'Registered successfully'})
 	return HttpResponse("This endpoint expects a POST request.")
 
@@ -83,12 +85,10 @@ def login(request):
             # set user-specific data in the session
             request.session['username'] = username
             request.session.save()
-            print("Successfully logged in.")
-            # return redirect('home')
-            print("After login")
+            return JsonResponse({"message": "Successfully logged in."}, status=200)
+            # print("After login")
             # messages.success(request, 'You have successfully logged in.')
             # return render(request, 'pages/partials/home_page.html')
-            return JsonResponse({"message": "Successfully logged in."}, status=200)
         else:
             print("failed to log in.")
             # messages.error(request, 'Invalid username or password. Please try again.')
