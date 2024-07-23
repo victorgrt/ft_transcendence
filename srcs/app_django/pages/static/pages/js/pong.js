@@ -116,35 +116,38 @@ function launchGame()
     };
 
     let countdownText;
+    let countdownValue = null;  // Valeur du compte à rebours reçue du backend
+    let countdownStartTime = null;
 
-    function createCountdownText(text)
-    {
-        if (!font) return;
-        const geometry = new THREE.TextGeometry(text,
-        {
+    function createCountdownText(text) {
+        if (!font) {
+            console.warn("Font not loaded yet.");
+            return;
+        }
+        const geometry = new THREE.TextGeometry(text, {
             font: font,
             size: 1,
             height: 0.1
         });
-
         const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        if (countdownText)
-            scene.remove(countdownText);
-
+        if (countdownText) scene.remove(countdownText);
         countdownText = new THREE.Mesh(geometry, material);
-        countdownText.position.set(0, 2, 0); // Position it at the center of the scene
+        countdownText.position.set(0, 2, 0);
         scene.add(countdownText);
     }
 
-    function updateCountdown(count)
+    function updateCountdown()
     {
-        if (count > 0)
-            createCountdownText(count.toString());
-        else
-            createCountdownText("START");
+        if (countdownStartTime != null)
+        {
+            console.log(countdown.countdown.countdown);
+            if (countdown.countdown == 0)
+                createCountdownText("START");
+            else
+                createCountdownText(countdown.countdown.countdown.toString());
+            countdownValue = null; // Réinitialiser pour éviter la boucle
+        }
     }
-
-    let currentCountdown = 3;
 
     function animate()
     {
@@ -164,14 +167,11 @@ function launchGame()
             }
             updateState();
             renderer.render(scene, camera);
-            if (gamedata.game_state.nb_players == 2)
+            // if (gamedata.game_state.state == "waiting" && gamedata.game_state.nb_players == 2)
+            if (countdown)
             {
-                console.log("YES")
-                updateCountdown(currentCountdown);
-                currentCountdown--;
-                if (currentCountdown < 0)
-                    countdown = false;
-                setTimeout(() => { animate(); }, 1000);
+                countdownStartTime = Date.now();
+                updateCountdown();  // Mettre à jour le compte à rebours en fonction de la valeur reçue
             }
         }
         requestAnimationFrame(animate);
@@ -184,4 +184,3 @@ var pov_camera;
 var set_camera = 0;
 var score_player_1 = 0;
 var score_player_2 = 0;
-var countdown = true;

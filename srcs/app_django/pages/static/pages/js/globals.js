@@ -16,3 +16,4 @@ var compteur_notifs = document.getElementById("nb_notifs").textContent;
 // ------------ GAME VARIABLES ---------
 var socket;
 var gamedata;
+var countdown;
