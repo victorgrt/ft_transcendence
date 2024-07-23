@@ -88,7 +88,7 @@ class Game:
                 self.move_2 = 0
     def update(self):
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
-            winner = "Player1" if self.player_1_score == 3 else "Player2"
+            winner = self.players[0].id if self.player_1_score == 3 else self.players[1].id
             self.state = winner
 
             # Send game over message
@@ -109,7 +109,7 @@ class Game:
                 'player_2_id': self.players[1].id,
                 'player_1_score': self.player_1_score,
                 'player_2_score': self.player_2_score,
-                'winner_id': self.players[0].id,
+                'winner_id': winner,
             })
 
             return
