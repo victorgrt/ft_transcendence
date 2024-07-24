@@ -19,3 +19,4 @@ var gamedata;
 
 // ------------ OTHER ---------
 var friendsVisible = false;
+var countdown;
