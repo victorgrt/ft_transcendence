@@ -113,40 +113,21 @@ function launchGame()
 
         score_player_1 = gamedata.game_state.player_1_score;
         score_player_2 = gamedata.game_state.player_2_score;
+        let displayText = gamedata.game_state.player_1_login.toString() + " : " + score_player_1.toString() + " | " + gamedata.game_state.player_2_login.toString() + " : " + score_player_2.toString();
+        document.getElementById('score').innerText = displayText;
     };
 
-    let countdownText;
-    let countdownValue = null;  // Valeur du compte à rebours reçue du backend
-    let countdownStartTime = null;
 
-    function createCountdownText(text) {
-        if (!font) {
-            console.warn("Font not loaded yet.");
-            return;
-        }
-        const geometry = new THREE.TextGeometry(text, {
-            font: font,
-            size: 1,
-            height: 0.1
-        });
-        const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        if (countdownText) scene.remove(countdownText);
-        countdownText = new THREE.Mesh(geometry, material);
-        countdownText.position.set(0, 2, 0);
-        scene.add(countdownText);
-    }
-
-    function updateCountdown()
+    function updateCountdownHTML()
     {
-        if (countdownStartTime != null)
-        {
-            console.log(countdown.countdown.countdown);
-            if (countdown.countdown == 0)
-                createCountdownText("START");
-            else
-                createCountdownText(countdown.countdown.countdown.toString());
-            countdownValue = null; // Réinitialiser pour éviter la boucle
-        }
+        let displayText;
+        if (countdown.countdown.countdown > 0)
+            displayText = `${countdown.countdown.countdown}`;
+        else if (countdown.countdown.countdown === 0)
+            displayText = "START";
+        else if (countdown.countdown.countdown == -1)
+            displayText = "";
+        document.getElementById('countdownDisplay').innerText = displayText;
     }
 
     function animate()
@@ -169,10 +150,7 @@ function launchGame()
             renderer.render(scene, camera);
             // if (gamedata.game_state.state == "waiting" && gamedata.game_state.nb_players == 2)
             if (countdown)
-            {
-                countdownStartTime = Date.now();
-                updateCountdown();  // Mettre à jour le compte à rebours en fonction de la valeur reçue
-            }
+                updateCountdownHTML();  // Mettre à jour le compte à rebours en fonction de la valeur reçue
         }
         requestAnimationFrame(animate);
     }

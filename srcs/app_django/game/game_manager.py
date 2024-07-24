@@ -54,9 +54,9 @@ class Game:
         self.ballNextBounce[0] = x2
         self.ballNextBounce[1] = y2
 
-    def add_player(self, player, user):
+    def add_player(self, consumer, user):
         self.players.append(user)
-        self.consumers.append(player)
+        self.consumers.append(consumer)
         self.nb_players += 1
 
     def remove_player(self, player):
@@ -155,7 +155,7 @@ class Game:
 
         def gameCountDown(self):
             countdown = 3
-            while countdown > 0:
+            while countdown >= 0:
                 async_to_sync(get_channel_layer().group_send)(
                     self.game_id,
                     {
@@ -167,7 +167,16 @@ class Game:
                 )
                 time.sleep(1)  # Wait for 1 second
                 countdown -= 1
-
+                if (countdown == -1):
+                    async_to_sync(get_channel_layer().group_send)(
+                        self.game_id,
+                        {
+                            'type': 'countdown',
+                            'message':{
+                                'countdown': -1
+                            }
+                        }
+                    )
         if self.state == "waiting":
             # If there are enough players, start the game
             if len(self.players) >= 2:
@@ -180,26 +189,22 @@ class Game:
 
     def send_game_state(self):
         # print("Sending game state to group %s" % self.game_id)
+        if (self.nb_players == 2) :
+            player_2_username = self.players[1].username
+        else :
+            player_2_username = "waiting"
         for i in range(len(self.consumers)):
             async_to_sync(self.consumers[i].send_game_state_directly)(
                 {
                         'state': self.state,
                         'nb_players': self.nb_players,
+                        'player_1_login': self.players[0].username,
+                        'player_2_login': player_2_username,
                         'ball_position': self.ball_position,
                         'ball_velocity': self.ball_velocity,
                         'player_1_position': self.player_1_position,
                         'player_2_position': self.player_2_position,
                         'player_id': i + 1,
-                        # 'dx' : self.dx,
-                        # 'dy': self.dy,
-                        # 'seed' : self.seed,
-                        # 'ballRadius' : self.ballRadius,
-                        # 'paddleWidth': self.paddleWidth,
-                        # 'paddleHeight': self.paddleHeight,
-                        # 'paddleSpeed': self.paddleSpeed,
-                        # 'fieldHeight': self.fieldHeight,
-                        # 'fieldWidth': self.fieldWidth,
-                        # 'ballNextBounce': self.ballNextBounce,
                         'player_1_score': self.player_1_score,
                         'player_2_score': self.player_2_score,
                             # Add more game state information as needed
