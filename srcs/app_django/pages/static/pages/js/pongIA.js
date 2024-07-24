@@ -129,8 +129,8 @@ function launchGameIA()
 
         score_player_1 = gamedata.game_state.player_1_score;
         score_player_2 = gamedata.game_state.player_2_score;
-        HandleIAMove();
-        let displayText = gamedata.game_state.player_1_login.toString() + " : " + score_player_1.toString() + " | " + gamedata.game_state.player_2_login.toString() + " : " + score_player_2.toString();
+        handleIAMove();
+        let displayText = gamedata.game_state.player_1_login.toString() + " : " + score_player_1.toString() + " | IA : " + score_player_2.toString();
         document.getElementById('score').innerText = displayText;
     };
 

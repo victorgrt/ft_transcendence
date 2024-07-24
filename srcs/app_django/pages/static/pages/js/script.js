@@ -11,6 +11,7 @@ function pongPageScripts () {
 function pongIAPageScripts()
 {
     connectToGame();
+    connectToGame();
     launchGameIA();
 }
 
@@ -30,6 +31,8 @@ function loadContent(url, pushState = true) {
     // if there is a trailing session id, remove it
     if (url.includes('/pong/'))
         page_url = '/pong/'
+    else if (url.includes('/pongIA/'))
+        page_url = '/pongIA/'
     else
         page_url = url
 
