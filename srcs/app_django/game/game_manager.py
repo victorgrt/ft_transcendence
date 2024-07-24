@@ -146,10 +146,10 @@ class Game:
             # Detect goal
             if self.ball_position[1] <= -4 or self.ball_position[1] >= 4:
                 if self.ball_position[1] <= -4 :
-                    self.player_2_score += 1
+                    self.player_1_score += 1
                     self.resetBall(1)
                 elif self.ball_position[1] >= 4:
-                    self.player_1_score += 1
+                    self.player_2_score += 1
                     self.resetBall(2)
             self.send_game_state()
 

@@ -3,43 +3,8 @@
 	<script src="{% static 'pages/js/pong.js' %}"></script>
 	<div id="countdownDisplay" style="position: absolute; top: 250px; left: 50%; transform: translateX(-50%); font-size: 240px; color: white;"></div>
 	<div id="score" style="position: absolute; top: 50px; left: 50%; transform: translateX(-50%); font-size: 80px; color: white;"></div>
+	<div id="footer">
+        <button id="leaveGameButton" onclick=leaveGame() src="{% static 'pages/js/pong.js' %}">> Leave Game <</button>
+    </div>
 
 </div>
-
-
-
-
-<!-- <head>
-	<link rel="stylesheet" type="text/css" href="{% static 'pages/css/pong.css' %}">
-  </head>
-  <div id="game">
-	  <div id="titre">
-		  Ft_transcendence en mode detente mon pote
-		</div>
-		<div id="buttons">
-		  <button id="settingsButton">Pause</button>
-		  <button id="ModeButton">Player 2 / IA</button>
-		  <button id="customizationButton">Customisation</button>
-		</div>
-
-	  <div class = "ballSpeedindic">
-			SPEED :
-			<div id="ballSpeed"></div>Km/h
-		</div>
-	  <div class = "score">
-		<div>
-		  P1 Score :
-		  <div id = "score_P1">
-
-		  </div>
-		</div>
-		<div>
-		  P2 Score :
-		  <div id = "score_P2">
-
-		  </div>
-		</div>
-	  </div>
-		<canvas id="pongCanvas" width="1200" height="600"></canvas>
-		<script src="{% static 'pages/js/pong.js' %}"></script>
-		<script src="{% static 'pages/js/multi.js' %}"></script> -->
