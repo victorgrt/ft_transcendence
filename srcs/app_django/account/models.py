@@ -11,15 +11,15 @@ from django.utils import timezone
 # from django.core.files.storage import FileSystemStorage
 
 
-class Notification(models.Model):
-    to_user = models.ForeignKey('CustomUser', related_name='received_notifications', on_delete=models.CASCADE)
-    from_user_username = models.CharField(max_length=150, default="default_sender")  # Champ pour le nom d'utilisateur de l'envoyeur
-    type_of_notification = models.CharField(max_length=100)
-    message = models.CharField(max_length=255)
-    read = models.BooleanField(default=False)
+# class Notification(models.Model):
+#     to_user = models.ForeignKey('CustomUser', related_name='received_notifications', on_delete=models.CASCADE)
+#     from_user_username = models.CharField(max_length=150, default="default_sender")  # Champ pour le nom d'utilisateur de l'envoyeur
+#     type_of_notification = models.CharField(max_length=100)
+#     message = models.CharField(max_length=255)
+#     read = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f'From {self.from_user_username} to {self.to_user.username}: {self.message}'
+#     def __str__(self):
+#         return f'From {self.from_user_username} to {self.to_user.username}: {self.message}'
 
     
 class UserManager(BaseUserManager):

@@ -10,8 +10,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
-# from notification.models import FriendRequest
-from account.models import Notification
+from notification.models import FriendRequest
+from notification.models import Notification
 import uuid
 from game.models import MatchHistory
 
