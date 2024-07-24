@@ -115,6 +115,40 @@ function launchGame()
         score_player_2 = gamedata.game_state.player_2_score;
     };
 
+    let countdownText;
+    let countdownValue = null;  // Valeur du compte à rebours reçue du backend
+    let countdownStartTime = null;
+
+    function createCountdownText(text) {
+        if (!font) {
+            console.warn("Font not loaded yet.");
+            return;
+        }
+        const geometry = new THREE.TextGeometry(text, {
+            font: font,
+            size: 1,
+            height: 0.1
+        });
+        const material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+        if (countdownText) scene.remove(countdownText);
+        countdownText = new THREE.Mesh(geometry, material);
+        countdownText.position.set(0, 2, 0);
+        scene.add(countdownText);
+    }
+
+    function updateCountdown()
+    {
+        if (countdownStartTime != null)
+        {
+            console.log(countdown.countdown.countdown);
+            if (countdown.countdown == 0)
+                createCountdownText("START");
+            else
+                createCountdownText(countdown.countdown.countdown.toString());
+            countdownValue = null; // Réinitialiser pour éviter la boucle
+        }
+    }
+
     function animate()
     {
         if (gamedata)
@@ -131,8 +165,14 @@ function launchGame()
                 controls.update(); // Update controls after setting the camera position
                 set_camera = 1
             }
-        updateState();
-        renderer.render(scene, camera);
+            updateState();
+            renderer.render(scene, camera);
+            // if (gamedata.game_state.state == "waiting" && gamedata.game_state.nb_players == 2)
+            if (countdown)
+            {
+                countdownStartTime = Date.now();
+                updateCountdown();  // Mettre à jour le compte à rebours en fonction de la valeur reçue
+            }
         }
         requestAnimationFrame(animate);
     }

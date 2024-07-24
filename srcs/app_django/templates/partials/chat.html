@@ -2,7 +2,7 @@
     <div
       class="chat__item__container"
       id="id_chat_item_container"
-      style="font-size: 20px">
+      style="font-size: 20px">    {% include 'partials/register_form.html' %}
       <input type="text" id="id_message_send_input" />
       <button type="submit" id="id_message_send_button">Send Message</button>
     </div>
@@ -18,7 +18,7 @@
       };
       document.querySelector("#id_message_send_input").focus();
       document.querySelector("#id_message_send_input").onkeyup = function (e)
-	  {
+	  {    {% include 'partials/register_form.html' %}
         if (e.keyCode == 13) {
           document.querySelector("#id_message_send_button").click();
         }

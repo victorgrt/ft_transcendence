@@ -1,6 +1,5 @@
 {% load static %}
-{% if user.is_authenticated %}
-<div id="game_history" class="match_history_container">
+<div class="match_history_container">
     <h2>Match History</h2>
     <div class="match_history_list">
         {% for match in match_history %}
@@ -33,5 +32,4 @@
             <li>No match history found.</li>
         {% endfor %}
     </div>
-</div>
-{% endif %}
+  </div>

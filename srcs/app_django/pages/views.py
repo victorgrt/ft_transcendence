@@ -50,37 +50,37 @@ def starting_page(request):
         # return render(request, 'base.html', {'username': request.user.username})
         match_history = get_user_match_history(request.user)
 
-        return render(request, 'pages/index.html', {'user': request.user, 'match_history': match_history})
+        return render(request, 'index.html', {'user': request.user, 'match_history': match_history})
     else:
         print(f"user not authenticated : {request}")
-        return  render(request, 'pages/index.html')
+        return  render(request, 'index.html')
 
 def scene(request):
-    return render(request, 'pages/index.html')
+    return render(request, 'index.html')
 
 # game page
 def pong(request, session_id):
     context = {'session_id': session_id}
     if is_ajax(request):
-        return render(request, 'pages/partials/pong.html', context)
+        return render(request, 'partials/pong.html', context)
     else:
-        return render(request, 'pages/index.html', {'partial_template': 'pages/partials/pong.html', 'context': session_id})
+        return render(request, 'index.html', {'partial_template': 'partials/pong.html', 'context': session_id})
 
 # IA game page
 def pongIA(request):
-    return render(request, 'pages/partials/pongIA.html')
-    # return render(request, 'pages/partials/pong.html')
+    return render(request, 'partials/pongIA.html')
+    # return render(request, 'partials/pong.html')
 
 # Game menu
 def menuPong(request):
-    return render(request, 'pages/partials/menuPong.html')
+    return render(request, 'partials/menuPong.html')
 
 # def account(request):
-#     return render(request, 'pages/partials/account.html')
+#     return render(request, 'partials/account.html')
 
 # Chat page
 def chat(request):
-    return render(request, 'pages/partials/chat.html')
+    return render(request, 'partials/chat.html')
 
 @csrf_exempt
 def send_notification(request):

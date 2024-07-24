@@ -431,7 +431,7 @@ function hideNotifs(){
     console.log("closing notifications div")
     notifsDiv.style.visibility = 'hidden';
     notifsDiv.style.opacity = '0';
-    ment(notifbtn);
+    hideElement(notifbtn);
 }
 
 
