@@ -248,6 +248,7 @@ class GameManager:
             sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
             time.sleep(sleep_time);
 
+
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)
 game_update_thread.start()

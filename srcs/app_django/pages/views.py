@@ -49,8 +49,14 @@ def starting_page(request):
         print(f"Authenticated user: {request.user.username}")
         # return render(request, 'base.html', {'username': request.user.username})
         match_history = get_user_match_history(request.user)
+        notifications = request.user.received_notifications.all()  # Call .all() to get a queryset
 
-        return render(request, 'index.html', {'user': request.user, 'match_history': match_history})
+        context = {
+            'user': request.user,
+            'match_history': match_history,
+            'notifications': notifications
+        }
+        return render(request, 'index.html', context)
     else:
         print(f"user not authenticated : {request}")
         return  render(request, 'index.html')

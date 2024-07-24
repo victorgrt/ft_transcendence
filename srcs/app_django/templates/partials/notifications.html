@@ -26,5 +26,13 @@
             <td id="notiftd">DECLINE</td>
         </tr>
         <p id="nb_notifs">{{user.nb_notifs}}</p>
+        {% for notif in notifications %}
+            <tr>
+                <td id="notiftd">{{notif.from_user_username}}</td>
+                <td id="notiftd">{{notif.type_of_notification}}</td>
+                <td id="notiftd"><button class="needed_hover" onclick="acceptNotif('{{ notif.message }}')">ACCEPT</button></td>
+                <td id="notiftd"><button class="needed_hover" onclick="declineNotif('{{ notif.message }}')">DECLINE</button></td>
+            </tr>
+        {% endfor %}
     </table>
 </div>
