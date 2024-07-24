@@ -1,5 +1,6 @@
 .match_history_container
 {
+  visibility: hidden;
   position:absolute;
   width:400px;
   left: 5%;
