@@ -16,10 +16,18 @@
 </head>
 
 <body>
+    <!-- HEADER -->
     {% include 'partials/header.html' %}
+
+    <!-- CONTENT -->
     <div id="content">
         {% block content %}{% endblock %}
     </div>
+
+    <!-- 3D LOBBY SCENE -->
+    <div id="scene"/>
+
+    <!-- FOOTER -->
     {% include 'partials/footer.html' %}
     
     <!-- Include common scripts -->

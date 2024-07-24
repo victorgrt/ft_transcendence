@@ -1,0 +1,17 @@
+<div class="login_form">
+    <h2 class="pong_title" style="font-size: 30px;margin-bottom: 30px;">LOGIN</h2>
+    <form id="loginForm" action="/account/login/" method="post">
+        <div class="form-group">
+            <label for="username" class="account-form-label">Username</label>
+            <input class="account-form-input" type="username" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+            <label for="password" class="account-form-label">Password</label>
+            <input class="account-form-input" type="password" id="password" name="password">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="LOGIN">
+        </div>
+    </form>
+    <div id="loginError"></div>
+</div>
