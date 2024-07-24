@@ -8,11 +8,18 @@ function pongPageScripts () {
     launchGame();
 }
 
+function pongIAPageScripts()
+{
+    connectToGame();
+    launchGameIA();
+}
+
 
 const page_scripts = {
     // 'gameSession' : loadGameSession,
     'menuPong/' : loadMenuPong,
     '/pong/' : pongPageScripts,
+    '/pongIA/' :pongIAPageScripts,
 }
 
 function loadContent(url, pushState = true) {

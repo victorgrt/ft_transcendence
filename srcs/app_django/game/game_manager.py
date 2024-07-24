@@ -207,6 +207,7 @@ class Game:
                         'player_id': i + 1,
                         'player_1_score': self.player_1_score,
                         'player_2_score': self.player_2_score,
+                        'ballNextBounce': self.ballNextBounce,
                             # Add more game state information as needed
                     }
             )

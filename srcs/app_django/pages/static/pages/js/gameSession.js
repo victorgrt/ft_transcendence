@@ -57,8 +57,24 @@ function connectToGame() {
         });
 }
 
+async function createGameIA()
+{
+    console.log("createGame");
+	try
+    {
+		const response = await fetch('/create_session/');
+		const data = await response.json();
+		loadContent('/pongIA/' + data.session_id + '/');
+	}
+    catch (error)
+    {
+		console.error('Error creating session or connecting WebSocket:', error);
+	}
+}
+
 function loadMenuPong(){
     console.log("coucou vivi");
+
 	document.getElementById('joinSessionBtn').addEventListener('click', function() {
 		console.log("ici");
 		    const sessionId = document.getElementById('sessionIdInput').value;
@@ -67,6 +83,8 @@ function loadMenuPong(){
 	});
 
 	document.getElementById('createSessionBtn').addEventListener('click', createGame);
+	document.getElementById('IAButton').addEventListener('click', createGameIA);
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
