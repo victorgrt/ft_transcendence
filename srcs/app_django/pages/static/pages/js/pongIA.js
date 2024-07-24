@@ -115,6 +115,8 @@ function launchGameIA()
                     socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left'}))
                 else if (gamedata.game_state.ball_velocity[1] > 0 && gamedata.game_state.player_2_position < 0)
                     socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right'}))
+                else
+                socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null'}))
             }
         }
     }
