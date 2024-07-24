@@ -19,7 +19,7 @@ const page_scripts = {
     // 'gameSession' : loadGameSession,
     'menuPong/' : loadMenuPong,
     '/pong/' : pongPageScripts,
-    '/pongIA/' :pongIAPageScripts,
+    '/pongIA/' : pongIAPageScripts,
 }
 
 function loadContent(url, pushState = true) {

@@ -13,7 +13,7 @@ urlpatterns = [
 
   # account
 	path('account/', include("account.urls")),
- 
+
   # notification
 	path('notification/', include("notification.urls")),
 
@@ -22,4 +22,6 @@ urlpatterns = [
   path('accept-friend-request/', accept_friend_request),
   # Game
   path("pong/<str:session_id>/", pong, name="pong_session"),  # Add this line
+  path("pongIA/<str:session_id>/", pongIA, name="pong_session"),  # Add this line
+
 ]
