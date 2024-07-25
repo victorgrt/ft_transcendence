@@ -28,7 +28,7 @@ function init() {
     scene.add(light);
 
     loader = new THREE.GLTFLoader();
-    const sceneurl = "/staticfiles/pages/images/scene3.gltf";
+    const sceneurl = "/staticfiles/pages/images/scene4.gltf";
 
     loader.load(
         sceneurl,
@@ -93,12 +93,6 @@ function onMouseMove(event) {
     var intersects = raycaster.intersectObjects(scene.children, true);
     // Réinitialiser l'objet surligné précédent
     if (highlightedObject) {
-        if (highlightedObject.name === 'mesh_130')
-        {
-            highlightedObject.material.color.setHex( 0xFFFFFF );
-            highlightedObject = null;
-            return;
-        }
         highlightedObject.material.emissiveIntensity = 1; // Réinitialiser l'intensité d'émission
         highlightedObject = null;
     }
@@ -124,13 +118,9 @@ function onMouseMove(event) {
             //ECRAN ORDINATEUR
             else if (selectedObject.object.name === 'Plane009_2') {
                 objectToHighlight.material.emissiveIntensity = 5; // Exemple: intensité d'émission pour la surbrillance
-                objectToHighlight.material.color.setHex( 0xFF0000 );
             }
             else if (selectedObject.object.name === 'mesh_130') {
-                objectToHighlight.material.emissiveIntensity = 10000; // Exemple: intensité d'émission pour la surbrillance
-                console.log("here king");
-                // objectToHighlight.material.emissive = "0xFFFFFF";
-                objectToHighlight.material.color.setHex( 0x000000 );
+                objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
             }
             // Autres ajustements de surbrillance si nécessaire
             highlightedObject = objectToHighlight;
