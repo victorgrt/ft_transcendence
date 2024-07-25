@@ -611,3 +611,13 @@ selectnotif{
 	position: absolute;
 	z-index: 10;
 }
+
+#about_us{
+	background-color: red;
+	display: flex;
+}
+
+.about_img{
+	width: 30%;
+	height: 30%;
+}

@@ -119,6 +119,29 @@ function zoomToCoordinates(clickCoordinates) {
                 })
                 .start();
         }
+        else if (selected_object_name == "mesh_130") {
+            console.log("click :", clickCoordinates);
+            targetPosition = new THREE.Vector3(-1.5, 4.2, -0.5);
+            new TWEEN.Tween(camera.position)
+                .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, duration)
+                .easing(TWEEN.Easing.Quadratic.InOut)
+                .onUpdate(() => {
+                    controls.target.x = targetPosition.x;
+                    controls.target.y = targetPosition.y;
+                    controls.target.z = targetPosition.z;
+                })
+                .onComplete(() => {
+                    console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
+                    isZooming = false;
+
+                    controls.target.x = targetPosition.x;
+                    controls.target.y = targetPosition.y;
+                    controls.target.z = targetPosition.z;
+
+                    showElement(goBackButton);
+                })
+                .start();
+        }
     }
 }
 

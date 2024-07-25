@@ -100,7 +100,6 @@ function onMouseMove(event) {
     if (intersects.length > 0) {
         // document.body.style.cursor = 'pointer';
         var selectedObject = intersects.find(function (intersect) {
-            // console.log("HERE BABE:", intersect.object.name);
             // Check si l'utilisteur est sur un objet cliquable
             if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2' || intersect.object.name === 'mesh_130') && isZooming === false) {
                 selected_object_name = intersect.object.name;
