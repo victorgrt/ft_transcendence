@@ -469,7 +469,7 @@ input[type="password"] {
 }
 
 /* FRIENDS LIST */
-#friends{
+/* #friends{
 	z-index: -1;
 	overflow-y: scroll;
 	position: absolute;
@@ -479,17 +479,17 @@ input[type="password"] {
 	height: 80%;
 	border: 2px solid rgba(40, 40, 40, 1);
     background-color: rgba(24, 24, 24, 0.9);
-}
+} */
 
-#friends_list{
+/* #friends_list{
 	color:white;
 	width: 100%;
     overflow: hidden;
-}
-
+} */
+/* 
 #friend_avatar{
 	width: 20%;
-}
+} */
 
 td{
 	max-width: 150px; 

@@ -210,6 +210,21 @@ function centerLoginForm()
     registerForm.style.position = 'absolute';
 }
 
+function showHideElement(element)
+{
+	console.log("in showHideElement");
+	if (element.style.visibility === 'visible')
+	{	
+		element.style.visibility = 'hidden';
+			element.style.opacity = '0';
+	}
+	else
+	{	
+		element.style.visibility = 'visible';
+		element.style.opacity = '1';
+	}
+}
+
 function showElement(element)
 {
     element.style.opacity = '1';

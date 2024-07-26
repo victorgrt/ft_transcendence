@@ -1,8 +1,9 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        var ws_path = ws_scheme + '://' + window.location.host + '/ws/notifications/';
+        var ws_path = 'ws://' + window.location.host + '/ws/notifications/';
         var websocket = new WebSocket(ws_path);
+		// socketGame = new WebSocket('ws://' + window.location.hostname + ':8002/ws/game/' + roomName + '/');
 
         websocket.onopen = function(event) {
             console.log("WebSocket is open now.");
@@ -27,7 +28,7 @@
         function sendNotificationSocket(username){
             console.log("from : ", username);
             // You can implement WebSocket send here if needed
-            // websocket.send(JSON.stringify({ 'username': username }));
+            websocket.send(JSON.stringify({ 'username': username }));
         }
 
         document.getElementById('sendbtn').onclick = function() {
@@ -42,7 +43,7 @@
                 return;
             }
 
-            fetch('/send_notification/', {
+            fetch('/send-notification/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',
