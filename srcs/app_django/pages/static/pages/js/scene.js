@@ -9,18 +9,19 @@ var selecting_clickable;
 var initialControlPosition;
 var clickCoordinates = null;
 function init() {
-    scene = new THREE.Scene();
-
     renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(window.innerWidth, window.innerHeight);
+
+    renderer.outpuEncoding = THREE.RGBEEncoding;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.25;
+
+    scene = new THREE.Scene();
 
     camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     camera.position.set(12, 5, 12);
     controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.update();
-    renderer.outpuEncoding = THREE.RGBEEncoding;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.25;
     document.getElementById('scene').appendChild(renderer.domElement);
     // document.body.appendChild(renderer.domElement);
     var light = new THREE.PointLight(0xffffff);
@@ -28,31 +29,40 @@ function init() {
     scene.add(light);
 
     loader = new THREE.GLTFLoader();
-    const sceneurl = "/staticfiles/pages/images/scene4.gltf";
+    const sceneurl = "/staticfiles/pages/images/please.gltf";
 
     loader.load(
         sceneurl,
         function (gltf) {
             gltf.scene.traverse(function (child) {
-                if (child.isMesh && child.name === 'Plane003_3') {
-                    // Réinitialiser les propriétés d'émission du matériau spécifique
-                    child.material.emissive = new THREE.Color(0xED7F10); // Noir pour désactiver l'émission
-                    child.material.emissiveIntensity = 1; // Aucune intensité d'émission
-                    child.material.toneMapped = false; // Aucune intensité d'émission
-                }
+                // if (child.isMesh && child.name === 'Plane003_3') {
+                //     // Réinitialiser les propriétés d'émission du matériau spécifique
+                //     // child.material.emissive = new THREE.Color(0xED7F10); // Noir pour désactiver l'émission
+                //     child.material.emissiveIntensity = 1; // Aucune intensité d'émission
+                //     // child.material.toneMapped = false; // Aucune intensité d'émission
+                // }
                 gltf.scene.traverse(function (child) {
                     if (child.isLight) {
                         // Si l'objet est une lumière, ajustez ses propriétés
-                        if (child instanceof THREE.DirectionalLight) {
-                            child.intensity = 0.5; // Exemple: Réduire l'intensité d'une lumière directionnelle
-                        } else if (child instanceof THREE.PointLight) {
-                            child.intensity = 0.3; // Exemple: Réduire l'intensité d'une lumière ponctuelle
+                        // if (child instanceof THREE.DirectionalLight) {
+                            // child.intensity = 100; // Exemple: Réduire l'intensité d'une lumière directionnelle
+                        if (child instanceof THREE.PointLight) {
+                            child.intensity = 0.5; // Exemple: Réduire l'intensité d'une lumière ponctuelle
                         }
-
-                        if (child instanceof THREE.AmbientLight) {
+                        if (child.name === 'PointLight')
+                        {
+                            child.intensity = 15;
+                            console.log(child.name, " booste a ", child.intensity);
+                        }
+                        if (child.name === 'Point002' || child.name === 'Point003')
+                        {
+                            child.intensity = 5;
+                            console.log(child.name, " booste a ", child.intensity);
+                        }
+                        // if (child instanceof THREE.AmbientLight) {
                             // Si l'objet est une lumière ambiante, ajustez ses propriétés
-                            child.intensity = 0.7; // Exemple: Réduire l'intensité de la lumière ambiante
-                        }
+                            // child.intensity = 0; // Exemple: Réduire l'intensité de la lumière ambiante
+                        // }
                     }
                 });
             });
@@ -78,8 +88,9 @@ function init() {
     console.log("charged ouais la zone");
     window.addEventListener('click', onClickScene);
     document.addEventListener('mousemove', onMouseMove, false);
-    animate();
 }
+init();
+animate();
 
 function onMouseMove(event) {
     // Mettre à jour la position du pointeur de la souris
@@ -101,7 +112,7 @@ function onMouseMove(event) {
         // document.body.style.cursor = 'pointer';
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
-            if ((intersect.object.name === 'Plane003_2' || intersect.object.name === 'Plane009_2' || intersect.object.name === 'mesh_130') && isZooming === false) {
+            if ((intersect.object.name === 'GameScreen_Plane' || intersect.object.name === 'computerScreen_2_1' || intersect.object.name === 'mesh_130') && isZooming === false) {
                 selected_object_name = intersect.object.name;
                 return intersect.object.name;
             }
@@ -112,10 +123,10 @@ function onMouseMove(event) {
             selecting_clickable = true;
             var objectToHighlight = selectedObject.object;
             //ARCADE MACHINE
-            if (selectedObject.object.name === 'Plane003_2')
+            if (selectedObject.object.name === 'GameScreen_Plane')
                 objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
             //ECRAN ORDINATEUR
-            else if (selectedObject.object.name === 'Plane009_2') {
+            else if (selectedObject.object.name === 'computerScreen_2_1') {
                 objectToHighlight.material.emissiveIntensity = 5; // Exemple: intensité d'émission pour la surbrillance
             }
             else if (selectedObject.object.name === 'mesh_130') {
@@ -139,8 +150,6 @@ function animate() {
     TWEEN.update(); // Mise à jour de TWEEN
     renderer.render(scene, camera);
 }
-
-init();
 
 //=== LAUNCH SCRIPT ===//
 function loadScript(url, callback) {
