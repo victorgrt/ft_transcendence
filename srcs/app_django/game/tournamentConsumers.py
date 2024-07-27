@@ -35,13 +35,12 @@ async def get_user_from_session_key(session_key):
     except ObjectDoesNotExist:
         return None
 
-class PongConsumer(AsyncWebsocketConsumer):
-    games = {}
+class TournamentConsumer(AsyncWebsocketConsumer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.game = None  # Initialize self.game to None
-        self.game_id = None  # Initialize self.game_id to None
+        self.tournament = None  # Initialize self.game to None
+        self.tournament_id = None  # Initialize self.game_id to None
         self.user = None  # Initialize self.player to None
         self.is_added_to_group = False  # Initialize self.player to None
 
@@ -68,25 +67,29 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.close()
             return  # Stop further execution
 
-        # Extract the game_id
-        game_id = self.scope['url_route']['kwargs']['game_id']
-        self.game_id = game_id
-        print(f"Connecting to game {self.game_id}")
-        self.game = game_manager.get_game(game_id)
-        # self.user = user
-        # print(user.id)
+        # Handle tournament connection
+        tournament_id = self.scope['url_route']['kwargs']['game_id']  # Assuming tournament_id is passed as game_id
+        self.game_id = tournament_id  # You might want to use a different attribute for clarity
+        print(f"Connecting to tournament {self.game_id}")
 
-        if not self.game:
-            self.game = game_manager.create_game(game_id)
-        self.game.add_player(self, self.user)
+        # Get or create the tournament
+        self.tournament = game_manager.get_tournament(tournament_id)
+        if not self.tournament:
+            self.tournament = game_manager.create_tournament(tournament_id)
+        
+        # Add the player to the tournament
+        self.tournament.add_player(self.tournament, self.user)
+
+        # Add the player to the group
         await self.channel_layer.group_add(self.game_id, self.channel_name)
         self.is_added_to_group = True
+
         await self.accept()
 
 
     async def disconnect(self, close_code):
-        if self.game:
-            self.game.remove_player(self)
+        if self.tournament:
+            self.tournament.remove_player(self)
         # if not self.game.players:
         #     game_manager.remove_game(self.game_id)
         if self.is_added_to_group:
@@ -94,20 +97,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        # print(text_data_json)
-        # print(text_data)
         action = text_data_json['action']
-        if action == 'move_paddle' :
-            player = text_data_json['player']
-            direction = text_data_json['direction']
-            game_manager.handle_paddle_move(self.game_id, player, direction)
-        elif action == 'IA_game' :
-            game_manager.IAMode(self.game_id)
-            return
-        else :
-            self.send(text_data=json.dumps({
-                'error': 'Key "message" not found in WebSocket'
-            }))
 
     async def game_update(self, event):
         message = event['message']
@@ -120,16 +110,3 @@ class PongConsumer(AsyncWebsocketConsumer):
         print(f"Received message: {message} at time : {datetime.datetime.now().time()}")
         await self.send(text_data=json.dumps({'countdown': message}))
 
-    async def send_game_state_directly(self, state):
-        # print ("state : ", state)
-        # print(f"Sending state {state} at time : {datetime.datetime.now().time()}")
-        try :
-            await self.send(text_data=json.dumps({'game_state': state}))
-        except Exception as e :
-            print(f"Error while sending game state : {e}")
-
-    async def game_over(self, event):
-        message = event['message']
-        print("Game n° %s is over" % self.game_id)
-        print("Winner : % s" % message)
-        await self.send(text_data=json.dumps({'game_over': message}))

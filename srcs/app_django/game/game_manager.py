@@ -9,6 +9,8 @@ from random import random
 from django.middleware.csrf import get_token
 from django.test import Client
 
+from .tournamentManager import TournamentManager
+
 class Game:
     def __init__(self, game_id):
         self.game_id = game_id  # Ensure the game_id is a valid string
@@ -97,6 +99,7 @@ class Game:
                 self.move_2 = 1
             elif direction == 'null':
                 self.move_2 = 0
+
     def update(self):
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
             winner = self.players[0].id if self.player_1_score == 3 else self.players[1].id
@@ -123,6 +126,7 @@ class Game:
             })
 
             return
+
         if self.state == "playing":
             if (self.player_1_position > 2.2 and self.player_1_position < 2.4) or (self.player_1_position < -2.2 and self.player_1_position > -2.4) :
                 self.move_1 = 0
@@ -254,7 +258,10 @@ class Game:
 class GameManager:
     def __init__(self):
         self.games = {}
+        self.tournaments = {}
         self.lock = threading.Lock()
+
+    # Game management
 
     def create_game(self, game_id):
         with self.lock:
@@ -281,6 +288,28 @@ class GameManager:
         with self.lock :
             game = self.get_game(game_id)
             game.checkIAMode(game_id)
+
+    # Tournament management
+
+    def create_tournament(self, tournament_id):
+        with self.lock:
+            # Here, check that the game_id is unique
+            print("Creating tournament n %d" % (len(self.tournaments) + 1))
+            tournament = TournamentManager(tournament_id)
+            self.tournaments[tournament_id] = tournament
+            return tournament
+
+    def get_tournament(self, tournament_id):
+        return self.tournaments.get(tournament_id)
+
+    def remove_tournament(self, tournament_id):
+        with self.lock:
+            if tournament_id in self.tournaments:
+                del self.tournaments[tournament_id]
+        
+
+    # Main loop
+
     def update_games(self):
         while True:
             start_time = time.time()
@@ -292,6 +321,18 @@ class GameManager:
             sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
             time.sleep(sleep_time);
 
+    def update_tournaments(self):
+        while True:
+            start_time = time.time()
+            # print("Updating games. Time : %s" % start_time)
+            with self.lock:
+                for tournament in self.tournaments.values():
+                    tournament.update()
+            elapsed = time.time() - start_time
+            sleep_time = max(0.016 - elapsed, 0)
+
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)
 game_update_thread.start()
+tournament_update_thread = threading.Thread(target=game_manager.update_tournaments)
+tournament_update_thread.start()

@@ -1,21 +1,23 @@
-class TournamentManager
+class TournamentManager:
     def __init__(self, tournament_id):
         self.tournament_id = tournament_id
-        self.tournament = Tournament.objects.get(id=game_id)
+        # self.tournament = Tournament.objects.get(id=tournament_id)
         self.players = []
         self.consumers = []
         self.nb_players = 0
         self.state = "waiting" # semi_finals, finals, finished
 
-    def add_player(self, player):
+    def add_player(self, player, consumer):
         self.players.append(player)
+        self.consumers.append(consumer)
         self.nb_players += 1
         if self.nb_players == 4:
             self.state = "semi_finals"
             self.start_semi_finals()
 
-    def remove_player(self, player):
+    def remove_player(self, player, consumer):
         self.players.remove(player)
+        self.consumers.remove(consumer)
         self.nb_players -= 1
         if self.nb_players < 4:
             self.state = "waiting"

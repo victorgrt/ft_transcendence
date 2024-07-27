@@ -21,6 +21,7 @@ const page_scripts = {
     'menuPong/' : loadMenuPong,
     '/pong/' : pongPageScripts,
     '/pongIA/' : pongIAPageScripts,
+    '/tournament/' : connectToTournament,
 }
 
 function loadContent(url, pushState = true) {
@@ -33,8 +34,11 @@ function loadContent(url, pushState = true) {
         page_url = '/pong/'
     else if (url.includes('/pongIA/'))
         page_url = '/pongIA/'
+    else if (url.includes('/tournament/'))
+        page_url = '/tournament/'
     else
         page_url = url
+
 
     fetch(url, {
             headers: {

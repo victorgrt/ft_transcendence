@@ -17,10 +17,27 @@ function setUpSocket(_socket)
     };
 }
 
-function connectWebSocket(gameId) {
+function setUpSocketTournament(_socket)
+{
+  console.log("SETTING SOCKET UP");
+	_socket.onmessage = function(e) {
+        // console.log(e.data)
+        const data = JSON.parse(e.data);
+        if (data.hasOwnProperty('countdown'))
+            countdown = data;
+        if (data.hasOwnProperty('game_state'))
+        {
+            // if (e.data == "waiting" || e.data == "playing")
+            gamedata = data;
+        }
+    };
+}
+
+
+function connectWebSocket(url) {
     return new Promise((resolve, reject) => {
 
-        socket = new WebSocket('ws://' + window.location.host + '/ws/pong/' + gameId + '/');
+        socket = new WebSocket( url);
 
         socket.addEventListener('open', () => {
             console.log('WebSocket connection established');
@@ -38,7 +55,7 @@ async function createGame ()
 {
 	console.log("createGame");
 	try {
-		const response = await fetch('/create_session/');
+		const response = await fetch('/create_session/')
 		const data = await response.json();
 		loadContent('/pong/' + data.session_id + '/');
 	} catch (error) {
@@ -58,13 +75,25 @@ async function handleCreateTournament ()
 	}
 }
 
+function connectToTournament() {
+    // Extract session ID from URL
+    const tournamentId = window.location.pathname.split('/')[2]
+    console.log('Connecting to game:', tournamentId);
+
+    connectWebSocket('ws://' + window.location.host + '/ws/tournament/' + tournamentId + '/')
+        .then(socket => {
+            setUpSocket(socket);
+        });
+}
+
+
 
 function connectToGame() {
     // Extract session ID from URL
     const gameId = window.location.pathname.split('/')[2]
-    console.log('Connecting to game:', gameId);
+    console.log('Connecting to tournament:', gameId);
 
-    connectWebSocket(gameId)
+    connectWebSocket('ws://' + window.location.host + '/ws/pong/' + gameId + '/')
         .then(socket => {
             setUpSocket(socket);
         });
