@@ -46,6 +46,19 @@ async function createGame ()
 	}
 }
 
+async function handleCreateTournament ()
+{
+	console.log("createGame");
+	try {
+		const response = await fetch('/create_tournament/');
+		const data = await response.json();
+		loadContent('/tournament/' + data.tournament_id + '/');
+	} catch (error) {
+		console.error('Error creating tournament or connecting WebSocket:', error);
+	}
+}
+
+
 function connectToGame() {
     // Extract session ID from URL
     const gameId = window.location.pathname.split('/')[2]
@@ -59,14 +72,14 @@ function connectToGame() {
 
 function loadMenuPong(){
     console.log("coucou vivi");
+	document.getElementById('createTournamentBtn').addEventListener('click', handleCreateTournament);
+	document.getElementById('createSessionBtn').addEventListener('click', createGame);
 	document.getElementById('joinSessionBtn').addEventListener('click', function() {
 		console.log("ici");
 		    const sessionId = document.getElementById('sessionIdInput').value;
         console.log(sessionId);
 		    loadContent('/pong/' + sessionId + '/');
 	});
-
-	document.getElementById('createSessionBtn').addEventListener('click', createGame);
 }
 
 document.addEventListener('DOMContentLoaded', function() {

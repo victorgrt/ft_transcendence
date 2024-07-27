@@ -44,6 +44,7 @@ def create_session(request):
 
 def create_tournament(request):
     tournament_id = str(uuid.uuid4())
+    print(tournament_id)
     tournament = Tournament.objects.create(id=tournament_id, name='tournament', state='waiting')
     return JsonResponse({'tournament_id': tournament_id})
 

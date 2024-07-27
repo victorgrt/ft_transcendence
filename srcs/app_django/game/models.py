@@ -40,13 +40,13 @@ class MatchHistory(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 	
 class Tournament(models.Model):
-    id = models.CharField(max_length=100, unique=True)
+    id = models.CharField(max_length=100, unique=True, primary_key=True)
     name = models.CharField(max_length=100)
-    start_date = models.DateTimeField()
+    start_date = models.DateTimeField(default=timezone.now)
     semi_final_games = models.ManyToManyField('GameSession', related_name='semi_final_games')
-    final_game = models.ForeignKey('GameSession', related_name='final_game', on_delete=models.CASCADE)
-    small_final_game = models.ForeignKey('GameSession', related_name='small_final_game', on_delete=models.CASCADE)
-    winner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='tournaments_won', on_delete=models.CASCADE)
+    final_game = models.ForeignKey('GameSession', related_name='final_game', on_delete=models.CASCADE, null=True)
+    small_final_game = models.ForeignKey('GameSession', related_name='small_final_game', on_delete=models.CASCADE, null=True)
+    winner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='tournaments_won', on_delete=models.CASCADE, null=True)
     players = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='tournaments_played')
     created_at = models.DateTimeField(default=timezone.now)
     state = models.TextField(default='waiting')
