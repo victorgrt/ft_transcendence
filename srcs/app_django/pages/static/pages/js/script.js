@@ -8,11 +8,19 @@ function pongPageScripts () {
     launchGame();
 }
 
+function pongIAPageScripts()
+{
+    connectToGame();
+    // connectToGame();
+    launchGameIA();
+}
+
 
 const page_scripts = {
     // 'gameSession' : loadGameSession,
     'menuPong/' : loadMenuPong,
     '/pong/' : pongPageScripts,
+    '/pongIA/' : pongIAPageScripts,
 }
 
 function loadContent(url, pushState = true) {
@@ -23,6 +31,8 @@ function loadContent(url, pushState = true) {
     // if there is a trailing session id, remove it
     if (url.includes('/pong/'))
         page_url = '/pong/'
+    else if (url.includes('/pongIA/'))
+        page_url = '/pongIA/'
     else
         page_url = url
 
