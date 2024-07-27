@@ -6,7 +6,7 @@ from .models import GameSession
 import uuid
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-from pages.services.notifications_service import send_notification_service
+from notification.services.notification_services import send_notification_service
 
 # Create your views here.
 # Add record to the MatchHistory model. 

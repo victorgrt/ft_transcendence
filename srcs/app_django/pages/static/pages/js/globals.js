@@ -7,6 +7,7 @@ const goBackButton = document.getElementById("footer");
 const header = document.getElementById("header");
 const contentdiv = document.getElementById("content");
 const statsDiv = document.getElementById("user_stats");
+const GHDiv = document.getElementById("game_history");
 const friendsDiv = document.getElementById("friends");
 const paramsDiv = document.getElementById("change_prof");
 const menuPongDiv = document.getElementById("menuPongDiv");
@@ -16,5 +17,8 @@ var compteur_notifs = document.getElementById("nb_notifs").textContent;
 // ------------ GAME VARIABLES ---------
 var socket;
 var gamedata;
+
+// ------------ OTHER ---------
+var friendsVisible = false;
 var countdown;
 var gameover;

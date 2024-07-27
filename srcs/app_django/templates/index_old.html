@@ -3,45 +3,39 @@
 <html lang="en">
 
 <head>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const element = document.getElementById('logoutButton');
-            if (element) {
-                element.addEventListener('click', function () {
-                    window.location.href = 'account/logout/';
-                });
-            }
-        });
-    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FT_TRANSCENDENCE</title>
-    <!-- BOOTSTRAP -->
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/account.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/index.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/match_history.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'pages/images/42logo.jpg' %}">
 </head>
-
 <body>
     <div id="header">
         {% if user.is_authenticated == False %}
-            <button class="needed_hover" onclick='goToLogin()' src="{% static '/js/main.js' %}">> LOGIN < </button>
-            <button class="needed_hover" onclick='goToRegister()' src="{% static '/js/main.js' %}">> REGISTER <</button>
+            <button class="needed_hover" onclick='goToLogin()'>LOGIN</button>
+            <button class="needed_hover" onclick='goToRegister()'>REGISTER</button>
+		{% else %}
+			<button class="needed_hover" id="logoutButton">LOGOUT</button>
+			<button class="needed_hover" id="statsButton" onclick='showStats()'>{{ user.username }}</button>
+			<button class="needed_hover" id="gameHistorybutton" onclick='showGameHistory()'>GAME HISTORY</button>
+			{% comment %} <button class="needed_hover" id="friendsButton" onclick='goToFriends()'>FRIENDS</button> {% endcomment %}
+			<button class="needed_hover" id="friendsButton" onclick="showFriends()">FRIENDS LIST</button>
+			<button id="param_btn" onclick='showParams()'><img id="param_img" src="{% static '/pages/images/parametres.png' %}"></button>
         {% endif %}
-        {% if user.is_authenticated %}
-        <button class="needed_hover" id="statsButton" onclick="showStats()"
-            src="{% static '/js/main.js' %}">{{ user.username }}</button>
-        <button class="needed_hover" id="friendsButton" onclick="showFriends()"
-            src="{% static '/js/main.js' %}"> FRIENDS LIST</button>
-        <button class="needed_hover" id="logoutButton" class="button">LOGOUT</button>
-        <button id="param_btn" onclick='showParams()'><img id="param_img"
-                src="{% static '/pages/images/parametres.png' %}"></button>
-        {% endif %}
-    </div>
-    <!-- data-bs-delay="5000" -->
+	</div>
+	<!-- USER STATS -->
+    <div id="user_stats" data-username="{{ user.username }}"
+	data-avatar="{{ user.get_avatar_name }}" data-friends="{{ user.friends }}"
+	data-win="{{ user.win }}" data-lost="{{ user.lost }}"> 
+	</div>
+	<!-- FRIENDS -->
+	{% comment %} <div id="friends"> </div> {% endcomment %}
     <!-- content des pages -->
     <div id="content">
         <div id="boot_toast">
@@ -57,7 +51,7 @@
                 <button class="needed_hover2" href="/pong/">Tournois</button >
                 <button class="needed_hover2" id="createSessionBtn">Create Game Session</button>
                 <button class="needed_hover2" id="joinSessionBtn" href="join_session/{{ user.id }}/">Join</button>
-                <input type="text" placeholder="--> Enter Session ID Here <--" id="sessionIdInput"></input>
+                <input type="text" placeholder=" Enter Session ID Here " id="sessionIdInput"></input>
             </div>
         </div>
         {% if user.is_authenticated %}
@@ -111,6 +105,7 @@
         <div id="notifications">
             <h2 id="notiftitle">NOTIFICATIONS</h2>
             <button id="closeNotifs" onclick="hideNotifs()" class="needed_hover">CLOSE</button>
+<<<<<<< HEAD:srcs/app_django/pages/templates/pages/index.html
             <script>
                 var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
                 var ws_path = ws_scheme + '://' + window.location.host + '/ws/notifications/';
@@ -178,6 +173,10 @@
                 };
             </script>
 
+=======
+			
+            
+>>>>>>> origin/master:srcs/app_django/templates/index_old.html
             <div id="sendnotifs">
                 <p id="from_user" style="color:red;">{{user.username}}</p>
                 <form id="notifform">
@@ -304,6 +303,7 @@
         {% endif %}
 
         <!-- GAME HISTORY  -->
+<<<<<<< HEAD:srcs/app_django/pages/templates/pages/index.html
         {% if user.is_authenticated %}
         <div class="match_history_container">
           <h2>Match History</h2>
@@ -340,6 +340,9 @@
           </div>
         </div>
         {% endif %}
+=======
+		{% include 'pages/partials/gameHistory.html' %}
+>>>>>>> origin/master:srcs/app_django/templates/index_old.html
     </div>
     <div id="scene">
         <!-- scene 3d -->
@@ -376,7 +379,16 @@
 <script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
 <!-- REGISTER FORM SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/handleRegisterForm.js' %}"></script>
-<!-- MAIN SCRIPT -->
+<!-- LOGOUT SCRIPT -->
+<script type="text/javascript" src="{% static 'pages/js/handleLogout.js' %}"></script>
+<!-- FRIENDS -->
+<script type="text/javascript" src="{% static 'pages/js/handleFriends.js' %}"></script>
+<!-- Setup Socket -->
+<script type="text/javascript" src="{% static 'pages/js/setupSocket.js' %}"></script>
+<!-- SCENE SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
-
+<!-- SHOW STATS USER -->
+<script type="text/javascript" src="{% static 'pages/js/handleUserStats.js' %}"></script>
+<!-- SHOW GAME HISTORY -->
+<script type="text/javascript" src="{% static 'pages/js/handleGameHistory.js' %}"></script>
 </html>
