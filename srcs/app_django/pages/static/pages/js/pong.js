@@ -130,8 +130,26 @@ function launchGame()
         document.getElementById('countdownDisplay').innerText = displayText;
     }
 
+    function showElement(element)
+    {
+        element.style.opacity = '1';
+        element.style.visibility = 'visible';
+        element.style.z_index = '2';
+    }
+
+    function hideElement(element) {
+        if (element.classList.contains("register_form"))
+            registerVisible = true;
+        if (element.classList.contains("login_form"))
+            loginVisible = true;
+        element.style.opacity = '0';
+        element.style.visibility = 'hidden';
+        element.style.z_index = '-2';
+    }
+
     function animate()
     {
+        showElement(leaveGameButton);
         if (gamedata)
         {
             if (set_camera == 0)
@@ -148,13 +166,19 @@ function launchGame()
             }
             updateState();
             renderer.render(scene, camera);
-            // if (gamedata.game_state.state == "waiting" && gamedata.game_state.nb_players == 2)
             if (countdown)
                 updateCountdownHTML();  // Mettre à jour le compte à rebours en fonction de la valeur reçue
         }
         requestAnimationFrame(animate);
     }
     animate();
+}
+
+function leaveGame()
+{
+    console.log("YESYEYSYEYS")
+    loadContent('/');
+    // return redirect('/');
 }
 
 var id;

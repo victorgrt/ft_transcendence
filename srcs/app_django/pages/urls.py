@@ -13,7 +13,7 @@ urlpatterns = [
 
   # account
 	path('account/', include("account.urls")),
- 
+
   # notification
 	path('notification/', include("notification.urls")),
 
@@ -23,5 +23,7 @@ urlpatterns = [
 
   # Game
   path("pong/<str:session_id>/", pong, name="pong_session"), 
+  path("pongIA/<str:session_id>/", pongIA, name="pong_session"), 
   path("tournament/<str:tournament_id>/", tournament, name="tournament"),  
+
 ]
