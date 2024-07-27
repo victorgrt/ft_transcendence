@@ -39,3 +39,14 @@ class MatchHistory(models.Model):
     player_2_score = models.IntegerField(null=True)
     date = models.DateTimeField(auto_now_add=True)
 	
+class Tournament(models.Model):
+    id = models.CharField(max_length=100, unique=True)
+    name = models.CharField(max_length=100)
+    start_date = models.DateTimeField()
+    semi_final_games = models.ManyToManyField('GameSession', related_name='semi_final_games')
+    final_game = models.ForeignKey('GameSession', related_name='final_game', on_delete=models.CASCADE)
+    small_final_game = models.ForeignKey('GameSession', related_name='small_final_game', on_delete=models.CASCADE)
+    winner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='tournaments_won', on_delete=models.CASCADE)
+    players = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='tournaments_played')
+    created_at = models.DateTimeField(default=timezone.now)
+    state = models.TextField(default='waiting')

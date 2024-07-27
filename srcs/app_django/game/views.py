@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import MatchHistory
 from account.models import CustomUser
 from django.contrib.auth import get_user_model
-from .models import GameSession
+from .models import GameSession, Tournament
 import uuid
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -41,6 +41,11 @@ def create_session(request):
     session_id = str(uuid.uuid4())
     game_session = GameSession.objects.create(player1='player1', session_id=session_id, state='{}')
     return JsonResponse({'session_id': session_id})
+
+def create_tournament(request):
+    tournament_id = str(uuid.uuid4())
+    tournament = Tournament.objects.create(id=tournament_id, name='tournament', state='waiting')
+    return JsonResponse({'tournament_id': tournament_id})
 
 def join_session(request, session_id):
     try:
