@@ -313,3 +313,321 @@ Player 2 pos :  2.25
 GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
 Game n° 60e73f32-6a4a-45a8-8bdd-97b11d1676b9 is over
 Winner : {'winner': 1}
+INFO:     127.0.0.1:57796 - "GET /pongIA/60e73f32-6a4a-45a8-8bdd-97b11d1676b9/ HTTP/1.1" 500 Internal Server Error
+INFO:     127.0.0.1:57796 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:57800 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55056 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55048 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57800 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55044 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55066 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55056 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55048 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55066 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:57800 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55044 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55056 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55048 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57810 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:55066 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55044 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57800 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55048 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55056 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55056 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60188 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60188 - "GET /pong/bf7205d0-d338-4675-93a8-7a4cba8d1e7b/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game bf7205d0-d338-4675-93a8-7a4cba8d1e7b
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+INFO:     127.0.0.1:60188 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60188 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:60188 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60188 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60202 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60220 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60206 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:51228 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51212 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51242 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:49886 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49886 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49900 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49904 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49914 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49914 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49892 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49914 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49900 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49892 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49904 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49916 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49886 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49900 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49914 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49886 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49892 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49916 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49904 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49904 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:38918 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38918 - "GET /pongIA/4d0b273c-464c-4d09-8ad4-9e83b168529a/ HTTP/1.1" 500 Internal Server Error
+jquil@jquil.com
+Connecting to game 4d0b273c-464c-4d09-8ad4-9e83b168529a
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+INFO:     127.0.0.1:49156 - "GET /pongIA/4d0b273c-464c-4d09-8ad4-9e83b168529a/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49164 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49180 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49196 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49170 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49196 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49170 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49180 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49198 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49164 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49196 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49170 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49164 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49198 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49180 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49156 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49170 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49164 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49156 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:49156 - "GET /pongIA/4d0b273c-464c-4d09-8ad4-9e83b168529a/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 4d0b273c-464c-4d09-8ad4-9e83b168529a
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+INFO:     127.0.0.1:44876 - "GET /pongIA/4d0b273c-464c-4d09-8ad4-9e83b168529a/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44876 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44900 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44908 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44896 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44876 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44916 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44908 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44876 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44896 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44900 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44916 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44890 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:44896 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44890 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44916 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44900 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44876 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44876 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:44876 - "GET /pongIA/4d0b273c-464c-4d09-8ad4-9e83b168529a/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 4d0b273c-464c-4d09-8ad4-9e83b168529a
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:41056 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41056 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41068 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41090 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41102 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41076 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:41076 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41068 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41090 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41056 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41076 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:38180 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41068 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41090 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41076 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41056 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:38180 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41068 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41056 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41090 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41076 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:38180 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41102 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:41068 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41076 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41076 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:45434 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45434 - "GET /pongIA/6d3e64ba-da31-470f-9627-9f1ecb2abf1e/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 6d3e64ba-da31-470f-9627-9f1ecb2abf1e
+Creating game n 2
+Ball Next Bounce [2.5, 2.5]
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:54750 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54760 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54750 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54762 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54790 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54776 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:54776 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54750 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54776 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54762 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54760 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54760 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54750 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54762 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54776 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54796 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54790 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54750 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54762 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54790 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54760 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54776 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54796 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54760 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54776 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54796 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54796 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59766 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59766 - "GET /pongIA/bb472a50-81da-410a-adf3-a441739dc223/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game bb472a50-81da-410a-adf3-a441739dc223
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+INFO:     127.0.0.1:59766 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59782 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+Received message: {'countdown': 3} at time : 13:41:16.986412
+Received message: {'countdown': 2} at time : 13:41:17.989732
+Received message: {'countdown': 1} at time : 13:41:18.993955
+Received message: {'countdown': 0} at time : 13:41:19.999257
+Received message: {'countdown': -1} at time : 13:41:21.004521
+Ball Next Bounce [0.8975000000000324, 2.5]
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Game n° bb472a50-81da-410a-adf3-a441739dc223 is over
+Winner : {'winner': 1}
+INFO:     127.0.0.1:41870 - "GET /pongIA/bb472a50-81da-410a-adf3-a441739dc223/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41884 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41882 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41882 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41894 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41884 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41870 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:41884 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41870 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41882 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41894 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41894 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /pongIA/bb472a50-81da-410a-adf3-a441739dc223/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41894 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+jquil@jquil.com
+Connecting to game bb472a50-81da-410a-adf3-a441739dc223
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:41894 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41894 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41882 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41870 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:41870 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41882 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41894 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41894 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41884 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41882 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41870 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:41870 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41894 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41884 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41882 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41872 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41882 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:41892 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:60876 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60892 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60896 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60926 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60910 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60910 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60876 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60876 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60910 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60892 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60896 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60926 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60940 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60910 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60892 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60896 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60926 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60876 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60940 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60940 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60940 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+Game session created
+send_notification_service
+try send_notification_service
+INFO:     127.0.0.1:60940 - "POST /send_play_request/ HTTP/1.1" 500 Internal Server Error
+Game session created
+send_notification_service
+try send_notification_service
+INFO:     127.0.0.1:34500 - "POST /send_play_request/ HTTP/1.1" 500 Internal Server Error
+Game session created
+send_notification_service
+try send_notification_service
+INFO:     127.0.0.1:34500 - "POST /send_play_request/ HTTP/1.1" 500 Internal Server Error

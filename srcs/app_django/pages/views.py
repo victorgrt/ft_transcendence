@@ -70,9 +70,9 @@ def pong(request, session_id):
 def pongIA(request, session_id):
     context = {'session_id': session_id}
     if is_ajax(request):
-        return render(request, 'pages/partials/pongIA.html', context)
+        return render(request, 'partials/pongIA.html', context)
     else:
-        return render(request, 'pages/index.html', {'partial_template': 'pages/partials/pongIA.html', 'context': session_id})
+        return render(request, 'index.html', {'partial_template': 'pages/partials/pongIA.html', 'context': session_id})
 
 # Game menu
 def menuPong(request):
