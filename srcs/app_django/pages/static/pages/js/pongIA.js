@@ -90,34 +90,49 @@ function launchGameIA()
     function sendPaddleMovement(state)
     {
         if (state == "up")
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'null' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'null' }));
         if ('a' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'left' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left' }));
         else if ('d' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'right' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right' }));
         else if ('ArrowLeft' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'left' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left' }));
         else if ('ArrowRight' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'right' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right' }));
     }
 
     function handleIAMove()
     {
-        if (Date.now() - launch_date % 1000 == 1)
+        const currentTime = Date.now();
+        if ((currentTime - launch_date) % 1000 < 50) // Tolérance de 50ms pour plus de fiabilité
         {
-            if (gamedata.game_state.ballNextBounce[1] <= -3.5)
+            if (gamedata.game_state.ballNextBounce[1] <= 0)
             {
-                if (gamedata.game_state.ballNextBounce[0] >= gamedata.game_state.player_2_position + 0.4)
-                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left'}))
-                else if (gamedata.game_state.ballNextBounce[0] <= gamedata.game_state.player_2_position - 0.4)
-                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right'}))
-                else if (gamedata.game_state.ball_velocity[1] > 0 && gamedata.game_state.player_2_position > 0)
-                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left'}))
-                else if (gamedata.game_state.ball_velocity[1] > 0 && gamedata.game_state.player_2_position < 0)
-                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right'}))
-                else
-                socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null'}))
+                if (printeur == 0)
+                {
+                    console.log("Ball Next Bounce : ", gamedata.game_state.ballNextBounce)
+                    console.log("Player 2 : ", gamedata.game_state.player_2_position)
+                    printeur = 1
+                }
+                console.log("NULL test : ", gamedata.game_state.ballNextBounce[0] <= gamedata.game_state.player_2_position + 0.4 && gamedata.game_state.ballNextBounce[0] >= gamedata.game_state.player_2_position - 0.4);
+                console.log("Right test : ", gamedata.game_state.ballNextBounce[0] > gamedata.game_state.player_2_position + 0.4);
+                console.log("Left test : ", gamedata.game_state.ballNextBounce[0] < gamedata.game_state.player_2_position - 0.4);
+                console.log("Ball next Bounce : ", gamedata.game_state.ballNextBounce);
+                console.log("player2 = [", gamedata.game_state.player_2_position - 0.4, " ; ", gamedata.game_state.player_2_position + 0.4, "]");
+                if (gamedata.game_state.ballNextBounce[0] <= gamedata.game_state.player_2_position + 0.4 && gamedata.game_state.ballNextBounce[0] >= gamedata.game_state.player_2_position - 0.4)
+                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null'}));
+                else if (gamedata.game_state.ballNextBounce[0] - 0.4 < gamedata.game_state.player_2_position)
+                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left'}));
+                else if (gamedata.game_state.ballNextBounce[0] + 0.4 > gamedata.game_state.player_2_position)
+                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right'}));
             }
+            // else if (gamedata.game_state.ball_velocity[1] > 0 && gamedata.game_state.player_2_position > 0)
+            //     socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right'}));
+            // else if (gamedata.game_state.ball_velocity[1] > 0 && gamedata.game_state.player_2_position < 0)
+            //     socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left'}));
+            // else
+            //     socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null'}));
+
         }
     }
 
@@ -147,7 +162,6 @@ function launchGameIA()
         else if (countdown.countdown.countdown == -1)
         {
             displayText = "";
-            launch_date = Date.now();
         }
         document.getElementById('countdownDisplay').innerText = displayText;
     }
@@ -176,6 +190,7 @@ function launchGameIA()
         {
             if (set_camera == 0)
             {
+                socket.send(JSON.stringify({action : 'IA_game'}));
                 camera.position.set(0, 3, 7); // Position behind the red paddle
                 camera.lookAt(0, 0, 0); // The camera looks at the center of the scene
                 controls.update(); // Update controls after setting the camera position
@@ -184,7 +199,9 @@ function launchGameIA()
             updateState();
             renderer.render(scene, camera);
             if (countdown)
-                updateCountdownHTML();  // Mettre à jour le compte à rebours en fonction de la valeur reçue
+                updateCountdownHTML();
+            launch_date = Date.now();
+            launch_date = launch_date;
         }
         handleIAMove();
         requestAnimationFrame(animate);
@@ -203,5 +220,7 @@ var set_camera = 0;
 var score_player_1 = 0;
 var score_player_2 = 0;
 var launch_date;
+
+var printeur = 0;
 
 

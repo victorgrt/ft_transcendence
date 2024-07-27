@@ -1,0 +1,315 @@
+Ball Next Bounce [0.8975000000000324, 2.5]
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+INFO:     127.0.0.1:39856 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+INFO:     127.0.0.1:59674 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59680 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59694 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59686 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59680 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59714 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59702 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59694 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59686 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59674 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:59680 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59686 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59694 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59702 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59714 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59674 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59674 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59674 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 3731c71b-604e-472f-a886-93ec87d7f3a7
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+INFO:     127.0.0.1:59674 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:59714 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+Received message: {'countdown': 3} at time : 12:05:37.258904
+INFO:     127.0.0.1:59742 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+Received message: {'countdown': 2} at time : 12:05:38.263248
+Received message: {'countdown': 1} at time : 12:05:39.269384
+Received message: {'countdown': 0} at time : 12:05:40.273633
+Received message: {'countdown': -1} at time : 12:05:41.277969
+Ball Next Bounce [0.8975000000000324, 2.5]
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+INFO:     127.0.0.1:54098 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54112 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54122 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54098 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54098 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54112 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54122 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54138 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54142 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54098 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54122 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54112 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54142 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54138 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54106 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:54098 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54098 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54098 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:54098 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:54106 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+jquil@jquil.com
+Connecting to game 3731c71b-604e-472f-a886-93ec87d7f3a7
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+Received message: {'countdown': 3} at time : 12:08:01.694011
+Received message: {'countdown': 2} at time : 12:08:02.698062
+Received message: {'countdown': 1} at time : 12:08:03.702693
+Received message: {'countdown': 0} at time : 12:08:04.714800
+Received message: {'countdown': -1} at time : 12:08:05.721657
+INFO:     127.0.0.1:60114 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60114 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60132 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60144 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60132 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60144 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60114 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60174 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60158 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60114 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60130 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:60144 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60132 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60174 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60158 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60130 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60130 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60130 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60130 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:60158 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+jquil@jquil.com
+Connecting to game 3731c71b-604e-472f-a886-93ec87d7f3a7
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+Received message: {'countdown': 3} at time : 12:08:38.557221
+Received message: {'countdown': 2} at time : 12:08:39.562496
+Received message: {'countdown': 1} at time : 12:08:40.568500
+Received message: {'countdown': 0} at time : 12:08:41.574853
+Received message: {'countdown': -1} at time : 12:08:42.578332
+Ball Next Bounce [0.8975000000000324, 2.5]
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+INFO:     127.0.0.1:55972 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55972 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56004 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55988 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56004 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55988 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55972 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56016 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56024 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55988 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56004 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55972 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56024 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56016 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:55974 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:56016 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56016 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56016 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55974 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:56016 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+jquil@jquil.com
+Connecting to game 3731c71b-604e-472f-a886-93ec87d7f3a7
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+Received message: {'countdown': 3} at time : 12:11:39.265625
+Received message: {'countdown': 2} at time : 12:11:40.270238
+Received message: {'countdown': 1} at time : 12:11:41.276754
+Received message: {'countdown': 0} at time : 12:11:42.280911
+Received message: {'countdown': -1} at time : 12:11:43.231460
+Ball Next Bounce [0.8975000000000324, 2.5]
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+INFO:     127.0.0.1:34482 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34482 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34502 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34518 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34518 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34482 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34530 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34502 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34544 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34518 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34490 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:34482 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34544 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34530 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34518 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34502 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34502 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34502 - "GET /pongIA/3731c71b-604e-472f-a886-93ec87d7f3a7/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34518 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:34502 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+jquil@jquil.com
+Connecting to game 3731c71b-604e-472f-a886-93ec87d7f3a7
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+Received message: {'countdown': 3} at time : 12:13:28.868687
+Received message: {'countdown': 2} at time : 12:13:29.873924
+Received message: {'countdown': 1} at time : 12:13:30.880699
+Received message: {'countdown': 0} at time : 12:13:31.885364
+Received message: {'countdown': -1} at time : 12:13:32.891756
+Ball Next Bounce [0.8975000000000324, 2.5]
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Game n° 3731c71b-604e-472f-a886-93ec87d7f3a7 is over
+Winner : {'winner': 1}
+Authenticated user: jquil
+match history : 
+<QuerySet [<MatchHistory: MatchHistory object (100)>, <MatchHistory: MatchHistory object (99)>, <MatchHistory: MatchHistory object (98)>, <MatchHistory: MatchHistory object (97)>, <MatchHistory: MatchHistory object (96)>, <MatchHistory: MatchHistory object (95)>, <MatchHistory: MatchHistory object (94)>, <MatchHistory: MatchHistory object (93)>, <MatchHistory: MatchHistory object (92)>, <MatchHistory: MatchHistory object (91)>, <MatchHistory: MatchHistory object (90)>, <MatchHistory: MatchHistory object (89)>, <MatchHistory: MatchHistory object (88)>, <MatchHistory: MatchHistory object (87)>, <MatchHistory: MatchHistory object (86)>, <MatchHistory: MatchHistory object (85)>, <MatchHistory: MatchHistory object (84)>, <MatchHistory: MatchHistory object (83)>, <MatchHistory: MatchHistory object (82)>, <MatchHistory: MatchHistory object (81)>, '...(remaining elements truncated)...']>
+INFO:     127.0.0.1:47694 - "GET / HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47694 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47724 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47708 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47708 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47726 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:47726 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47726 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47726 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47726 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47708 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47708 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47726 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47724 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47694 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47726 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47724 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47694 - "GET /staticfiles/pages/images/fight_icon_2.svg HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47708 - "GET /staticfiles/pages/images/42logo.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:47708 - "GET /create_session/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47708 - "GET /pongIA/60e73f32-6a4a-45a8-8bdd-97b11d1676b9/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 60e73f32-6a4a-45a8-8bdd-97b11d1676b9
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+INFO:     127.0.0.1:47708 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59378 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 200 OK
+Received message: {'countdown': 3} at time : 12:22:44.360486
+Received message: {'countdown': 2} at time : 12:22:45.364267
+Received message: {'countdown': 1} at time : 12:22:46.367584
+Received message: {'countdown': 0} at time : 12:22:47.372072
+Received message: {'countdown': -1} at time : 12:22:48.375400
+Ball Next Bounce [0.8975000000000324, 2.5]
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.892749999999919]
+Player 2 pos :  2.25
+Ball Next Bounce [0.5274999999999598, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.5499999999999999, -4.025000000000008]
+Game n° 60e73f32-6a4a-45a8-8bdd-97b11d1676b9 is over
+Winner : {'winner': 1}
+INFO:     127.0.0.1:40842 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40846 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40846 - "GET /pongIA/60e73f32-6a4a-45a8-8bdd-97b11d1676b9/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40842 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51794 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51804 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51804 - "GET /staticfiles/pages/img_avatars/ign_DesertTree-1.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40842 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51794 - "GET /staticfiles/pages/img_avatars/Robert_De_Niro.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51818 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51830 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40842 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51804 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51818 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51830 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51794 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40846 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:40846 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40846 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40846 - "GET /pongIA/60e73f32-6a4a-45a8-8bdd-97b11d1676b9/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 60e73f32-6a4a-45a8-8bdd-97b11d1676b9
+Creating game n 1
+Ball Next Bounce [2.5, 2.5]
+INFO:     127.0.0.1:40846 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:51794 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+Received message: {'countdown': 3} at time : 12:26:43.005925
+Received message: {'countdown': 2} at time : 12:26:44.010245
+Received message: {'countdown': 1} at time : 12:26:45.014382
+Received message: {'countdown': 0} at time : 12:26:46.019260
+Received message: {'countdown': -1} at time : 12:26:46.974869
+Ball Next Bounce [0.8975000000000324, 2.5]
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Ball Next Bounce [0.8975000000000324, 2.5]
+Player 2 pos :  2.25
+Ball Next Bounce [-2.5, -0.9477499999999196]
+Player 2 pos :  2.25
+Ball Next Bounce [0.47749999999996035, -2.5]
+Player 2 pos :  2.25
+GOAL BALL POSITION :  [0.4999999999999999, -4.025000000000008]
+Game n° 60e73f32-6a4a-45a8-8bdd-97b11d1676b9 is over
+Winner : {'winner': 1}

@@ -99,6 +99,9 @@ class PongConsumer(AsyncWebsocketConsumer):
             player = text_data_json['player']
             direction = text_data_json['direction']
             game_manager.handle_paddle_move(self.game_id, player, direction)
+        elif action == 'IA_game' :
+            game_manager.IAMode(self.game_id)
+            return
         else :
             self.send(text_data=json.dumps({
                 'error': 'Key "message" not found in WebSocket'

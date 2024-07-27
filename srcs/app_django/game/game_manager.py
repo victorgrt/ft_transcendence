@@ -15,6 +15,7 @@ class Game:
         self.players = []
         self.consumers = []
         self.nb_players = 0
+        self.mode = 1
         self.seed = seed(1),
         self.dx = 0.05
         self.dy = 0.05
@@ -24,13 +25,13 @@ class Game:
         self.paddleHeight = 0.2
         self.paddleDepth = 0.2
         self.paddleSpeed = 0.075
-        self.fieldHeight = -2.5
+        self.fieldHeight = 2.5
         self.fieldWidth = 2.5
         self.ball_position = [0, 0]
         self.ballNextBounce = [0, 0]#pas modifier
-        self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.player_1_position = 0
         self.player_2_position = 0
+        self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.move_1 = 0
         self.move_2 = 0
         self.player_1_position_z = 3.5
@@ -43,16 +44,23 @@ class Game:
     def defineNextBounce(self, x, y):
         x2 = x
         y2 = y
-        if self.ball_velocity[0] > 0 :
-            while x2 < self.fieldHeight - self.ballRadius and (y2 > 0 and y2 < self.fieldWidth):
-                x2 += self.ball_velocity[0] / 20
-                y2 += self.ball_velocity[1] / 20
-        else :
-            while x2 > self.ballRadius and (y2 > 0 and y2 < self.fieldWidth) :
-                x2 += self.ball_velocity[0] / 20
-                y2 += self.ball_velocity[1] / 20
+        while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
+            x2 += self.ball_velocity[0] / 20
+            y2 += self.ball_velocity[1] / 20
+
+        if (x2 > 2.5) :
+            x2 = 2.5
+        elif (x2 < -2.5) :
+            x2 = -2.5
+        if (y2 > 2.5) :
+            y2 = 2.5
+        elif (y2 < -2.5) :
+            y2 = -2.5
         self.ballNextBounce[0] = x2
         self.ballNextBounce[1] = y2
+        print("Ball Next Bounce", self.ballNextBounce)
+        if (self.player_2_position) :
+            print("Player 2 pos : ", self.player_2_position)
 
     def add_player(self, consumer, user):
         self.players.append(user)
@@ -70,19 +78,22 @@ class Game:
         self.ball_velocity[0] =  0.05
         self.ball_velocity[1] =  0.05
 
+    def checkIAMode(self, game_id) :
+        self.nb_players = 2
+        self.mode = 2
+
     def movePaddle(self, game_id, player, direction) :
-        print(direction)
         if player == 1 :
-            if direction == 'left' and self.player_1_position > -4 :
+            if direction == 'left' and self.player_1_position > -2.5 :
                 self.move_1 = -1
-            elif direction == 'right' and self.player_1_position < self.fieldWidth :
+            elif direction == 'right' and self.player_1_position < 2.5 :
                 self.move_1 = 1
             elif direction == 'null':
                 self.move_1 = 0
         elif player == 2 :
-            if direction == 'left' and self.player_2_position > -4 :
+            if direction == 'left' and self.player_2_position > -2.5 :
                 self.move_2 = -1
-            elif direction == 'right' and self.player_2_position < self.fieldWidth :
+            elif direction == 'right' and self.player_2_position < 2.5 :
                 self.move_2 = 1
             elif direction == 'null':
                 self.move_2 = 0
@@ -113,15 +124,20 @@ class Game:
 
             return
         if self.state == "playing":
+            if (self.player_1_position > 2.2 and self.player_1_position < 2.4) or (self.player_1_position < -2.2 and self.player_1_position > -2.4) :
+                self.move_1 = 0
             if (self.move_1 != 0):
-                if (self.move_1 > 0):
+                if (self.move_1 > 0 and self.player_1_position < 2.3):
                     self.player_1_position += self.paddleSpeed
-                elif (self.move_1 < 0):
+                elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
-            if (self.move_2 > 0):
-                self.player_2_position -= self.paddleSpeed
-            if (self.move_2 < 0):
-                self.player_2_position += self.paddleSpeed
+            if (self.player_2_position > 2.2 and self.player_2_position < 2.4) or (self.player_2_position < -2.2 and self.player_2_position > -2.4) :
+                self.move_2 = 0
+            if(self.move_2 != 0):
+                if (self.move_2 > 0 and self.player_2_position < 2.3):
+                    self.player_2_position -= self.paddleSpeed
+                if (self.move_2 < 0 and self.player_2_position > -2.3):
+                    self.player_2_position += self.paddleSpeed
             # Handle ball move
             self.ball_position[0] += self.ball_velocity[0]
             self.ball_position[1] += self.ball_velocity[1]
@@ -129,7 +145,7 @@ class Game:
             # Handle collision with walls
             if self.ball_position[0] >= 2.4 or self.ball_position[0] <= -2.4:
                 self.ball_velocity[0] = -self.ball_velocity[0]
-                # self.defineNextBounce()
+                self.defineNextBounce(self.ball_position[0], self.ball_position[1])
 
             # Handle collision with paddles
             if(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.6 and self.ball_position[0] >= self.player_1_position - 0.4 and self.ball_position[0] <= self.player_1_position + 0.4) :
@@ -137,14 +153,17 @@ class Game:
                 self.ball_position[1] = self.player_1_position_z - 0.1
                 self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
+                self.defineNextBounce(self.ball_position[0], self.ball_position[1])
             if(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.6 and (self.ball_position[0] >= self.player_2_position - 0.4 and self.ball_position[0] <= self.player_2_position + 0.4)) :
                 self.dy = -self.dy
                 self.ball_position[1] = self.player_2_position_z + 0.1
                 self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
+                self.defineNextBounce(self.ball_position[0], self.ball_position[1])
 
             # Detect goal
             if self.ball_position[1] <= -4 or self.ball_position[1] >= 4:
+                print("GOAL BALL POSITION : ", self.ball_position)
                 if self.ball_position[1] <= -4 :
                     self.player_1_score += 1
                     self.resetBall(1)
@@ -179,7 +198,7 @@ class Game:
                     )
         if self.state == "waiting":
             # If there are enough players, start the game
-            if len(self.players) >= 2:
+            if self.nb_players >= 2:
               self.send_game_state()
               gameCountDown(self)
               self.state = "playing"
@@ -189,28 +208,48 @@ class Game:
 
     def send_game_state(self):
         # print("Sending game state to group %s" % self.game_id)
-        if (self.nb_players == 2) :
-            player_2_username = self.players[1].username
-        else :
-            player_2_username = "waiting"
-        for i in range(len(self.consumers)):
-            async_to_sync(self.consumers[i].send_game_state_directly)(
+        if (self.mode == 1) :
+            if (self.nb_players == 2) :
+                player_2_username = self.players[1].username
+            else :
+                player_2_username = "waiting"
+        if (self.mode == 2) :
+            async_to_sync(self.consumers[0].send_game_state_directly)(
                 {
                         'state': self.state,
                         'nb_players': self.nb_players,
                         'player_1_login': self.players[0].username,
-                        'player_2_login': player_2_username,
+                        'player_2_login': "IA",
                         'ball_position': self.ball_position,
                         'ball_velocity': self.ball_velocity,
                         'player_1_position': self.player_1_position,
                         'player_2_position': self.player_2_position,
-                        'player_id': i + 1,
+                        'player_id': 1,
                         'player_1_score': self.player_1_score,
                         'player_2_score': self.player_2_score,
                         'ballNextBounce': self.ballNextBounce,
                             # Add more game state information as needed
                     }
             )
+        else :
+            for i in range(len(self.consumers)):
+                async_to_sync(self.consumers[i].send_game_state_directly)(
+                    {
+                            'state': self.state,
+                            'nb_players': self.nb_players,
+                            'player_1_login': self.players[0].username,
+                            'player_2_login': player_2_username,
+                            'ball_position': self.ball_position,
+                            'ball_velocity': self.ball_velocity,
+                            'player_1_position': self.player_1_position,
+                            'player_2_position': self.player_2_position,
+                            'player_id': i + 1,
+                            'player_1_score': self.player_1_score,
+                            'player_2_score': self.player_2_score,
+                            'ballNextBounce': self.ballNextBounce,
+                                # Add more game state information as needed
+                        }
+                )
 
 class GameManager:
     def __init__(self):
@@ -238,6 +277,10 @@ class GameManager:
             game = self.get_game(game_id)
             game.movePaddle(game_id, player, direction)
 
+    def IAMode(self, game_id) :
+        with self.lock :
+            game = self.get_game(game_id)
+            game.checkIAMode(game_id)
     def update_games(self):
         while True:
             start_time = time.time()

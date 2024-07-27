@@ -11,7 +11,7 @@ function pongPageScripts () {
 function pongIAPageScripts()
 {
     connectToGame();
-    connectToGame();
+    // connectToGame();
     launchGameIA();
 }
 
