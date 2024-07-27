@@ -71,6 +71,14 @@ def pongIA(request):
     return render(request, 'partials/pongIA.html')
     # return render(request, 'partials/pong.html')
 
+# Tournament page
+def tournament(request, tournament_id):
+    context = {'tournament_id': tournament_id}
+    if is_ajax(request):
+        return render(request, 'partials/tournamentPage.html', context)
+    else:
+        return render(request, 'index.html', {'partial_template': 'partials/tournamentPage.html', 'context': tournament_id})
+
 # Game menu
 def menuPong(request):
     return render(request, 'partials/menuPong.html')
