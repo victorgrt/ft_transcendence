@@ -56,7 +56,7 @@ function zoomToCoordinates(clickCoordinates) {
         const zoomDistance = 2; // Zoom distance relative to the object (adjust as needed)
         const direction = new THREE.Vector3();
         direction.subVectors(clickCoordinates, camera.position).normalize();
-        if (selected_object_name == "Plane009_2") {
+        if (selected_object_name == "computerScreen_2_1") {
             console.log("click :", clickCoordinates);
             targetPosition = new THREE.Vector3(2, 2.8, 0.02);
             new TWEEN.Tween(camera.position)
@@ -97,7 +97,7 @@ function zoomToCoordinates(clickCoordinates) {
                 })
                 .start();
         }
-        else if (selected_object_name == "Plane003_2") {
+        else if (selected_object_name == "GameScreen_Plane") {
             targetPosition = new THREE.Vector3(1.75, 3.7, 2.5);
             new TWEEN.Tween(camera.position)
                 .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
