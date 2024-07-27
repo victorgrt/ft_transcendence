@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'channels',
     'account',
     'notification',
+    'friends',
     # 'avatar'
 ]
 

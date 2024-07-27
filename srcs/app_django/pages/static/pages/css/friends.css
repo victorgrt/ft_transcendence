@@ -14,3 +14,76 @@
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
 }
 
+
+.search_bar {
+	width: 100%;
+	padding: 10px;
+	margin-bottom: 20px; /* Space below the input bar */
+	border: 1px solid rgba(40, 40, 40, 1);
+	border-radius: 5px;
+	box-sizing: border-box; /* Ensure padding is included in the width */
+	font-size: 16px;
+	color: white;
+	background-color: rgba(36, 36, 36, 1); /* Slightly lighter background for the input */
+}
+
+.search_bar::placeholder {
+	color: white; /* Placeholder color */
+}
+
+.add_button {
+	visibility: hidden;
+    background-color: #007bff; /* Button color */
+    color: #fff; /* Text color */
+    border: none; /* Remove default border */
+    padding: 5px 10px; /* Button padding */
+    border-radius: 50%; /* Circular button */
+    width: 30px; /* Button width */
+    height: 30px; /* Button height */
+    display: flex; /* Center align text */
+    align-items: center; /* Center align text */
+    justify-content: center; /* Center align text */
+    cursor: pointer; /* Cursor on hover */
+    font-size: 18px; /* Font size for + icon */
+    text-align: center; /* Center text */
+}
+
+.status_circle {
+
+	width: 20px; 
+    height: 20px; 
+    border-radius: 50%; 
+    display: inline-block; 
+    background-color: grey; 
+}
+
+.username{
+	margin: 0; /* Remove default margin */
+	font-size: 14px; /* Adjust font size as needed */
+	color: #333; /* Text color */
+}
+
+.avatar {
+	width: 20%; /* Width of the avatar */
+    border-radius: 30%; /* Make the avatar circular */
+    object-fit: cover; /* Ensures image covers the circle */
+}
+
+.friend_box {
+    border-bottom: 1px solid white; /* Discrete line under the user information */
+    padding: 10px; /* Padding inside the friend box */
+    margin-bottom: 10px; /* Space between friend boxes */
+    display: flex; /* Align items in a row */
+    align-items: center; /* Center align items vertically */
+    gap: 5%; /* Space between child elements */
+}
+
+#search_friend_error{
+	color: white;
+	visibility: visible;
+}
+
+.friend_list_button{
+	margin-right: 0;
+	margin-left: 0;
+}

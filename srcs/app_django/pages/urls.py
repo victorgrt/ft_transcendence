@@ -13,6 +13,7 @@ urlpatterns = [
 
   # account
 	path('account/', include("account.urls")),
+	
  
   # notification
 	path('notification/', include("notification.urls")),

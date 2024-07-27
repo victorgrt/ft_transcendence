@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("pages.urls")),
     path("", include("game.urls")),
+    path("friends/", include("friends.urls")),
 
     # url(r'^ws/', include(routing.websocket_urlpatterns)),
     # account 

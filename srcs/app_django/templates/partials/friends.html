@@ -1,4 +1,33 @@
 {% load static %}
 <div class="friends_container" id="friends">
     <h2>Friends</h2>
-  </div>
+	<input type="text" id="input_search_friend" class="search_bar" placeholder="Search for friends...">
+
+	<!-- Div Search result -->
+	<div class="friend_box" id="result_box" style="visibility:hidden">
+		<div class="status_circle" id="result_status"></div>
+		<img class="avatar" id="result_avatar"  src="{% static 'pages/img_avatars/' %}">
+		<p class="username" id="result_name"></p>
+		<button class="friend_list_button" id="challenge_button">Challenge</button>
+		<button class="add_button" id="add_button" onclick="sendFriendRequest()">+</button> <!-- Added the + icon here -->
+	</div>
+
+	<div class="friends_list" id="friends_list">
+		{% for user.friends in friends %}
+		<div class="friend_box" id="friend_box">
+			{% if user.friends.is_active %}
+				<div class="status_circle" style="background-color: green;"></div>
+			{% else %}
+				<div class="status_circle" style="background-color: red;"></div>
+			{% endif %}
+			<img src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}">
+			<p>{{ user.friend.username }}</p>
+			</div>
+			<div class="friend_buttons">
+					<button class="friend_button1" id="" onclick="location.href='{% url 'profile' friend.username %}'">View Profile</button>
+					<button class="friend_button2"> 
+				</div>
+			</div>
+		{% endfor %}
+		<div id="search_friend_error"></div>
+</div>

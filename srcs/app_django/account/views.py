@@ -14,10 +14,32 @@ from notification.models import Notification
 import uuid
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
+import json
+
 
 
 # def register(request):
 #     return render(request, 'account/register.html')
+
+@csrf_exempt
+def is_user(request):
+    print('IN IS USER')
+    if request.method == 'POST':
+        try:
+            # Parse JSON body
+            data = json.loads(request.body.decode('utf-8'))
+            username = data.get('username')
+            print("USER NAME ICI:", username)
+            
+            if CustomUser.objects.filter(username=username).exists():
+                print("USERNAME FOUND HERE")
+                return JsonResponse({'success': True, 'message': 'Username found!'}, status=200)
+            else:
+                return JsonResponse({'success': False, 'message': 'User not found!'}, status=404)
+        except json.JSONDecodeError:
+            return JsonResponse({'success': False, 'message': 'Invalid JSON'}, status=400)
+    else:
+        return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 
 def settings(request):
 	print('IN SETTINGS')
@@ -113,28 +135,28 @@ def user_avatar(request):
 # def search_friend(request, userID):
 
 
-@login_required
-def send_friend_request(request):
-	print('IN SEND FRIEND REQUEST')
-	if request.method == 'POST':
-		from_user = request.user
-		to_user_username = request.POST.get('searched_user')
-		try:
-			to_user = CustomUser.objects.get(username=to_user_username)
-		except CustomUser.DoesNotExist:
-			return HttpResponse("User not found", status=404)
-		if from_user.username == to_user_username:
-			return JsonResponse({"message": "You cannot send a friend request to yourself."}, status=400)
-		# if FriendRequest.objects.filter(from_user=from_user, to_user=to_user).exists():
-		# 	return JsonResponse({"message": "Friend request already sent."}, status=409)
-		 # Create a friend request or get the existing one
-		friend_request, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
-		if created:
-			notification_message = f"{from_user.username} has sent you a friend request."
-			Notification.objects.create(to_user=to_user, from_user=from_user, message=notification_message)
-			# return HttpResponse("Friend request sent")
-			return JsonResponse({"message": "Friend request sent successfully."}, status=200)
-		return JsonResponse({"message": "Friend request sent successfully."}, status=200)
+# @login_required
+# def send_friend_request(request):
+# 	print('IN SEND FRIEND REQUEST')
+# 	if request.method == 'POST':
+# 		from_user = request.user
+# 		to_user_username = request.POST.get('searched_user')
+# 		try:
+# 			to_user = CustomUser.objects.get(username=to_user_username)
+# 		except CustomUser.DoesNotExist:
+# 			return HttpResponse("User not found", status=404)
+# 		if from_user.username == to_user_username:
+# 			return JsonResponse({"message": "You cannot send a friend request to yourself."}, status=400)
+# 		# if FriendRequest.objects.filter(from_user=from_user, to_user=to_user).exists():
+# 		# 	return JsonResponse({"message": "Friend request already sent."}, status=409)
+# 		 # Create a friend request or get the existing one
+# 		friend_request, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
+# 		if created:
+# 			notification_message = f"{from_user.username} has sent you a friend request."
+# 			Notification.objects.create(to_user=to_user, from_user=from_user, message=notification_message)
+# 			# return HttpResponse("Friend request sent")
+# 			return JsonResponse({"message": "Friend request sent successfully."}, status=200)
+# 		return JsonResponse({"message": "Friend request sent successfully."}, status=200)
 
 	# # to_user = CustomUser.objects.get(username=username)
 	# FriendRequest, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
@@ -161,6 +183,33 @@ def logout(request):
     # return JsonResponse({"message": "Successfully logged out."}, status=200)
     # return redirect('home')
 
+# def get_user_data(request):
+# 	if request.method == 'GET':
+# 		user = CustomUser.objects.get(username=request.POST.get('username'))
+# 		return JsonResponse({
+# 			'username': user.username,
+#         	'is_active': user.is_active,
+# 			'email': user.email,
+# 			'avatar': user.avatar.url,
+# 		})
+
+def get_user_data(request):
+    if request.method == 'GET':
+        username = request.GET.get('username')  # Use request.GET.get() for query parameters
+        try:
+            user = CustomUser.objects.get(username=username)
+            return JsonResponse({
+                'username': user.username,
+                'is_active': user.is_active,
+                'email': user.email,
+                'avatar': user.get_avatar_name(),
+                'success': True
+            })
+        except CustomUser.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'User not found!'}, status=404)
+
+
+# Not used
 def get_login_status(request):
     user = request.user
     print(user.username)
@@ -170,7 +219,8 @@ def get_login_status(request):
         'is_logged_in': True,
         'username': user.username,
         'email': user.email,
-        'is_active': user.is_active
+        'is_active': user.is_active,
+        'user_avatar': user.avatar.url,
     })
 
 # Create your views here.

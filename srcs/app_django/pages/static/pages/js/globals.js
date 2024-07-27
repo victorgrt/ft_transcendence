@@ -13,7 +13,19 @@ const friendsDiv = document.getElementById("friends");
 const paramsDiv = document.getElementById("change_prof");
 const menuPongDiv = document.getElementById("menuPongDiv");
 const notifsDiv = document.getElementById("notifications");
+
+	// ------------ Friends div---------
+const inputSearchFriend = document.getElementById("input_search_friend");
+const resultBox = document.getElementById("result_box");
+// const searchUserSuccess = document.getElementById("search_user_success");
+const resultUsername= document.getElementById("result_name");
+const resultStatus= document.getElementById("result_status");
+const resultAvatar = document.getElementById("result_avatar");
+const friendsList = document.getElementById("friends_list");
+const searchFriendError = document.getElementById('search_friend_error');
+const addButton = document.getElementById('add_button');
 var compteur_notifs = document.getElementById("nb_notifs").textContent;
+const baseSrc = document.getElementById("result_avatar").src;
 
 // ------------ GAME VARIABLES ---------
 var socket;

@@ -564,7 +564,7 @@ function handleNotification(data)
     var type = "default";
     if (data.message === "play with")
         type = "play";
-    else if (data.message === "friend request")
+    else if (data.message === "friend")
         type = "friend"
       
     showToast(data);

@@ -80,4 +80,3 @@ def send_play_request (request):
     print('Notification sent')
     # Last, return the session_id
     return JsonResponse({'session_id': session_id}, status=200)
-
