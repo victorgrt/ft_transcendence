@@ -85,10 +85,9 @@ class PongConsumer(AsyncWebsocketConsumer):
 
 
     async def disconnect(self, close_code):
+        # Remove player from game 
         if self.game:
             self.game.remove_player(self)
-        # if not self.game.players:
-        #     game_manager.remove_game(self.game_id)
         if self.is_added_to_group:
             await self.channel_layer.group_discard(self.game_id, self.channel_name);
 

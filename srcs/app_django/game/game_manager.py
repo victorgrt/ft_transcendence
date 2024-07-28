@@ -12,7 +12,8 @@ from django.test import Client
 from .tournamentManager import TournamentManager
 
 class Game:
-    def __init__(self, game_id):
+    def __init__(self, game_id, game_manager):
+        self.game_manager = game_manager
         self.game_id = game_id  # Ensure the game_id is a valid string
         self.players = []
         self.consumers = []
@@ -105,6 +106,7 @@ class Game:
             winner = self.players[0].id if self.player_1_score == 3 else self.players[1].id
             self.state = winner
             # Send game over message
+            print("Sending game over message to group %s" % self.game_id)
             async_to_sync(get_channel_layer().group_send)(
                 self.game_id,
                 {
@@ -116,6 +118,7 @@ class Game:
             )
 
             # Send request to save game history
+            print("Sending request to save game history")
             requests.post('http://localhost:8000/game/finished_match/', data={
                 'game_id': self.game_id,
                 'player_1_id': self.players[0].id,
@@ -124,6 +127,12 @@ class Game:
                 'player_2_score': self.player_2_score,
                 'winner_id': winner,
             })
+
+            print("Game over : %s" % self.game_id)
+
+            # Set state to finished and remove it from the game manager
+            self.state = "finished"
+            self.game_manager.remove_game(self.game_id)
 
             return
 
@@ -267,7 +276,7 @@ class GameManager:
         with self.lock:
             # Here, check that the game_id is unique
             print("Creating game n %d" % (len(self.games) + 1))
-            game = Game(game_id)
+            game = Game(game_id, self)
             self.games[game_id] = game
             return game
 
@@ -278,6 +287,7 @@ class GameManager:
         with self.lock:
             if game_id in self.games:
                 del self.games[game_id]
+                print(f"Removed game {game_id}")
 
     def handle_paddle_move(self, game_id, player, direction) :
         with self.lock :
@@ -306,6 +316,7 @@ class GameManager:
         with self.lock:
             if tournament_id in self.tournaments:
                 del self.tournaments[tournament_id]
+                print(f"Removed tournament {tournament_id}")
         
 
     # Main loop
@@ -314,22 +325,21 @@ class GameManager:
         while True:
             start_time = time.time()
             # print("Updating games. Time : %s" % start_time)
-            with self.lock:
-                for game in self.games.values():
-                    game.update()
+            for game in list(self.games.values()):
+                game.update()
             elapsed = time.time() - start_time
             sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
-            time.sleep(sleep_time);
+            time.sleep(sleep_time)
 
     def update_tournaments(self):
         while True:
             start_time = time.time()
             # print("Updating games. Time : %s" % start_time)
-            with self.lock:
-                for tournament in self.tournaments.values():
-                    tournament.update()
+            for tournament in list(self.tournaments.values()):
+                tournament.update()
             elapsed = time.time() - start_time
             sleep_time = max(0.016 - elapsed, 0)
+            time.sleep(sleep_time)
 
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)
