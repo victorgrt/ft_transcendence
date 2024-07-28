@@ -13,7 +13,7 @@ from django.db.models import Q
 from notification.models import FriendRequest
 from notification.models import Notification
 import uuid
-from game.models import MatchHistory
+from game.models import MatchHistory, Tournament
 
 
 #notifs par chatgpt
@@ -76,11 +76,12 @@ def pongIA(request, session_id):
 
 # Tournament page
 def tournament(request, tournament_id):
-    context = {'tournament_id': tournament_id}
+    tournament = Tournament.objects.get(id=tournament_id)
+    context = {'tournament': tournament}
     if is_ajax(request):
         return render(request, 'partials/tournamentPage.html', context)
     else:
-        return render(request, 'index.html', {'partial_template': 'partials/tournamentPage.html', 'context': tournament_id})
+        return render(request, 'index.html', {'partial_template': 'partials/tournamentPage.html', 'context': context})
 
 # Game menu
 def menuPong(request):

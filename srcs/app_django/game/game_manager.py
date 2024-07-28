@@ -338,7 +338,7 @@ class GameManager:
             for tournament in list(self.tournaments.values()):
                 tournament.update()
             elapsed = time.time() - start_time
-            sleep_time = max(0.016 - elapsed, 0)
+            sleep_time = max(0.5 - elapsed, 0)
             time.sleep(sleep_time)
 
 game_manager = GameManager()

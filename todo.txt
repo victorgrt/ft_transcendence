@@ -1,0 +1,1 @@
+Checker tous les appels asynchrones dans game_manager, tournament et games --> tous doivent être protégés par des locks

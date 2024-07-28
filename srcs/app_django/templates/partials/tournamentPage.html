@@ -1,23 +1,25 @@
 <div id="tournament-container">
-    TOURNAMENT PAGE
+    TOURNAMENT N° <span id="tournament_id">{{tournament.id}}</span>
 
     <div id="tournament_state">
         Waiting for players to join...
     </div>
 
     <div id="tournament_players">
-        <div id="tournament_player1">
-            Player 1
-        </div>
-        <div id="tournament_player2">
-            Player 2
-        </div>
-        <div id="tournament_player3">
-            Player 3
-        </div>
-        <div id="tournament_player4">
-            Player 4
-        </div>
+        {% for player in tournament.players.all %}
+          <div class="player">
+              <span class="player_name">{{player.username}}</span>
+          </div>
+        {% endfor %}
     </div>
 
+    <div id="semi-finals-games">
+        <div>Semi-Finals Games</div>
+        {% for game in tournament.semi_final_games.all %}
+            <div class="game">
+                <div>{{game.id}}</div>
+                <span class="player1">{{game.player1.username}}</span> vs <span class="player2">{{game.player2.username}}</span>
+            </div>
+        {% endfor %}
+    </div>
 </div>

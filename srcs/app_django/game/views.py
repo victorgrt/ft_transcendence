@@ -48,6 +48,27 @@ def create_tournament(request):
     tournament = Tournament.objects.create(id=tournament_id, name='tournament', state='waiting')
     return JsonResponse({'tournament_id': tournament_id})
 
+def join_tournament(request, tournament_id):
+    try:
+        tournament = Tournament.objects.get(id=tournament_id)
+        user = request.user
+
+        # If the player is already in the tournament, return success
+        if user in tournament.players.all():
+            return JsonResponse({'success': 'Joined tournament'}, status=200)
+ 
+        # TODO : Check if the tournament is full
+        # TODO : Check if the user is already in the tournament
+        # TODO : check if the user belongs to invited players ? 
+
+        tournament.players.add(user)
+        tournament.save()
+        return JsonResponse({'success': 'Joined tournament'})
+    except Tournament.DoesNotExist:
+        return JsonResponse({'error': 'Tournament not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': 'Failed to join tournament'}, status=500)
+
 def join_session(request, session_id):
     try:
         game_session = GameSession.objects.get(session_id=session_id)
