@@ -17,8 +17,9 @@
         <div>Semi-Finals Games</div>
         {% for game in tournament.semi_final_games.all %}
             <div class="game">
-                <div>{{game.id}}</div>
-                <span class="player1">{{game.player1.username}}</span> vs <span class="player2">{{game.player2.username}}</span>
+                <div>{{game.session_id}}</div>
+                <span class="player1">{{game.player1}}</span> vs <span class="player2">{{game.player2}}</span>
+                <a class="go_button" href="/pong/{{ game.session_id }}/">GO</a>
             </div>
         {% endfor %}
     </div>

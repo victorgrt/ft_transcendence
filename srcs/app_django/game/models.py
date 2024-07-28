@@ -10,6 +10,7 @@ class GameSession(models.Model):
     player1 = models.CharField(max_length=100, null=True, blank=True)
     player2 = models.CharField(max_length=100, null=True, blank=True)
     session_id = models.CharField(max_length=100, unique=True)
+    tournament_id = models.CharField(max_length=100, null=True, blank=True)
     state = models.TextField(default='{}')
     created_at = models.DateTimeField(default=timezone.now)
 

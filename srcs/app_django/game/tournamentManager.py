@@ -16,10 +16,10 @@ import uuid
 #     game = GameSession.objects.create(player1=player1, player2=player2)
 #     return game
 
-def create_game_session_in_thread(player1, player2):
+def create_game_session_in_thread(player1, player2, tournament_id):
     try:
         session_id = str(uuid.uuid4())
-        game = GameSession.objects.create(player1=player1, player2=player2, session_id=session_id, state='{}')
+        game = GameSession.objects.create(player1=player1.username, player2=player2.username, session_id=session_id, state='{}', tournament_id=tournament_id)
         connection.close()  # Close the connection explicitly
         return game
     except:
@@ -48,6 +48,10 @@ class TournamentManager:
         # self.tournament = tournament
         self.players = []
         self.consumers = []
+        self.all_games = []
+        self.semi_finals_games = []
+        self.final_game = None
+        self.small_final_game = None
         self.nb_players = 0
         self.state = "waiting" # semi_finals, finals, finished
 
@@ -62,14 +66,13 @@ class TournamentManager:
         self.players.remove(player)
         self.consumers.remove(consumer)
         self.nb_players -= 1
-        if self.nb_players < 4:
-            self.state = "waiting"
 
     # TODO WARNING : should be protected by a lock
     def get_players(self):
         return self.players
 
     def update(self):
+        # print(f"Updating tournament {self.tournament_id} in state {self.state}")
         if self.state == "waiting":
             if self.nb_players == 4:
                 self.start_semi_finals()
@@ -79,11 +82,25 @@ class TournamentManager:
             self.update_finals()
         elif self.state == "finished":
             self.close_tournament()
+
+    def create_game_item(self, game_id):
+        game = {
+            "game_id": game_id,
+            "finished": False,
+            "winner": None,
+            "loser": None
+        }
+        self.all_games.append(game)
+        return game;
     
     def start_semi_finals(self):
         # Create two games for the semi finals
-        semi_final_game1 = create_game_session_in_thread(self.players[0], self.players[1])
-        semi_final_game2 = create_game_session_in_thread(self.players[2], self.players[3])
+        semi_final_game1 = create_game_session_in_thread(self.players[0], self.players[1], self.tournament_id)
+        semi_final_game2 = create_game_session_in_thread(self.players[2], self.players[3], self.tournament_id)
+
+        # Create the game items that serve to keep track of the games
+        semi_final_game1_item = self.create_game_item(semi_final_game1.id)
+        semi_final_game2_item = self.create_game_item(semi_final_game2.id)
         
         print(f"semi_final_game1 created : {semi_final_game1}")
         print(f"semi_final_game2 created : {semi_final_game2}")
@@ -97,5 +114,29 @@ class TournamentManager:
         # Set the tournament state to semi_finals
         self.state = "semi_finals"
 
+    def start_finals(self):
+        print("Starting finals")
+
     def update_semi_finals(self):
-        pass
+        # If game 1 and game 2 are finished, start the finals
+        if self.all_games[0]["finished"] and self.all_games[1]["finished"]:
+            self.start_finals()
+        
+    
+    # TODO WARNING : should be protected by a lock
+    def set_game_result(self, game_id, winner_id, loser_id):
+        print(f"Tournament manager received game result")
+        # Find the game in the list of games
+        game = next((game for game in self.all_games if game["game_id"] == game_id), None)
+
+        # TODO : handle the case where the game is not found ?
+        if not game:
+            print(f"Game {game_id} not found")
+            return
+
+        # Update the game result
+        game["finished"] = True
+        game["winner"] = winner_id
+        game["loser"] = loser_id
+
+        print(f"Tournament manager acknowledged : Game {game_id} finished. Winner : {winner_id}, Loser : {loser_id}")

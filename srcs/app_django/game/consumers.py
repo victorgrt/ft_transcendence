@@ -14,6 +14,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
 
 from .game_manager import game_manager
+from game.models import GameSession
 
 # Wrap the synchronous Django ORM calls with database_sync_to_async
 
@@ -25,6 +26,10 @@ def get_session(session_key):
 def get_user(uid):
     return get_user_model().objects.get(pk=uid)
 
+@database_sync_to_async
+def get_game_DB(game_id):
+    return GameSession.objects.get(session_id=game_id)
+
 # Function to get the user object from the session key
 async def get_user_from_session_key(session_key):
     try:
@@ -32,6 +37,13 @@ async def get_user_from_session_key(session_key):
         uid = session.get_decoded().get('_auth_user_id')
         user = await get_user(uid)
         return user
+    except ObjectDoesNotExist:
+        return None
+    
+async def get_game_tournament(game_id) :
+    try :
+        game = await get_game_DB(game_id)
+        return game.tournament_id
     except ObjectDoesNotExist:
         return None
 
@@ -76,8 +88,13 @@ class PongConsumer(AsyncWebsocketConsumer):
         # self.user = user
         # print(user.id)
 
+        # Check if game is part of a tournament
+        tournament_id = await get_game_tournament(game_id)
+        if tournament_id:
+            print(f"Game {game_id} is part of tournament {tournament_id}")
+
         if not self.game:
-            self.game = game_manager.create_game(game_id)
+            self.game = game_manager.create_game(game_id, tournament_id)
         self.game.add_player(self, self.user)
         await self.channel_layer.group_add(self.game_id, self.channel_name)
         self.is_added_to_group = True

@@ -132,7 +132,7 @@ class TournamentConsumer(AsyncWebsocketConsumer):
         # if not self.game.players:
         #     game_manager.remove_game(self.game_id)
         if self.is_added_to_group:
-            await self.channel_layer.group_discard(self.game_id, self.channel_name);
+            await self.channel_layer.group_discard(self.tournament_id, self.channel_name);
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)

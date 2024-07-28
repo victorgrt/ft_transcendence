@@ -12,8 +12,9 @@ from django.test import Client
 from .tournamentManager import TournamentManager
 
 class Game:
-    def __init__(self, game_id, game_manager):
+    def __init__(self, game_id, game_manager, tournament):
         self.game_manager = game_manager
+        self.tournament = tournament
         self.game_id = game_id  # Ensure the game_id is a valid string
         self.players = []
         self.consumers = []
@@ -31,7 +32,7 @@ class Game:
         self.fieldHeight = 2.5
         self.fieldWidth = 2.5
         self.ball_position = [0, 0]
-        self.ballNextBounce = [0, 0]#pas modifier
+        self.ballNextBounce = [0, 0]  #pas modifier
         self.player_1_position = 0
         self.player_2_position = 0
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
@@ -104,6 +105,7 @@ class Game:
     def update(self):
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
             winner = self.players[0].id if self.player_1_score == 3 else self.players[1].id
+            loser = self.players[0].id if self.player_1_score != 3 else self.players[1].id
             self.state = winner
             # Send game over message
             print("Sending game over message to group %s" % self.game_id)
@@ -129,6 +131,11 @@ class Game:
             })
 
             print("Game over : %s" % self.game_id)
+
+            # Notifies the tournament manager
+            if self.tournament:
+                self.tournament.set_game_result(self.game_id, winner, loser)
+                print("Game result set in tournament")
 
             # Set state to finished and remove it from the game manager
             self.state = "finished"
@@ -272,16 +279,18 @@ class GameManager:
 
     # Game management
 
-    def create_game(self, game_id):
+    def create_game(self, game_id, tournament_id):
         with self.lock:
             # Here, check that the game_id is unique
             print("Creating game n %d" % (len(self.games) + 1))
-            game = Game(game_id, self)
+            tournament = self.get_tournament(tournament_id)
+            game = Game(game_id, self, tournament)
             self.games[game_id] = game
             return game
 
     def get_game(self, game_id):
         return self.games.get(game_id)
+    
 
     def remove_game(self, game_id):
         with self.lock:
@@ -318,7 +327,9 @@ class GameManager:
                 del self.tournaments[tournament_id]
                 print(f"Removed tournament {tournament_id}")
         
-
+    def get_tournament(self, tournament_id):
+        return self.tournaments.get(tournament_id)
+    
     # Main loop
 
     def update_games(self):
