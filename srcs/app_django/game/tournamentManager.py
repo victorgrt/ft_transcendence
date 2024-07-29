@@ -99,8 +99,8 @@ class TournamentManager:
         semi_final_game2 = create_game_session_in_thread(self.players[2], self.players[3], self.tournament_id)
 
         # Create the game items that serve to keep track of the games
-        semi_final_game1_item = self.create_game_item(semi_final_game1.id)
-        semi_final_game2_item = self.create_game_item(semi_final_game2.id)
+        semi_final_game1_item = self.create_game_item(semi_final_game1.session_id)
+        semi_final_game2_item = self.create_game_item(semi_final_game2.session_id)
         
         print(f"semi_final_game1 created : {semi_final_game1}")
         print(f"semi_final_game2 created : {semi_final_game2}")
@@ -126,7 +126,7 @@ class TournamentManager:
     # TODO WARNING : should be protected by a lock
     def set_game_result(self, game_id, winner_id, loser_id):
         print(f"Tournament manager received game result")
-        # Find the game in the list of games
+        # Find the games array
         game = next((game for game in self.all_games if game["game_id"] == game_id), None)
 
         # TODO : handle the case where the game is not found ?

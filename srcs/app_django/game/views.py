@@ -18,6 +18,7 @@ def finished_match(request):
     winner_id = request.POST.get('winner_id')
     player_1_score = request.POST.get('player_1_score')
     player_2_score = request.POST.get('player_2_score')
+    game_id = request.POST.get('game_id')
 
     print("winner_id")
     print(winner_id)
@@ -30,7 +31,8 @@ def finished_match(request):
     user_winner = get_user_model().objects.get(id=winner_id)
     user_player_1 = get_user_model().objects.get(id=player_1_id)
     user_player_2 = get_user_model().objects.get(id=player_2_id)
-    new_match = MatchHistory.objects.create(winner=user_winner, player_1=user_player_1, player_2=user_player_2, player_1_score=player_1_score, player_2_score=player_2_score)
+    game = GameSession.objects.get(session_id=game_id)
+    new_match = MatchHistory.objects.create(winner=user_winner, player_1=user_player_1, player_2=user_player_2, player_1_score=player_1_score, player_2_score=player_2_score , game_id=game.id)
 
     # Save the record
     new_match.save()
