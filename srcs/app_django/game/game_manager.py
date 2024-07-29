@@ -136,7 +136,7 @@ class Game:
 
             return
         if self.state == "playing":
-
+            print("Boucle")
             if (self.player_1_position > 2.3 and self.player_1_position < 2.3) or (self.player_1_position < -2.3 and self.player_1_position > -2.3) :
                 self.move_1 = 0
             if (self.move_1 != 0):
@@ -145,7 +145,7 @@ class Game:
                 elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
             # if (self.player_2_position > 2.3 and self.player_2_position < 2.3) or (self.player_2_position < -2.3 and self.player_2_position > -2.3) :
-            if (self.obj_2 == self.player_2_position) :
+            if (self.obj_2 + 0.3 >= self.player_2_position and self.obj_2 - 0.3 <= self.player_2_position) :
                 self.move_2 = 0
             if(self.move_2 != 0):
                 if (self.move_2 > 0 and self.player_2_position < 2.4):

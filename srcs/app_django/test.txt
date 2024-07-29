@@ -11302,3 +11302,239 @@ GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOAL
 GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOAL
 Game n° 1f65f806-eabf-4216-a1e9-63f0d500f22c is over
 Winner : {'winner': 1}
+INFO:     127.0.0.1:53188 - "GET /pongIA/1f65f806-eabf-4216-a1e9-63f0d500f22c/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53188 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53220 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53218 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53234 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53188 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53242 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53218 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53220 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53234 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53188 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53242 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53188 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53234 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53220 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53242 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53218 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53204 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:53218 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53218 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53218 - "GET /pongIA/1f65f806-eabf-4216-a1e9-63f0d500f22c/ HTTP/1.1" 200 OK
+jquil@jquil.com
+Connecting to game 1f65f806-eabf-4216-a1e9-63f0d500f22c
+INFO:     127.0.0.1:53204 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:53218 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+Received message: {'countdown': 3} at time : 10:59:30.994253
+Received message: {'countdown': 2} at time : 10:59:34.958818
+Received message: {'countdown': 1} at time : 10:59:34.959508
+Received message: {'countdown': 0} at time : 10:59:34.959958
+Received message: {'countdown': -1} at time : 10:59:34.960066
+INFO:     127.0.0.1:40182 - "GET /pongIA/1f65f806-eabf-4216-a1e9-63f0d500f22c/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40190 - "GET /staticfiles/pages/css/account.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40202 - "GET /staticfiles/pages/css/index.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40212 - "GET /staticfiles/pages/css/match_history.css HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40214 - "GET /staticfiles/pages/images/parametres.png HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40190 - "GET /staticfiles/pages/js/gameSession.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40224 - "GET /staticfiles/pages/js/scene.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40214 - "GET /staticfiles/pages/js/globals.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40212 - "GET /staticfiles/pages/js/script.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40202 - "GET /staticfiles/pages/js/pong.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40190 - "GET /staticfiles/pages/js/handleLoginForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40224 - "GET /staticfiles/pages/js/pongIA.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40212 - "GET /staticfiles/pages/js/handleFriends.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40214 - "GET /staticfiles/pages/js/handleRegisterForm.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40202 - "GET /staticfiles/pages/js/handleLogout.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40190 - "GET /staticfiles/pages/js/setupSocket.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40182 - "GET /staticfiles/pages/img_avatars/None.jpg HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:40190 - "GET /staticfiles/pages/js/main.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40182 - "GET /staticfiles/pages/images/scene-18.gltf HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40202 - "GET /staticfiles/pages/js/handleUserStats.js HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40202 - "GET /pongIA/1f65f806-eabf-4216-a1e9-63f0d500f22c/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40202 - "GET /staticfiles/pages/images/arcade.jpg HTTP/1.1" 304 Not Modified
+INFO:     127.0.0.1:40182 - "GET /staticfiles/pages/fonts/arcades/threejs_font.typeface.json HTTP/1.1" 304 Not Modified
+jquil@jquil.com
+Connecting to game 1f65f806-eabf-4216-a1e9-63f0d500f22c
+Received message: {'countdown': 3} at time : 11:02:09.438927
+Boucle
+Received message: {'countdown': 2} at time : 11:02:13.385165
+Received message: {'countdown': 1} at time : 11:02:13.385342
+Received message: {'countdown': 0} at time : 11:02:13.385727
+Received message: {'countdown': -1} at time : 11:02:13.385825
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
+Boucle
