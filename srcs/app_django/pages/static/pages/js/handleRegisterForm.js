@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', handleRegisterForm);
-ocument.getElementById('content').addEventListener('DOMContentLoaded', handleRegisterForm);
+document.getElementById('content').addEventListener('DOMContentLoaded', handleRegisterForm);
 
 
 function handleRegisterForm()

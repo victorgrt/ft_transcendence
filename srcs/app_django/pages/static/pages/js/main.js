@@ -379,15 +379,13 @@ function showNotifs()
 
 // HANDLE NOTIFICATIONS
 async function acceptNotif(data){
-
     console.log("Accepting notif:", data);
     if (data.notification_type === 'play')
     {
         console.log("PLAY");
-        //logique de rejoindre la game
         
-        window.location.href = '/pong/' + data.data.session_id + '/';
-
+        // window.location.href = '/pong/' + data.data.session_id + '/';
+        loadContent('/pong/' + data.data.session_id + '/');
         //delete notif
         var id_to_delete = obj.className;
         var element = document.getElementById(id_to_delete);
@@ -524,7 +522,7 @@ $(document).ready(function() {
                 success: function(response) {
                     console.log(response);
                     compteur_notifs++;
-                    window.location.href = '/pong/' + response.session_id + '/';
+                    loadContent('/pong/' + response.session_id + '/');
                 },
                 error: function(response) {
                     alert('Error: ' + response.statusText);

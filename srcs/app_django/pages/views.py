@@ -76,7 +76,7 @@ def pong(request, session_id):
     if is_ajax(request):
         return render(request, 'partials/pong.html', context)
     else:
-        return render(request, 'index.html', {'partial_template': 'partials/pong.html', 'context': context})
+        return render(request, 'base.html',{'context': context})
 
 # IA game page
 def pongIA(request, session_id):
@@ -84,16 +84,18 @@ def pongIA(request, session_id):
     if is_ajax(request):
         return render(request, 'partials/pongIA.html', context)
     else:
-        return render(request, 'index.html', {'partial_template': 'pages/partials/pongIA.html', 'context': session_id})
+        return render(request, 'base.html', {'context': session_id})
 
 # Tournament page
 def tournament(request, tournament_id):
     tournament = Tournament.objects.get(id=tournament_id)
     context = {'tournament': tournament}
     if is_ajax(request):
+        print("IS AJAX")
         return render(request, 'partials/tournamentPage.html', context)
     else:
-        return render(request, 'index.html', {'partial_template': 'partials/tournamentPage.html', 'context': context})
+        print("IS NOT AJAX")
+        return render(request, 'base.html', {'partial_template': 'partials/tournamentPage.html', 'context': context})
 
 # Game menu
 def menuPong(request):

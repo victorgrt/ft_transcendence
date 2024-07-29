@@ -99,6 +99,7 @@ def send_play_request (request):
         session_id = str(uuid.uuid4())
         game_session = GameSession.objects.create(player1=from_username, player2=to_username, session_id=session_id, state='{}')
     except Exception as e:
+        print("HERE BRO")
         return JsonResponse({'error': 'Failed to create game session'}, status=500)
     print ('Game session created')
     # If successful, send a notification to the recipient

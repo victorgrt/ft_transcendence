@@ -113,7 +113,7 @@ function onMouseMove(event) {
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
             if ((intersect.object.name === 'GameScreen_Plane' || intersect.object.name === 'computerScreen_2_1' || intersect.object.name === 'lampSquareFloor_2') && isZooming === false) {
-                console.log("HERE:", intersect.object);
+                // console.log("HERE:", intersect.object);
                 selected_object_name = intersect.object.name;
                 return intersect.object.name;
             }

@@ -35,7 +35,7 @@ const page_scripts = {
 }
 
 function loadContent(url, pushState = true) {
-    console.log(url)
+    console.warn(" LOADIG CONTENT BOY")
     if (url == '/')
         url = ""
 
