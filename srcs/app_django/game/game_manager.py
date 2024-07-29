@@ -34,6 +34,7 @@ class Game:
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.move_1 = 0
         self.move_2 = 0
+        self.obj_2 = 0
         self.player_1_position_z = 3.5
         self.player_2_position_z = -3.5
         self.player_1_score = 0
@@ -79,7 +80,7 @@ class Game:
         self.nb_players = 2
         self.mode = 2
 
-    def movePaddle(self, game_id, player, direction) :
+    def movePaddle(self, game_id, player, direction, coord) :
         if player == 1 :
             if direction == 'left' and self.player_1_position > -2.5 :
                 self.move_1 = -1
@@ -88,17 +89,22 @@ class Game:
             elif direction == 'null':
                 self.move_1 = 0
         elif player == 2 :
-            print("Actual game state is : \nBallNextBounce : ", self.ballNextBounce, "    Ball position is : ", self.ball_position)
-            print("Player position is : ", self.player_2_position)
-            if direction == 'left' and self.player_2_position > -2.5 :
-                print("Player 2 want to go left")
-                self.move_2 = -1
-            elif direction == 'right' and self.player_2_position < 2.5 :
-                print("Player 2 want to go right")
-                self.move_2 = 1
-            elif direction == 'null':
-                print("Player 2 want to be static")
-                self.move_2 = 0
+            if (coord) :
+                if direction == 'left' and self.player_2_position > -2.5 :
+                    self.move_2 = -1
+                    self.obj_2 = coord
+                elif direction == 'right' and self.player_2_position < 2.5 :
+                    self.move_2 = 1
+                    self.obj_2 = coord
+                elif direction == 'null':
+                    self.move_2 = 0
+            else :
+                if direction == 'left' and self.player_2_position > -2.5 :
+                    self.move_2 = -1
+                elif direction == 'right' and self.player_2_position < 2.5 :
+                    self.move_2 = 1
+                elif direction == 'null':
+                    self.move_2 = 0
 
     def update(self):
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
@@ -130,6 +136,7 @@ class Game:
 
             return
         if self.state == "playing":
+
             if (self.player_1_position > 2.3 and self.player_1_position < 2.3) or (self.player_1_position < -2.3 and self.player_1_position > -2.3) :
                 self.move_1 = 0
             if (self.move_1 != 0):
@@ -138,6 +145,8 @@ class Game:
                 elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
             # if (self.player_2_position > 2.3 and self.player_2_position < 2.3) or (self.player_2_position < -2.3 and self.player_2_position > -2.3) :
+            if (self.obj_2 == self.player_2_position) :
+                self.move_2 = 0
             if(self.move_2 != 0):
                 if (self.move_2 > 0 and self.player_2_position < 2.4):
                     self.player_2_position -= self.paddleSpeed
@@ -166,7 +175,6 @@ class Game:
                 self.ball_velocity[1] *= 1.1
                 self.defineNextBounce(self.ball_position[0], self.ball_position[1])
             if(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.6 and (self.ball_position[0] >= self.player_2_position - 0.4 and self.ball_position[0] <= self.player_2_position + 0.4)) :
-                print("HIT PADDLE")
                 self.dy = -self.dy
                 # self.ball_position[1] = self.player_2_position_z + 0.1
                 self.ball_velocity[1] = -self.ball_velocity[1]
@@ -281,10 +289,10 @@ class GameManager:
             if game_id in self.games:
                 del self.games[game_id]
 
-    def handle_paddle_move(self, game_id, player, direction) :
+    def handle_paddle_move(self, game_id, player, direction, coord) :
         with self.lock :
             game = self.get_game(game_id)
-            game.movePaddle(game_id, player, direction)
+            game.movePaddle(game_id, player, direction, coord)
 
     def IAMode(self, game_id) :
         with self.lock :
@@ -298,8 +306,8 @@ class GameManager:
                     game.update()
             elapsed = time.time() - start_time
             sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
-            # time.sleep(sleep_time)
-            time.sleep(0.1)
+            time.sleep(sleep_time)
+            # time.sleep(0.05)
 
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)

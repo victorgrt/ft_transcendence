@@ -90,15 +90,15 @@ function launchGameIA()
     function sendPaddleMovement(state)
     {
         if (state == "up")
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'null' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'null', coord : 0 }));
         if ('a' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left', coord : 0 }));
         else if ('d' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right', coord : 0 }));
         else if ('ArrowLeft' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left', coord : 0 }));
         else if ('ArrowRight' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right' }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right', coord : 0 }));
     }
 
     function handleIAMove()
@@ -108,39 +108,26 @@ function launchGameIA()
         {
             if (gamedata.game_state.ballNextBounce[1] <= 0)
             {
-                if (printeur == 0)
+                if (gamedata.game_state.ballNextBounce[1] <= -2.4)
                 {
-                    console.log("Ball Next Bounce : ", gamedata.game_state.ballNextBounce)
-                    console.log("Player 2 : ", gamedata.game_state.player_2_position)
-                    printeur = 1
+                    obj = gamedata.game_state.player_2_position - gamedata.game_state.ballNextBounce[0];
+                    if (obj >= -0.2 && obj <= 0.2)
+                        socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null', coord : 0}));
+                    else if (obj < -0.2)
+                        socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left', coord: gamedata.game_state.ballNextBounce[0]}));
+                    else if (obj > 0.2)
+                        socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right', coord: gamedata.game_state.ballNextBounce[0]}));
                 }
-                // console.log("NULL test : ", gamedata.game_state.ballNextBounce[0] <= gamedata.game_state.player_2_position + 0.2 && gamedata.game_state.ballNextBounce[0] >= gamedata.game_state.player_2_position - 0.2);
-                // console.log("Left test : ", gamedata.game_state.ballNextBounce[0] > gamedata.game_state.player_2_position + 0.2, " so ", gamedata.game_state.ballNextBounce[0], " is bigger than ", gamedata.game_state.player_2_position + 0.2);
-                // console.log("Right test : ", gamedata.game_state.ballNextBounce[0] < gamedata.game_state.player_2_position - 0.2, " so ", gamedata.game_state.ballNextBounce[0], " is less than ", gamedata.game_state.player_2_position - 0.2);
-                // console.log("Ball next Bounce : ", gamedata.game_state.ballNextBounce);
-                // console.log("player2 = [", gamedata.game_state.player_2_position - 0.2, " ; ", gamedata.game_state.player_2_position + 0.2, "]");
-                obj = gamedata.game_state.player_2_position - gamedata.game_state.ballNextBounce[0];
-                console.log("Obj is  : ", obj);
-                if (obj > -0.4 && obj < 0.4)
-                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null'}));
-                if (obj > -0.4)
-                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right'}));
-                else if (obj < 0.4)
-                    socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left'}));
-                // if (gamedata.game_state.ballNextBounce[0] <= gamedata.game_state.player_2_position + 0.2 && gamedata.game_state.ballNextBounce[0] >= gamedata.game_state.player_2_position - 0.2)
-                //     socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null'}));
-                // else if (gamedata.game_state.ballNextBounce[0] - 0.2 < gamedata.game_state.player_2_position)
-                //     socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right'}));
-                // // else if ((gamedata.game_state.player_2_position < 0) && gamedata.game_state.ballNextBounce[0] + 0.2 > (gamedata.game_state.player_2_position * -1))
-                // else if ((gamedata.game_state.player_2_position < 0) && gamedata.game_state.ballNextBounce[0] + 0.2 > (gamedata.game_state.player_2_position * -1))
-                // socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left'}));
             }
-            else if (gamedata.game_state.ball_velocity[1] > 0 && gamedata.game_state.player_2_position > 0)
-                socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right'}));
-            else if (gamedata.game_state.ball_velocity[1] > 0 && gamedata.game_state.player_2_position < 0)
-                socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left'}));
             else
-                socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null'}));
+            {
+                if (gamedata.game_state.player_2_position < 0.2 && gamedata.game_state.player_2_position > -0.2)
+                    socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'null', coord : 0}));
+                else if (gamedata.game_state.player_2_position > 0)
+                    socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'right', coord : 0}));
+                else if (gamedata.game_state.player_2_position < 0)
+                    socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'left', coord : 0}));
+            }
 
         }
     }
