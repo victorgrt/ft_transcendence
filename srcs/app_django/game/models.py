@@ -51,3 +51,16 @@ class Tournament(models.Model):
     players = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='tournaments_played')
     created_at = models.DateTimeField(default=timezone.now)
     state = models.TextField(default='waiting')
+
+
+class TournamentRanking(models.Model):
+    tournament = models.ForeignKey(Tournament, on_delete=models.CASCADE, related_name='rankings')
+    player = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='tournament_rankings')
+    rank = models.IntegerField()
+
+    class Meta:
+        unique_together = ('tournament', 'player')
+        ordering = ['rank']
+
+    def __str__(self):
+        return f"{self.tournament.name} - {self.player.username}: Rank {self.rank}"

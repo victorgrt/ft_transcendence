@@ -59,12 +59,19 @@ def scene(request):
     return render(request, 'index.html')
 
 # game page
+
 def pong(request, session_id):
-    context = {'session_id': session_id}
-    if is_ajax(request):
+    # Fetch the GameSession instance using the provided session_id
+    game_session = GameSession.objects.get(session_id=session_id)
+    
+    # Prepare the context with the game_session object
+    context = {'game_session': game_session}
+    
+    # Render the template with the context
+    if request.is_ajax():
         return render(request, 'partials/pong.html', context)
     else:
-        return render(request, 'index.html', {'partial_template': 'partials/pong.html', 'context': session_id})
+        return render(request, 'index.html', {'partial_template': 'partials/pong.html', 'context': context})
 
 # IA game page
 def pongIA(request, session_id):

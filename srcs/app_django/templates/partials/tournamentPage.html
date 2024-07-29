@@ -16,20 +16,26 @@
     <div id="semi-finals-games">
         <div>Semi-Finals Games</div>
         {% for game in tournament.semi_final_games.all %}
-            <div class="game">
-                <div>{{game.session_id}}</div>
-                <span class="player1">{{game.player1}}</span> vs <span class="player2">{{game.player2}}</span>
-                <a class="go_button" href="/pong/{{ game.session_id }}/">GO</a>
-                <div class="game_winner">
-                    Winner: 
-                    <span>
-                        {% if game.matches.first and game.matches.first.winner %}
-                            {{game.matches.first.winner.username}}
-                        {% else %}
-                            TBD
-                        {% endif %}
-                    </span></div>
-            </div>
+            {% include 'partials/gameElement.html' %}
         {% endfor %}
     </div>
+
+    <div id="final-game">
+        <div>Final Game</div>
+        {% if tournament.final_game %}
+            {% with game=tournament.final_game %}
+                {% include 'partials/gameElement.html' %}
+            {% endwith %}
+        {% endif %}
+    </div>
+
+    <div id="small-final-game">
+        <div>Small Final Game</div>
+        {% if tournament.small_final_game %}
+            {% with game=tournament.small_final_game %}
+                {% include 'partials/gameElement.html' %}
+            {% endwith %}
+        {% endif %}
+    </div>  
+
 </div>

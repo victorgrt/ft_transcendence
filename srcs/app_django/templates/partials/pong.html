@@ -5,6 +5,12 @@
 	<div id="score" style="position: absolute; top: 50px; left: 50%; transform: translateX(-50%); font-size: 80px; color: white;"></div>
 	<div id="footer">
         <button id="leaveGameButton" onclick=leaveGame() src="{% static 'pages/js/pong.js' %}">> Leave Game <</button>
-    </div>
+		{% if game_session.tournament_id %}
+			<!-- Display content related to the tournament_id -->
+			<a href="/tournament/{{ game_session.tournament_id }}/">
+				Back to Tournament
+			</a>
+		{% endif %}
+	</div>
 
 </div>

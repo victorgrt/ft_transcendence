@@ -41,6 +41,59 @@ def add_semi_final_game(tournament_id, game):
         print(connection.queries)
         connection.close()  # Ensure the connection is closed even if an error occurs
 
+def add_final_game(tournament_id, game):
+    try:
+        tournament = Tournament.objects.get(id=tournament_id)
+        tournament.final_game = game
+        tournament.save()
+        connection.close()  # Close the connection explicitly
+        return game
+    except:
+        print("Error adding final game")
+        print(connection.queries)
+        connection.close()  # Ensure the connection is closed even if an error occurs
+
+def add_small_final_game(tournament_id, game):
+    try:
+        tournament = Tournament.objects.get(id=tournament_id)
+        tournament.small_final_game = game
+        tournament.save()
+        connection.close()  # Close the connection explicitly
+        return game
+    except:
+        print("Error adding small final game")
+        print(connection.queries)
+        connection.close()  # Ensure the connection is closed even if an error occurs
+
+def create_or_update_rankings(tournament_id, player, rank):
+    try:
+        
+        connection.close()
+    except Exception as e:
+        print(f"Error creating/updating rankings: {e}")
+        connection.close()
+
+def create_or_update_rankings(tournament_id, player, rank):
+    try:
+        # Start a database transaction
+        with transaction.atomic():
+            # Fetch the tournament instance
+            tournament = Tournament.objects.get(id=tournament_id)
+            
+            # Update existing ranking or create a new one
+            ranking, created = TournamentRanking.objects.update_or_create(
+                tournament=tournament,
+                player=player,
+                defaults={'rank': rank},
+            )
+            
+            if created:
+                print(f"Created new ranking for player {player.username} in tournament {tournament.name}")
+            else:
+                print(f"Updated ranking for player {player.username} in tournament {tournament.name}")
+    except Exception as e:
+        print(f"Error creating/updating rankings: {e}") 
+
 
 class TournamentManager:
     def __init__(self, tournament_id):
@@ -49,9 +102,6 @@ class TournamentManager:
         self.players = []
         self.consumers = []
         self.all_games = []
-        self.semi_finals_games = []
-        self.final_game = None
-        self.small_final_game = None
         self.nb_players = 0
         self.state = "waiting" # semi_finals, finals, finished
 
@@ -75,7 +125,7 @@ class TournamentManager:
         # print(f"Updating tournament {self.tournament_id} in state {self.state}")
         if self.state == "waiting":
             if self.nb_players == 4:
-                self.start_semi_finals()
+                self.setup_semi_finals()
         if self.state == "semi_finals":
             self.update_semi_finals()
         elif self.state == "finals":
@@ -93,7 +143,7 @@ class TournamentManager:
         self.all_games.append(game)
         return game;
     
-    def start_semi_finals(self):
+    def setup_semi_finals(self):
         # Create two games for the semi finals
         semi_final_game1 = create_game_session_in_thread(self.players[0], self.players[1], self.tournament_id)
         semi_final_game2 = create_game_session_in_thread(self.players[2], self.players[3], self.tournament_id)
@@ -114,17 +164,59 @@ class TournamentManager:
         # Set the tournament state to semi_finals
         self.state = "semi_finals"
 
-    def start_finals(self):
-        print("Starting finals")
+    def setup_finals(self):
+        print("Setup finals")
+
+        # Create the final game
+        winner1 = self.all_games[0]["winner"]
+        winner2 = self.all_games[1]["winner"]
+        self.final_game = create_game_session_in_thread(winner1, winner2, self.tournament_id)
+
+        # Create the small final game
+        loser1 = self.all_games[0]["loser"]
+        loser2 = self.all_games[1]["loser"]
+        self.small_final_game = create_game_session_in_thread(loser1, loser2, self.tournament_id)
+
+        # Create the tracking game items 
+        final_game_item = self.create_game_item(self.final_game.session_id)
+        small_final_game_item = self.create_game_item(self.small_final_game.session_id)
+
+        # Add the games to the tournament
+        add_final_game(self.tournament_id, self.final_game)
+        add_small_final_game(self.tournament_id, self.small_final_game)
+
+        # Set the tournament state to finals
+        self.state = "finals"
 
     def update_semi_finals(self):
         # If game 1 and game 2 are finished, start the finals
         if self.all_games[0]["finished"] and self.all_games[1]["finished"]:
-            self.start_finals()
+            self.setup_finals()
+    
+    def update_finals(self):
+        # If the finals are finished, close the tournament
+        if self.all_games[2]["finished"] and self.all_games[3]["finished"]:
+            self.finish_tournament()
+            self.state = "finished"
+
+    def finish_tournament(self):
+        print(f"Tournament {self.tournament_id} finished")
+
+        # Set the ranks 
+        # 1st : winner of the finals
+        # 2nd : loser of the finals
+        # 3rd : winner of the small finals
+        # 4th : loser of the small finals
+        create_or_update_rankings(self.tournament_id, self.all_games[2]["winner"], 1)
+        create_or_update_rankings(self.tournament_id, self.all_games[2]["loser"], 2)
+        create_or_update_rankings(self.tournament_id, self.all_games[3]["winner"], 3)
+        create_or_update_rankings(self.tournament_id, self.all_games[3]["loser"], 4)
+
+        # TODO : close tournament gracefully
         
     
     # TODO WARNING : should be protected by a lock
-    def set_game_result(self, game_id, winner_id, loser_id):
+    def set_game_result(self, game_id, winner, loser):
         print(f"Tournament manager received game result")
         # Find the games array
         game = next((game for game in self.all_games if game["game_id"] == game_id), None)
@@ -136,7 +228,7 @@ class TournamentManager:
 
         # Update the game result
         game["finished"] = True
-        game["winner"] = winner_id
-        game["loser"] = loser_id
+        game["winner"] = winner
+        game["loser"] = loser
 
-        print(f"Tournament manager acknowledged : Game {game_id} finished. Winner : {winner_id}, Loser : {loser_id}")
+        print(f"Tournament manager acknowledged : Game {game_id} finished. Winner : {winner.username}, Loser : {loser.username}")

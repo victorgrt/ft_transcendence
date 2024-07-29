@@ -104,9 +104,9 @@ class Game:
 
     def update(self):
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
-            winner = self.players[0].id if self.player_1_score == 3 else self.players[1].id
-            loser = self.players[0].id if self.player_1_score != 3 else self.players[1].id
-            self.state = winner
+            winner = self.players[0] if self.player_1_score == 3 else self.players[1]
+            loser = self.players[0]  if self.player_1_score != 3 else self.players[1]
+            self.state = winner.id
             # Send game over message
             print("Sending game over message to group %s" % self.game_id)
             async_to_sync(get_channel_layer().group_send)(
@@ -114,7 +114,7 @@ class Game:
                 {
                     'type': 'game_over',
                     'message': {
-                        'winner': winner
+                        'winner': winner.id
                     }
                 }
             )
@@ -127,7 +127,7 @@ class Game:
                 'player_2_id': self.players[1].id,
                 'player_1_score': self.player_1_score,
                 'player_2_score': self.player_2_score,
-                'winner_id': winner,
+                'winner_id': winner.id
             })
 
             print("Game over : %s" % self.game_id)
