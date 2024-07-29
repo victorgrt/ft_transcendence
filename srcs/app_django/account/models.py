@@ -54,6 +54,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 	email = models.EmailField(unique=True)
 	avatar = models.ImageField(upload_to='pages/static/pages/img_avatars', blank=True, null=True)
 	is_active = models.BooleanField(default=True)
+	is_online = models.BooleanField(default=False)
 	is_staff = models.BooleanField(default=False)  # Add this field
 	register_date = models.DateTimeField(default=timezone.now)
 	last_login = models.DateTimeField(default=timezone.now)

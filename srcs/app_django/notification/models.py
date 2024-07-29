@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from account.models import CustomUser
+import uuid
 
 # 1. 👇 Add the following line
 # class Notification(models.Model):
@@ -20,6 +21,7 @@ class Notification(models.Model):
     type_of_notification = models.CharField(max_length=100, default="default")
     message = models.CharField(max_length=255)
     read = models.BooleanField(default=False)
+    notification_id = models.CharField(max_length=255, default="default")
 
     def __str__(self):
         return f'From {self.from_user_username} to {self.to_user.username}: {self.message}'

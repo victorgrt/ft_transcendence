@@ -18,6 +18,7 @@ urlpatterns = [
   # notification
 	path('notification/', include("notification.urls")),
 
+
   # notifs
   path('send-notification/', send_notification, name='send_notification'),
   path('accept-friend-request/', accept_friend_request),

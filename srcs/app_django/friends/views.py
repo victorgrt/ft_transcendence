@@ -2,8 +2,11 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from account.models import CustomUser
+from notification.models import Notification
 from notification.services.notification_services import send_notification_service
 import json
+from django.http import JsonResponse
+
 
 # Create your views here.
 def is_friend(request):
@@ -30,11 +33,40 @@ def send_friend_request(request):
 		from_username = request.user.username
 		to_user = CustomUser.objects.get(username=to_username)
 		from_user = CustomUser.objects.get(username=from_username)
+  
 		if not to_user or not from_user:
 			return JsonResponse({'error': 'user not found'}, status=404)
 		# test = None
 		# If successful, send a notification to the recipient
-		send_notification_service('friend', to_user, from_user, "friend request recieved")
+		send_notification_service('friend', to_user, from_user, "friend request received")
 		print('Friend Notification sent')
 	# Last, return the session_id
 	return JsonResponse({'success': True}, status=200)
+
+@csrf_exempt
+def accept_friend_request(request):
+    try:
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            notification_data = data.get('data', {})
+            print('NOTIF FRIEND:', notification_data)
+            
+            from_user_username = notification_data.get('from_user')
+            notification_id = notification_data.get('notification_id')
+            
+            from_user = CustomUser.objects.get(username=from_user_username)
+            to_user = request.user
+            
+            from_user.friends.add(to_user)
+            to_user.friends.add(from_user)
+            
+            Notification.objects.get(notification_id=notification_id).delete()
+            print(from_user.friends.all())
+            print("WE GOT HERE")
+            return JsonResponse({'success': True})
+    except CustomUser.DoesNotExist:
+        return JsonResponse({'message': 'User does not exist!'}, status=404)
+    except Notification.DoesNotExist:
+        return JsonResponse({'message': 'Friend request does not exist!'}, status=404)
+    except Exception as e:
+        return JsonResponse({'message': str(e)}, status=500)

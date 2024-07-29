@@ -55,4 +55,5 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             'notification_type': notification_type,
             'from_user': from_user,
             'data': data,
+            'notification_id': event['notification_id']
         }))

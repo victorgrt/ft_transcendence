@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	// Stores the id of the listened button
 	const element = document.getElementById('logoutButton');
     if (element) {
-		// The function is triggered when the button is clicked
+	// The function is triggered when the button is clicked
         element.addEventListener('click', function () {
             // Fetch API
 				// Sends a request to the backend
@@ -28,9 +28,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 if (data.success) {
 					console.log("LOGOUT SUCCES");
                     // Handle successful logout
+					isZooming = false;
+					isZoomed = false;
                     alert(data.message);
-                    // window.location.href = '/'; // Reload the page or update the UI as needed
-					updateUIForLogout();
+                    window.location.href = '/'; // Reload the page or update the UI as needed
+					// updateUIForLogout();
                 } else {
                     // Handle failure
 					console.log("LOGOUT FAIL");

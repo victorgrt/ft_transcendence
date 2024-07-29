@@ -8,8 +8,8 @@ var paramsVisible = false;
 var statsVisible = false;
 var friendsVisible = false;
 
-let isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom;
-let isZooming = false;
+var isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom;
+var isZooming = false;
 
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
@@ -216,7 +216,7 @@ function showHideElement(element)
 	if (element.style.visibility === 'visible')
 	{	
 		element.style.visibility = 'hidden';
-			element.style.opacity = '0';
+		element.style.opacity = '0';
 	}
 	else
 	{	
@@ -378,7 +378,7 @@ function showNotifs()
 }
 
 // HANDLE NOTIFICATIONS
-function acceptNotif(data){
+async function acceptNotif(data){
 
     console.log("Accepting notif:", data);
     if (data.notification_type === 'play')
@@ -394,32 +394,71 @@ function acceptNotif(data){
         element.remove();
         return ;
     }
-    else if (value === 'friend')
+    else if (data.notification_type === 'friend')
     {
         console.log("FRIEND");
+		console.log("data:", data);
         //logique de ajouter en amis
-        var notificationId = obj.className;  // Adapter selon votre implémentation
-        let test = parseInt(notificationId);
-        // Envoyer une requête Ajax pour informer le serveur que l'invitation est acceptée
-        $.ajax({
-            url: '/accept-friend-request/',  // URL de votre vue Django pour accepter une demande d'ami
-            type: 'POST',
-            data: {
-                notification_id: test  // ID de la notification à accepter
-            },
-            success: function(response) {
-                if (response.status === 'success') {
-                    // Gérer la réponse si nécessaire
-                    console.log('Friend request accepted successfully');
-                } else {
-                    // Gérer les erreurs ou autres cas
-                    console.error('Error accepting friend request:', response.message);
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error:', error);
-            }
-        });
+        try {
+			const raw_data = await fetch(`friends/accept_friend_request/`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify({
+                'data': data
+            	})
+			});
+			const received_data = await raw_data.json();
+			if (received_data.success) {
+				console.log("User data:", received_data);
+				console.log("Data successfuly returned from backend");
+				// Update the friends list in the DOM
+				// const friendsList = document.getElementById('friends_list');
+				// const friendBox = document.createElement('div');
+				// friendBox.className = 'friend_box';
+	
+				// const statusCircle = document.createElement('div');
+				// statusCircle.className = 'status_circle';
+				// statusCircle.style.backgroundColor = received_data.friend.is_active ? 'green' : 'red';
+	
+				// // const avatarImg = document.createElement('img');
+				// // avatarImg.src = `/static/pages/img_avatars/${received_data.friend.get_avatar_name}`;
+	
+				// const friendUsername = document.createElement('p');
+				// friendUsername.textContent = received_data.friend.username;
+	
+				// const friendButtons = document.createElement('div');
+				// friendButtons.className = 'friend_buttons';
+	
+				// const viewProfileButton = document.createElement('button');
+				// viewProfileButton.className = 'friend_button1';
+				// viewProfileButton.textContent = 'View Profile';
+				// // viewProfileButton.onclick = () => {
+				// //    location.href = `/profile/${received_data.friend.username}`;
+				// // };
+	
+				// friendButtons.appendChild(viewProfileButton);
+	
+				// friendBox.appendChild(statusCircle);
+				// friendBox.appendChild(avatarImg);
+				// friendBox.appendChild(friendUsername);
+				// friendBox.appendChild(friendButtons);
+	
+				// friendsList.appendChild(friendBox);
+				console.log("APPENED EVERYTHING")
+				return received_data; 
+			} else {
+				console.log(data.message);
+				return null; // Return null or handle error
+			}
+	
+		}
+		catch (error) {
+			console.error('Error:', error);
+			return null; // Return null or handle error
+		}
+
         //delete notif
         var id_to_delete = obj.className;
         var element = document.getElementById(id_to_delete);
@@ -564,9 +603,11 @@ function handleNotification(data)
     var type = "default";
     if (data.message === "play with")
         type = "play";
-    else if (data.message === "friend")
-        type = "friend"
-      
+    else if (data.notification_type === "friend")
+	{
+		console.log("HERERERE");
+		type = "friend"
+	}  
     showToast(data);
 
     // Create table row

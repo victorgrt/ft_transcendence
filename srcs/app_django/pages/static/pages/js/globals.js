@@ -10,6 +10,7 @@ const statsDiv = document.getElementById("user_stats");
 const matchHistoryDiv = document.getElementById("match_history");
 const GHDiv = document.getElementById("game_history");
 const friendsDiv = document.getElementById("friends");
+const notifDiv = document.getElementById("notif");
 const paramsDiv = document.getElementById("change_prof");
 const menuPongDiv = document.getElementById("menuPongDiv");
 const notifsDiv = document.getElementById("notifications");

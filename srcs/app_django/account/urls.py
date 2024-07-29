@@ -16,6 +16,6 @@ urlpatterns = [
   path("get_user_data/", get_user_data),
   path("user_avatar/", user_avatar, name='user_avatar'),
   path("search_friend/", user_avatar, name='user_avatar'),
-  path("accept_friend_request/<int:userID>/", accept_friend_request, name='accept_friend_request'),
+#   path("accept_friend_request/<int:userID>/", accept_friend_request, name='accept_friend_request'),
 #   path("send_friend_request/", send_friend_request, name='send_friend_request'),
 ]

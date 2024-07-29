@@ -95,7 +95,9 @@ def login(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
 
-    print(username)
+    print("USERNAME:", username)
+    print("PASSWORD:", password)
+ 
     if username and password:
         print(f"Attempting to authenticate user: {username}")
         # Authenticate user
@@ -106,6 +108,8 @@ def login(request):
             django_login(request, user)
             # set user-specific data in the session
             request.session['username'] = username
+            user.is_online = True
+            user.save()
             request.session.save()
             return JsonResponse({"message": "Successfully logged in."}, status=200)
             # print("After login")
@@ -164,19 +168,21 @@ def user_avatar(request):
 	# else:
 	# 	return HttpResponse("Friend request already sent")
 
-@login_required
-def accept_friend_request(request, requestID):
-	friend_request = FriendRequest.objects.get(id=requestID)
-	if friend_request == FriendRequest.objects.get(id=requestID):
-		friend_request.to_user.friends.add(FriendRequest.from_user)
-		friend_request.from_user.friends.add(FriendRequest.to_user)
-		friend_request.delete()
-		return HttpResponse('Friend request accepted')
-	else:
-		return HttpResponse('Friend request not accepted')
+# @login_required
+# def accept_friend_request(request, requestID):
+# 	friend_request = FriendRequest.objects.get(id=requestID)
+# 	if friend_request == FriendRequest.objects.get(id=requestID):
+# 		friend_request.to_user.friends.add(FriendRequest.from_user)
+# 		friend_request.from_user.friends.add(FriendRequest.to_user)
+# 		friend_request.delete()
+# 		return HttpResponse('Friend request accepted')
+# 	else:
+# 		return HttpResponse('Friend request not accepted')
 
 def logout(request):
 	print('IN LOGOUT')
+	request.user.is_online = False
+	request.user.save()
 	django_logout(request)
 	Session.objects.filter(session_key=request.session.session_key).delete()
 	return JsonResponse({'success': True, 'message': 'Logged out successfully'})

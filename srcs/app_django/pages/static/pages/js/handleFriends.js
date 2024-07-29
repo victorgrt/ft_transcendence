@@ -29,17 +29,6 @@ async function handleInput(event)
 			displayResultBox(inputValue);
 			toUser = inputValue;
 			console.log("got after");
-			// if (isFriend(inputValue))
-			// {
-			// 	console.log("Friend exists");
-			// 	displayFriendBox(inputValue);
-			// 	return;
-			// }
-			// else
-			// {
-			// 	displayUserBox(inputValue);
-			// 	return;
-			// }
 		}
 		else 
 		{
@@ -48,12 +37,9 @@ async function handleInput(event)
 			searchFriendError.style.visibility = 'visible';
 			resultBox.style.visibility = 'hidden';
 			addButton.style.visibility = 'hidden';
-			// resultAvatar.src = '{{% static \'pages/img_avatars/\' %}}';
 			return;		
 		}
 	}
-	// console.log("got out directement");
-	//hide result box
 }
 
 

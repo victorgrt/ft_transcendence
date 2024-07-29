@@ -11,23 +11,28 @@
 		<button class="friend_list_button" id="challenge_button">Challenge</button>
 		<button class="add_button" id="add_button" onclick="sendFriendRequest()">+</button> <!-- Added the + icon here -->
 	</div>
-
 	<div class="friends_list" id="friends_list">
-		{% for user.friends in friends %}
-		<div class="friend_box" id="friend_box">
-			{% if user.friends.is_active %}
-				<div class="status_circle" style="background-color: green;"></div>
-			{% else %}
-				<div class="status_circle" style="background-color: red;"></div>
-			{% endif %}
-			<img src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}">
-			<p>{{ user.friend.username }}</p>
-			</div>
-			<div class="friend_buttons">
-					<button class="friend_button1" id="" onclick="location.href='{% url 'profile' friend.username %}'">View Profile</button>
-					<button class="friend_button2"> 
+		{% if user.friends.all %}
+			<p>Friends count: {{ user.friends.count }}</p>
+			{% for friend in user.friends.all %}
+			<div class="friend_box" id="friend_box">
+				{% if friend.is_online %}
+					<div class="status_circle" style="background-color: green;"></div>
+				{% else %}
+					<div class="status_circle" style="background-color: red;"></div>
+				{% endif %}
+				<img src="{% static 'pages/img_avatars/' %}{{ friend.get_avatar_name }}">
+				<p>{{ friend.username }}</p>
+				<div class="friend_buttons">
+					{% comment %} <button class="friend_button1" onclick="location.href='{% url 'profile' friend.username %}'">View Profile</button> {% endcomment %}
+					<button class="friend_button2">Another Action</button>
 				</div>
 			</div>
-		{% endfor %}
+			{% endfor %}
+		{% else %}
+			<p>No friends to display</p>
+		{% endif %}
+	</div>
+	
 		<div id="search_friend_error"></div>
 </div>
