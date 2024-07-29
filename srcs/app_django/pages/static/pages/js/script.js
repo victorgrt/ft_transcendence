@@ -14,6 +14,7 @@ function loadHome(){
 	goBackButton = document.getElementById("footer");
 	header = document.getElementById("header");
 	handleLoginForm();
+	handleRegisterForm();
 	console.log("here:", loginForm);
 }
 

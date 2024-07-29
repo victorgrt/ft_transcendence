@@ -1,17 +1,18 @@
 .friends_container
 {
-  visibility: hidden;
-  opacity: 0;
-  position:absolute;
-  width:400px;
-  right: 5%;
-  height: 70%;
+	visibility: hidden;
+	opacity: 0;
+	position:absolute;
+	width:400px;
+	right: 5%;
+	height: 70%;
 	border: 2px solid rgba(40, 40, 40, 1);
 	color: white;
 	background-color: rgba(24, 24, 24, 1);
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+	overflow: scroll;
 }
 
 
@@ -64,9 +65,9 @@
 }
 
 .avatar {
-	width: 20%; /* Width of the avatar */
-    border-radius: 30%; /* Make the avatar circular */
-    object-fit: cover; /* Ensures image covers the circle */
+	width: 30%; /* Width of the avatar */
+    /* border-radius: 30%; Make the avatar circular */
+    /* object-fit: cover;  */
 }
 
 .friend_box {
@@ -86,4 +87,9 @@
 .friend_list_button{
 	margin-right: 0;
 	margin-left: 0;
+}
+
+#friend_avatar{
+	width: 20%;
+	border-radius: 30%;
 }

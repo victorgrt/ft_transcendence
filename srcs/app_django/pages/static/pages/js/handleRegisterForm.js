@@ -1,4 +1,8 @@
-document.addEventListener('DOMContentLoaded', function ()
+document.addEventListener('DOMContentLoaded', handleRegisterForm);
+ocument.getElementById('content').addEventListener('DOMContentLoaded', handleRegisterForm);
+
+
+function handleRegisterForm()
 {
 	const form = document.getElementById('registerForm')
 	const registerError = document.getElementById('registerError');
@@ -37,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function ()
 
 		});
 	}
-});
+}
 
 function getCookie(name) {
     let cookieValue = null;

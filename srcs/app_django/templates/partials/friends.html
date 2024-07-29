@@ -21,7 +21,7 @@
 				{% else %}
 					<div class="status_circle" style="background-color: red;"></div>
 				{% endif %}
-				<img src="{% static 'pages/img_avatars/' %}{{ friend.get_avatar_name }}">
+				<img id="friend_avatar" src="{% static 'pages/img_avatars/' %}{{ friend.get_avatar_name }}">
 				<p>{{ friend.username }}</p>
 				<div class="friend_buttons">
 					{% comment %} <button class="friend_button1" onclick="location.href='{% url 'profile' friend.username %}'">View Profile</button> {% endcomment %}
