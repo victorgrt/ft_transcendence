@@ -1,10 +1,10 @@
 
 // ------------ DOM ELEMENTS ---------
 
-const loginForm = document.getElementsByClassName("login_form")[0];
-const registerForm = document.getElementsByClassName("register_form")[0];
-const goBackButton = document.getElementById("footer");
-const header = document.getElementById("header");
+var loginForm = document.getElementsByClassName("login_form")[0];
+var registerForm = document.getElementsByClassName("register_form")[0];
+var goBackButton = document.getElementById("footer");
+var header = document.getElementById("header");
 const contentdiv = document.getElementById("content");
 const statsDiv = document.getElementById("user_stats");
 const matchHistoryDiv = document.getElementById("match_history");
@@ -26,7 +26,7 @@ const friendsList = document.getElementById("friends_list");
 const searchFriendError = document.getElementById('search_friend_error');
 const addButton = document.getElementById('add_button');
 var compteur_notifs = document.getElementById("nb_notifs").textContent;
-const baseSrc = document.getElementById("result_avatar").src;
+const baseSrc = document.getElementById("result_avatar")?.src;
 
 // ------------ GAME VARIABLES ---------
 var socket;

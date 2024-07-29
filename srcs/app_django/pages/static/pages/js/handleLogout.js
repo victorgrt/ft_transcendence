@@ -30,8 +30,9 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Handle successful logout
 					isZooming = false;
 					isZoomed = false;
-                    alert(data.message);
-                    window.location.href = '/'; // Reload the page or update the UI as needed
+					loadContent('/');
+                    // alert(data.message);
+                    // window.location.href = '/'; // Reload the page or update the UI as needed
 					// updateUIForLogout();
                 } else {
                     // Handle failure

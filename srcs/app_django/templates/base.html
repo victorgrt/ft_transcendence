@@ -19,18 +19,19 @@
 
 <body>
     <!-- HEADER -->
-    {% include 'partials/header.html' %}
+    {% comment %} {% include 'partials/header.html' %} {% endcomment %}
 
     <!-- CONTENT -->
     <div id="content">
-        {% block content %}{% endblock %}
+        {% include 'index.html' %}
     </div>
+
+    <!-- FOOTER -->
+    {% include 'partials/footer.html' %}
 
     <!-- 3D LOBBY SCENE -->
     <div id="scene"/>
 
-    <!-- FOOTER -->
-    {% include 'partials/footer.html' %}
     
     <!-- Include common scripts -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

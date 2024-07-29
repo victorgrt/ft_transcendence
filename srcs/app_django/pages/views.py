@@ -45,15 +45,20 @@ def get_user_match_history(user):
 
 # starting_page
 def starting_page(request):
-    if request.user.is_authenticated:
-        print(f"Authenticated user: {request.user.username}")
-        # return render(request, 'base.html', {'username': request.user.username})
-        match_history = get_user_match_history(request.user)
-
-        return render(request, 'index.html', {'user': request.user, 'match_history': match_history})
-    else:
-        print(f"user not authenticated : {request}")
-        return  render(request, 'index.html')
+	if request.user.is_authenticated:
+		print(f"Authenticated user: {request.user.username}")
+		# return render(request, 'base.html', {'username': request.user.username})
+		match_history = get_user_match_history(request.user)
+		if is_ajax(request):
+			return render(request, 'index.html', {'user': request.user, 'match_history': match_history})
+		else:
+			return render(request, 'base.html', {'user': request.user, 'match_history': match_history})
+	else:
+		print(f"user not authenticated : {request}")
+		if is_ajax(request):
+			return render(request, 'index.html')
+		else:
+			return render(request, 'base.html')
 
 def scene(request):
     return render(request, 'index.html')

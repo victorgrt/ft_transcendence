@@ -8,11 +8,20 @@ function pongPageScripts () {
     launchGame();
 }
 
+function loadHome(){
+	loginForm = document.getElementsByClassName("login_form")[0];
+	registerForm = document.getElementsByClassName("register_form")[0];
+	goBackButton = document.getElementById("footer");
+	header = document.getElementById("header");
+	handleLoginForm();
+	console.log("here:", loginForm);
+}
 
 const page_scripts = {
     // 'gameSession' : loadGameSession,
     'menuPong/' : loadMenuPong,
     '/pong/' : pongPageScripts,
+	'' : loadHome,
 }
 
 function loadContent(url, pushState = true) {
