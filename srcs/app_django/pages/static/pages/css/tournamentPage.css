@@ -1,9 +1,10 @@
 #tournament-container{
     /* Layout */
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
+    gap: 50px;
     margin-top: 50px;
 
     width: 100%;
@@ -18,3 +19,12 @@
     color: white;
     
 }
+
+.tournament-element 
+{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    justify-content: flex-start;
+}
+

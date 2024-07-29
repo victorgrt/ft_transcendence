@@ -1,11 +1,13 @@
 <div id="tournament-container">
-    TOURNAMENT N° <span id="tournament_id">{{tournament.id}}</span>
+    TOURNAMENT
+    <!-- <span id="tournament_id">{{tournament.id}}</span> -->
 
     <div id="tournament_state">
         Waiting for players to join...
     </div>
 
-    <div id="tournament_players">
+    <div id="tournament_players" class="tournament-element ">
+        <div>PLAYERS</div>
         {% for player in tournament.players.all %}
           <div class="player">
               <span class="player_name">{{player.username}}</span>
@@ -13,14 +15,14 @@
         {% endfor %}
     </div>
 
-    <div id="semi-finals-games">
+    <div id="semi-finals-games" class="tournament-element ">
         <div>Semi-Finals Games</div>
         {% for game in tournament.semi_final_games.all %}
             {% include 'partials/gameElement.html' %}
         {% endfor %}
     </div>
 
-    <div id="final-game">
+    <div id="final-game" class="tournament-element ">
         <div>Final Game</div>
         {% if tournament.final_game %}
             {% with game=tournament.final_game %}
@@ -29,7 +31,7 @@
         {% endif %}
     </div>
 
-    <div id="small-final-game">
+    <div id="small-final-game" class="tournament-element ">
         <div>Small Final Game</div>
         {% if tournament.small_final_game %}
             {% with game=tournament.small_final_game %}
@@ -37,5 +39,15 @@
             {% endwith %}
         {% endif %}
     </div>  
+
+    <div id="tournament-rankings" class="tournament-element ">
+        <div>Rankings</div>
+        {% for ranking in tournament.rankings.all %}
+            <div class="ranking">
+                <span class="rank">{{ ranking.rank }}</span>
+                <span class="player_name">{{ ranking.player.username }}</span>
+            </div>
+        {% endfor %}
+    </div>
 
 </div>

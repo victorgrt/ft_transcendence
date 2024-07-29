@@ -1,5 +1,5 @@
 
-from .models import GameSession, Tournament
+from .models import GameSession, Tournament, TournamentRanking
 from account.models import CustomUser
 from django.db import connection
 from channels.db import database_sync_to_async
@@ -75,24 +75,25 @@ def create_or_update_rankings(tournament_id, player, rank):
 
 def create_or_update_rankings(tournament_id, player, rank):
     try:
-        # Start a database transaction
-        with transaction.atomic():
-            # Fetch the tournament instance
-            tournament = Tournament.objects.get(id=tournament_id)
-            
-            # Update existing ranking or create a new one
-            ranking, created = TournamentRanking.objects.update_or_create(
-                tournament=tournament,
-                player=player,
-                defaults={'rank': rank},
-            )
-            
-            if created:
-                print(f"Created new ranking for player {player.username} in tournament {tournament.name}")
-            else:
-                print(f"Updated ranking for player {player.username} in tournament {tournament.name}")
+        # Fetch the tournament instance
+        tournament = Tournament.objects.get(id=tournament_id)
+        
+        # Update existing ranking or create a new one
+        ranking, created = TournamentRanking.objects.update_or_create(
+            tournament=tournament,
+            player=player,
+            defaults={'rank': rank},
+        )
+        
+        if created:
+            print(f"Created new ranking for player {player.username} in tournament {tournament.name}")
+        else:
+            print(f"Updated ranking for player {player.username} in tournament {tournament.name}")
+        
+        connection.close()
     except Exception as e:
         print(f"Error creating/updating rankings: {e}") 
+        connection.close()
 
 
 class TournamentManager:
@@ -130,8 +131,6 @@ class TournamentManager:
             self.update_semi_finals()
         elif self.state == "finals":
             self.update_finals()
-        elif self.state == "finished":
-            self.close_tournament()
 
     def create_game_item(self, game_id):
         game = {
@@ -197,7 +196,7 @@ class TournamentManager:
         # If the finals are finished, close the tournament
         if self.all_games[2]["finished"] and self.all_games[3]["finished"]:
             self.finish_tournament()
-            self.state = "finished"
+            self.finish_tournament()
 
     def finish_tournament(self):
         print(f"Tournament {self.tournament_id} finished")
@@ -213,6 +212,7 @@ class TournamentManager:
         create_or_update_rankings(self.tournament_id, self.all_games[3]["loser"], 4)
 
         # TODO : close tournament gracefully
+        self.state = "finished"
         
     
     # TODO WARNING : should be protected by a lock

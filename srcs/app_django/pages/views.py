@@ -13,7 +13,7 @@ from django.db.models import Q
 from notification.models import FriendRequest
 from notification.models import Notification
 import uuid
-from game.models import MatchHistory, Tournament
+from game.models import MatchHistory, Tournament, GameSession
 
 
 #notifs par chatgpt
@@ -68,7 +68,7 @@ def pong(request, session_id):
     context = {'game_session': game_session}
     
     # Render the template with the context
-    if request.is_ajax():
+    if is_ajax(request):
         return render(request, 'partials/pong.html', context)
     else:
         return render(request, 'index.html', {'partial_template': 'partials/pong.html', 'context': context})
