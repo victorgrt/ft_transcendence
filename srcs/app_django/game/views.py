@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import MatchHistory
 from account.models import CustomUser
 from django.contrib.auth import get_user_model
-from .models import GameSession
+from .models import GameSession, Tournament
 import uuid
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
@@ -18,6 +18,7 @@ def finished_match(request):
     winner_id = request.POST.get('winner_id')
     player_1_score = request.POST.get('player_1_score')
     player_2_score = request.POST.get('player_2_score')
+    game_id = request.POST.get('game_id')
 
     print("winner_id")
     print(winner_id)
@@ -30,7 +31,8 @@ def finished_match(request):
     user_winner = get_user_model().objects.get(id=winner_id)
     user_player_1 = get_user_model().objects.get(id=player_1_id)
     user_player_2 = get_user_model().objects.get(id=player_2_id)
-    new_match = MatchHistory.objects.create(winner=user_winner, player_1=user_player_1, player_2=user_player_2, player_1_score=player_1_score, player_2_score=player_2_score)
+    game = GameSession.objects.get(session_id=game_id)
+    new_match = MatchHistory.objects.create(winner=user_winner, player_1=user_player_1, player_2=user_player_2, player_1_score=player_1_score, player_2_score=player_2_score , game_id=game.id)
 
     # Save the record
     new_match.save()
@@ -41,6 +43,33 @@ def create_session(request):
     session_id = str(uuid.uuid4())
     game_session = GameSession.objects.create(player1='player1', session_id=session_id, state='{}')
     return JsonResponse({'session_id': session_id})
+
+def create_tournament(request):
+    tournament_id = str(uuid.uuid4())
+    print(tournament_id)
+    tournament = Tournament.objects.create(id=tournament_id, name='tournament', state='waiting')
+    return JsonResponse({'tournament_id': tournament_id})
+
+def join_tournament(request, tournament_id):
+    try:
+        tournament = Tournament.objects.get(id=tournament_id)
+        user = request.user
+
+        # If the player is already in the tournament, return success
+        if user in tournament.players.all():
+            return JsonResponse({'success': 'Joined tournament'}, status=200)
+ 
+        # TODO : Check if the tournament is full
+        # TODO : Check if the user is already in the tournament
+        # TODO : check if the user belongs to invited players ? 
+
+        tournament.players.add(user)
+        tournament.save()
+        return JsonResponse({'success': 'Joined tournament'})
+    except Tournament.DoesNotExist:
+        return JsonResponse({'error': 'Tournament not found'}, status=404)
+    except Exception as e:
+        return JsonResponse({'error': 'Failed to join tournament'}, status=500)
 
 def join_session(request, session_id):
     try:

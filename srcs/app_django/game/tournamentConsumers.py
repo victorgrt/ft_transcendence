@@ -12,9 +12,8 @@ from channels.db import database_sync_to_async
 from django.contrib.sessions.models import Session
 from django.contrib.auth import get_user_model
 from django.core.exceptions import ObjectDoesNotExist
-
+from game.models import Tournament
 from .game_manager import game_manager
-from game.models import GameSession
 
 # Wrap the synchronous Django ORM calls with database_sync_to_async
 
@@ -27,8 +26,13 @@ def get_user(uid):
     return get_user_model().objects.get(pk=uid)
 
 @database_sync_to_async
-def get_game_DB(game_id):
-    return GameSession.objects.get(session_id=game_id)
+def get_tournament_DB(tournament_id):
+    return Tournament.objects.get(id=tournament_id)
+
+@database_sync_to_async
+def load_tournament_players(tournament):
+    tournament.players_loaded = list(tournament.players.all())
+    return tournament.players_loaded
 
 # Function to get the user object from the session key
 async def get_user_from_session_key(session_key):
@@ -40,20 +44,21 @@ async def get_user_from_session_key(session_key):
     except ObjectDoesNotExist:
         return None
     
-async def get_game_tournament(game_id) :
-    try :
-        game = await get_game_DB(game_id)
-        return game.tournament_id
+# Function to get the tournament object from the tournament_id
+async def get_tournament_from_id(tournament_id):
+    try:
+        tournament = await get_tournament_DB(tournament_id)
+        await load_tournament_players(tournament)
+        return tournament
     except ObjectDoesNotExist:
         return None
 
-class PongConsumer(AsyncWebsocketConsumer):
-    games = {}
+class TournamentConsumer(AsyncWebsocketConsumer):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.game = None  # Initialize self.game to None
-        self.game_id = None  # Initialize self.game_id to None
+        self.tournament = None  # Initialize self.game to None
+        self.tournament_id = None  # Initialize self.game_id to None
         self.user = None  # Initialize self.player to None
         self.is_added_to_group = False  # Initialize self.player to None
 
@@ -79,51 +84,59 @@ class PongConsumer(AsyncWebsocketConsumer):
             print("Authentication failed. Closing connection.")
             await self.close()
             return  # Stop further execution
+        
+        # Get the tournament DB object
+        tournament_id = self.scope['url_route']['kwargs']['game_id']
+        self.tournament_id = tournament_id
+        print(f"Connecting to tournament {self.tournament_id}")
+        self.tournament = await get_tournament_from_id(tournament_id)
 
-        # Extract the game_id
-        game_id = self.scope['url_route']['kwargs']['game_id']
-        self.game_id = game_id
-        print(f"Connecting to game {self.game_id}")
-        self.game = game_manager.get_game(game_id)
-        # self.user = user
-        # print(user.id)
+        # Check that the tournament exists
+        if not self.tournament:
+            await self.close()
+            print("Tournament not found : closing connection")
+            return
 
-        # Check if game is part of a tournament
-        tournament_id = await get_game_tournament(game_id)
-        if tournament_id:
-            print(f"Game {game_id} is part of tournament {tournament_id}")
+        # Check that the player is subscribed to the tournament and not already connected
+        # TODO : else connect it to socket as a spectator ? 
+        if self.user not in self.tournament.players_loaded:
+            await self.close()
+            print("Player not in the tournament : closing connection")
+            return
+        
+        # Get or create the tournament
+        self.tournament = game_manager.get_tournament(tournament_id)
+        if not self.tournament:
+            self.tournament = game_manager.create_tournament(tournament_id)
+        
+        # Add the player to the tournament
+        players_connected = self.tournament.get_players()
+        if self.user not in players_connected:
+          self.tournament.add_player(self.user, self)
+        else:
+          print("Player already has a playing connexion to the tournament")
+          # TODO : add consumer to spectators ? 
+          await self.close()
+          return
 
-        if not self.game:
-            self.game = game_manager.create_game(game_id, tournament_id)
-        self.game.add_player(self, self.user)
-        await self.channel_layer.group_add(self.game_id, self.channel_name)
+        # Add the player to the group
+        await self.channel_layer.group_add(self.tournament_id, self.channel_name)
         self.is_added_to_group = True
+
         await self.accept()
 
 
     async def disconnect(self, close_code):
-        # Remove player from game 
-        if self.game:
-            self.game.remove_player(self)
+        if self.tournament:
+            self.tournament.remove_player(self.user, self)
+        # if not self.game.players:
+        #     game_manager.remove_game(self.game_id)
         if self.is_added_to_group:
-            await self.channel_layer.group_discard(self.game_id, self.channel_name);
+            await self.channel_layer.group_discard(self.tournament_id, self.channel_name);
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        # print(text_data_json)
-        # print(text_data)
         action = text_data_json['action']
-        if action == 'move_paddle' :
-            player = text_data_json['player']
-            direction = text_data_json['direction']
-            game_manager.handle_paddle_move(self.game_id, player, direction)
-        elif action == 'IA_game' :
-            game_manager.IAMode(self.game_id)
-            return
-        else :
-            self.send(text_data=json.dumps({
-                'error': 'Key "message" not found in WebSocket'
-            }))
 
     async def game_update(self, event):
         message = event['message']
@@ -136,16 +149,3 @@ class PongConsumer(AsyncWebsocketConsumer):
         print(f"Received message: {message} at time : {datetime.datetime.now().time()}")
         await self.send(text_data=json.dumps({'countdown': message}))
 
-    async def send_game_state_directly(self, state):
-        # print ("state : ", state)
-        # print(f"Sending state {state} at time : {datetime.datetime.now().time()}")
-        try :
-            await self.send(text_data=json.dumps({'game_state': state}))
-        except Exception as e :
-            print(f"Error while sending game state : {e}")
-
-    async def game_over(self, event):
-        message = event['message']
-        print("Game n° %s is over" % self.game_id)
-        print("Winner : % s" % message)
-        await self.send(text_data=json.dumps({'game_over': message}))

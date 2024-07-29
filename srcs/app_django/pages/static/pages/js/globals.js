@@ -36,3 +36,4 @@ var gamedata;
 var matchHistoryBool = false;
 var friendsVisible = false;
 var countdown;
+var gameover;

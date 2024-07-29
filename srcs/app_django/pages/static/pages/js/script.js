@@ -17,12 +17,21 @@ function loadHome(){
 	handleRegisterForm();
 	console.log("here:", loginForm);
 }
+function pongIAPageScripts()
+{
+    connectToGame();
+    // connectToGame();
+    launchGameIA();
+}
+
 
 const page_scripts = {
     // 'gameSession' : loadGameSession,
     'menuPong/' : loadMenuPong,
     '/pong/' : pongPageScripts,
 	'' : loadHome,
+    '/pongIA/' : pongIAPageScripts,
+    '/tournament/' : connectToTournament,
 }
 
 function loadContent(url, pushState = true) {
@@ -33,8 +42,13 @@ function loadContent(url, pushState = true) {
     // if there is a trailing session id, remove it
     if (url.includes('/pong/'))
         page_url = '/pong/'
+    else if (url.includes('/pongIA/'))
+        page_url = '/pongIA/'
+    else if (url.includes('/tournament/'))
+        page_url = '/tournament/'
     else
         page_url = url
+
 
     fetch(url, {
             headers: {

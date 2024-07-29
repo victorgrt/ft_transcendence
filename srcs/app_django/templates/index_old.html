@@ -46,7 +46,7 @@
         <div id="menuPongDiv">
             <div class="left">
                 <h1 class="pong_title">42 PONG</h1>
-                <button class="needed_hover2" href="/pongIA/">IA</button >
+                <button id = "IAButton" class="needed_hover2" href="/pongIA/" >IA</button >
                 <button class="needed_hover2" href="/pong/">1v1</button >
                 <button class="needed_hover2" href="/pong/">Tournois</button >
                 <button class="needed_hover2" id="createSessionBtn">Create Game Session</button>
@@ -105,8 +105,78 @@
         <div id="notifications">
             <h2 id="notiftitle">NOTIFICATIONS</h2>
             <button id="closeNotifs" onclick="hideNotifs()" class="needed_hover">CLOSE</button>
+<<<<<<< HEAD:srcs/app_django/pages/templates/pages/index.html
+            <script>
+                var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
+                var ws_path = ws_scheme + '://' + window.location.host + '/ws/notifications/';
+                var websocket = new WebSocket(ws_path);
+
+                websocket.onopen = function(event) {
+                    console.log("WebSocket is open now.");
+                };
+
+                websocket.onclose = function(event) {
+                    console.log("WebSocket is closed now.");
+                };
+
+                websocket.onerror = function(event) {
+                    console.error("WebSocket error observed:", event);
+                };
+
+                websocket.onmessage = function(event) {
+                    console.log(event.data);
+                    var data = JSON.parse(event.data);
+                    // alert('Notification received from ' + data.from_user);
+                    handleNotification(data);
+                    // showToast();
+                };
+
+                function sendNotificationSocket(username){
+                    console.log("from : ", username);
+                }
+
+                document.getElementById('sendbtn').onclick = function() {
+                    console.log("puis on passe ici??");
+                    var pseudo = document.getElementById('inputnotif').value;
+                    var notificationType = document.getElementById('selectnotif').value;
+                    var csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                    var fromUser = document.querySelector('from_user').textContent;
+
+                    if (notificationType === "")
+                    {
+                        console.log("EMPTY MA GUEULE");
+                        return ;
+                    }
+
+                    fetch('/send_notification/', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-CSRFToken': csrfToken
+                        },
+                        body: new URLSearchParams({
+                            'pseudo': pseudo,
+                            'notification_type': notificationType,
+                            'from_user': fromUser,
+                        })
+                    }).then(response => response.json()).then(data => {
+                        console.log("Notification send response:", data);
+                        if (data.status === 'success') {
+                            // alert('Notification sent successfully.');
+                            console.log("here : ", data);
+                        } else {
+                            alert('Error sending notification: ' + data.message);
+                        }
+                    }).catch(error => {
+                        console.error('Error:', error);
+                    });
+                };
+            </script>
+
+=======
 			
             
+>>>>>>> origin/master:srcs/app_django/templates/index_old.html
             <div id="sendnotifs">
                 <p id="from_user" style="color:red;">{{user.username}}</p>
                 <form id="notifform">
@@ -233,7 +303,46 @@
         {% endif %}
 
         <!-- GAME HISTORY  -->
+<<<<<<< HEAD:srcs/app_django/pages/templates/pages/index.html
+        {% if user.is_authenticated %}
+        <div class="match_history_container">
+          <h2>Match History</h2>
+          <div class="match_history_list">
+              {% for match in match_history %}
+                  <div class="match_history_item">
+                      {% if match.user_won %}
+                      <div class="match_history_win_icon">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#0feb0f" class="bi bi-check-square-fill" viewBox="0 0 16 16">
+                        <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm10.03 4.97a.75.75 0 0 1 .011 1.05l-3.992 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+                      </svg>
+                      </div>
+                      {% else %}
+                      <div class="match_history_win_icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="red" class="bi bi-x-square-fill" viewBox="0 0 16 16">
+                          <path d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm10.03 4.97a.75.75 0 0 1 1.05 1.05L9.08 10.02a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.75.75 0 0 1 1.08-.022z"/>
+                        </svg>
+                      </div>
+                      {% endif %}
+                      <div class="match_history_username"> {{ match.player_1.username }} </div>
+                      <div class="match_history_score" id="match_history_score_left">
+                        {{ match.player_1_score }}
+                      </div>
+                      <img src="{% static 'pages/images/fight_icon_2.svg' %}" alt="Fight Icon" class="fight-icon">
+                      <div class="match_history_score" id="match_history_score_right">
+                        {{ match.player_2_score }}
+                      </div>
+                      <div class="match_history_username"> {{ match.player_2.username }} </div>
+                      <div class="match_history_date" > {{ match.date|date:"Y-m-d H:i" }} </div>
+                  </div>
+              {% empty %}
+                  <li>No match history found.</li>
+              {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+=======
 		{% include 'pages/partials/gameHistory.html' %}
+>>>>>>> origin/master:srcs/app_django/templates/index_old.html
     </div>
     <div id="scene">
         <!-- scene 3d -->
@@ -264,6 +373,8 @@
 <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
 <!-- PONG SCRIPT??? -->
 <script src="{% static 'pages/js/pong.js' %}"></script>
+<!-- PONG IA -->
+<script src="{% static 'pages/js/pongIA.js' %}"></script>
 <!-- LOGIN FORM SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
 <!-- REGISTER FORM SCRIPT -->

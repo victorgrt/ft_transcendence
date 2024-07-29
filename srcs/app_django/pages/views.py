@@ -13,7 +13,7 @@ from django.db.models import Q
 from notification.models import FriendRequest
 from notification.models import Notification
 import uuid
-from game.models import MatchHistory
+from game.models import MatchHistory, Tournament, GameSession
 
 
 #notifs par chatgpt
@@ -64,17 +64,36 @@ def scene(request):
     return render(request, 'index.html')
 
 # game page
+
 def pong(request, session_id):
-    context = {'session_id': session_id}
+    # Fetch the GameSession instance using the provided session_id
+    game_session = GameSession.objects.get(session_id=session_id)
+    
+    # Prepare the context with the game_session object
+    context = {'game_session': game_session}
+    
+    # Render the template with the context
     if is_ajax(request):
         return render(request, 'partials/pong.html', context)
     else:
-        return render(request, 'index.html', {'partial_template': 'partials/pong.html', 'context': session_id})
+        return render(request, 'index.html', {'partial_template': 'partials/pong.html', 'context': context})
 
 # IA game page
-def pongIA(request):
-    return render(request, 'partials/pongIA.html')
-    # return render(request, 'partials/pong.html')
+def pongIA(request, session_id):
+    context = {'session_id': session_id}
+    if is_ajax(request):
+        return render(request, 'partials/pongIA.html', context)
+    else:
+        return render(request, 'index.html', {'partial_template': 'pages/partials/pongIA.html', 'context': session_id})
+
+# Tournament page
+def tournament(request, tournament_id):
+    tournament = Tournament.objects.get(id=tournament_id)
+    context = {'tournament': tournament}
+    if is_ajax(request):
+        return render(request, 'partials/tournamentPage.html', context)
+    else:
+        return render(request, 'index.html', {'partial_template': 'partials/tournamentPage.html', 'context': context})
 
 # Game menu
 def menuPong(request):
@@ -93,12 +112,12 @@ def send_notification(request):
         pseudo = request.POST.get('pseudo')
         notification_type = request.POST.get('notification_type')
         from_user_username = request.POST.get('from_user')  # Nom d'utilisateur de l'envoyeur
-        
+
         try:
             to_user = CustomUser.objects.get(username=pseudo)
             from_user = CustomUser.objects.get(username=from_user_username)
             # from_user_username = request.user.username  # Utilisez ceci si l'envoyeur est l'utilisateur authentifié
-            
+
             # Créer la notification
             Notification.objects.create(
                 to_user=to_user,
@@ -106,7 +125,7 @@ def send_notification(request):
                 type_of_notification=notification_type,
                 message=f'{from_user_username} wants to {notification_type}'
             )
-            
+
             # Incrémenter le champ nb_notifs de l'utilisateur destinataire
             to_user.nb_notifs += 1
             to_user.save()
@@ -120,7 +139,7 @@ def send_notification(request):
                     'type': 'notification_message',
                     'message': notification_type,
                     'from_user': from_user_username,  # Envoyer le nom d'utilisateur comme chaîne de caractères
-                    'from_user_id': from_user.id  
+                    'from_user_id': from_user.id
                 }
             )
 
@@ -142,16 +161,16 @@ def accept_friend_request(request):
             # Récupérer la notification spécifique
             # notification = Notification.objects.get(id=int_notif_id)
             notification = Notification.objects.get(id=notification_id)
-            
+
             # Récupérer l'utilisateur destinataire de l'invitation
             to_user = notification.to_user
-            
+
             # Récupérer l'utilisateur qui a envoyé l'invitation
             from_user = notification.from_user_username
-            
+
             # Ajouter from_user à la liste d'amis de to_user
             to_user.friends.add(from_user)
-            
+
             # Supprimer la notification après l'acceptation
             notification.delete()
 
