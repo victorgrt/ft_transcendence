@@ -46,8 +46,8 @@ class Game:
         x2 = x
         y2 = y
         while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
-            x2 += self.ball_velocity[0] / 20
-            y2 += self.ball_velocity[1] / 20
+            x2 += self.ball_velocity[0] / 10
+            y2 += self.ball_velocity[1] / 10
 
         if (x2 > 2.5) :
             x2 = 2.5
@@ -146,13 +146,13 @@ class Game:
                 if (self.ball_velocity[1] > 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
-                self.ball_position[1] = self.ball_position[1] - 0.2
+                self.ball_position[1] = self.ball_position[1] - 0.1
             elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.35 and self.ball_position[0] < self.player_2_position + 0.35)) :
                 self.dy = -self.dy
                 if (self.ball_velocity[1] < 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
-                self.ball_position[1] = self.ball_position[1] + 0.2
+                self.ball_position[1] = self.ball_position[1] + 0.1
             self.defineNextBounce(self.ball_position[0], self.ball_position[1])
 
             if (self.move_1 != 0):
