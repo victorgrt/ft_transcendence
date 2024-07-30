@@ -7,3 +7,5 @@
 - polish tournaments page
 - Checker tous les appels asynchrones dans game_manager, tournament et games --> tous doivent être protégés par des locks
 - make background unclickable while tournament or menu opened
+
+- fix bug countdown

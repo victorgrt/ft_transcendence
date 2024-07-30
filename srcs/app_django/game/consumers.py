@@ -81,18 +81,19 @@ class PongConsumer(AsyncWebsocketConsumer):
 
         # Extract the game_id and get the game objects
         game_id = self.scope['url_route']['kwargs']['game_id']
+        mode = self.scope['url_route']['kwargs']['mode']
         self.game_id = game_id
         print(f"Connecting to game {self.game_id}")
         self.game = game_manager.get_game(game_id)    # Get the game object from game manager
         gameSession = await get_game_DB(game_id)      # Get the game data from the database
         
         # check that the game exists
-        if not gameSession:
+        if mode == 'pvp' and not gameSession:
             print(f"Game {game_id} not found in DB. Closing connection.")
             await self.close()
 
         # check that user is subscribed to the game
-        if gameSession.player1 != self.user.username and gameSession.player2 != self.user.username:
+        if mode == 'pvp' and gameSession.player1 != self.user.username and gameSession.player2 != self.user.username:
             print(f"User {self.user.username} is not part of game {game_id}. Closing connection.")
             await self.close()
             return

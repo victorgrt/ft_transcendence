@@ -102,12 +102,12 @@ async function connectToTournament() {
 
 
 
-function connectToGame() {
+function connectToGame(mode = "pvp") {
     // Extract session ID from URL
     const gameId = window.location.pathname.split('/')[2]
     console.log('Connecting to tournament:', gameId);
 
-    connectWebSocket('ws://' + window.location.host + '/ws/pong/' + gameId + '/')
+    connectWebSocket(`ws://${window.location.host}/ws/pong/${gameId}/${mode}/`)
         .then(socket => {
             setUpSocket(socket);
         });
