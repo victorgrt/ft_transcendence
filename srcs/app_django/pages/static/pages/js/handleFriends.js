@@ -235,3 +235,44 @@ function getCookie(name) {
 	}
 	return cookieValue;
 }
+
+
+function friendSendChallenge(friend_username){
+	var formData = {
+		'pseudo': friend_username,
+		'notification_type': 'play with',
+		'from_user': $('#current_username').text(),
+		'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+	};
+	console.log("formData:", formData);
+	if (formData.notification_type === "" || formData.pseudo === "")
+	{
+		console.log("EMPTY ????");
+		return ;
+	}
+
+	if (formData.notification_type === "play with")
+	{
+		console.log("PLAY WITH");
+		$.ajax({
+			type: 'POST',
+			url: '/send_play_request/',  // L'URL doit correspondre à celle définie dans urls.py
+			data: {
+				'to_username': formData.pseudo,
+			},
+			headers: {
+				'X-CSRFToken': $('input[name=csrfmiddlewaretoken]').val()
+			}
+			,
+			success: function(response) {
+				console.log(response);
+				compteur_notifs++;
+				loadContent('/pong/' + response.session_id + '/');
+			},
+			error: function(response) {
+				alert('Error: ' + response.statusText);
+			}
+		});
+		return;
+	}
+}

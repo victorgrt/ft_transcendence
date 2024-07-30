@@ -1,13 +1,15 @@
 <div id="tournament-container">
-    TOURNAMENT
+    <div id="tournament-title">
+        <h1>TOURNAMENT</h1>
+    </div>
     <!-- <span id="tournament_id">{{tournament.id}}</span> -->
 
     <div id="tournament_state">
-        Waiting for players to join...
+        Waiting for players...
     </div>
 
     <div id="tournament_players" class="tournament-element ">
-        <div>PLAYERS</div>
+        <div class="tournament_category">PLAYERS</div>
         {% for player in tournament.players.all %}
           <div class="player">
               <span class="player_name">{{player.username}}</span>
@@ -16,14 +18,14 @@
     </div>
 
     <div id="semi-finals-games" class="tournament-element ">
-        <div>Semi-Finals Games</div>
+        <div class="tournament_category">Semi-Finals Games</div>
         {% for game in tournament.semi_final_games.all %}
             {% include 'partials/gameElement.html' %}
         {% endfor %}
     </div>
 
     <div id="final-game" class="tournament-element ">
-        <div>Final Game</div>
+        <div class="tournament_category">Final Game</div>
         {% if tournament.final_game %}
             {% with game=tournament.final_game %}
                 {% include 'partials/gameElement.html' %}
@@ -32,7 +34,7 @@
     </div>
 
     <div id="small-final-game" class="tournament-element ">
-        <div>Small Final Game</div>
+        <div class="tournament_category">Small Final Game</div>
         {% if tournament.small_final_game %}
             {% with game=tournament.small_final_game %}
                 {% include 'partials/gameElement.html' %}
@@ -41,10 +43,18 @@
     </div>  
 
     <div id="tournament-rankings" class="tournament-element ">
-        <div>Rankings</div>
+        <div class="tournament_category">Rankings</div>
         {% for ranking in tournament.rankings.all %}
             <div class="ranking">
-                <span class="rank">{{ ranking.rank }}</span>
+                <span class="rank">
+                    {% if ranking.rank == 1 %}
+                    🥇
+                    {% elif ranking.rank == 2 %}
+                    🥈
+                    {% elif ranking.rank == 3 %}
+                    🥉
+                    {% else %}{{ ranking.rank }}
+                    {% endif %}</span>
                 <span class="player_name">{{ ranking.player.username }}</span>
             </div>
         {% endfor %}

@@ -248,16 +248,16 @@ textarea {
 input[type="submit"] {
   width:100%;
 	background: linear-gradient(90deg, rgba(65,56,255,1) 0%, rgba(0,213,255,1) 100%);
-  background: linear-gradient(90deg, rgba(243,33,105,1) 0%, rgba(245,133,41,1) 50%, rgba(255,214,0,1) 100%);
+	background: linear-gradient(90deg, rgba(243,33,105,1) 0%, rgba(245,133,41,1) 50%, rgba(255,214,0,1) 100%);
   /* background: linear-gradient(90deg, rgba(193,33,105,1) 0%, rgba(145,83,41,1) 50%, rgba(155,114,0,1) 100%); */
 	color: white;
-  font-weight: bold;
+	font-weight: bold;
 	padding: 10px 20px;
 	border: none;
 	border-radius: 50px;
 	cursor: pointer;
 	font-size: 16px;
-  transition: background 0.4s, box-shadow 0.4s; /* Smooth transition for hover effect */
+	transition: background 0.4s, box-shadow 0.4s; /* Smooth transition for hover effect */
 }
 
 input[type="submit"]:hover {
