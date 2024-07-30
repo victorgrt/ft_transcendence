@@ -17,7 +17,6 @@ from django.db import IntegrityError
 import json
 
 
-
 # def register(request):
 #     return render(request, 'account/register.html')
 
@@ -91,12 +90,12 @@ def createUser(request):
 
 @csrf_exempt
 def login(request):
-    
+    print("IN loggin")
     username = request.POST.get('username')
     password = request.POST.get('password')
 
-    print("USERNAME:", username)
-    print("PASSWORD:", password)
+    print("	USERNAME:", username)
+    print("	PASSWORD:", password)
  
     if username and password:
         print(f"Attempting to authenticate user: {username}")
@@ -104,13 +103,13 @@ def login(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            print(f"Authentication successful for user: {username}")
-            django_login(request, user)
-            # set user-specific data in the session
             request.session['username'] = username
             user.is_online = True
             user.save()
+            print(f"Authentication successful for user: {username}")
+            django_login(request, user)
             request.session.save()
+            # set user-specific data in the session
             return JsonResponse({"message": "Successfully logged in."}, status=200)
             # print("After login")
             # messages.success(request, 'You have successfully logged in.')
@@ -136,68 +135,15 @@ def user_avatar(request):
         avatar_url = None
     return render(request, 'index.html', {'avatar_url': avatar_url})
 
-# def search_friend(request, userID):
-
-
-# @login_required
-# def send_friend_request(request):
-# 	print('IN SEND FRIEND REQUEST')
-# 	if request.method == 'POST':
-# 		from_user = request.user
-# 		to_user_username = request.POST.get('searched_user')
-# 		try:
-# 			to_user = CustomUser.objects.get(username=to_user_username)
-# 		except CustomUser.DoesNotExist:
-# 			return HttpResponse("User not found", status=404)
-# 		if from_user.username == to_user_username:
-# 			return JsonResponse({"message": "You cannot send a friend request to yourself."}, status=400)
-# 		# if FriendRequest.objects.filter(from_user=from_user, to_user=to_user).exists():
-# 		# 	return JsonResponse({"message": "Friend request already sent."}, status=409)
-# 		 # Create a friend request or get the existing one
-# 		friend_request, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
-# 		if created:
-# 			notification_message = f"{from_user.username} has sent you a friend request."
-# 			Notification.objects.create(to_user=to_user, from_user=from_user, message=notification_message)
-# 			# return HttpResponse("Friend request sent")
-# 			return JsonResponse({"message": "Friend request sent successfully."}, status=200)
-# 		return JsonResponse({"message": "Friend request sent successfully."}, status=200)
-
-	# # to_user = CustomUser.objects.get(username=username)
-	# FriendRequest, created = FriendRequest.objects.get_or_create(from_user=from_user, to_user=to_user)
-	# if created:
-	# else:
-	# 	return HttpResponse("Friend request already sent")
-
-# @login_required
-# def accept_friend_request(request, requestID):
-# 	friend_request = FriendRequest.objects.get(id=requestID)
-# 	if friend_request == FriendRequest.objects.get(id=requestID):
-# 		friend_request.to_user.friends.add(FriendRequest.from_user)
-# 		friend_request.from_user.friends.add(FriendRequest.to_user)
-# 		friend_request.delete()
-# 		return HttpResponse('Friend request accepted')
-# 	else:
-# 		return HttpResponse('Friend request not accepted')
-
 def logout(request):
 	print('IN LOGOUT')
 	request.user.is_online = False
 	request.user.save()
 	django_logout(request)
 	Session.objects.filter(session_key=request.session.session_key).delete()
-	return JsonResponse({'success': True, 'message': 'Logged out successfully'})
-    # return JsonResponse({"message": "Successfully logged out."}, status=200)
-    # return redirect('home')
-
-# def get_user_data(request):
-# 	if request.method == 'GET':
-# 		user = CustomUser.objects.get(username=request.POST.get('username'))
-# 		return JsonResponse({
-# 			'username': user.username,
-#         	'is_active': user.is_active,
-# 			'email': user.email,
-# 			'avatar': user.avatar.url,
-# 		})
+	response = JsonResponse({'success': True, 'message': 'Logged out successfully'})	
+	response.delete_cookie('csrftoken')  # Adjust the cookie name if necessary
+	return response
 
 def get_user_data(request):
     if request.method == 'GET':

@@ -28,11 +28,9 @@ async function handleInput(event)
 			searchFriendError.style.visibility = 'hidden';
 			displayResultBox(inputValue);
 			toUser = inputValue;
-			console.log("got after");
 		}
 		else 
 		{
-			console.log("TEST User does not exist");
 			searchFriendError.textContent = 'No user or friend found';
 			searchFriendError.style.visibility = 'visible';
 			resultBox.style.visibility = 'hidden';
@@ -40,12 +38,19 @@ async function handleInput(event)
 			return;		
 		}
 	}
+	else
+	{
+		console.log("Friend list generated");
+		friendsList.style.visibility = 'visible';
+	}
+	console.log("End of handleInput");
+	return ;
 }
 
 
 
 async function getUserData(username) {
-	console.log("Get user data");
+	console.log("In get_user_data");
 	try {
 		const raw_data = await fetch(`account/get_user_data/?username=${encodeURIComponent(username)}`, {
 		method: 'GET',
@@ -57,8 +62,8 @@ async function getUserData(username) {
 		})
 		const data = await raw_data.json();
 		if (data.success) {
-			console.log("User data:", data);
-			console.log("Data successfuly returned from backend");
+			console.log("	User data:", data);
+			console.log("	Data successfuly returned from backend");
 			return data;  // Function to display user data
 		} else {
 			console.log(data.message);
@@ -67,7 +72,7 @@ async function getUserData(username) {
 
 	}
 	catch (error) {
-		console.error('Error:', error);
+		console.error('	Error:', error);
 		return null; // Return null or handle error
 	}
 }
@@ -75,11 +80,11 @@ async function getUserData(username) {
 async function displayResultBox(inputValue)
 {
 	username = inputValue;
-	console.log("Display result box");
+	console.log("In display_result_box");
 	resultBox.style.visibility ='visible';
 	resultBox.style.opacity = '1';
 	const user_data = await getUserData(username);
-	console.log("user data: ", user_data);
+	console.log("	user data: ", user_data);
 	const friendExists = await isFriend(inputValue);
 	if (user_data)	
 	{	
@@ -95,22 +100,30 @@ async function displayResultBox(inputValue)
 		}
 		if (friendExists === false)
 		{
-			console.log("User box generated");
+			console.log("	user box generated");
 			resultBox.style.visibility ='visible';
 			resultUsername.textContent = user_data.get_avatar_name;
-			// {% static '/pages/img_avatars/' %}{{user.get_avatar_name}}
-			// resultAvatar.setAttribute("src", "{% static 'images/newSlideImage.png' %}")
 			var tmpSrc = baseSrc + user_data.avatar;
 			resultAvatar.src = tmpSrc;
 			addButton.style.visibility = 'visible';
 			addButton.style.opacity = '1';
 		}
-		resultBox.visibility ='visible';
+		else
+		{
+			console.log("	friend box generated");
+			resultBox.visibility ='visible';
+			resultUsername.textContent = user_data.get_avatar_name;
+			var tmpSrc = baseSrc + user_data.avatar;
+			resultAvatar.src = tmpSrc;
+			addButton.style.visibility = 'hidden';
+		}
 	}	
 		return ;
 }
 
 async function isFriend(inputValue) {
+	console.log("In isFriend");
+	console.log('	Input value:', inputValue);
     try {
         const response = await fetch('friends/is_friend/', {
             method: 'POST',
@@ -126,14 +139,14 @@ async function isFriend(inputValue) {
         const data = await response.json();
 
         if (data.success) {
-            console.log("Friend exists");
+            console.log("	Friend exists");
             return true;
         } else {
-            console.log("Friend does not exist");
+            console.log("	Friend does not exist");
             return false;
         }
     } catch (error) {
-        console.error('Error:', error);
+        console.error('	Error:', error);
         return false;
     }
 }
