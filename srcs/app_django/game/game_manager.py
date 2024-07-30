@@ -89,7 +89,7 @@ class Game:
             elif direction == 'null':
                 self.move_1 = 0
         elif player == 2 :
-            if (coord) :
+            if (coord != 0) :
                 if direction == 'left' and self.player_2_position > -2.5 :
                     self.move_2 = -1
                     self.obj_2 = coord
@@ -160,7 +160,7 @@ class Game:
                     self.player_1_position += self.paddleSpeed
                 elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
-            if self.move_2 != 0 and (self.obj_2 >= self.player_2_position -0.1 and self.obj_2  <= self.player_2_position + 0.1) :
+            if self.mode == 2 and self.move_2 != 0 and (self.obj_2 > self.player_2_position -0.2 and self.obj_2  <= self.player_2_position + 0.1) :
                 self.move_2 = 0
             elif(self.move_2 != 0):
                 if (self.move_2 > 0 and self.player_2_position < 2.4):
