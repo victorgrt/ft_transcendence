@@ -135,9 +135,7 @@ async function isFriend(inputValue) {
                 'friend_name': inputValue
             })
         });
-
         const data = await response.json();
-
         if (data.success) {
             console.log("	Friend exists");
             return true;

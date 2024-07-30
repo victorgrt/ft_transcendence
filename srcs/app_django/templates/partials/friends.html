@@ -10,6 +10,7 @@
 		<p class="username" id="result_name"></p>
 		<button class="friend_list_button" id="challenge_button">Challenge</button>
 		<button class="add_button" id="add_button" onclick="sendFriendRequest()">+</button> <!-- Added the + icon here -->
+		{% comment %} <button class="invite_tournament_button" id="invite_tournament_button">Invite tournament</button> <!-- Added the + icon here --> {% endcomment %}
 	</div>
 	<div class="friends_list" id="friends_list">
 		{% if user.friends.all %}
@@ -33,6 +34,5 @@
 			<p>No friends to display</p>
 		{% endif %}
 	</div>
-	
 		<div id="search_friend_error"></div>
 </div>
