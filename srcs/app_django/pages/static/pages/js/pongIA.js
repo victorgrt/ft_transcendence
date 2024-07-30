@@ -106,17 +106,16 @@ function launchGameIA()
         const currentTime = Date.now();
         if ((currentTime - launch_date) % 1000 < 50) // Tolérance de 50ms pour plus de fiabilité
         {
-            console.log(gamedata.game_state.ballNextBounce[1]);
             if (gamedata.game_state.ballNextBounce[1] <= 0)
             {
                 if (gamedata.game_state.ballNextBounce[1] <= -2.4)
                 {
                     obj = gamedata.game_state.player_2_position - gamedata.game_state.ballNextBounce[0];
-                    if (obj >= -0.2 && obj <= 0.2)
+                    if (obj >= -0.1 && obj <= 0.1)
                         socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null', coord : 0}));
-                    else if (obj < -0.2)
+                    else if (obj < -0.1)
                         socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left', coord: gamedata.game_state.ballNextBounce[0]}));
-                    else if (obj > 0.2)
+                    else if (obj > 0.1)
                         socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right', coord: gamedata.game_state.ballNextBounce[0]}));
                 }
             }

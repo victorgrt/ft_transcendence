@@ -138,7 +138,6 @@ class Game:
         if self.state == "playing":
             # Handle collision with walls
             if self.ball_position[0] >= 2.3 or self.ball_position[0] <= -2.3:
-                print ("BOUNCE ON WALL MAGLE")
                 self.ball_velocity[0] = -self.ball_velocity[0]
 
             # Handle collision with paddles
@@ -161,7 +160,7 @@ class Game:
                     self.player_1_position += self.paddleSpeed
                 elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
-            if self.move_2 != 0 and (self.obj_2 + 0.1 >= self.player_2_position and self.obj_2 - 0.1 <= self.player_2_position) :
+            if self.move_2 != 0 and (self.obj_2 >= self.player_2_position and self.obj_2 - 0.2 <= self.player_2_position) :
                 self.move_2 = 0
             if(self.move_2 != 0):
                 if (self.move_2 > 0 and self.player_2_position < 2.4):
@@ -173,12 +172,11 @@ class Game:
             self.ball_position[1] += self.ball_velocity[1]
 
             # Detect goal
-            if self.ball_position[1] <= -4 or self.ball_position[1] >= 4:
-                print("GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOAL")
-                if self.ball_position[1] <= -4 :
+            if self.ball_position[1] <= -3.7 or self.ball_position[1] >= 3.7:
+                if self.ball_position[1] <= -3.7 :
                     self.player_1_score += 1
                     self.resetBall(1)
-                elif self.ball_position[1] >= 4:
+                elif self.ball_position[1] >= 3.7:
                     self.player_2_score += 1
                     self.resetBall(2)
             self.send_game_state()
