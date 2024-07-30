@@ -126,12 +126,10 @@ function launchGameIA()
                 if (gamedata.game_state.player_2_position < 0.2 && gamedata.game_state.player_2_position > -0.2)
                 {
                     socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'null', coord : 0}));
-                    console.log("Dont move");
                 }
                 else if (gamedata.game_state.player_2_position > 0)
                 {
                     socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'right', coord : 0}));
-                    console.log("GO RIGHT");
                 }
                 else if (gamedata.game_state.player_2_position < 0)
                 {
@@ -177,16 +175,6 @@ function launchGameIA()
         element.style.opacity = '1';
         element.style.visibility = 'visible';
         element.style.z_index = '2';
-    }
-
-    function hideElement(element) {
-        if (element.classList.contains("register_form"))
-            registerVisible = true;
-        if (element.classList.contains("login_form"))
-            loginVisible = true;
-        element.style.opacity = '0';
-        element.style.visibility = 'hidden';
-        element.style.z_index = '-2';
     }
 
     function animate()
