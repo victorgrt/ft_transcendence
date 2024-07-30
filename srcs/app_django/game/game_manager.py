@@ -50,8 +50,8 @@ class Game:
         x2 = x
         y2 = y
         while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
-            x2 += self.ball_velocity[0] / 20
-            y2 += self.ball_velocity[1] / 20
+            x2 += self.ball_velocity[0] / 10
+            y2 += self.ball_velocity[1] / 10
 
         if (x2 > 2.5) :
             x2 = 2.5
@@ -95,7 +95,7 @@ class Game:
             elif direction == 'null':
                 self.move_1 = 0
         elif player == 2 :
-            if (coord) :
+            if (coord != 0) :
                 if direction == 'left' and self.player_2_position > -2.5 :
                     self.move_2 = -1
                     self.obj_2 = coord
@@ -165,22 +165,21 @@ class Game:
         if self.state == "playing":
             # Handle collision with walls
             if self.ball_position[0] >= 2.3 or self.ball_position[0] <= -2.3:
-                print ("BOUNCE ON WALL MAGLE")
                 self.ball_velocity[0] = -self.ball_velocity[0]
 
             # Handle collision with paddles
-            elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.35 and self.ball_position[0] < self.player_1_position + 0.35) :
+            elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.3 and self.ball_position[0] < self.player_1_position + 0.3) :
                 self.dy = -self.dy
                 if (self.ball_velocity[1] > 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
-                self.ball_position[1] = self.ball_position[1] - 0.2
-            elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.35 and self.ball_position[0] < self.player_2_position + 0.35)) :
+                self.ball_position[1] = self.ball_position[1] - 0.1
+            elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.3 and self.ball_position[0] < self.player_2_position + 0.3)) :
                 self.dy = -self.dy
                 if (self.ball_velocity[1] < 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
-                self.ball_position[1] = self.ball_position[1] + 0.2
+                self.ball_position[1] = self.ball_position[1] + 0.1
             self.defineNextBounce(self.ball_position[0], self.ball_position[1])
 
             if (self.move_1 != 0):
@@ -188,9 +187,9 @@ class Game:
                     self.player_1_position += self.paddleSpeed
                 elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
-            if self.move_2 != 0 and (self.obj_2 + 0.1 >= self.player_2_position and self.obj_2 - 0.1 <= self.player_2_position) :
+            if self.mode == 2 and self.move_2 != 0 and (self.obj_2 > self.player_2_position -0.2 and self.obj_2  <= self.player_2_position + 0.1) :
                 self.move_2 = 0
-            if(self.move_2 != 0):
+            elif(self.move_2 != 0):
                 if (self.move_2 > 0 and self.player_2_position < 2.4):
                     self.player_2_position -= self.paddleSpeed
                 elif (self.move_2 < 0 and self.player_2_position > -2.4):
@@ -200,12 +199,11 @@ class Game:
             self.ball_position[1] += self.ball_velocity[1]
 
             # Detect goal
-            if self.ball_position[1] <= -4 or self.ball_position[1] >= 4:
-                print("GOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOAL")
-                if self.ball_position[1] <= -4 :
+            if self.ball_position[1] <= -3.7 or self.ball_position[1] >= 3.7:
+                if self.ball_position[1] <= -3.7 :
                     self.player_1_score += 1
                     self.resetBall(1)
-                elif self.ball_position[1] >= 4:
+                elif self.ball_position[1] >= 3.7:
                     self.player_2_score += 1
                     self.resetBall(2)
             self.send_game_state()
