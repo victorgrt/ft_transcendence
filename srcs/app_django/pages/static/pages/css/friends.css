@@ -15,7 +15,6 @@
 	overflow: scroll;
 }
 
-
 .search_bar {
 	width: 100%;
 	padding: 10px;
@@ -92,4 +91,12 @@
 #friend_avatar{
 	width: 20%;
 	border-radius: 30%;
+}
+
+#friends_challenge{
+	width: 100%;
+}
+
+#sendbtn{
+	width: 20%;
 }
