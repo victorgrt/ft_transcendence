@@ -245,7 +245,7 @@ class Game:
 
     def send_game_state(self):
         if (self.mode == 1) :
-            if (self.nb_players == 2) :
+            if (self.nb_players == 2 and self.players[1]) :
                 player_2_username = self.players[1].username
             else :
                 player_2_username = "waiting"

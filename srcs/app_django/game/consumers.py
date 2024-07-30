@@ -42,8 +42,7 @@ async def get_user_from_session_key(session_key):
     
 async def get_game_tournament(game_id) :
     try :
-        game = await get_game_DB(game_id)
-        return game.tournament_id
+        return await get_game_DB(game_id)
     except ObjectDoesNotExist:
         return None
 
@@ -80,16 +79,26 @@ class PongConsumer(AsyncWebsocketConsumer):
             await self.close()
             return  # Stop further execution
 
-        # Extract the game_id
+        # Extract the game_id and get the game objects
         game_id = self.scope['url_route']['kwargs']['game_id']
         self.game_id = game_id
         print(f"Connecting to game {self.game_id}")
-        self.game = game_manager.get_game(game_id)
-        # self.user = user
-        # print(user.id)
+        self.game = game_manager.get_game(game_id)    # Get the game object from game manager
+        gameSession = await get_game_DB(game_id)      # Get the game data from the database
+        
+        # check that the game exists
+        if not gameSession:
+            print(f"Game {game_id} not found in DB. Closing connection.")
+            await self.close()
+
+        # check that user is subscribed to the game
+        if gameSession.player1 != self.user.username and gameSession.player2 != self.user.username:
+            print(f"User {self.user.username} is not part of game {game_id}. Closing connection.")
+            await self.close()
+            return
 
         # Check if game is part of a tournament
-        tournament_id = await get_game_tournament(game_id)
+        tournament_id = gameSession.tournament_id
         if tournament_id:
             print(f"Game {game_id} is part of tournament {tournament_id}")
 

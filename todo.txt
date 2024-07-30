@@ -1,6 +1,7 @@
-- Gracefully ending tournaments (verify two tournament in a row)
-- Tournaments : avoid player joining a game where not authorized
+- CHECK (BUT COME BACK MAYBE) Gracefully ending tournaments (verify two tournament in a row)
+- CHECK Tournaments : avoid player joining a game where not authorized
 - Tournaments socket
+- polish game history and place it correctly
 - navigation back and forth
 - replace all links by loadContent or add event listener
 - polish tournaments page

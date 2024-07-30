@@ -68,9 +68,17 @@ def scene(request):
 def pong(request, session_id):
     # Fetch the GameSession instance using the provided session_id
     game_session = GameSession.objects.get(session_id=session_id)
-    
+
+    # Check that the user is part of the game
+    if request.user.username not in [game_session.player1, game_session.player2]:
+        authorized = False
+        print("User " + request.user.username + " is not authorized in the game " + session_id)
+    else:
+        print("User " + request.user.username + " is authorized in the game " + session_id)
+        authorized = True
+
     # Prepare the context with the game_session object
-    context = {'game_session': game_session}
+    context = {'game_session': game_session, 'authorized': authorized}
     
     # Render the template with the context
     if is_ajax(request):

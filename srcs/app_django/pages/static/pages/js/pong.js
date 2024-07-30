@@ -1,5 +1,6 @@
 function launchGame()
 {
+
     console.log("PONG SCRIPT LOADED");
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);

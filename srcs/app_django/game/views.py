@@ -76,7 +76,10 @@ def join_session(request, session_id):
         game_session = GameSession.objects.get(session_id=session_id)
         if game_session.player2:
             return JsonResponse({'error': 'Session already full'}, status=400)
-        game_session.player2 = 'player2'
+        # check that the user is not already in the session
+        if game_session.player1 == request.user.username:
+            return JsonResponse({'error': 'User already in the session'}, status=400)
+        game_session.player2 = request.user.username
         game_session.save()
         return JsonResponse({'success': 'Joined game session'})
     except GameSession.DoesNotExist:
