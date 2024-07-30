@@ -52,6 +52,7 @@ body {
 	position: fixed;
 	color : white;
 	display: flex;
+	margin-top: 1.5%;
 }
 
 #param_img {
@@ -64,6 +65,7 @@ body {
 }
 
 #param_btn {
+	padding: 0;
 	border: 0;
     width: 5%;
     margin: 0;	
@@ -159,6 +161,7 @@ body {
 button {
 	cursor: pointer;
 	background: none;
+	/* background-color: rgba(white, white, white, 0.8); */
 	padding: 1%;
 	border: 2px solid white;
 	border-radius: 1vh;
@@ -610,4 +613,68 @@ selectnotif{
 #boot_toast{
 	position: absolute;
 	z-index: 10;
+}
+
+#param_btn2 {
+	padding: 0;
+	border: 0;
+    width: 5%;
+    margin: 0;
+	background-color: white;
+	transition: transform 2s ease ;
+	/* transition: background-color 2s ease ; */
+}
+
+.needed_hover2:hover {
+	background-color: red;
+	color: black;
+	transition: 1s;
+	text-decoration: 2px solid underline overline;
+	/* text-decoration: 1px solid black; */
+	text-underline-offset: 5px;
+	box-shadow: 0 0 15px white;
+	transition: all .45s ease-Out;
+}
+
+#friends_button{
+	padding : 0;
+}
+
+.header_icon{
+	width: 30%;
+}
+
+#header_button{
+	cursor: pointer;
+	background-color: white;
+	padding: 1%;
+	border: 2px solid white;
+	border-radius: 1vh;
+	font: larger;
+	font-weight: bold;
+	margin-left: 5%;
+	margin-right: 5%;
+	text-decoration: none;
+	color: white;
+}
+
+.header_hover:hover{
+	/* background-color: red; */
+	transform: translateY(1em);
+	box-shadow: 0 0 30px white;
+	transition: all .45s ease-in-out;
+}
+
+#header_button_logout{
+	cursor: pointer;
+	background-color: white;
+	padding: 1%;
+	border: 2px solid white;
+	border-radius: 1vh;
+	font: larger;
+	font-weight: bold;
+	margin-left: 5%;
+	margin-right: 5%;
+	text-decoration: none;
+	color: white;
 }
