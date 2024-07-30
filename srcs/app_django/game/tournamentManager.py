@@ -97,8 +97,9 @@ def create_or_update_rankings(tournament_id, player, rank):
 
 
 class TournamentManager:
-    def __init__(self, tournament_id):
+    def __init__(self, tournament_id, game_manager):
         self.tournament_id = tournament_id
+        self.game_manager = game_manager
         # self.tournament = tournament
         self.players = []
         self.consumers = []
@@ -202,17 +203,14 @@ class TournamentManager:
         print(f"Tournament {self.tournament_id} finished")
 
         # Set the ranks 
-        # 1st : winner of the finals
-        # 2nd : loser of the finals
-        # 3rd : winner of the small finals
-        # 4th : loser of the small finals
         create_or_update_rankings(self.tournament_id, self.all_games[2]["winner"], 1)
         create_or_update_rankings(self.tournament_id, self.all_games[2]["loser"], 2)
         create_or_update_rankings(self.tournament_id, self.all_games[3]["winner"], 3)
         create_or_update_rankings(self.tournament_id, self.all_games[3]["loser"], 4)
 
-        # TODO : close tournament gracefully
         self.state = "finished"
+        # self.game_manager.remove_tournament(self.tournament_id)
+        
         
     
     # TODO WARNING : should be protected by a lock

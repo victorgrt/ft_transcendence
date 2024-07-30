@@ -332,7 +332,7 @@ class GameManager:
         with self.lock:
             # Here, check that the game_id is unique
             print("Creating tournament n %d" % (len(self.tournaments) + 1))
-            tournament = TournamentManager(tournament_id)
+            tournament = TournamentManager(tournament_id, self)
             self.tournaments[tournament_id] = tournament
             return tournament
 
