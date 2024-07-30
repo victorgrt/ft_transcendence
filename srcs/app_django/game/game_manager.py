@@ -65,13 +65,15 @@ class Game:
         self.ballNextBounce[1] = y2
 
     def add_player(self, consumer, user):
-        self.players.append(user)
+        # If player is not subscribed to the game, add it
+        if user not in self.players:
+          self.players.append(user)
         self.consumers.append(consumer)
         self.nb_players += 1
 
-    def remove_player(self, player):
+    def remove_player(self, consumer):
         # self.players.remove(player)
-        self.consumers.remove(player)
+        self.consumers.remove(consumer)
         self.nb_players -= 1
 
     def resetBall(self, x):
@@ -111,7 +113,16 @@ class Game:
                     self.move_2 = 0
 
     def update(self):
+
+
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
+            
+            # In IA mode, the match history is not registered
+            if self.mode == 2 :
+              self.state = "finished"
+              self.game_manager.remove_game(self.game_id)
+              return
+            
             winner = self.players[0] if self.player_1_score == 3 else self.players[1]
             loser = self.players[0]  if self.player_1_score != 3 else self.players[1]
             self.state = winner.id
@@ -238,43 +249,45 @@ class Game:
                 player_2_username = self.players[1].username
             else :
                 player_2_username = "waiting"
-        if (self.mode == 2) :
-            async_to_sync(self.consumers[0].send_game_state_directly)(
-                {
-                        'state': self.state,
-                        'nb_players': self.nb_players,
-                        'player_1_login': self.players[0].username,
-                        'player_2_login': "IA",
-                        'ball_position': self.ball_position,
-                        'ball_velocity': self.ball_velocity,
-                        'player_1_position': self.player_1_position,
-                        'player_2_position': self.player_2_position,
-                        'player_id': 1,
-                        'player_1_score': self.player_1_score,
-                        'player_2_score': self.player_2_score,
-                        'ballNextBounce': self.ballNextBounce,
-                            # Add more game state information as needed
-                    }
-            )
+        if (self.mode == 2):
+            if self.consumers[0]:
+              async_to_sync(self.consumers[0].send_game_state_directly)(
+                  {
+                          'state': self.state,
+                          'nb_players': self.nb_players,
+                          'player_1_login': self.players[0].username,
+                          'player_2_login': "IA",
+                          'ball_position': self.ball_position,
+                          'ball_velocity': self.ball_velocity,
+                          'player_1_position': self.player_1_position,
+                          'player_2_position': self.player_2_position,
+                          'player_id': 1,
+                          'player_1_score': self.player_1_score,
+                          'player_2_score': self.player_2_score,
+                          'ballNextBounce': self.ballNextBounce,
+                              # Add more game state information as needed
+                      }
+              )
         else :
             for i in range(len(self.consumers)):
-                async_to_sync(self.consumers[i].send_game_state_directly)(
-                    {
-                            'state': self.state,
-                            'nb_players': self.nb_players,
-                            'player_1_login': self.players[0].username,
-                            'player_2_login': player_2_username,
-                            'ball_position': self.ball_position,
-                            'ball_velocity': self.ball_velocity,
-                            'player_1_position': self.player_1_position,
-                            'player_2_position': self.player_2_position,
-                            'player_id': i + 1,
-                            'player_1_score': self.player_1_score,
-                            'player_2_score': self.player_2_score,
-                            'ballNextBounce': self.ballNextBounce,
-                                # Add more game state information as needed
-                        }
-                )
+                if self.consumers[i]:
+                  async_to_sync(self.consumers[i].send_game_state_directly)(
+                      {
+                              'state': self.state,
+                              'nb_players': self.nb_players,
+                              'player_1_login': self.players[0].username,
+                              'player_2_login': player_2_username,
+                              'ball_position': self.ball_position,
+                              'ball_velocity': self.ball_velocity,
+                              'player_1_position': self.player_1_position,
+                              'player_2_position': self.player_2_position,
+                              'player_id': i + 1,
+                              'player_1_score': self.player_1_score,
+                              'player_2_score': self.player_2_score,
+                              'ballNextBounce': self.ballNextBounce,
+                                  # Add more game state information as needed
+                          }
+                  )
 
 class GameManager:
     def __init__(self):
