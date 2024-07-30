@@ -141,13 +141,13 @@ class Game:
                 self.ball_velocity[0] = -self.ball_velocity[0]
 
             # Handle collision with paddles
-            elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.35 and self.ball_position[0] < self.player_1_position + 0.35) :
+            elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.3 and self.ball_position[0] < self.player_1_position + 0.3) :
                 self.dy = -self.dy
                 if (self.ball_velocity[1] > 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
                 self.ball_position[1] = self.ball_position[1] - 0.1
-            elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.35 and self.ball_position[0] < self.player_2_position + 0.35)) :
+            elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.3 and self.ball_position[0] < self.player_2_position + 0.3)) :
                 self.dy = -self.dy
                 if (self.ball_velocity[1] < 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
@@ -160,9 +160,9 @@ class Game:
                     self.player_1_position += self.paddleSpeed
                 elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
-            if self.move_2 != 0 and (self.obj_2 >= self.player_2_position and self.obj_2 - 0.2 <= self.player_2_position) :
+            if self.move_2 != 0 and (self.obj_2 >= self.player_2_position -0.1 and self.obj_2  <= self.player_2_position + 0.1) :
                 self.move_2 = 0
-            if(self.move_2 != 0):
+            elif(self.move_2 != 0):
                 if (self.move_2 > 0 and self.player_2_position < 2.4):
                     self.player_2_position -= self.paddleSpeed
                 elif (self.move_2 < 0 and self.player_2_position > -2.4):
