@@ -136,50 +136,45 @@ class Game:
 
             return
         if self.state == "playing":
-            print("Boucle")
-            if (self.player_1_position > 2.3 and self.player_1_position < 2.3) or (self.player_1_position < -2.3 and self.player_1_position > -2.3) :
-                self.move_1 = 0
             if (self.move_1 != 0):
                 if (self.move_1 > 0 and self.player_1_position < 2.3):
                     self.player_1_position += self.paddleSpeed
                 elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
-            # if (self.player_2_position > 2.3 and self.player_2_position < 2.3) or (self.player_2_position < -2.3 and self.player_2_position > -2.3) :
-            if (self.obj_2 + 0.3 >= self.player_2_position and self.obj_2 - 0.3 <= self.player_2_position) :
+            if self.move_2 != 0 and (self.obj_2 + 0.1 >= self.player_2_position and self.obj_2 - 0.1 <= self.player_2_position) :
+                print("RESET MOVE 2 TO 0")
                 self.move_2 = 0
             if(self.move_2 != 0):
+                print("self.move_2 is : ", self.move_2, " and self.player_2 position is ", self.player_2_position)
+                print("So transi is ", (self.move_2 > 0 and self.player_2_position < 2.4))
                 if (self.move_2 > 0 and self.player_2_position < 2.4):
-                    self.player_2_position -= self.paddleSpeed
+                    print("player 2 pos = ", self.player_2_position)
+                    self.player_2_position += -self.paddleSpeed
                 elif (self.move_2 < 0 and self.player_2_position > -2.4):
                     self.player_2_position += self.paddleSpeed
-            if (self.player_2_position < 0 and self.player_2_position < -2.4) or (self.player_2_position > 0 and self.player_2_position > 2.4) :
-                self.move_2 = 0
-                if (self.player_2_position < 0 and self.player_2_position < -2.4) :
-                    self.player_2_position += 0.1
-                else :
-                    self.player_2_position -= 0.1
             # Handle ball move
             self.ball_position[0] += self.ball_velocity[0]
             self.ball_position[1] += self.ball_velocity[1]
 
             # Handle collision with walls
             if self.ball_position[0] >= 2.3 or self.ball_position[0] <= -2.3:
+                print ("BOUNCE ON WALL MAGLE")
                 self.ball_velocity[0] = -self.ball_velocity[0]
-                self.defineNextBounce(self.ball_position[0], self.ball_position[1])
 
             # Handle collision with paddles
-            if(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.6 and self.ball_position[0] >= self.player_1_position - 0.4 and self.ball_position[0] <= self.player_1_position + 0.4) :
+            elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.6 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
                 self.dy = -self.dy
                 # self.ball_position[1] = self.player_1_position_z - 0.1
                 self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
-                self.defineNextBounce(self.ball_position[0], self.ball_position[1])
-            if(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.6 and (self.ball_position[0] >= self.player_2_position - 0.4 and self.ball_position[0] <= self.player_2_position + 0.4)) :
+                self.ball_position[1] = self.ball_position[1] - 0.2
+            elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.6 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
                 self.dy = -self.dy
                 # self.ball_position[1] = self.player_2_position_z + 0.1
                 self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
-                self.defineNextBounce(self.ball_position[0], self.ball_position[1])
+                self.ball_position[1] = self.ball_position[1] + 0.2
+            self.defineNextBounce(self.ball_position[0], self.ball_position[1])
 
             # Detect goal
             if self.ball_position[1] <= -4 or self.ball_position[1] >= 4:
@@ -306,8 +301,8 @@ class GameManager:
                     game.update()
             elapsed = time.time() - start_time
             sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
-            time.sleep(sleep_time)
-            # time.sleep(0.05)
+            # time.sleep(sleep_time)
+            time.sleep(0.05)
 
 game_manager = GameManager()
 game_update_thread = threading.Thread(target=game_manager.update_games)
