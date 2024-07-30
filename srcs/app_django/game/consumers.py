@@ -116,7 +116,8 @@ class PongConsumer(AsyncWebsocketConsumer):
         if action == 'move_paddle' :
             player = text_data_json['player']
             direction = text_data_json['direction']
-            game_manager.handle_paddle_move(self.game_id, player, direction)
+            coord = text_data_json['coord']
+            game_manager.handle_paddle_move(self.game_id, player, direction, coord)
         elif action == 'IA_game' :
             game_manager.IAMode(self.game_id)
             return
