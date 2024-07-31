@@ -370,7 +370,8 @@ function showNotifs()
 {
     const notifbtn = document.getElementById("notifbtn");
     hideElement(notifbtn);
-    showElement(notifsDiv); 
+    showElement(notifsDiv);
+	
     // notifsDiv.style.visibility = 'visible';
     // notifsDiv.style.opacity = '1';
     // notifsDiv.style.z_index = '2';
@@ -483,7 +484,9 @@ function hideNotifs(){
     console.log("closing notifications div")
     notifsDiv.style.visibility = 'hidden';
     notifsDiv.style.opacity = '0';
-    hideElement(notifbtn);
+	showElement(notifbtn);
+    // hideElement(notifbtn);
+	
 }
 
 
@@ -605,7 +608,7 @@ function handleNotification(data)
 	{
 		console.log("HERERERE");
 		type = "friend"
-	}  
+	} 
     showToast(data);
 
     // Create table row
