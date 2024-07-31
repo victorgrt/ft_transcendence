@@ -8,24 +8,20 @@ urlpatterns = [
   # path('partial/<str:page>/', partial_content, name='partial_content'),
 
   # navigation
-  path("", starting_page, name="home"),
-  path("menuPong/", menuPong),
+  path("", scene, name="home"),
+  path("partials/home_page/", home_page),
+  path("partials/menuPong/", menuPong),
 
   # account
-	path('account/', include("account.urls")),
-	
- 
-  # notification
-	path('notification/', include("notification.urls")),
-
-
-  # notifs
-  path('send-notification/', send_notification, name='send_notification'),
-  path('accept-friend-request/', accept_friend_request),
+  path("partials/register/", register),
+  path("createUser", createUser),
+  path("login/", login),
+  path('api/login_status/', get_login_status, name='login_status'),
+  path("account/", account),
+  path("logout/", logout),
 
   # Game
-  path("pong/<str:session_id>/", pong, name="pong_session"), 
-  path("pongIA/<str:session_id>/", pongIA, name="pong_session"), 
-  path("tournament/<str:tournament_id>/", tournament, name="tournament"),  
-
+  path('create_session/', create_session, name='create_session'),
+  path('join_session/<str:session_id>/', join_session, name='join_session'),
+  path("partials/pong/<str:session_id>/", pong, name="pong_session"),  # Add this line
 ]

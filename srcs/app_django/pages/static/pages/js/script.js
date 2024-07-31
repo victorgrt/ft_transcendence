@@ -40,7 +40,7 @@ function loadContent(url, pushState = true) {
         url = ""
 
     // if there is a trailing session id, remove it
-    if (url.includes('/pong/'))
+    if (url.includes('pong/')) 
         page_url = '/pong/'
     else if (url.includes('/pongIA/'))
         page_url = '/pongIA/'
@@ -49,12 +49,7 @@ function loadContent(url, pushState = true) {
     else
         page_url = url
 
-
-    fetch(url, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
+    fetch('/partials/' + url)
         .then(response => response.text())
         .then(data => {
             console.log("fetched url : ", url);

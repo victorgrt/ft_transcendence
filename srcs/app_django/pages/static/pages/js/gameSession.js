@@ -5,15 +5,9 @@ function setUpSocket(_socket)
 {
   console.log("SETTING SOCKET UP");
 	_socket.onmessage = function(e) {
-        // console.log(e.data)
-        const data = JSON.parse(e.data);
-        if (data.hasOwnProperty('countdown'))
-            countdown = data;
-        if (data.hasOwnProperty('game_state'))
-        {
-            // if (e.data == "waiting" || e.data == "playing")
-            gamedata = data;
-        }
+	    const data = JSON.parse(e.data);
+	    console.log('Received message:', data);
+        //gamedata = data;
     };
 }
 
@@ -57,7 +51,12 @@ async function createGame ()
 	try {
 		const response = await fetch('/create_session/')
 		const data = await response.json();
-		loadContent('/pong/' + data.session_id + '/');
+
+		// const socket = await connectWebSocket(data.session_id);
+    // setUpSocket(socket);
+		// console.log('Session created with ID:', data.session_id);
+		// window.location.href = '/pong/'
+		loadContent('pong/' + data.session_id + '/');
 	} catch (error) {
 		console.error('Error creating session or connecting WebSocket:', error);
 	}
@@ -167,3 +166,30 @@ document.addEventListener('DOMContentLoaded', function() {
         loadContent(document.location.pathname, false);
     }
 });
+
+//game/multi/id
+
+
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     fetch('/api/login_status/')
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             if (data.is_logged_in) {
+    //                 document.getElementById('username').textContent = data.username;
+    //                 document.getElementById('email').textContent = data.email;
+    //                 document.getElementById('is_active').textContent = 'Connected';
+    //             } else {
+    //                 document.getElementById('username').textContent = 'N/A';
+    //                 document.getElementById('email').textContent = 'N/A';
+    //                 document.getElementById('is_active').textContent = 'Disconnected';
+    //             }
+    //         })
+            // .catch(error => {
+            //     console.error('Error fetching user info:', error);
+            // });
+    // });
+
+        // JavaScript pour le jeu Pong
+
+        // Logique du jeu Pong ici...
