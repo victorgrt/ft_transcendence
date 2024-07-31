@@ -41,8 +41,11 @@ def finished_match(request):
 
 def create_session(request):
     session_id = str(uuid.uuid4())
-    game_session = GameSession.objects.create(player1='player1', session_id=session_id, state='{}')
-    return JsonResponse({'session_id': session_id})
+    game_session = GameSession.objects.create(player1=request.user.username, session_id=session_id, state='{}')
+    if game_session:
+        return JsonResponse({'session_id': session_id})
+    else:
+        return JsonResponse({'error': 'Failed to create session'}, status=500)
 
 def create_tournament(request):
     tournament_id = str(uuid.uuid4())
@@ -72,11 +75,18 @@ def join_tournament(request, tournament_id):
         return JsonResponse({'error': 'Failed to join tournament'}, status=500)
 
 def join_session(request, session_id):
+    print('Join Session View: User ' + request.user.username + ' is trying to join game session ' + session_id)
     try:
         game_session = GameSession.objects.get(session_id=session_id)
         if game_session.player2:
+            print('Join Session View: Session already full')
             return JsonResponse({'error': 'Session already full'}, status=400)
-        game_session.player2 = 'player2'
+        # check that the user is not already in the session
+        if game_session.player1 == request.user.username:
+            print('Join Session View: User ' + request.user.username + ' already in the session')
+            return JsonResponse({'error': 'User already in the session'}, status=400)
+        print('Join Session View: User ' + request.user.username + ' joined game session ' + session_id)
+        game_session.player2 = request.user.username
         game_session.save()
         return JsonResponse({'success': 'Joined game session'})
     except GameSession.DoesNotExist:
