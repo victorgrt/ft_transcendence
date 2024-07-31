@@ -9,7 +9,7 @@
         <input type="text" placeholder=" Enter Session ID Here " id="sessionIdInput"></input>
     </div>
 </div>
-
+<div>{{ user.username }} </div>
 {% include 'partials/header.html' %}
 {% if user.is_authenticated %}
     {% include 'partials/userStats.html' %}
