@@ -66,15 +66,17 @@ def scene(request):
 # game page
 
 def pong(request, session_id):
+    # TODO : handle the case where game session does not exist
     # Fetch the GameSession instance using the provided session_id
     game_session = GameSession.objects.get(session_id=session_id)
 
     # Check that the user is part of the game
+    print("Pong View: User " + request.user.username + " is trying to access the game " + session_id)
     if request.user.username not in [game_session.player1, game_session.player2]:
         authorized = False
-        print("User " + request.user.username + " is not authorized in the game " + session_id)
+        print("Pong View: User " + request.user.username + " is not authorized in the game " + session_id)
     else:
-        print("User " + request.user.username + " is authorized in the game " + session_id)
+        print("Pong View: User " + request.user.username + " is authorized in the game " + session_id)
         authorized = True
 
     # Prepare the context with the game_session object

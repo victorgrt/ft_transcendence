@@ -20,15 +20,24 @@ from game.models import GameSession
 
 @database_sync_to_async
 def get_session(session_key):
-    return Session.objects.get(session_key=session_key)
+    try:
+      return Session.objects.get(session_key=session_key)
+    except ObjectDoesNotExist:
+      return None
 
 @database_sync_to_async
 def get_user(uid):
-    return get_user_model().objects.get(pk=uid)
+    try:
+      return get_user_model().objects.get(pk=uid)
+    except ObjectDoesNotExist:
+      return None
 
 @database_sync_to_async
 def get_game_DB(game_id):
-    return GameSession.objects.get(session_id=game_id)
+    try :
+        return GameSession.objects.get(session_id=game_id)
+    except ObjectDoesNotExist:
+        return None
 
 # Function to get the user object from the session key
 async def get_user_from_session_key(session_key):
@@ -91,6 +100,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         if mode == 'pvp' and not gameSession:
             print(f"Game {game_id} not found in DB. Closing connection.")
             await self.close()
+            return
 
         # check that user is subscribed to the game
         if mode == 'pvp' and gameSession.player1 != self.user.username and gameSession.player2 != self.user.username:

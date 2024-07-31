@@ -100,8 +100,6 @@ async function connectToTournament() {
         });
 }
 
-
-
 function connectToGame(mode = "pvp") {
     // Extract session ID from URL
     const gameId = window.location.pathname.split('/')[2]
@@ -128,42 +126,3 @@ async function createGameIA()
 	}
 }
 
-function loadMenuPong(){
-    console.log("coucou vivi");
-	document.getElementById('createTournamentBtn').addEventListener('click', handleCreateTournament);
-	document.getElementById('createSessionBtn').addEventListener('click', createGame);
-	document.getElementById('IAButton').addEventListener('click', createGameIA);
-	document.getElementById('joinSessionBtn').addEventListener('click', function() {
-		console.log("ici");
-		    const sessionId = document.getElementById('sessionIdInput').value;
-        console.log(sessionId);
-		    loadContent('/pong/' + sessionId + '/');
-	});
-
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-
-    function handleNavigation(event) {
-        event.preventDefault();
-        const url = event.target.getAttribute('href');
-        loadContent(url);
-    }
-
-    document.querySelectorAll('.nav, .button1, .button2').forEach(link => {
-        link.addEventListener('click', handleNavigation);
-    });
-
-    window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.url) {
-            loadContent(event.state.url, false);
-        } else {
-            loadContent(document.location.pathname, false);
-        }
-    });
-
-    // Initial load to handle direct access or page refresh
-    if (document.location.pathname !== '/') {
-        loadContent(document.location.pathname, false);
-    }
-});

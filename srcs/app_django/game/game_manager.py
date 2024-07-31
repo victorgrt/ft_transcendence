@@ -68,12 +68,13 @@ class Game:
         # If player is not subscribed to the game, add it
         if user not in self.players:
           self.players.append(user)
+          self.nb_players += 1
         self.consumers.append(consumer)
-        self.nb_players += 1
 
     def remove_player(self, consumer):
         # self.players.remove(player)
-        self.consumers.remove(consumer)
+        if consumer in self.consumers:
+          self.consumers.remove(consumer)
         self.nb_players -= 1
 
     def resetBall(self, x):
@@ -245,7 +246,7 @@ class Game:
 
     def send_game_state(self):
         if (self.mode == 1) :
-            if (self.nb_players == 2 and self.players[1]) :
+            if (self.nb_players == 2):
                 player_2_username = self.players[1].username
             else :
                 player_2_username = "waiting"
