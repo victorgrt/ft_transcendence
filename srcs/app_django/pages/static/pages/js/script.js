@@ -19,7 +19,7 @@ function loadHome(){
 }
 function pongIAPageScripts()
 {
-    connectToGame();
+    connectToGame(mode='ia');
     // connectToGame();
     launchGameIA();
 }
