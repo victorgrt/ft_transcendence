@@ -19,7 +19,7 @@ class Notification(models.Model):
     to_user = models.ForeignKey(CustomUser, related_name='received_notifications', on_delete=models.CASCADE)
     from_user_username = models.CharField(max_length=150, default="default_sender")  # Champ pour le nom d'utilisateur de l'envoyeur
     type_of_notification = models.CharField(max_length=100, default="default")
-    message = models.CharField(max_length=255)
+    message = models.JSONField(default=dict)
     read = models.BooleanField(default=False)
     notification_id = models.CharField(max_length=255, default="default")
 

@@ -37,3 +37,5 @@ var matchHistoryBool = false;
 var friendsVisible = false;
 var countdown;
 var gameover;
+var notifs_fetched;
+var id_to_accept;

@@ -520,7 +520,7 @@ td{
 	bottom: 0;
 	right: 0;
 	margin: 0;
-	width: 20%;
+	width: 30%;
 }
 
 #notifications{
@@ -530,7 +530,7 @@ td{
 	opacity: 0;
 	text-align: center;
 	position: absolute;
-	width: 20%;
+	width: 30%;
 	height: 40%;
 	right: 0;
 	bottom: 0; 
@@ -558,10 +558,6 @@ td{
 	margin-bottom: 2%;
 }
 
-#notifform{
-
-}
-
 #inputnotif{
 	width: 50%;
 	font-size: small;
@@ -581,6 +577,7 @@ selectnotif{
 #notiftable{
 	color: white;
     overflow: hidden;
+	width: 100%;
 }
 
 #notiftd{

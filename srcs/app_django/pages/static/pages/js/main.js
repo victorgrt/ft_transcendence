@@ -366,36 +366,51 @@ function showParams()
     paramsVisible = true;
 }
 
-function showNotifs()
-{
-    const notifbtn = document.getElementById("notifbtn");
-    hideElement(notifbtn);
-    showElement(notifsDiv); 
-    // notifsDiv.style.visibility = 'visible';
-    // notifsDiv.style.opacity = '1';
-    // notifsDiv.style.z_index = '2';
-    notifsVisible = true;
+async function showNotifs() {
+    try {
+        const response = await fetch('/account/get_user_notifications/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        notifs_fetched = await response.json();
+        if (notifs_fetched.success) {
+            console.log("MESSAGE:", notifs_fetched.message);
+            const notifbtn = document.getElementById("notifbtn");
+            hideElement(notifbtn);
+            showElement(notifsDiv);
+            notifsVisible = true;
+            handleNotification();
+        } else {
+            console.log('Failed to fetch notifications:', data.message);
+            return null;
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        return null;
+    }
 }
 
 // HANDLE NOTIFICATIONS
-async function acceptNotif(data){
-    console.log("Accepting notif:", data);
-    if (data.notification_type === 'play')
+async function acceptNotif(id){
+    notif_to_accept = getNotificationById(id);
+    console.log("accepting:", notif_to_accept);
+    if (notif_to_accept.type_of_notification === 'play')
     {
-        console.log("PLAY");
-        
-        // window.location.href = '/pong/' + data.data.session_id + '/';
-        loadContent('/pong/' + data.data.session_id + '/');
-        //delete notif
-        var id_to_delete = obj.className;
-        var element = document.getElementById(id_to_delete);
-        element.remove();
+        console.log("PLAY on session:", notif_to_accept.message.session_id);
+        loadContent('/pong/' + notif_to_accept.message.session_id + '/');
+        removeNotificationFromDom(notif_to_accept.notification_id);
         return ;
     }
-    else if (data.notification_type === 'friend')
+    else if (notif_to_accept.type_of_notification === 'friend')
     {
         console.log("FRIEND");
-		console.log("data:", data);
+		console.log("data:", notif_to_accept);
         //logique de ajouter en amis
         try {
 			const raw_data = await fetch(`friends/accept_friend_request/`, {
@@ -404,50 +419,19 @@ async function acceptNotif(data){
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-                'data': data
+                'data': notif_to_accept
             	})
 			});
 			const received_data = await raw_data.json();
 			if (received_data.success) {
 				console.log("User data:", received_data);
 				console.log("Data successfuly returned from backend");
-				// Update the friends list in the DOM
-				// const friendsList = document.getElementById('friends_list');
-				// const friendBox = document.createElement('div');
-				// friendBox.className = 'friend_box';
-	
-				// const statusCircle = document.createElement('div');
-				// statusCircle.className = 'status_circle';
-				// statusCircle.style.backgroundColor = received_data.friend.is_active ? 'green' : 'red';
-	
-				// // const avatarImg = document.createElement('img');
-				// // avatarImg.src = `/static/pages/img_avatars/${received_data.friend.get_avatar_name}`;
-	
-				// const friendUsername = document.createElement('p');
-				// friendUsername.textContent = received_data.friend.username;
-	
-				// const friendButtons = document.createElement('div');
-				// friendButtons.className = 'friend_buttons';
-	
-				// const viewProfileButton = document.createElement('button');
-				// viewProfileButton.className = 'friend_button1';
-				// viewProfileButton.textContent = 'View Profile';
-				// // viewProfileButton.onclick = () => {
-				// //    location.href = `/profile/${received_data.friend.username}`;
-				// // };
-	
-				// friendButtons.appendChild(viewProfileButton);
-	
-				// friendBox.appendChild(statusCircle);
-				// friendBox.appendChild(avatarImg);
-				// friendBox.appendChild(friendUsername);
-				// friendBox.appendChild(friendButtons);
-	
-				// friendsList.appendChild(friendBox);
 				console.log("APPENED EVERYTHING")
+                //REMOVE THE WHOLE RAW THAT WAS ACCEPTED   
+                removeNotificationFromDom(id);            
 				return received_data; 
 			} else {
-				console.log(data.message);
+				console.log(notif_to_accept.message);
 				return null; // Return null or handle error
 			}
 	
@@ -456,27 +440,18 @@ async function acceptNotif(data){
 			console.error('Error:', error);
 			return null; // Return null or handle error
 		}
-
-        //delete notif
-        var id_to_delete = obj.className;
-        var element = document.getElementById(id_to_delete);
-        element.remove();
-        return;
     }
     else
     {
-        var id_to_delete = obj.className;
-        var element = document.getElementById(id_to_delete);
-        element.remove();
-        alert("WRONG NOTIF DUDE");
+        denyNotification(notif_to_accept);
     }
 }
 
-function declineNotif(obj){
-    console.log(obj);
-    var id_to_delete = obj.className;
-    var element = document.getElementById(id_to_delete);
-    element.remove();
+
+function declineNotif(id_del){
+    var notif_to_deny = getNotificationById(id_del);
+    console.log("trying to deny :",notif_to_deny);
+    denyNotification(notif_to_deny);
 }
 
 function hideNotifs(){
@@ -594,62 +569,109 @@ function showToast(data){
   toastInstance.show(); 
 }
 
-function handleNotification(data)
-{
-    console.log("compteur :", compteur_notifs);
-    console.log("data received:", data);
-    var type = "default";
-    if (data.message === "play with")
-        type = "play";
-    else if (data.notification_type === "friend")
-	{
-		console.log("HERERERE");
-		type = "friend"
-	}  
-    showToast(data);
+async function handleNotification() {
+    console.log("notifications_fetched:", notifs_fetched);
+    var size = notifs_fetched.notifications.length;
+    console.log("SIZE : ", size);
+    var i = 0;
+    while (i < size) {
+        console.log("i:", i);
+        var type = "default";
+        if (notifs_fetched.notifications[i].type_of_notification === 'play')
+            type = "play";
+        else if (notifs_fetched.notifications[i].type_of_notification === 'friend')
+            type = "friend"
 
-    // Create table row
-    var tr = document.createElement("tr");
-    tr.id = compteur_notifs;
+        var tr = document.createElement("tr");
+        tr.id = notifs_fetched.notifications[i].notification_id;
 
-    // Create 'from user' data cell
-    var tdFromUser = document.createElement("td");
-    tdFromUser.id = "notiftd_from_notif";
-    tdFromUser.textContent = data.from_user;
+        // Create 'from user' data cell
+        var tdFromUser = document.createElement("td");
+        tdFromUser.id = "notiftd_from_notif";
+        tdFromUser.textContent = notifs_fetched.notifications[i].from_user_username;
 
-    // Create 'type' data cell
-    var tdType = document.createElement("td");
-    tdType.id = "notiftd_type";
-    tdType.textContent = type;
+        // Create 'type' data cell
+        var tdType = document.createElement("td");
+        tdType.id = "notiftd_type";
+        tdType.textContent = type;
 
-    // Create 'accept' button cell
-    var tdAccept = document.createElement("td");
-    tdAccept.id = "notiftd_from_notif";
-    var acceptButton = document.createElement("button");
-    acceptButton.className = compteur_notifs;
-    acceptButton.id = "notifaccept";
-    acceptButton.value = type;
-    acceptButton.textContent = "V";
-    acceptButton.onclick = function() { acceptNotif(data); };
-    tdAccept.appendChild(acceptButton);
+        // Create 'accept' button cell
+        var tdAccept = document.createElement("td");
+        tdAccept.id = "notiftd_from_notif";
+        var acceptButton = document.createElement("button");
+        acceptButton.className = compteur_notifs;
+        acceptButton.id = "notifaccept";
+        acceptButton.value = type;
+        acceptButton.textContent = "V";
+        
+        // Using IIFE to create a new scope for each button
+        (function(id) {
+            acceptButton.onclick = function() { acceptNotif(id); };
+        })(notifs_fetched.notifications[i].notification_id);
 
-    // Create 'decline' button cell
-    var tdDecline = document.createElement("td");
-    tdDecline.id = "notiftd_from_notif";
-    var declineButton = document.createElement("button");
-    declineButton.className = compteur_notifs;
-    declineButton.id = "notifdecline";
-    declineButton.textContent = "X";
-    declineButton.onclick = function() { declineNotif(data); };
-    tdDecline.appendChild(declineButton);
+        tdAccept.appendChild(acceptButton);
 
-    // Append cells to row
-    tr.appendChild(tdFromUser);
-    tr.appendChild(tdType);
-    tr.appendChild(tdAccept);
-    tr.appendChild(tdDecline);
+        // Create 'decline' button cell
+        var tdDecline = document.createElement("td");
+        tdDecline.id = "notiftd_from_notif";
+        var declineButton = document.createElement("button");
+        declineButton.className = compteur_notifs;
+        declineButton.id = "notifdecline";
+        declineButton.textContent = "X";
+        
+        // Using IIFE to create a new scope for each button
+        (function(id) {
+            declineButton.onclick = function() { declineNotif(id); };
+        })(notifs_fetched.notifications[i].notification_id);
 
-    // Append row to table
-    document.getElementById("notiftable").appendChild(tr);
+        tdDecline.appendChild(declineButton);
+
+        // Append cells to row
+        tr.appendChild(tdFromUser);
+        tr.appendChild(tdType);
+        tr.appendChild(tdAccept);
+        tr.appendChild(tdDecline);
+
+        // Append row to table
+        document.getElementById("notiftable").appendChild(tr);
+        i++;
+    }
 }
 
+function getNotificationById(notificationId) {
+    return notifs_fetched.notifications.find(notification => notification.notification_id === notificationId);
+}
+
+function removeNotificationFromDom(id_del)
+{
+    const row = document.getElementById(id_del);
+    if (row) {
+        console.log("HERE");
+        console.log("deleting row of id :", id_del);
+        row.remove();
+    }
+}
+
+async function denyNotification(notif_to_deny){
+    try {
+        const raw_data = await fetch(`friends/deny_notification/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            'data': notif_to_deny
+            })
+        });
+        const received_data = await raw_data.json();
+        if (received_data.success)
+        {
+            console.log("deleting : ", notif_to_deny);
+            removeNotificationFromDom(notif_to_deny.notification_id);
+        }
+    }
+    catch (error) {
+        console.error('Error:', error);
+        return null; // Return null or handle error
+    }
+}

@@ -229,4 +229,23 @@ def get_login_status(request):
         'user_avatar': user.avatar.url,
     })
 
+def get_user_notifications(request):
+    user = request.user
+    print("trying to retreive notification from '", user.username, "'")
+    # Retrieve notifications that have to_user equal to the current user
+    all_pending_notifications = Notification.objects.filter(to_user=user)
+    print("all pending:", all_pending_notifications)
+    # You can format the notifications into a list of dictionaries to send back as JSON
+    notifications_list = [
+        {
+            'from_user_username': notification.from_user_username,
+            'type_of_notification': notification.type_of_notification,
+            'message': notification.message,
+            'read': notification.read,
+            'notification_id': notification.notification_id,
+        }
+        for notification in all_pending_notifications
+    ]
+    return JsonResponse({'success': True, 'notifications': notifications_list}, safe=False)
+
 # Create your views here.

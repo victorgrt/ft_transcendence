@@ -2,7 +2,7 @@
 # from channels.layers import get_channel_layer
 # from asgiref.sync import async_to_sync
 
-# def send_notification_service(type, to_user, from_user, data):
+# def  	(type, to_user, from_user, data):
 #     try:
 #         # Créer la notification dans la base de données
 #         Notification.objects.create(
