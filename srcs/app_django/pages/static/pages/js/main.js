@@ -227,12 +227,16 @@ function showHideElement(element)
 
 function showElement(element)
 {
+    if (!element)
+        return;
     element.style.opacity = '1';
     element.style.visibility = 'visible';
     element.style.z_index = '2';
 }
 
 function hideElement(element) {
+    if (!element)
+        return;
     if (element.classList.contains("register_form"))
         registerVisible = true;
     if (element.classList.contains("login_form"))

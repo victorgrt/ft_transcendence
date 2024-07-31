@@ -1,16 +1,19 @@
 - CHECK (BUT COME BACK MAYBE) Gracefully ending tournaments (verify two tournament in a row)
 - CHECK Tournaments : avoid player joining a game where not authorized
-- Tournaments socket
-- polish game history and place it correctly
-- handle trying to connect to session not created
-- handle trying to GET a pong page when game does not exist
+- CHECK polish game history and place it correctly
+- CHECK handle trying to connect to session not created
 - CHECK handle trying to connect to session where already joined
+- Tournaments socket
+- handle trying to GET a pong page when game does not exist
 - navigation back and forth
 - replace all links by loadContent or add event listener
 - polish tournaments page
 - Checker tous les appels asynchrones dans game_manager, tournament et games --> tous doivent être protégés par des locks
 
 - make background unclickable while tournament or menu opened
+
+GAME : 
 - fix bug countdown
+- Jeu en local !! 
 
 - remplacer page d'erreur par défaut 404 etc ? 
