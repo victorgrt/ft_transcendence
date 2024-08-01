@@ -11,11 +11,40 @@ from django.contrib import messages
 # from .models import GameSession
 from notification.models import FriendRequest
 from notification.models import Notification
+from game.models import MatchHistory
 import uuid
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 import json
 import re
+from django.db import models
+
+
+
+def stats(request):
+    if request.method == 'GET':
+        user = request.user
+        try:
+            win = MatchHistory.objects.filter(winner=user).count()
+            lost = MatchHistory.objects.filter(
+                models.Q(player_1=user) | models.Q(player_2=user)
+            ).exclude(winner=user).count()
+
+            # Calculate win-loss ratio, handling division by zero
+            ratio = (win / lost) * 100 if lost != 0 else win * 100
+            username = user.username
+            avatar = user.get_avatar_name()
+            return JsonResponse({
+                'success': True,
+                'wins': win,
+                'losses': lost,
+                'ratio': ratio,
+                'username': username,
+                'avatar': avatar,
+            })
+        except CustomUser.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'User not found!'}, status=404)
+    return render(request, 'stats.html')
 
 
 @csrf_exempt
