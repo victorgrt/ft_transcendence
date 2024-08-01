@@ -9,6 +9,7 @@ urlpatterns = [
 
   # navigation
   path("", starting_page, name="home"),
+  path("badGateway/", badGateway),
   path("menuPong/", menuPong),
 
   # account

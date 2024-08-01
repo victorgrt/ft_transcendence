@@ -49,7 +49,6 @@ function loadContent(url, pushState = true) {
     else
         page_url = url
 
-
     fetch(url, {
             headers: {
                 'X-Requested-With': 'XMLHttpRequest'

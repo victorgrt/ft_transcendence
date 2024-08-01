@@ -14,7 +14,7 @@ def send_notification_service(type, to_user, from_user, data):
             from_user_username=from_user.username,
             type_of_notification=type,
             notification_id = str(uuid.uuid4()),
-            message=data
+            message=data,
         )
 
         # Incrémenter le champ nb_notifs de l'utilisateur destinataire
@@ -35,7 +35,7 @@ def send_notification_service(type, to_user, from_user, data):
                 'from_user': from_user.username, 
                 'to_user': to_user.username,
                 'data': data,
-                'notification_id' : notification_id
+                'notification_id' : notification_id,
             }
         )
         print(f"Notification sent to {to_user.username} from {from_user.username}")

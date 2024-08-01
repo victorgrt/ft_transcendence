@@ -9,7 +9,7 @@
 		<div class="status_circle" id="result_status"></div>
 		<img class="avatar" id="result_avatar"  src="{% static 'pages/img_avatars/' %}">
 		<p class="username" id="result_name"></p>
-		<button class="friend_list_button" id="challenge_button">Challenge</button>
+		<!-- <button class="friend_list_button" id="challenge_button" onclick="friendSendChallenge(`{{ result_name }}`)">Challenge</button> -->
 		<button class="add_button" id="add_button" onclick="sendFriendRequest()">+</button> <!-- Added the + icon here -->
 		{% comment %} <button class="invite_tournament_button" id="invite_tournament_button">Invite tournament</button> <!-- Added the + icon here --> {% endcomment %}
 	</div>

@@ -14,6 +14,7 @@ urlpatterns = [
   path("logout/", logout),
   path("is_user/", is_user),
   path("get_user_data/", get_user_data),
+  path("get_user_notifications/", get_user_notifications),
   path("user_avatar/", user_avatar, name='user_avatar'),
   path("search_friend/", user_avatar, name='user_avatar'),
 #   path("accept_friend_request/<int:userID>/", accept_friend_request, name='accept_friend_request'),
