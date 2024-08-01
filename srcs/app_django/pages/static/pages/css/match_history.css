@@ -11,6 +11,7 @@
 	padding: 20px;
 	border-radius: 5px;
 	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+	overflow: auto; /* Enables scrolling */
 }
 
 .match_history_list

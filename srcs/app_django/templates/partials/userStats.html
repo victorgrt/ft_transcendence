@@ -6,7 +6,7 @@
     <div id="rightstats">
         <ul id="stats_username">{{user.username}}</ul>
         <ul id="stats">{{user.friends.count}} amis</ul>
-        <ul id="stats">{{user.win}}</ul>
-        <ul id="stats">{{user.lost}}</ul>
+		<ul id="stats" style="color:green;">{{ user.win }}</ul>
+		<ul id="stats" style="color:red;">{{ user.lost }}</ul>
     </div>
 </div>

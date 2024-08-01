@@ -1,6 +1,4 @@
 #TODO:
-COMPOSE=sudo docker-	
-COMPOSE_FILE=docker-compose.yml
 
 re:	docker_clean build up
 
