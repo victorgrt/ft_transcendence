@@ -118,14 +118,16 @@ function launchGame()
     };
 
 
-    function updateCountdownHTML()
+    function updateCountdownHTML(countdown)
     {
+        console.log("COUNTDOWN: ");
+        console.log(countdown);
         let displayText;
-        if (countdown.countdown.countdown > 0)
-            displayText = `${countdown.countdown.countdown}`;
-        else if (countdown.countdown.countdown === 0)
+        if (countdown > 0)
+            displayText = `${countdown}`;
+        else if (countdown === 0)
             displayText = "START";
-        else if (countdown.countdown.countdown == -1)
+        else if (countdown == -1)
             displayText = "";
         document.getElementById('countdownDisplay').innerText = displayText;
     }
@@ -166,8 +168,10 @@ function launchGame()
             }
             updateState();
             renderer.render(scene, camera);
-            if (countdown)
-                updateCountdownHTML();  // Mettre à jour le compte à rebours en fonction de la valeur reçue
+            if (gamedata.game_state.state == "countdown")
+                updateCountdownHTML(gamedata.game_state.countdown);  // Mettre à jour le compte à rebours en fonction de la valeur reçue
+            else if (gamedata.game_state.state == "playing" && document.getElementById('countdownDisplay').innerText != "")
+                updateCountdownHTML(-1);
         }
         requestAnimationFrame(animate);
     }

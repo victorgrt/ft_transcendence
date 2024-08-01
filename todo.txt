@@ -29,3 +29,5 @@ INFO:     127.0.0.1:50888 - "GET /staticfiles/pages/css/tournamentPage.css HTTP/
 /mnt/nfs/homes/teliet/.local/lib/python3.10/site-packages/django/http/response.py:517: Warning: StreamingHttpResponse must consume synchronous iterators in order to serve them asynchronously. Use an asynchronous iterator instead.
   warnings.warn(
 INFO:     127.0.0.1:50874 - "GET /staticfiles/pages/css/notif.css HTTP/1.1" 304 Not Modified
+
+Error while sending game state : Unexpected ASGI message 'websocket.send', after sending 'websocket.close' or response already completed.
