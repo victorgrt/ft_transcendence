@@ -12,7 +12,7 @@
   {% endif %}
   
   <div id="footer">
-    <button id="leaveGameButton" onclick=leaveGame() src="{% static 'pages/js/pong.js' %}">> Leave Game <</button>
+    <button id="leaveGameButton" class="needed_hover" onclick=leaveGame() src="{% static 'pages/js/pong.js' %}">> Leave Game <</button>
 
 		{% if authorized and game_session.tournament_id %}
 			<!-- Display content related to the tournament_id -->

@@ -640,7 +640,7 @@ selectnotif{
 	width: 30%;
 }
 
-#header_button{
+.header_hover{
 	cursor: pointer;
 	background-color: white;
 	padding: 1%;

@@ -1,7 +1,7 @@
 function launchGame()
 {
-
     console.log("PONG SCRIPT LOADED");
+    hideElement(goBackButton);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -178,11 +178,18 @@ function launchGame()
     animate();
 }
 
+// window.addEventListener('resize', () => {
+//     console.log("should auto resize");
+//     const width = window.innerWidth;
+//     const height = window.innerHeight;
+//     renderer.setSize(width, height);
+//     camera.aspect = width / height;
+//     camera.updateProjectionMatrix();
+// });
+
 function leaveGame()
 {
-    console.log("YESYEYSYEYS")
     loadContent('/');
-    // return redirect('/');
 }
 
 var id;

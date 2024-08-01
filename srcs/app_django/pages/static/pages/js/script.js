@@ -1,5 +1,4 @@
 console.log("loaded script.js");
-
 function pongPageScripts () {
     console.log("launchPongScript")
 
@@ -9,11 +8,14 @@ function pongPageScripts () {
 }
 
 function loadHome(){
+    console.log("LOADING HOME PAGE")
+    zoomBack();
 	loginForm = document.getElementsByClassName("login_form")[0];
 	registerForm = document.getElementsByClassName("register_form")[0];
 	goBackButton = document.getElementById("footer");
 	header = document.getElementById("header");
-	handleLoginForm();
+    loadHeader();
+    handleLoginForm();
 	handleRegisterForm();
 	console.log("here:", loginForm);
 }
@@ -75,4 +77,3 @@ function loadContent(url, pushState = true) {
         })
         .catch(error => console.error('Error loading content:', error));
 }
-

@@ -1,22 +1,27 @@
 
-var statsVisible = false;
-function showStats(){
-    if (statsVisible === true)
-    {
-        zoomBack();
-		statsDiv.style.visibility = 'hidden'
-		statsVisible = false;
-        return;
-    }
-	else
-	{
-		statsDiv.style.visibility = 'visible';
-		statsDiv.style.opacity = '1';
-		statsVisible = true;
-		// updateUIForStats() 
-		showElement(goBackButton);
-	}
-}
+// var statsVisible = false;
+// function showStats(){
+// 	console.log("clicked mfffff");
+//     if (statsVisible === true)
+//     {
+// 		console.log("ICIIII");
+//         // zoomBack();
+// 		statsDiv.style.visibility = 'hidden'
+// 		statsVisible = false;
+//         return;
+//     }
+// 	else
+// 	{
+// 		console.log("ICIIII22222");
+// 		console.log(statsDiv);
+// 		console.log("should be here??");
+// 		statsDiv.style.visibility = 'visible';
+// 		statsDiv.style.opacity = '1';
+// 		statsVisible = true;
+// 		// updateUIForStats() 
+// 		showElement(goBackButton);
+// 	}
+// }
 
 
 // function updateUIForStats() 

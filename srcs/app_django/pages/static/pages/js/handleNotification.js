@@ -286,6 +286,7 @@ function removeNotificationFromDom(id_del)
         console.log("deleting row of id :", id_del);
         row.remove();
     }
+    
 }
 
 async function denyNotification(notif_to_deny){
