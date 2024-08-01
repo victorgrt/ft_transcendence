@@ -1,7 +1,7 @@
 {% load static %}
-<div id="user_stats"></div>
+<div id="user_stats">
     <div id="leftstats">
-        <img src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}"> id="avatar"></ul>
+        <img id="avatar" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}">
     </div>
     <div id="rightstats">
         <ul id="stats_username">{{user.username}}</ul>
