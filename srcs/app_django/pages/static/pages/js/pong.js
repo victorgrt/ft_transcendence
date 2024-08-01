@@ -151,11 +151,11 @@ function launchGame()
 
     function animate()
     {
-        showElement(leaveGameButton);
         if (gamedata)
         {
             if (set_camera == 0)
             {
+                // leaveGameButton.style.z_index = '2';
                 id = gamedata.game_state.player_id
                 if (id == 2)
                     pov_camera = -7

@@ -1,4 +1,5 @@
 {% load static %}
+{% include 'partials/header.html' %}
 <div id="pongScene">
 	<script src="{% static 'pages/js/pong.js' %}"></script>
 	<div id="countdownDisplay" style="position: absolute; top: 250px; left: 50%; transform: translateX(-50%); font-size: 240px; color: white;"></div>
@@ -10,17 +11,15 @@
       This game is private and you are not authorized to join or spectate it.
     </div>
   {% endif %}
-  
-  <div id="footer">
-    <button id="leaveGameButton" class="needed_hover" onclick=leaveGame() src="{% static 'pages/js/pong.js' %}">> Leave Game <</button>
+</div>
+<div id="footer">
+    <button id="leaveGameButton" class="needed_hover" onclick=leaveGame()>> Leave Game <</button>
 
-		{% if authorized and game_session.tournament_id %}
-			<!-- Display content related to the tournament_id -->
-			<a style="visibility: visible;"
-			 href="/tournament/{{ game_session.tournament_id }}/">
-				Back to Tournament
-			</a>
-		{% endif %}
-	</div>
-
+	{% if authorized and game_session.tournament_id %}
+		<!-- Display content related to the tournament_id -->
+		<a style="visibility: visible;"
+			href="/tournament/{{ game_session.tournament_id }}/">
+			Back to Tournament
+		</a>
+	{% endif %}
 </div>

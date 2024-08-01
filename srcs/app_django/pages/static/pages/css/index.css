@@ -306,7 +306,6 @@ input[type="submit"]:hover {
 
 /* FOOTER */
 #footer {
-	visibility: hidden;
 	display: flex;
 	width: 100%;
 	position: absolute;
