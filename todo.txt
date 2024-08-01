@@ -9,7 +9,7 @@
 - replace all links by loadContent or add event listener
 - polish tournaments page
 - Checker tous les appels asynchrones dans game_manager, tournament et games --> tous doivent être protégés par des locks
-
+- Bug potentiel si users se connectent pas dans le bon ordre jeu tournois
 - make background unclickable while tournament or menu opened
 
 GAME : 
