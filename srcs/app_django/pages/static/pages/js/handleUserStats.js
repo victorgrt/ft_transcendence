@@ -39,10 +39,10 @@ async function updateUIForStats() {
 			const ratio = statsFetched.ratio;
 			const rightstats = document.getElementById('rightstats');
 			rightstats.innerHTML = `
-				<p class="stats_username">${username}</p>
-				<p style="color:green;">${win}</p>
-				<p style="color:red;">${lost}</p>
-				<p>${ratio}%</p>
+				<p class="stats_username" style="font-size: 40px;">${username}</p>
+				<p style="color:green; font-size: 30px;">${win}</p>
+				<p style="color:red; font-size: 30px;">${lost}</p>
+				<p style="color: yellow; font-size: 30px;">${ratio}%</p>
 		`;
         } else {
             console.log('Failed to fetch user stats:', statsFetched.message);

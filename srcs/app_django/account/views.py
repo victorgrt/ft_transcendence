@@ -31,7 +31,8 @@ def stats(request):
             ).exclude(winner=user).count()
 
             # Calculate win-loss ratio, handling division by zero
-            ratio = (win / lost) * 100 if lost != 0 else win * 100
+            total = win + lost
+            ratio = (win / total) * 100 if total != 0 else 0
             username = user.username
             avatar = user.get_avatar_name()
             return JsonResponse({
