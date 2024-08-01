@@ -104,39 +104,47 @@ function launchGameIA()
     function handleIAMove()
     {
         const currentTime = Date.now();
-        if ((currentTime - launch_date) % 1000 < 50) // Tolérance de 50ms pour plus de fiabilité
-        {
+        // if ((currentTime - launch_date) % 1000 < 50) // Tolérance de 50ms pour plus de fiabilité
+        // {
             if (gamedata.game_state.ballNextBounce[1] <= 0)
             {
-                if (gamedata.game_state.ballNextBounce[1] <= -2.4)
-                {
                     obj = gamedata.game_state.player_2_position - gamedata.game_state.ballNextBounce[0];
-                    if (obj >= -0.1 && obj <= 0.1)
+                    if (obj >= -0.4 && obj <= 0.4)
+                    {
+                        console.log("TRY TO CATCH BALL --> NULL");
                         socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null', coord : 0}));
-                    else if (obj < -0.1)
-                        socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left', coord: gamedata.game_state.ballNextBounce[0]}));
-                    else if (obj > 0.1)
+                    }
+                    else if (obj < -0.4)
+                    {
+                        console.log("TRY TO CATCH BALL --> LEFT");
                         socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right', coord: gamedata.game_state.ballNextBounce[0]}));
-                }
-            }
+                    }
+                    else if (obj > 0.4)
+                    {
+                        console.log("TRY TO CATCH BALL --> RIGHT");
+                        socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left', coord: gamedata.game_state.ballNextBounce[0]}));
+                    }
+                    }
             else
             {
-                console.log("TRY TO REPLACE TO CENTER");
-                if (gamedata.game_state.player_2_position < 0.2 && gamedata.game_state.player_2_position > -0.2)
+                if (gamedata.game_state.player_2_position > -0.4 && gamedata.game_state.player_2_position < 0.4)
                 {
+                    console.log("TRY TO REPLACE TO CENTER --> NULL");
                     socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'null', coord : 0}));
                 }
                 else if (gamedata.game_state.player_2_position > 0)
                 {
-                    socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'right', coord : 0}));
+                    console.log("TRY TO REPLACE TO CENTER --> left");
+                    socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'left', coord : 0}));
                 }
                 else if (gamedata.game_state.player_2_position < 0)
                 {
-                    socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'left', coord : 0}));
+                    console.log("TRY TO REPLACE TO CENTER --> right");
+                    socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'right', coord : 0}));
                 }
             }
 
-        }
+        // }
     }
 
     function updateState()

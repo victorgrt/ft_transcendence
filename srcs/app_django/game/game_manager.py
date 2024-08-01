@@ -21,8 +21,8 @@ class Game:
         self.nb_players = 0
         self.mode = 1
         self.seed = seed(1),
-        self.dx = 0.05
-        self.dy = 0.05
+        self.dx = 0.03 + (0.07 - 0.03) * random()
+        self.dy = 0.03 + (0.07 - 0.03) * random()
         self.ball_velocity = [self.dx, self.dy]
         self.ballRadius = 10
         self.paddleWidth = 0.8
@@ -80,8 +80,11 @@ class Game:
     def resetBall(self, x):
         self.ball_position[0] = 0
         self.ball_position[1] = 0
-        self.ball_velocity[0] =  0.05
-        self.ball_velocity[1] =  0.05
+        self.ball_velocity[0] =  0.03 + (0.07 - 0.03) * random()
+        self.ball_velocity[1] =  0.03 + (0.07 - 0.03) * random()
+        if (x == 2) :
+            self.ball_velocity[0] = -self.ball_velocity[0]
+            self.ball_velocity[1] = -self.ball_velocity[1]
 
     def checkIAMode(self, game_id) :
         self.nb_players = 2
@@ -114,16 +117,14 @@ class Game:
                     self.move_2 = 0
 
     def update(self):
-
-
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
-            
+
             # In IA mode, the match history is not registered
             if self.mode == 2 :
               self.state = "finished"
               self.game_manager.remove_game(self.game_id)
               return
-            
+
             winner = self.players[0] if self.player_1_score == 3 else self.players[1]
             loser = self.players[0]  if self.player_1_score != 3 else self.players[1]
             self.state = winner.id
@@ -169,13 +170,13 @@ class Game:
                 self.ball_velocity[0] = -self.ball_velocity[0]
 
             # Handle collision with paddles
-            elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.3 and self.ball_position[0] < self.player_1_position + 0.3) :
+            elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
                 self.dy = -self.dy
                 if (self.ball_velocity[1] > 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
                 self.ball_position[1] = self.ball_position[1] - 0.1
-            elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.3 and self.ball_position[0] < self.player_2_position + 0.3)) :
+            elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
                 self.dy = -self.dy
                 if (self.ball_velocity[1] < 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
@@ -188,13 +189,22 @@ class Game:
                     self.player_1_position += self.paddleSpeed
                 elif (self.move_1 < 0 and self.player_1_position > -2.3):
                     self.player_1_position -= self.paddleSpeed
-            if self.mode == 2 and self.move_2 != 0 and (self.obj_2 > self.player_2_position -0.2 and self.obj_2  <= self.player_2_position + 0.1) :
-                self.move_2 = 0
-            elif(self.move_2 != 0):
-                if (self.move_2 > 0 and self.player_2_position < 2.4):
-                    self.player_2_position -= self.paddleSpeed
-                elif (self.move_2 < 0 and self.player_2_position > -2.4):
+            # if self.mode == 2 and self.move_2 != 0 and (self.obj_2 > self.player_2_position -0.2 and self.obj_2  <= self.player_2_position + 0.1) :
+            # if self.mode == 2 and self.move_2 != 0 and (self.player_2_position - 0.2 < self.ballNextBounce[0] and self.player_2_position + 0.2 > self.ballNextBounce[0]) :
+            #     print("Reset move 2")
+            #     self.move_2 = 0
+            # elif(self.move_2 != 0):
+            #     if (self.move_2 > 0 and self.player_2_position < 2.4):
+            #         self.player_2_position -= self.paddleSpeed
+            #         print("player 2 pos --")
+            #     elif (self.move_2 < 0 and self.player_2_position > -2.4):
+            #         self.player_2_position += self.paddleSpeed
+            #         print("player 2 pos ++")
+            if (self.move_2 != 0):
+                if (self.move_2 > 0 and self.player_2_position < 2.3):
                     self.player_2_position += self.paddleSpeed
+                elif (self.move_2 < 0 and self.player_2_position > -2.3):
+                    self.player_2_position -= self.paddleSpeed
             # Handle ball move
             self.ball_position[0] += self.ball_velocity[0]
             self.ball_position[1] += self.ball_velocity[1]
@@ -307,7 +317,7 @@ class GameManager:
 
     def get_game(self, game_id):
         return self.games.get(game_id)
-    
+
 
     def remove_game(self, game_id):
         with self.lock:
@@ -343,10 +353,10 @@ class GameManager:
             if tournament_id in self.tournaments:
                 del self.tournaments[tournament_id]
                 print(f"Removed tournament {tournament_id}")
-        
+
     def get_tournament(self, tournament_id):
         return self.tournaments.get(tournament_id)
-    
+
     # Main loop
 
     def update_games(self):
@@ -357,6 +367,7 @@ class GameManager:
                 game.update()
             elapsed = time.time() - start_time
             sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
+            # sleep_time = 0.1
             time.sleep(sleep_time)
 
     def update_tournaments(self):
