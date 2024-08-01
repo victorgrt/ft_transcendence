@@ -15,6 +15,7 @@ import uuid
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 import json
+import re
 
 
 @csrf_exempt
@@ -70,6 +71,9 @@ def createUser(request):
 		if CustomUser.objects.filter(email=email).exists():
 			return JsonResponse({'success': False, 'message': 'Email is already registered.'},  status=409)
 		password = request.POST.get('password')
+		# Password validation
+		if not re.match(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', password):
+			return JsonResponse({'success': False, 'message': 'Password must contain at least 8 characters, one uppercase letter, one number, and one symbol.'}, status=405)
 		avatar = request.FILES.get('avatar')
 		print('avatar:', avatar)
 		user = CustomUser.objects.create_user(username=username, email=email, password=password, is_superuser=False, is_staff=False, avatar=avatar)

@@ -21,6 +21,8 @@ GAME :
 - Jeu en local !! 
 - implement game is finished
 - Tournament players issues
+- User not found when game request (user exists)
+- Increment 
 
 SECU : 
 - Renvoyer vers home page si user pas connecte
@@ -30,6 +32,7 @@ SECU :
 - Changer username + check que username pas deja pris
 - Check toutes les erreur 500 et gere dans back :
     - friends requests
+
 
 
 
