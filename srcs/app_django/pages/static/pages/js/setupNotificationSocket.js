@@ -20,8 +20,8 @@
             console.log(event.data);
             var data = JSON.parse(event.data);
             // alert('Notification received from ' + data.from_user);
+            showToast(data);
             handleNotification(data);
-            // showToast();
         };
 
         // document.getElementById('sendbtn').onclick = function() {

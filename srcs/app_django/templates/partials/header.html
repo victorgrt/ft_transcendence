@@ -6,7 +6,7 @@
     {% else %}
         <button id="header_button" class="header_hover" onclick='showStats()'><img class="header_icon" src="{% static '/pages/images/mon-profil.png' %}" alt="PROFILE"></button>
         <button id="header_button" class="header_hover" onclick="showMatchHistory()"><img class="header_icon" src="{% static '/pages/images/livre-dhistoire.png' %}" alt="MATCH HISTORY"></button>
-        <button id="header_button" class="header_hover" onclick="showHideElement(friendsDiv)"><img class="header_icon" src="{% static '/pages/images/grouper.png' %}"></button>
+        <button id="header_button" class="header_hover" onclick="showFriends()"><img class="header_icon" src="{% static '/pages/images/grouper.png' %}"></button>
         <button id="header_button" class="header_hover" onclick='showParams()'><img class="header_icon" src="{% static '/pages/images/parametres.png' %}"></button>
         <button id="header_button_logout" class="header_hover" src="{% static 'pages/js/handleLogout.js' %}"><img class="header_icon" src="{% static '/pages/images/deconnexion.png' %}" alt="LOG OUT"></button>
         <script>

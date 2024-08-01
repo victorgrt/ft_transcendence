@@ -17,6 +17,8 @@ async function showNotifs() {
             const notifbtn = document.getElementById("notifbtn");
             hideElement(notifbtn);
             showElement(notifsDiv);
+            notifsDiv.style.zIndex = '2 ';
+            console.log("ZINDEX:", notifsDiv.style.z_index);
             notifsVisible = true;
             handleNotification();
         } else {
@@ -207,6 +209,7 @@ async function handleNotification() {
     var size = notifs_fetched.notifications.length;
     console.log("SIZE : ", size);
     var i = 0;
+    document.getElementById("notiftable").innerHTML = "";
     while (i < size) {
         console.log("i:", i);
         var type = "default";
@@ -217,7 +220,7 @@ async function handleNotification() {
 
         var tr = document.createElement("tr");
         tr.id = notifs_fetched.notifications[i].notification_id;
-
+        tr.classList.add("notifs_tr");
         // Create 'from user' data cell
         var tdFromUser = document.createElement("td");
         tdFromUser.id = "notiftd_from_notif";
@@ -311,5 +314,8 @@ async function denyNotification(notif_to_deny){
 
 function reloadNotifs(){
     hideNotifs();
+    // document.getElementById("notiftable").innerHTML = "";
+    // showNotifs();
+    // showElement(notifsDiv);
     showNotifs();
 }

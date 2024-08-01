@@ -33,7 +33,7 @@ var socket;
 var gamedata;
 
 // ------------ OTHER ---------
-var matchHistoryBool = false;
+var matchHistoryBool = true;
 var friendsVisible = false;
 var countdown;
 var gameover;
