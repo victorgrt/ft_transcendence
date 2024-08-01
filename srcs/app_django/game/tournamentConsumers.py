@@ -43,7 +43,7 @@ async def get_user_from_session_key(session_key):
         return user
     except ObjectDoesNotExist:
         return None
-    
+
 # Function to get the tournament object from the tournament_id
 async def get_tournament_from_id(tournament_id):
     try:
@@ -84,7 +84,7 @@ class TournamentConsumer(AsyncWebsocketConsumer):
             print("Authentication failed. Closing connection.")
             await self.close()
             return  # Stop further execution
-        
+
         # Get the tournament DB object
         tournament_id = self.scope['url_route']['kwargs']['game_id']
         self.tournament_id = tournament_id
@@ -98,24 +98,24 @@ class TournamentConsumer(AsyncWebsocketConsumer):
             return
 
         # Check that the player is subscribed to the tournament and not already connected
-        # TODO : else connect it to socket as a spectator ? 
+        # TODO : else connect it to socket as a spectator ?
         if self.user not in self.tournament.players_loaded:
             await self.close()
             print("Player not in the tournament : closing connection")
             return
-        
+
         # Get or create the tournament
         self.tournament = game_manager.get_tournament(tournament_id)
         if not self.tournament:
             self.tournament = game_manager.create_tournament(tournament_id)
-        
+
         # Add the player to the tournament
         players_connected = self.tournament.get_players()
         if self.user not in players_connected:
           self.tournament.add_player(self.user, self)
         else:
           print("Player already has a playing connexion to the tournament")
-          # TODO : add consumer to spectators ? 
+          # TODO : add consumer to spectators ?
           await self.close()
           return
 
@@ -140,7 +140,6 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 
     async def tournament_state(self, event):
         message = event['message']
-        print(f"Sending message : {message}")
         await self.send(text_data=json.dumps({
             'message': message
         }))
