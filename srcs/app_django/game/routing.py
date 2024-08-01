@@ -3,6 +3,6 @@ from . import consumers
 from .tournamentConsumers import TournamentConsumer
 
 websocket_urlpatterns = [
-    path('ws/pong/<str:game_id>/<str:mode>/', consumers.PongConsumer.as_asgi()),
-    path('ws/tournament/<str:game_id>/', TournamentConsumer.as_asgi()),
+    path('wss/pong/<str:game_id>/<str:mode>/', consumers.PongConsumer.as_asgi()),
+    path('wss/tournament/<str:game_id>/', TournamentConsumer.as_asgi()),
 ]
