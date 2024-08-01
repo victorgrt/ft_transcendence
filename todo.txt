@@ -17,3 +17,7 @@ GAME :
 - Jeu en local !! 
 
 - remplacer page d'erreur par défaut 404 etc ? 
+
+- Changer username + check que username pas deja pris
+- Check toutes les erreur 500 et gere dans back :
+    - friends requests
