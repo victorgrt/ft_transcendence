@@ -39,7 +39,7 @@ class Game:
         self.player_1_position = 0
         self.player_2_position = 0
         self.launch_time = 0
-        self.old_next_bounce = (time.time() - self.launch_time)
+        # self.old_next_bounce = (time.time() - self.launch_time)
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.move_1 = 0
         self.move_2 = 0
@@ -108,7 +108,7 @@ class Game:
         # self.players.remove(player)
         if consumer in self.consumers:
           self.consumers.remove(consumer)
-            
+
     def resetBall(self, x):
         self.ball_position[0] = 0
         self.ball_position[1] = 0
@@ -131,7 +131,14 @@ class Game:
             elif direction == 'null':
                 self.move_1 = 0
         elif player == 2 :
-            if (coord != 0) :
+            if (self.mode == 1):
+                if direction == 'right' and self.player_2_position > -2.5 :
+                    self.move_2 = -1
+                elif direction == 'left' and self.player_2_position < 2.5 :
+                    self.move_2 = 1
+                elif direction == 'null':
+                    self.move_2 = 0
+            elif (coord != 0) :
                 if direction == 'left' and self.player_2_position > -2.5 :
                     self.move_2 = -1
                     self.obj_2 = coord
@@ -148,31 +155,6 @@ class Game:
                 elif direction == 'null':
                     self.move_2 = 0
 
-<<<<<<< HEAD
-    def update(self):
-        if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
-
-            # In IA mode, the match history is not registered
-            if self.mode == 2 :
-              self.state = "finished"
-              self.game_manager.remove_game(self.game_id)
-              return
-
-            winner = self.players[0] if self.player_1_score == 3 else self.players[1]
-            loser = self.players[0]  if self.player_1_score != 3 else self.players[1]
-            self.state = winner.id
-            # Send game over message
-            print("Sending game over message to group %s" % self.game_id)
-            async_to_sync(get_channel_layer().group_send)(
-                self.game_id,
-                {
-                    'type': 'game_over',
-                    'message': {
-                        'winner': winner.id
-                    }
-                }
-            )
-=======
     async def update(self):
 
         # WAITING STATE
@@ -190,7 +172,6 @@ class Game:
             if time.time() > self.start_game_at:
                 self.state = "playing"
                 print("Game %s started" % self.game_id)
->>>>>>> origin/master
 
         # PLAYING STATE
         if self.state == "playing":
@@ -209,126 +190,39 @@ class Game:
         if self.ball_position[0] >= 2.3 or self.ball_position[0] <= -2.3:
             self.ball_velocity[0] = -self.ball_velocity[0]
 
-<<<<<<< HEAD
-            # Handle collision with paddles
-            elif(self.ball_position[1] >= 3.4 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
-                if (self.ball_velocity[1] > 0) :
-                    self.ball_velocity[1] = -self.ball_velocity[1]
-                self.ball_velocity[1] *= 1.05
-                if (self.ball_position[1] > 3.5) :
-                    self.ball_position[1] = 3.4
-                self.ball_position[1] = self.ball_position[1] - 0.1
-            elif(self.ball_position[1] <= -3.4 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
-                if (self.ball_velocity[1] < 0) :
-                    self.ball_velocity[1] = -self.ball_velocity[1]
-                self.ball_velocity[1] *= 1.05
-                if (self.ball_position[1] < -3.5) :
-                    self.ball_position[1] = -3.4
-                self.ball_position[1] = self.ball_position[1] + 0.1
-            self.defineNextBounce(self.ball_position[0], self.ball_position[1])
-
-            if (self.move_1 != 0):
-                if (self.move_1 > 0 and self.player_1_position < 2.3):
-                    self.player_1_position += self.paddleSpeed
-                elif (self.move_1 < 0 and self.player_1_position > -2.3):
-                    self.player_1_position -= self.paddleSpeed
-            # if self.mode == 2 and self.move_2 != 0 and (self.obj_2 > self.player_2_position -0.2 and self.obj_2  <= self.player_2_position + 0.1) :
-            # if self.mode == 2 and self.move_2 != 0 and (self.player_2_position - 0.2 < self.ballNextBounce[0] and self.player_2_position + 0.2 > self.ballNextBounce[0]) :
-            #     print("Reset move 2")
-            #     self.move_2 = 0
-            # elif(self.move_2 != 0):
-            #     if (self.move_2 > 0 and self.player_2_position < 2.4):
-            #         self.player_2_position -= self.paddleSpeed
-            #         print("player 2 pos --")
-            #     elif (self.move_2 < 0 and self.player_2_position > -2.4):
-            #         self.player_2_position += self.paddleSpeed
-            #         print("player 2 pos ++")
-            if (self.move_2 != 0):
-                if (self.move_2 > 0 and self.player_2_position < 2.3):
-                    self.player_2_position += self.paddleSpeed
-                elif (self.move_2 < 0 and self.player_2_position > -2.3):
-                    self.player_2_position -= self.paddleSpeed
-            # Handle ball move
-            self.ball_position[0] += self.ball_velocity[0]
-            self.ball_position[1] += self.ball_velocity[1]
-
-            # Detect goal
-            if self.ball_position[1] <= -3.7 or self.ball_position[1] >= 3.7:
-                print("GOAL POSITION : x = ", self.ball_position[0], " y = ", self.ball_position[1])
-                if self.ball_position[1] <= -3.7 :
-                    self.player_1_score += 1
-                    self.resetBall(1)
-                elif self.ball_position[1] >= 3.7:
-                    self.player_2_score += 1
-                    self.resetBall(2)
-            self.send_game_state()
-
-        def gameCountDown(self):
-            countdown = 3
-            while countdown >= 0:
-                async_to_sync(get_channel_layer().group_send)(
-                    self.game_id,
-                    {
-                        'type': 'countdown',
-                        'message': {
-                            'countdown': countdown
-                        }
-                    }
-                )
-                time.sleep(1)  # Wait for 1 second
-                countdown -= 1
-                if (countdown == -1):
-                    async_to_sync(get_channel_layer().group_send)(
-                        self.game_id,
-                        {
-                            'type': 'countdown',
-                            'message':{
-                                'countdown': -1
-                            }
-                        }
-                    )
-        if self.state == "waiting":
-            # If there are enough players, start the game
-            if self.nb_players >= 2:
-              self.send_game_state()
-              gameCountDown(self)
-              self.state = "playing"
-              self.launch_time = time.time()
-            self.send_game_state()
-=======
         # Handle collision with paddles
-        elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.3 and self.ball_position[0] < self.player_1_position + 0.3) :
-            self.dy = -self.dy
+        elif(self.ball_position[1] >= 3.4 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
             if (self.ball_velocity[1] > 0) :
                 self.ball_velocity[1] = -self.ball_velocity[1]
-            self.ball_velocity[1] *= 1.1
-            self.ball_position[1] = self.ball_position[1] - 0.1
-        elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.3 and self.ball_position[0] < self.player_2_position + 0.3)) :
-            self.dy = -self.dy
+            self.ball_velocity[1] *= 1.05
+            if (self.ball_position[1] > 3.5) :
+                self.ball_position[1] = 3.4
+            # self.ball_position[1] = self.ball_position[1] - 0.1
+        elif(self.ball_position[1] <= -3.4 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
             if (self.ball_velocity[1] < 0) :
                 self.ball_velocity[1] = -self.ball_velocity[1]
-            self.ball_velocity[1] *= 1.1
-            self.ball_position[1] = self.ball_position[1] + 0.1
+            self.ball_velocity[1] *= 1.05
+            if (self.ball_position[1] < -3.5) :
+                self.ball_position[1] = -3.4
+            # self.ball_position[1] = self.ball_position[1] + 0.1
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])
-
         if (self.move_1 != 0):
             if (self.move_1 > 0 and self.player_1_position < 2.3):
                 self.player_1_position += self.paddleSpeed
             elif (self.move_1 < 0 and self.player_1_position > -2.3):
                 self.player_1_position -= self.paddleSpeed
-        if self.mode == 2 and self.move_2 != 0 and (self.obj_2 > self.player_2_position -0.2 and self.obj_2  <= self.player_2_position + 0.1) :
-            self.move_2 = 0
-        elif(self.move_2 != 0):
-            if (self.move_2 > 0 and self.player_2_position < 2.4):
-                self.player_2_position -= self.paddleSpeed
-            elif (self.move_2 < 0 and self.player_2_position > -2.4):
+        if (self.move_2 != 0):
+            if (self.move_2 > 0 and self.player_2_position < 2.3):
                 self.player_2_position += self.paddleSpeed
+            elif (self.move_2 < 0 and self.player_2_position > -2.3):
+                self.player_2_position -= self.paddleSpeed
         # Handle ball move
         self.ball_position[0] += self.ball_velocity[0]
         self.ball_position[1] += self.ball_velocity[1]
 
         # Detect goal
         if self.ball_position[1] <= -3.7 or self.ball_position[1] >= 3.7:
+            # print("GOAL POSITION : x = ", self.ball_position[0], " y = ", self.ball_position[1])
             if self.ball_position[1] <= -3.7 :
                 self.player_1_score += 1
                 self.resetBall(1)
@@ -342,7 +236,7 @@ class Game:
             self.state = "finished"
             self.game_manager.remove_game(self.game_id)
             return
-        
+
         winner = self.players[0] if self.player_1_score == 3 else self.players[1]
         loser = self.players[0]  if self.player_1_score != 3 else self.players[1]
         self.state = winner.id
@@ -358,7 +252,6 @@ class Game:
                 }
             }
         ))
->>>>>>> origin/master
 
         # Send request to save game history
         print("Sending request to save game history")
@@ -500,24 +393,19 @@ class GameManager:
             await asyncio.gather(*tasks)
             elapsed = asyncio.get_event_loop().time() - start_time
             sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
-<<<<<<< HEAD
-            # sleep_time = 0.1
-            time.sleep(sleep_time)
-=======
             await asyncio.sleep(sleep_time)
 
     def update_games(self):
         # Set up a new event loop for this thread
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        
+
         try:
             # Run the main loop of the game updates
             loop.run_until_complete(self.async_update_games())
         finally:
             # Ensure the loop is closed at the end
             loop.close()
->>>>>>> origin/master
 
     def update_tournaments(self):
         while True:
