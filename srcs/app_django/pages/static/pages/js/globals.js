@@ -28,6 +28,13 @@ const addButton = document.getElementById('add_button');
 var compteur_notifs = document.getElementById("nb_notifs").textContent;
 const baseSrc = document.getElementById("result_avatar")?.src;
 
+// ------------ TOURNAMENT ELEMENTS ---------
+var tournamentPlayersList;
+var tournamentSemiFinals;
+var tournamentFinal;
+var tournamentSmallFinal;
+var tournamentRanking;
+
 // ------------ GAME VARIABLES ---------
 var socket;
 var gamedata;
