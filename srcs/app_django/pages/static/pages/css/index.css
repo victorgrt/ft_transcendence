@@ -73,22 +73,22 @@ body {
 
 /* change profile settings div */
 #change_prof{
-	transition: opacity 2s ease-out;
-	visibility: hidden;
-	opacity: 0;
-	background-color: rgba(24, 24, 24, 1);
-	color: white;
-	border: 2px solid rgba(40, 40, 40, 1);
-	border-radius: 10%;
-	position: absolute;
-	right: 0;
+    transition: opacity 2s ease-out;
+    visibility: hidden;
+    opacity: 0;
+    background-color: rgba(24, 24, 24, 1);
+    color: white;
+    border: 2px solid rgba(40, 40, 40, 1);
+    border-radius: 10%;
+    position: absolute;
+    right: 0;
     top: 0;
-    margin-top: 5%;
+    margin-top: 10%;
     margin-right: 20%;
-	height: 50%;
-	width: 15%;
-	display: flex;
-	flex-direction: column;
+    height: 60%;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
 }
 
 #top{
@@ -419,23 +419,21 @@ input[type="password"] {
 /* STATS */
 #user_stats{
 	opacity: 0;
-	transition: opacity 1s ease-out;
-
-	visibility: hidden;
-
-	color: white;
-	font-size: large;
-	font-weight: bold;
-	text-align: center;
-
-	/* border: 2px solid rgba(40, 40, 40, 1); */
-	/* border-radius: 7vh; */
-    width: 80%;
-	height: 50%;
+    transition: opacity 1s ease-out;
+    visibility: hidden;
+    color: white;
+    font-size: large;
+    font-weight: bold;
+    text-align: center;
+    width: 50%;
+    border: 2px solid rgba(40, 40, 40, 1);
     position: absolute;
-
-	background-color: rgba(24, 24, 24, 0.95);
-	display: flex;
+    background-color: rgba(24, 24, 24, 0.95);
+    display: flex;
+    justify-content: flex-start;
+    align-content: flex-start;
+    flex-direction: row;
+    align-items: center;
 }
 
 #leftstats
@@ -521,7 +519,7 @@ td{
 	bottom: 0;
 	right: 0;
 	margin: 0;
-	width: 30%;
+	width: 25%;
 }
 
 #notifications{
@@ -531,7 +529,7 @@ td{
 	opacity: 0;
 	text-align: center;
 	position: absolute;
-	width: 30%;
+	width: 25%;
 	height: 40%;
 	right: 0;
 	bottom: 0; 

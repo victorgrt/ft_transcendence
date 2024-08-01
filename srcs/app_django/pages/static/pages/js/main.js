@@ -6,7 +6,7 @@ var menuPongVisible;
 var notifsVisible = false;
 var paramsVisible = false;
 var statsVisible = false;
-var friendsVisible = false;
+var friendsVisible = true;
 
 var isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom;
 var isZooming = false;
@@ -14,6 +14,44 @@ var isZooming = false;
 const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
 const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 const duration = 2000; //Duree du zoom
+
+function hideEverything(){
+    if (registerVisible === true)
+        {
+            hideElement(registerForm);
+            registerVisible = false;
+        }
+        if (loginVisible === true)
+        {
+            hideElement(loginForm);
+            loginVisible = false;
+        }
+        if (menuPongVisible === true)
+        {
+            hideElement(menuPongDiv);
+            menuPongVisible = false;
+        }
+        if (statsVisible === true)
+        {
+            hideElement(statsDiv);
+            statsVisible = false;
+        }
+        if (friendsVisible === true)
+        {
+            hideElement(friendsDiv);
+            friendsVisible = false;
+        }
+        if (paramsVisible === true)
+        {
+            hideElement(paramsDiv);
+            paramsVisible = false;
+        }
+        if (matchHistoryBool === true)
+        {
+            hideElement(matchHistoryDiv);
+            matchHistoryBool = false;
+        }
+}
 
 //=== ZOOM INTO OBJECTS ===//
 function zoomToCoordinates(clickCoordinates) {
@@ -111,6 +149,7 @@ function zoomToCoordinates(clickCoordinates) {
                     controls.target.x = -targetPosition.x;
                     controls.target.y = targetPosition.y;
                     controls.target.z = targetPosition.z;
+                    hideEverything();
                     menuPongVisible = true;
                     showElement(menuPongDiv);
                     loadMenuPong();
@@ -153,7 +192,6 @@ function goToRegister() {
     registerForm.style.opacity = '1';
     registerForm.style.visibility = 'visible';
     registerForm.style.z_index = '2';
-    // showElement(goBackButton);
 }
 
 function zoomToPC() {
@@ -190,13 +228,9 @@ function centerRegisterForm()
     contentdiv.style.display = 'flex';
     contentdiv.style.justify_content = 'center';
     contentdiv.style.align_items = 'center';
-
     registerForm.style.width = '80%';
-    // registerForm.style.position = 'absolute';
-
     loginForm.style.position = 'absolute';
 }
-
 
 function centerLoginForm()
 {
@@ -210,28 +244,13 @@ function centerLoginForm()
     registerForm.style.position = 'absolute';
 }
 
-function showHideElement(element)
-{
-	console.log("in showHideElement");
-	if (element.style.visibility === 'visible')
-	{	
-		element.style.visibility = 'hidden';
-		element.style.opacity = '0';
-	}
-	else
-	{	
-		element.style.visibility = 'visible';
-		element.style.opacity = '1';
-	}
-}
-
 function showElement(element)
 {
     if (!element)
         return;
     element.style.opacity = '1';
     element.style.visibility = 'visible';
-    element.style.z_index = '2';
+    element.style.z_index = '4';
 }
 
 function hideElement(element) {
@@ -247,9 +266,7 @@ function hideElement(element) {
     console.log("z_index assigne :", element.style.z_index);
 }
 
-// SEEMS LIKE NOT NEEDED BUT KEEP IT HERE JUST IN CASE
 function resetStyleForms(){
-    // RESET register form style
     contentdiv.style.removeProperty('display');
     contentdiv.style.removeProperty('align_items');
     contentdiv.style.removeProperty('justify_content');
@@ -280,6 +297,26 @@ function zoomBack() {
     {
         hideElement(menuPongDiv);
         menuPongVisible = false;
+    }
+    if (statsVisible === true)
+    {
+        hideElement(statsDiv);
+        statsVisible = false;
+    }
+    if (friendsVisible === true)
+    {
+        hideElement(friendsDiv);
+        friendsVisible = false;
+    }
+    if (paramsVisible === true)
+    {
+        hideElement(paramsDiv);
+        paramsVisible = false;
+    }
+    if (matchHistoryBool === true)
+    {
+        hideElement(matchHistoryDiv);
+        matchHistoryBool = false;
     }
     hideElement(goBackButton);
     if (isZoomed === false)
@@ -326,9 +363,7 @@ function showStats(){
         return ;
     }
     showElement(statsDiv);
-    // statsDiv.style.visibility = 'visible';
-    // statsDiv.style.opacity = '1';
-    // statsDiv.style.z_index = '2';
+    showElement(goBackButton);
     statsVisible = true;
 }
 
@@ -340,16 +375,13 @@ function showFriends(){
         friendsDiv.style.visibility = '0';
         friendsDiv.style.opacity = '0';
         friendsDiv.style.z_index = '-2';
-        element.style.z_index = '-2';
         friendsVisible = false;
         return;
     }
     showElement(friendsDiv);
     element.style.z_index = '2';
-    // friendsDiv.style.z_index = '2';
-    // friendsDiv.style.visibility = 'visible';
-    // friendsDiv.style.opacity = '1';
     friendsVisible = true;
+    showElement(goBackButton);
 }
 
 function showParams()
@@ -364,8 +396,6 @@ function showParams()
         return;
     }
     showElement(paramsDiv);
-    // paramsDiv.style.z_index = '2';
-    // paramsDiv.style.visibility = 'visible';
-    // paramsDiv.style.opacity = '1';
+    showElement(goBackButton);
     paramsVisible = true;
 }

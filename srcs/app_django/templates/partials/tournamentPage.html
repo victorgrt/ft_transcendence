@@ -10,54 +10,64 @@
 
     <div id="tournament_players" class="tournament-element ">
         <div class="tournament_category">PLAYERS</div>
-        {% for player in tournament.players.all %}
-          <div class="player">
-              <span class="player_name">{{player.username}}</span>
-          </div>
-        {% endfor %}
+        <div id = "tournament_players_list">
+            {% for player in tournament.players.all %}
+            <div class="player">
+                <span class="player_name">{{player.username}}</span>
+            </div>
+            {% endfor %}
+        </div>
     </div>
 
     <div id="semi-finals-games" class="tournament-element ">
         <div class="tournament_category">Semi-Finals Games</div>
-        {% for game in tournament.semi_final_games.all %}
-            {% include 'partials/gameElement.html' %}
-        {% endfor %}
+        <div id = "tournament_semi_finals">
+            {% for game in tournament.semi_final_games.all %}
+                {% include 'partials/gameElement.html' %}
+            {% endfor %}
+        </div>
     </div>
 
     <div id="final-game" class="tournament-element ">
         <div class="tournament_category">Final Game</div>
-        {% if tournament.final_game %}
-            {% with game=tournament.final_game %}
-                {% include 'partials/gameElement.html' %}
-            {% endwith %}
-        {% endif %}
+        <div id = "tournament_final">
+            {% if tournament.final_game %}
+                {% with game=tournament.final_game %}
+                    {% include 'partials/gameElement.html' %}
+                {% endwith %}
+            {% endif %}
+        </div>
     </div>
 
     <div id="small-final-game" class="tournament-element ">
         <div class="tournament_category">Small Final Game</div>
-        {% if tournament.small_final_game %}
-            {% with game=tournament.small_final_game %}
-                {% include 'partials/gameElement.html' %}
-            {% endwith %}
-        {% endif %}
+        <div id = "tournament_small_final">
+            {% if tournament.small_final_game %}
+                {% with game=tournament.small_final_game %}
+                    {% include 'partials/gameElement.html' %}
+                {% endwith %}
+            {% endif %}
+        </div>
     </div>  
 
     <div id="tournament-rankings" class="tournament-element ">
         <div class="tournament_category">Rankings</div>
-        {% for ranking in tournament.rankings.all %}
-            <div class="ranking">
-                <span class="rank">
-                    {% if ranking.rank == 1 %}
-                    🥇
-                    {% elif ranking.rank == 2 %}
-                    🥈
-                    {% elif ranking.rank == 3 %}
-                    🥉
-                    {% else %}{{ ranking.rank }}
-                    {% endif %}</span>
-                <span class="player_name">{{ ranking.player.username }}</span>
-            </div>
-        {% endfor %}
+        <div id = "tournament_rankings_list">
+            {% for ranking in tournament.rankings.all %}
+                <div class="ranking">
+                    <span class="rank">
+                        {% if ranking.rank == 1 %}
+                        🥇
+                        {% elif ranking.rank == 2 %}
+                        🥈
+                        {% elif ranking.rank == 3 %}
+                        🥉
+                        {% else %}{{ ranking.rank }}
+                        {% endif %}</span>
+                    <span class="player_name">{{ ranking.player.username }}</span>
+                </div>
+            {% endfor %}
+        </div>
     </div>
 
 </div>

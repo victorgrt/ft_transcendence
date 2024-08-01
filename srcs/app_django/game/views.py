@@ -20,13 +20,6 @@ def finished_match(request):
     player_2_score = request.POST.get('player_2_score')
     game_id = request.POST.get('game_id')
 
-    print("winner_id")
-    print(winner_id)
-    print(player_1_id)
-    print(player_2_id)
-    print(player_1_score)
-    print(player_2_score)
-
     # Create a new record in the MatchHistory model
     user_winner = get_user_model().objects.get(id=winner_id)
     user_player_1 = get_user_model().objects.get(id=player_1_id)

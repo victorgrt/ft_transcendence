@@ -1,7 +1,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         var ws_scheme = window.location.protocol == "https:" ? "wss" : "ws";
-        var ws_path = ws_scheme + '://' + window.location.host + '/ws/notifications/';
+        var ws_path = ws_scheme + '://' + window.location.host + '/wss/notifications/';
         var websocket = new WebSocket(ws_path);
 
         websocket.onopen = function(event) {

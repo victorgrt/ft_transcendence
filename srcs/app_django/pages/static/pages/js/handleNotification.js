@@ -17,6 +17,8 @@ async function showNotifs() {
             const notifbtn = document.getElementById("notifbtn");
             hideElement(notifbtn);
             showElement(notifsDiv);
+            notifsDiv.style.zIndex = '2 ';
+            console.log("ZINDEX:", notifsDiv.style.z_index);
             notifsVisible = true;
             handleNotification();
         } else {
@@ -37,7 +39,8 @@ async function acceptNotif(id){
     {
         console.log("PLAY on session:", notif_to_accept.message.session_id);
         loadContent('/pong/' + notif_to_accept.message.session_id + '/');
-        removeNotificationFromDom(notif_to_accept.notification_id);
+		denyNotification(notif_to_accept);
+        // removeNotificationFromDom(notif_to_accept.notification_id);
         return ;
     }
     else if (notif_to_accept.type_of_notification === 'friend')
@@ -133,7 +136,7 @@ $(document).ready(function() {
                     loadContent('/pong/' + response.session_id + '/');
                 },
                 error: function(response) {
-                    alert('Error: ' + response.statusText);
+					// alert('Error: ' + response.statusText);
                 }
             });
             return;
@@ -207,6 +210,7 @@ async function handleNotification() {
     var size = notifs_fetched.notifications.length;
     console.log("SIZE : ", size);
     var i = 0;
+    document.getElementById("notiftable").innerHTML = "";
     while (i < size) {
         console.log("i:", i);
         var type = "default";
@@ -217,7 +221,7 @@ async function handleNotification() {
 
         var tr = document.createElement("tr");
         tr.id = notifs_fetched.notifications[i].notification_id;
-
+        tr.classList.add("notifs_tr");
         // Create 'from user' data cell
         var tdFromUser = document.createElement("td");
         tdFromUser.id = "notiftd_from_notif";
@@ -311,5 +315,8 @@ async function denyNotification(notif_to_deny){
 
 function reloadNotifs(){
     hideNotifs();
+    // document.getElementById("notiftable").innerHTML = "";
+    // showNotifs();
+    // showElement(notifsDiv);
     showNotifs();
 }

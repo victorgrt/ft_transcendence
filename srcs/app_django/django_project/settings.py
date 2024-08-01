@@ -117,12 +117,12 @@ DATABASES = {
         #Update database
         #python manage.py makemigrations
         #python manage.py migrate
-        'ENGINE':   'django.db.backends.postgresql',
+        'ENGINE':   'django.db.backends.sqlite3',
         'NAME':     'trantran',
-        'USER':     'admin',
-        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'default_password'),
-        'HOST':     'postgres',
-        'PORT':     '5432',
+    #     'USER':     'admin',
+    #     'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'default_password'),
+    #     'HOST':     'postgres',
+    #     'PORT':     '5432',
     }
 
 }

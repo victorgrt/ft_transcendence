@@ -5,15 +5,40 @@
 - CHECK handle trying to connect to session where already joined
 - Tournaments socket
 - handle trying to GET a pong page when game does not exist
-- navigation back and forth
-- replace all links by loadContent or add event listener
 - polish tournaments page
 - Checker tous les appels asynchrones dans game_manager, tournament et games --> tous doivent être protégés par des locks
+- Bug potentiel si users se connectent pas dans le bon ordre jeu tournois
 
+NAVIGATION 
+- CHECK replace all links by loadContent or add event listener
+- navigation back and forth
+- back to tournament
 - make background unclickable while tournament or menu opened
+- Leave Game, Go back, Leave tournament
 
 GAME : 
 - fix bug countdown
 - Jeu en local !! 
+- implement game is finished
+- Tournament players issues
+- User not found when game request (user exists)
+- Increment 
+
+SECU : 
+- Renvoyer vers home page si user pas connecte
 
 - remplacer page d'erreur par défaut 404 etc ? 
+
+- Changer username + check que username pas deja pris
+- Check toutes les erreur 500 et gere dans back :
+    - friends requests
+
+
+
+
+INFO:     127.0.0.1:50888 - "GET /staticfiles/pages/css/tournamentPage.css HTTP/1.1" 304 Not Modified
+/mnt/nfs/homes/teliet/.local/lib/python3.10/site-packages/django/http/response.py:517: Warning: StreamingHttpResponse must consume synchronous iterators in order to serve them asynchronously. Use an asynchronous iterator instead.
+  warnings.warn(
+INFO:     127.0.0.1:50874 - "GET /staticfiles/pages/css/notif.css HTTP/1.1" 304 Not Modified
+
+Error while sending game state : Unexpected ASGI message 'websocket.send', after sending 'websocket.close' or response already completed.

@@ -31,11 +31,11 @@ const page_scripts = {
     '/pong/' : pongPageScripts,
 	'' : loadHome,
     '/pongIA/' : pongIAPageScripts,
-    '/tournament/' : connectToTournament,
+    '/tournament/' : loadTournament,
 }
 
 function loadContent(url, pushState = true) {
-    console.warn(" LOADIG CONTENT BOY")
+    console.warn(" LOADING CONTENT BOY : ", url);
     if (url == '/')
         url = ""
 
@@ -76,3 +76,21 @@ function loadContent(url, pushState = true) {
         .catch(error => console.error('Error loading content:', error));
 }
 
+// Prevemt default link behavior and call the loadContent function instead
+document.addEventListener('click', function(event) {
+    // Check if the clicked element is an <a> tag
+    let target = event.target;
+    while (target != null && target.tagName !== 'A') {
+        target = target.parentElement;
+    }
+    if (target && target.tagName === 'A' && target.href) {
+        // Prevent the default link behavior
+        event.preventDefault();
+
+        // Extract the URL path from the href attribute
+        const urlPath = new URL(target.href).pathname;
+
+        // Call the loadContent function with the extracted URL path
+        loadContent(urlPath);
+    }
+});
