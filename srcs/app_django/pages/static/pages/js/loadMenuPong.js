@@ -4,9 +4,10 @@ function loadMenuPong() {
   document.getElementById('createTournamentBtn').addEventListener('click', handleCreateTournament);
   document.getElementById('createSessionBtn').addEventListener('click', createGame);
   document.getElementById('IAButton').addEventListener('click', createGameIA);
-  document.getElementById('joinSessionBtn').addEventListener('click', async function() 
+  document.getElementById('LocalButton').addEventListener('click', createGameLocal);
+  document.getElementById('joinSessionBtn').addEventListener('click', async function()
     {
-      // First try to connect to join the game 
+      // First try to connect to join the game
       const sessionId = document.getElementById('sessionIdInput').value;
 
       // Try to join the session with the given ID

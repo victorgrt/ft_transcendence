@@ -1,4 +1,4 @@
-function launchGameIA()
+function launchGameLocal()
 {
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
@@ -86,18 +86,23 @@ function launchGameIA()
         sendPaddleMovement("up");
     });
 
-    function sendPaddleMovement(state)
+    function sendPaddleMovement()
     {
-        if (state == "up")
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'null', coord : 0 }));
+        // Player 1 controls
         if ('a' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left', coord : 0 }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left', coord: 0 }));
         else if ('d' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right', coord : 0 }));
-        else if ('ArrowLeft' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left', coord : 0 }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right', coord: 0 }));
+        else
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'null', coord: 0 }));
+
+        // Player 2 controls
+        if ('ArrowLeft' in keys)
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left', coord: 0 }));
         else if ('ArrowRight' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right', coord : 0 }));
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right', coord: 0 }));
+        else
+            socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null', coord: 0 }));
     }
 
     function updateState()
@@ -143,7 +148,7 @@ function launchGameIA()
         {
             if (set_camera == 0)
             {
-                socket.send(JSON.stringify({action : 'IA_game'}));
+                socket.send(JSON.stringify({action : 'local'}));
                 camera.position.set(0, 3, 7); // Position behind the red paddle
                 camera.lookAt(0, 0, 0); // The camera looks at the center of the scene
                 controls.update(); // Update controls after setting the camera position

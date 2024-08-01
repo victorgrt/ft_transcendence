@@ -122,6 +122,10 @@ class Game:
         self.nb_players = 2
         self.mode = 2
 
+    def checkLocalMode(self, game_id) :
+        self.nb_players = 2
+        self.mode = 3
+
     def movePaddle(self, game_id, player, direction, coord) :
         if player == 1 :
             if direction == 'left' and self.player_1_position > -2.5 :
@@ -232,7 +236,7 @@ class Game:
 
     def handle_game_over(self):
         # In IA mode, the match history is not saved
-        if self.mode == 2 :
+        if self.mode == 2 or self.mode == 3:
             self.state = "finished"
             self.game_manager.remove_game(self.game_id)
             return
@@ -290,6 +294,26 @@ class Game:
                           'nb_players': self.nb_players,
                           'player_1_login': self.players[0].username,
                           'player_2_login': "IA",
+                          'ball_position': self.ball_position,
+                          'ball_velocity': self.ball_velocity,
+                          'player_1_position': self.player_1_position,
+                          'player_2_position': self.player_2_position,
+                          'player_id': 1,
+                          'player_1_score': self.player_1_score,
+                          'player_2_score': self.player_2_score,
+                          'ballNextBounce': self.ballNextBounce,
+                              # Add more game state information as needed
+                      }
+              ))
+        if (self.mode == 3):
+            if self.consumers[0]:
+                asyncio.create_task(self.consumers[0].send_game_state_directly(
+                  {
+                          'state': self.state,
+                          'countdown': self.countdown,
+                          'nb_players': self.nb_players,
+                          'player_1_login': self.players[0].username,
+                          'player_2_login': "Ton Pote",
                           'ball_position': self.ball_position,
                           'ball_velocity': self.ball_velocity,
                           'player_1_position': self.player_1_position,
@@ -360,6 +384,11 @@ class GameManager:
         with self.lock :
             game = self.get_game(game_id)
             game.checkIAMode(game_id)
+
+    def LocalMode(self, game_id) :
+        with self.lock :
+            game = self.get_game(game_id)
+            game.checkLocalMode(game_id)
 
     # Tournament management
 

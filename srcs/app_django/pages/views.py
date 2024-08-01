@@ -81,7 +81,7 @@ def pong(request, session_id):
 
     # Prepare the context with the game_session object
     context = {'game_session': game_session, 'authorized': authorized}
-    
+
     # Render the template with the context
     if is_ajax(request):
         return render(request, 'partials/pong.html', context)
@@ -93,6 +93,14 @@ def pongIA(request, session_id):
     context = {'session_id': session_id}
     if is_ajax(request):
         return render(request, 'partials/pongIA.html', context)
+    else:
+        return render(request, 'base.html', {'context': session_id})
+
+# LOCAL game page
+def pongLocal(request, session_id):
+    context = {'session_id': session_id}
+    if is_ajax(request):
+        return render(request, 'partials/pong_local.html', context)
     else:
         return render(request, 'base.html', {'context': session_id})
 

@@ -32,7 +32,7 @@
 	<!-- USER STATS -->
     <div id="user_stats" data-username="{{ user.username }}"
 	data-avatar="{{ user.get_avatar_name }}" data-friends="{{ user.friends }}"
-	data-win="{{ user.win }}" data-lost="{{ user.lost }}"> 
+	data-win="{{ user.win }}" data-lost="{{ user.lost }}">
 	</div>
 	<!-- FRIENDS -->
 	{% comment %} <div id="friends"> </div> {% endcomment %}
@@ -47,7 +47,7 @@
             <div class="left">
                 <h1 class="pong_title">42 PONG</h1>
                 <button id = "IAButton" class="needed_hover2" href="/pongIA/" >IA</button >
-                <button class="needed_hover2" href="/pong/">1v1</button >
+                <button id = "LocalButton" class="needed_hover2" href="/pong_local/">1v1</button >
                 <button class="needed_hover2" href="/pong/">Tournois</button >
                 <button class="needed_hover2" id="createSessionBtn">Create Game Session</button>
                 <button class="needed_hover2" id="joinSessionBtn" href="join_session/{{ user.id }}/">Join</button>
@@ -370,6 +370,8 @@
 <script src="{% static 'pages/js/pong.js' %}"></script>
 <!-- PONG IA -->
 <script src="{% static 'pages/js/pongIA.js' %}"></script>
+<!-- PONG local -->
+<script src="{% static 'pages/js/pong_local.js' %}"></script>
 <!-- LOGIN FORM SCRIPT -->
 <script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
 <!-- REGISTER FORM SCRIPT -->
