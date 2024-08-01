@@ -48,54 +48,51 @@ class Game:
         self.game_over = False
         self.state = "waiting"  # waiting, playing, Player1 or Player2 for winner
 
-    def defineNextNextBounce(self, x, y, ball_tmp_velocity_x, ball_tmp_velocity_y):
-        x2 = x
-        y2 = y
-        if (x2 >= 2.5 or x2 <= 2.5) :
-            ball_tmp_velocity_x = -ball_tmp_velocity_x
-        if (y2 >= 2.5 or y2 <= 2.5) :
-            ball_tmp_velocity_y = ball_tmp_velocity_y
-        while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
-            x2 += ball_tmp_velocity_x / 10
-            y2 += ball_tmp_velocity_y / 10
-        if (x2 > 2.5) :
-            x2 = 2.5
-        elif (x2 < -2.5) :
-            x2 = -2.5
-        if (y2 > 2.5) :
-            y2 = 2.5
-        elif (y2 < -2.5) :
-            y2 = -2.5
-        self.ballNextBounce[0] = x2
-        self.ballNextBounce[1] = y2
+    # def defineNextNextBounce(self, x2, y2, ball_tmp_velocity_x, ball_tmp_velocity_y):
+    #     if (x2 >= 2.5 or x2 <= 2.5) :
+    #         ball_tmp_velocity_x = -ball_tmp_velocity_x
+    #     if (y2 >= 2.5 or y2 <= 2.5) :
+    #         ball_tmp_velocity_y = -ball_tmp_velocity_y
+    #     while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
+    #         x2 += ball_tmp_velocity_x / 10
+    #         y2 += ball_tmp_velocity_y / 10
+    #     if (x2 > 2.5) :
+    #         x2 = 2.5
+    #     elif (x2 < -2.5) :
+    #         x2 = -2.5
+    #     if (y2 > 3.7) :
+    #         y2 = 3.7
+    #     elif (y2 < -3.7) :
+    #         y2 = -3.7
+    #     self.ballNextBounce[0] = x2
+    #     self.ballNextBounce[1] = y2
 
     def defineNextBounce(self, x, y):
-        if (time.time() - self.old_next_bounce < 1) :
-            return
-        self.old_next_bounce = time.time()
+        # if (time.time() - self.old_next_bounce < 1) :
+        #     return
+        # self.old_next_bounce = time.time()
         x2 = x
         y2 = y
         while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
             x2 += self.ball_velocity[0] / 10
             y2 += self.ball_velocity[1] / 10
-
         if (x2 > 2.5) :
             x2 = 2.5
         elif (x2 < -2.5) :
             x2 = -2.5
-        if (y2 > 2.5) :
-            y2 = 2.5
-        elif (y2 < -2.5) :
-            y2 = -2.5
+        if (y2 > 3.7) :
+            y2 = 3.7
+        elif (y2 < -3.7) :
+            y2 = -3.7
         self.ballNextBounce[0] = x2
         self.ballNextBounce[1] = y2
-        count = 5
-        while (self.ballNextBounce[1] > -2.5 and count > 0) :
-            tmp_x = self.ballNextBounce[0]
-            tmp_y = self.ballNextBounce[1]
-            self.defineNextNextBounce(x2, y2, tmp_x, tmp_y)
-            count = count - 1
-            print ("BALL NEXT BOUCE N - ", count , " = ", self.ballNextBounce[0], ", ", self.ballNextBounce[1])
+        # count = 5
+        # while (self.ballNextBounce[1] >= -3.7 and count > 0) :
+        #     tmp_x = self.ball_velocity[0]
+        #     tmp_y = self.ball_velocity[1]
+        #     self.defineNextNextBounce(self.ballNextBounce[0], self.ballNextBounce[1], tmp_x, tmp_y)
+        #     count = count - 1
+        #     print ("BALL NEXT BOUCE N - ", count , " = ", self.ballNextBounce[0], ", ", self.ballNextBounce[1])
 
     def add_player(self, consumer, user):
         # If player is not subscribed to the game, add it
@@ -206,14 +203,14 @@ class Game:
             elif(self.ball_position[1] >= 3.4 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
                 if (self.ball_velocity[1] > 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
-                # self.ball_velocity[1] *= 1.1
+                self.ball_velocity[1] *= 1.05
                 if (self.ball_position[1] > 3.5) :
                     self.ball_position[1] = 3.4
                 self.ball_position[1] = self.ball_position[1] - 0.1
             elif(self.ball_position[1] <= -3.4 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
                 if (self.ball_velocity[1] < 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
-                # self.ball_velocity[1] *= 1.1
+                self.ball_velocity[1] *= 1.05
                 if (self.ball_position[1] < -3.5) :
                     self.ball_position[1] = -3.4
                 self.ball_position[1] = self.ball_position[1] + 0.1
@@ -246,6 +243,7 @@ class Game:
 
             # Detect goal
             if self.ball_position[1] <= -3.7 or self.ball_position[1] >= 3.7:
+                print("GOAL POSITION : x = ", self.ball_position[0], " y = ", self.ball_position[1])
                 if self.ball_position[1] <= -3.7 :
                     self.player_1_score += 1
                     self.resetBall(1)
