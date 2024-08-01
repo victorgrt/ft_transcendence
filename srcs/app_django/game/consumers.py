@@ -48,7 +48,7 @@ async def get_user_from_session_key(session_key):
         return user
     except ObjectDoesNotExist:
         return None
-    
+
 async def get_game_tournament(game_id) :
     try :
         return await get_game_DB(game_id)
@@ -95,7 +95,7 @@ class PongConsumer(AsyncWebsocketConsumer):
         print(f"Connecting to game {self.game_id}")
         self.game = game_manager.get_game(game_id)    # Get the game object from game manager
         gameSession = await get_game_DB(game_id)      # Get the game data from the database
-        
+
         # check that the game exists
         if mode == 'pvp' and not gameSession:
             print(f"Game {game_id} not found in DB. Closing connection.")
@@ -122,7 +122,7 @@ class PongConsumer(AsyncWebsocketConsumer):
 
 
     async def disconnect(self, close_code):
-        # Remove player from game 
+        # Remove player from game
         if self.game:
             self.game.remove_player(self)
         if self.is_added_to_group:
@@ -140,6 +140,9 @@ class PongConsumer(AsyncWebsocketConsumer):
             game_manager.handle_paddle_move(self.game_id, player, direction, coord)
         elif action == 'IA_game' :
             game_manager.IAMode(self.game_id)
+            return
+        elif action == 'local' :
+            game_manager.LocalMode(self.game_id)
             return
         else :
             self.send(text_data=json.dumps({

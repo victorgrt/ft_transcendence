@@ -24,6 +24,13 @@ function pongIAPageScripts()
     launchGameIA();
 }
 
+function pongLocalPageScripts()
+{
+    connectToGame(mode='local');
+    // connectToGame();
+    launchGameLocal();
+}
+
 
 const page_scripts = {
     // 'gameSession' : loadGameSession,
@@ -31,6 +38,7 @@ const page_scripts = {
     '/pong/' : pongPageScripts,
 	'' : loadHome,
     '/pongIA/' : pongIAPageScripts,
+    '/pong_local/' :pongLocalPageScripts,
     '/tournament/' : loadTournament,
 }
 
@@ -44,6 +52,8 @@ function loadContent(url, pushState = true) {
         page_url = '/pong/'
     else if (url.includes('/pongIA/'))
         page_url = '/pongIA/'
+    else if (url.includes('/pong_local/'))
+        page_url = '/pong_local/'
     else if (url.includes('/tournament/'))
         page_url = '/tournament/'
     else

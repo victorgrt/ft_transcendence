@@ -229,6 +229,21 @@ function connectToGame(mode = "pvp") {
         });
 }
 
+async function createGameLocal()
+{
+    console.log("createGame");
+	try
+    {
+		const response = await fetch('/create_session/');
+		const data = await response.json();
+		loadContent('/pong_local/' + data.session_id + '/');
+	}
+    catch (error)
+    {
+		console.error('Error creating session or connecting WebSocket:', error);
+	}
+}
+
 async function createGameIA()
 {
     console.log("createGame");

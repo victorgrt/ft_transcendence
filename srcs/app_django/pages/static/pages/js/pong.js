@@ -151,7 +151,6 @@ function launchGame()
 
     function animate()
     {
-        showElement(leaveGameButton);
         if (gamedata)
         {
             if (set_camera == 0)
