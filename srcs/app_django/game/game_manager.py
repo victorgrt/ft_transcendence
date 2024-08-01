@@ -35,7 +35,8 @@ class Game:
         self.ballNextBounce = [0, 0]  #pas modifier
         self.player_1_position = 0
         self.player_2_position = 0
-        # self.old_next_bounce = currentTime - launch_date) % 1000 < 50
+        self.launch_time = 0
+        self.old_next_bounce = (time.time() - self.launch_time)
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.move_1 = 0
         self.move_2 = 0
@@ -47,7 +48,31 @@ class Game:
         self.game_over = False
         self.state = "waiting"  # waiting, playing, Player1 or Player2 for winner
 
+    def defineNextNextBounce(self, x, y, ball_tmp_velocity_x, ball_tmp_velocity_y):
+        x2 = x
+        y2 = y
+        if (x2 >= 2.5 or x2 <= 2.5) :
+            ball_tmp_velocity_x = -ball_tmp_velocity_x
+        if (y2 >= 2.5 or y2 <= 2.5) :
+            ball_tmp_velocity_y = ball_tmp_velocity_y
+        while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
+            x2 += ball_tmp_velocity_x / 10
+            y2 += ball_tmp_velocity_y / 10
+        if (x2 > 2.5) :
+            x2 = 2.5
+        elif (x2 < -2.5) :
+            x2 = -2.5
+        if (y2 > 2.5) :
+            y2 = 2.5
+        elif (y2 < -2.5) :
+            y2 = -2.5
+        self.ballNextBounce[0] = x2
+        self.ballNextBounce[1] = y2
+
     def defineNextBounce(self, x, y):
+        if (time.time() - self.old_next_bounce < 1) :
+            return
+        self.old_next_bounce = time.time()
         x2 = x
         y2 = y
         while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
@@ -64,6 +89,13 @@ class Game:
             y2 = -2.5
         self.ballNextBounce[0] = x2
         self.ballNextBounce[1] = y2
+        count = 5
+        while (self.ballNextBounce[1] > -2.5 and count > 0) :
+            tmp_x = self.ballNextBounce[0]
+            tmp_y = self.ballNextBounce[1]
+            self.defineNextNextBounce(x2, y2, tmp_x, tmp_y)
+            count = count - 1
+            print ("BALL NEXT BOUCE N - ", count , " = ", self.ballNextBounce[0], ", ", self.ballNextBounce[1])
 
     def add_player(self, consumer, user):
         # If player is not subscribed to the game, add it
@@ -174,14 +206,14 @@ class Game:
             elif(self.ball_position[1] >= 3.4 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
                 if (self.ball_velocity[1] > 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
-                self.ball_velocity[1] *= 1.1
+                # self.ball_velocity[1] *= 1.1
                 if (self.ball_position[1] > 3.5) :
                     self.ball_position[1] = 3.4
                 self.ball_position[1] = self.ball_position[1] - 0.1
             elif(self.ball_position[1] <= -3.4 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
                 if (self.ball_velocity[1] < 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
-                self.ball_velocity[1] *= 1.1
+                # self.ball_velocity[1] *= 1.1
                 if (self.ball_position[1] < -3.5) :
                     self.ball_position[1] = -3.4
                 self.ball_position[1] = self.ball_position[1] + 0.1
@@ -252,6 +284,7 @@ class Game:
               self.send_game_state()
               gameCountDown(self)
               self.state = "playing"
+              self.launch_time = time.time()
             self.send_game_state()
 
 

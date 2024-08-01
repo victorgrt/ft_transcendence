@@ -1,6 +1,5 @@
 function launchGameIA()
 {
-    console.log("PONG SCRIPT LOADED");
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -109,17 +108,14 @@ function launchGameIA()
                     obj = gamedata.game_state.player_2_position - gamedata.game_state.ballNextBounce[0];
                     if (obj >= -0.4 && obj <= 0.4)
                     {
-                        console.log("TRY TO CATCH BALL --> NULL");
                         socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'null', coord : 0}));
                     }
                     else if (obj < -0.4)
                     {
-                        console.log("TRY TO CATCH BALL --> LEFT");
                         socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'right', coord: gamedata.game_state.ballNextBounce[0]}));
                     }
                     else if (obj > 0.4)
                     {
-                        console.log("TRY TO CATCH BALL --> RIGHT");
                         socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left', coord: gamedata.game_state.ballNextBounce[0]}));
                     }
                     }
@@ -127,17 +123,14 @@ function launchGameIA()
             {
                 if (gamedata.game_state.player_2_position > -0.4 && gamedata.game_state.player_2_position < 0.4)
                 {
-                    console.log("TRY TO REPLACE TO CENTER --> NULL");
                     socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'null', coord : 0}));
                 }
                 else if (gamedata.game_state.player_2_position > 0)
                 {
-                    console.log("TRY TO REPLACE TO CENTER --> left");
                     socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'left', coord : 0}));
                 }
                 else if (gamedata.game_state.player_2_position < 0)
                 {
-                    console.log("TRY TO REPLACE TO CENTER --> right");
                     socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'right', coord : 0}));
                 }
             }
@@ -197,11 +190,6 @@ function launchGameIA()
             renderer.render(scene, camera);
             if (countdown)
                 updateCountdownHTML();
-        }
-        if (launch_date  == 0)
-        {
-            launch_date = Date.now();
-            launch_date = launch_date;
         }
         if (gamedata)
             handleIAMove();
