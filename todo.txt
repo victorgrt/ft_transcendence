@@ -5,17 +5,25 @@
 - CHECK handle trying to connect to session where already joined
 - Tournaments socket
 - handle trying to GET a pong page when game does not exist
-- navigation back and forth
-- replace all links by loadContent or add event listener
 - polish tournaments page
 - Checker tous les appels asynchrones dans game_manager, tournament et games --> tous doivent être protégés par des locks
 - Bug potentiel si users se connectent pas dans le bon ordre jeu tournois
+
+NAVIGATION 
+- CHECK replace all links by loadContent or add event listener
+- navigation back and forth
+- back to tournament
 - make background unclickable while tournament or menu opened
+- Leave Game, Go back, Leave tournament
 
 GAME : 
 - fix bug countdown
 - Jeu en local !! 
 - implement game is finished
+- Tournament players issues
+
+SECU : 
+- Renvoyer vers home page si user pas connecte
 
 - remplacer page d'erreur par défaut 404 etc ? 
 
