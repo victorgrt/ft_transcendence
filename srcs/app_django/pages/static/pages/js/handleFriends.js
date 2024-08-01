@@ -26,8 +26,8 @@ async function handleInput(event)
 		{
 			console.log("isUser was successful");
 			searchFriendError.style.visibility = 'hidden';
-			displayResultBox(inputValue);
 			toUser = inputValue;
+			displayResultBox(inputValue);
 		}
 		else 
 		{
@@ -50,7 +50,7 @@ async function handleInput(event)
 
 
 async function getUserData(username) {
-	console.log("In get_user_data");
+	console.log("In get_user_data 2222make re");
 	try {
 		const raw_data = await fetch(`account/get_user_data/?username=${encodeURIComponent(username)}`, {
 		method: 'GET',
@@ -80,7 +80,7 @@ async function getUserData(username) {
 async function displayResultBox(inputValue)
 {
 	username = inputValue;
-	console.log("In display_result_box");
+	console.log("In display_result_box : ");
 	resultBox.style.visibility ='visible';
 	resultBox.style.opacity = '1';
 	const user_data = await getUserData(username);
@@ -96,13 +96,15 @@ async function displayResultBox(inputValue)
 		{
 			resultStatus.style.backgroundColor = 'red';
 			resultUsername.textContent = user_data.username;
+			console.log("HERE :", user_data.username);
 			resultAvatar.src = friend_data.avatar;
 		}
 		if (friendExists === false)
 		{
 			console.log("	user box generated");
 			resultBox.style.visibility ='visible';
-			resultUsername.textContent = user_data.get_avatar_name;
+			resultUsername.style.color = 'white';
+			resultUsername.textContent = user_data.username;
 			var tmpSrc = baseSrc + user_data.avatar;
 			resultAvatar.src = tmpSrc;
 			addButton.style.visibility = 'visible';
@@ -165,8 +167,10 @@ async function sendFriendRequest() {
         const data = await response.json();
 
         if (data.success) {
-            console.log("Friend exists");
-            return true;
+            console.log("Friend request sent");
+			hideElement(friendsBox);
+			document.getElementById("input_search_friend").value = "";
+			return true;
         } else {
             console.log("Friend does not exist");
             return false;
@@ -249,6 +253,12 @@ function getCookie(name) {
 
 
 function friendSendChallenge(friend_username){
+	console.log(friend_username);
+	if (friend_username === 'null')
+	{
+		friend_username = resultUsername.textContent;	
+	}
+	console.log(friend_username);
 	var formData = {
 		'pseudo': friend_username,
 		'notification_type': 'play with',
@@ -285,5 +295,104 @@ function friendSendChallenge(friend_username){
 			}
 		});
 		return;
+	}
+}
+
+async function reloadFriendBox(){
+	friends_list = await fetchUserFriends();
+	console.log("friends list : ", friends_list);
+	console.log("under:", friends_list.friends[0]);
+	let i = 0;
+	let size = Object.keys(friends_list.friends).length;
+	console.log("size:", size);
+	friendsList.innerHTML = "";
+	while (i < size)
+	{
+		displayResultBoxFromObject(friends_list.friends[i]);
+		i++;	
+	}
+}
+
+async function fetchUserFriends() {
+    try {
+        const response = await fetch('/friends/get_user_friends/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const data = await response.json();
+        if (data.success) {
+            console.log('User friends:', data.friends);
+			return (data);
+        } else {
+            console.log('Failed to fetch friends:', data.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
+
+async function displayResultBoxFromObject(friend) {
+    console.log("displaying new friend : ", friend);
+	document.getElementById('friends_list').style.visibility = "visible";
+	if (friend) {
+        // Create the main container
+        const new_box = document.createElement('div');
+        new_box.className = 'friend_box';
+        new_box.id = 'result_box';
+
+        // Create the status circle
+        const statusCircle = document.createElement('div');
+        statusCircle.className = 'status_circle';
+        statusCircle.style.backgroundColor = friend.is_online ? 'green' : 'red';
+        new_box.appendChild(statusCircle);
+
+        // Create the avatar image
+        const avatar = document.createElement('img');
+        avatar.id = 'friend_avatar';
+		const regex = /img_avatars\/([^\/]+\.[^\/]+)$/;
+		const match = `${friend.avatar}`.match(regex);
+		const imageName = match ? match[1] : null;
+		console.log("here:", imageName);
+		if (imageName === null)
+			imageName = "default_avatar.jpg"
+        avatar.src = `/staticfiles/pages/img_avatars/` + imageName;
+		new_box.appendChild(avatar);
+
+        // Create the username paragraph
+        const username = document.createElement('p');
+        username.id = 'friend_username';
+        username.textContent = friend.username;
+        new_box.appendChild(username);
+
+        // Create the friend buttons container
+        const friendButtons = document.createElement('div');
+        friendButtons.className = 'friend_buttons';
+
+        // Create the send challenge button
+        const sendButton = document.createElement('button');
+        sendButton.id = 'sendbtn';
+        sendButton.className = 'needed_hover';
+        sendButton.onclick = function() { friendSendChallenge(friend.username); };
+
+        // Create the send challenge button image
+        const sendButtonImage = document.createElement('img');
+        sendButtonImage.id = 'friends_challenge';
+        sendButtonImage.src = '/staticfiles/pages/images/challenge.png';
+        sendButton.appendChild(sendButtonImage);
+
+        // Append the send challenge button to the buttons container
+        friendButtons.appendChild(sendButton);
+        new_box.appendChild(friendButtons);
+
+        // Append the friend box to the main container (assuming you have a container with ID 'friendsContainer')
+        document.getElementById('friends_list').appendChild(new_box);
+		console.log("end displaying new friend");
 	}
 }

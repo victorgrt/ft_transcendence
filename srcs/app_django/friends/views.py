@@ -96,3 +96,22 @@ def deny_notification(request):
         return JsonResponse({'message': 'Friend request does not exist!'}, status=404)
     except Exception as e:
         return JsonResponse({'message': str(e)}, status=500)
+
+def get_user_friends(request):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({'success': False, 'message': 'User not authenticated'}, status=401)
+    
+    friends = user.friends.all()
+    friends_list = [
+        {
+            'username': friend.username,
+            'email': friend.email,
+            'avatar': friend.avatar.url if friend.avatar else None,
+            'is_online': friend.is_online,
+            'register_date': friend.register_date,
+        }
+        for friend in friends
+    ]
+    
+    return JsonResponse({'success': True, 'friends': friends_list})

@@ -429,8 +429,9 @@ input[type="password"] {
 	text-align: center;
 
 	/* border: 2px solid rgba(40, 40, 40, 1); */
-	border-radius: 7vh;
-    width: 20%;
+	/* border-radius: 7vh; */
+    width: 80%;
+	height: 50%;
     position: absolute;
 
 	background-color: rgba(24, 24, 24, 0.95);
@@ -444,9 +445,9 @@ input[type="password"] {
 
 }
 
-
 #avatar{
 	width: 70%;
+	height: 100%;
 	border-radius: 10%;
 	border: 1.5px solid rgb(16, 16, 16);
 }
