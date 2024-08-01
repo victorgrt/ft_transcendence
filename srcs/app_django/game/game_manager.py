@@ -35,6 +35,7 @@ class Game:
         self.ballNextBounce = [0, 0]  #pas modifier
         self.player_1_position = 0
         self.player_2_position = 0
+        # self.old_next_bounce = currentTime - launch_date) % 1000 < 50
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.move_1 = 0
         self.move_2 = 0
@@ -170,17 +171,19 @@ class Game:
                 self.ball_velocity[0] = -self.ball_velocity[0]
 
             # Handle collision with paddles
-            elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
-                self.dy = -self.dy
+            elif(self.ball_position[1] >= 3.4 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
                 if (self.ball_velocity[1] > 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
+                if (self.ball_position[1] > 3.5) :
+                    self.ball_position[1] = 3.4
                 self.ball_position[1] = self.ball_position[1] - 0.1
-            elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
-                self.dy = -self.dy
+            elif(self.ball_position[1] <= -3.4 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
                 if (self.ball_velocity[1] < 0) :
                     self.ball_velocity[1] = -self.ball_velocity[1]
                 self.ball_velocity[1] *= 1.1
+                if (self.ball_position[1] < -3.5) :
+                    self.ball_position[1] = -3.4
                 self.ball_position[1] = self.ball_position[1] + 0.1
             self.defineNextBounce(self.ball_position[0], self.ball_position[1])
 

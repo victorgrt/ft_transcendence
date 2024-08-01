@@ -104,9 +104,7 @@ function launchGameIA()
     function handleIAMove()
     {
         const currentTime = Date.now();
-        // if ((currentTime - launch_date) % 1000 < 50) // Tolérance de 50ms pour plus de fiabilité
-        // {
-            if (gamedata.game_state.ballNextBounce[1] <= 0)
+            if (gamedata.game_state.ballNextBounce[1] <= 0 && gamedata.game_state.ball_velocity[1] < 0)
             {
                     obj = gamedata.game_state.player_2_position - gamedata.game_state.ballNextBounce[0];
                     if (obj >= -0.4 && obj <= 0.4)
@@ -143,8 +141,6 @@ function launchGameIA()
                     socket.send(JSON.stringify({action: 'move_paddle', player:2, direction: 'right', coord : 0}));
                 }
             }
-
-        // }
     }
 
     function updateState()
@@ -224,7 +220,6 @@ var pov_camera;
 var set_camera = 0;
 var score_player_1 = 0;
 var score_player_2 = 0;
-var launch_date = 0;
 
 var printeur = 0;
 
