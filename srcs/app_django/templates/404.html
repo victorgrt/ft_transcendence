@@ -1,0 +1,13 @@
+{% load static %}
+<div id="full_container">
+<link rel="stylesheet" type="text/css" href="{% static 'pages/css/badGateway.css' %}">
+	<div id="container">
+		<h1 id="title">404 PAGE NOT FOUND</h1>
+		<p>If you got here, it could mean two things :</p>
+		<ul>
+			<li>The page you are trying to access or some needed resources does not exist</ul>
+			<li>T'es un petit con qui essaye de casser notre projet.</ul>
+		</ul>
+		<p>Either way, you should go back to the <a href="{% url 'home' %}">home page</a> and try again.</p>
+	</div>
+</div>

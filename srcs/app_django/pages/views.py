@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 from account.models import CustomUser  # Adjust the import path according to your project structure
@@ -66,9 +66,12 @@ def scene(request):
 # game page
 
 def pong(request, session_id):
-    # TODO : handle the case where game session does not exist
     # Fetch the GameSession instance using the provided session_id
-    game_session = GameSession.objects.get(session_id=session_id)
+    try:
+        game_session = GameSession.objects.get(session_id=session_id)
+    except GameSession.DoesNotExist:
+        print("Pong View: Game session " + session_id + " does not exist")
+        return render(request, '404.html')
 
     # Check that the user is part of the game
     print("Pong View: User " + request.user.username + " is trying to access the game " + session_id)
@@ -98,8 +101,14 @@ def pongIA(request, session_id):
 
 # Tournament page
 def tournament(request, tournament_id):
-    tournament = Tournament.objects.get(id=tournament_id)
+    try:
+        tournament = Tournament.objects.get(id=tournament_id)
+    except Tournament.DoesNotExist:
+        print("Pong View: Tournament " + tournament_id + " does not exist")
+        return render(request, '404.html')
+
     context = {'tournament': tournament}
+
     if is_ajax(request):
         print("IS AJAX")
         return render(request, 'partials/tournamentPage.html', context)
