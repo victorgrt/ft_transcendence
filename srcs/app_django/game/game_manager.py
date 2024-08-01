@@ -305,7 +305,7 @@ class Game:
                               # Add more game state information as needed
                       }
               ))
-        if (self.mode == 3):
+        elif (self.mode == 3):
             if self.consumers[0]:
                 asyncio.create_task(self.consumers[0].send_game_state_directly(
                   {
