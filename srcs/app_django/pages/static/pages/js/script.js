@@ -31,7 +31,7 @@ const page_scripts = {
     '/pong/' : pongPageScripts,
 	'' : loadHome,
     '/pongIA/' : pongIAPageScripts,
-    '/tournament/' : connectToTournament,
+    '/tournament/' : loadTournament,
 }
 
 function loadContent(url, pushState = true) {

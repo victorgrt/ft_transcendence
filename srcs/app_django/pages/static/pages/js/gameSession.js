@@ -7,8 +7,6 @@ function setUpSocket(_socket)
 	_socket.onmessage = function(e) {
         // console.log(e.data)
         const data = JSON.parse(e.data);
-        if (data.hasOwnProperty('countdown'))
-            countdown = data;
         if (data.hasOwnProperty('game_state'))
         {
             // if (e.data == "waiting" || e.data == "playing")
@@ -17,19 +15,139 @@ function setUpSocket(_socket)
     };
 }
 
+function createGameElement(game) {
+    const { player1, player2, winner } = game;
+
+    // Create the main game div
+    const gameDiv = document.createElement('div');
+    gameDiv.className = 'game';
+
+    // Create the player1 span
+    const player1Span = document.createElement('span');
+    player1Span.className = 'player1';
+    player1Span.textContent = player1;
+
+    // Create the player2 span
+    const player2Span = document.createElement('span');
+    player2Span.className = 'player2';
+    player2Span.textContent = player2;
+
+    // Create the VS text node
+    const vsText = document.createTextNode(' ⚔️ ');
+
+    // Create the GO link
+    const goLink = document.createElement('a');
+    goLink.className = 'go_button';
+    goLink.href = `/pong/${game.game_id}/`; // Assuming game.session_id is available in this context
+    goLink.textContent = 'GO';
+
+    // Create the game_winner div
+    const winnerDiv = document.createElement('div');
+    winnerDiv.className = 'game_winner';
+    winnerDiv.textContent = 'Winner: 🏅 ';
+
+    // Create the winner span
+    const winnerSpan = document.createElement('span');
+    winnerSpan.textContent = winner || 'TBD';
+    winnerDiv.appendChild(winnerSpan);
+    winnerSpan.appendChild(document.createTextNode(' 🏅'));
+
+    // Append elements to the gameDiv
+    gameDiv.appendChild(player1Span);
+    gameDiv.appendChild(vsText);
+    gameDiv.appendChild(player2Span);
+    gameDiv.appendChild(goLink);
+    gameDiv.appendChild(winnerDiv);
+
+    return gameDiv;
+}
+
+function createPlayerElement(username) {
+    return `<div class="player">
+                <span class="player_name">${username}</span>
+            </div>`;
+}
+
+function createTournamentRankings(players) {
+    const rankingsContainer = document.createElement('div');
+    rankingsContainer.id = 'tournament_rankings_list';
+
+    players.forEach((player, index) => {
+        const rank = index + 1; // Assuming the first player is the winner and so on
+        const rankingDiv = document.createElement('div');
+        rankingDiv.className = 'ranking';
+
+        const rankSpan = document.createElement('span');
+        rankSpan.className = 'rank';
+        switch(rank) {
+            case 1:
+                rankSpan.textContent = '🥇';
+                break;
+            case 2:
+                rankSpan.textContent = '🥈';
+                break;
+            case 3:
+                rankSpan.textContent = '🥉';
+                break;
+            default:
+                rankSpan.textContent = rank;
+        }
+
+        const playerNameSpan = document.createElement('span');
+        playerNameSpan.className = 'player_name';
+        playerNameSpan.textContent = player.username; // Assuming each player object has a username property
+
+        rankingDiv.appendChild(rankSpan);
+        rankingDiv.appendChild(playerNameSpan);
+
+        rankingsContainer.appendChild(rankingDiv);
+    });
+
+    return rankingsContainer;
+}
+
+function updateTournamentData(data)
+{
+    if (data.players)
+    {
+        tournamentPlayersList.innerHTML = "";
+        data.players.forEach(player => {
+            const playerElement = createPlayerElement(player);
+            tournamentPlayersList.innerHTML += playerElement;
+        });
+    }
+    if (data.all_games[0] && data.all_games[1])
+    {
+        tournamentSemiFinals.innerHTML = "";
+        const gameElement1 = createGameElement(data.all_games[0]);
+        const gameElement2 = createGameElement(data.all_games[1]);
+        tournamentSemiFinals.appendChild(gameElement1);
+        tournamentSemiFinals.appendChild(gameElement2);
+    }
+    if (data.all_games[2] && data.all_games[3])
+    {
+        tournamentFinal.innerHTML = "";
+        const finalGameElement = createGameElement(data.all_games[2]);
+        const smallFinalGameElement = createGameElement(data.all_games[3]);
+        tournamentFinal.appendChild(gameElement);
+        tournamentSmallFinal.appendChild(smallFinalGameElement);
+    }
+    if (data.players_ranking)
+    {
+        tournamentRanking.innerHTML = "";
+        const rankingsElement = createTournamentRankings(data.players_ranking);
+        tournamentRanking.appendChild(rankingsElement);
+    }
+}
+
 function setUpSocketTournament(_socket)
 {
   console.log("SETTING SOCKET UP");
 	_socket.onmessage = function(e) {
         // console.log(e.data)
         const data = JSON.parse(e.data);
-        if (data.hasOwnProperty('countdown'))
-            countdown = data;
-        if (data.hasOwnProperty('game_state'))
-        {
-            // if (e.data == "waiting" || e.data == "playing")
-            gamedata = data;
-        }
+        console.log(data);
+        updateTournamentData(data.message);
     };
 }
 
@@ -96,7 +214,7 @@ async function connectToTournament() {
     // Connect to the WebSocket
     connectWebSocket('ws://' + window.location.host + '/ws/tournament/' + tournamentId + '/')
         .then(socket => {
-            setUpSocket(socket);
+            setUpSocketTournament(socket);
         });
 }
 
