@@ -1,7 +1,10 @@
 {% load static %}
 <p id="current_username" style="display: none;">{{ user.username }}</p>
 <div class="friends_container" id="friends">
-    <h2>Friends</h2>
+	<div id="friends_header">
+    	<h2>Friends</h2>
+		<button id="friends_reload" class="needed_hover" onclick="reloadFriendBox()">RELOAD</button>
+	</div>
 	<input type="text" id="input_search_friend" class="search_bar" placeholder="Search for friends...">
 
 	<!-- Div Search result -->
@@ -9,8 +12,9 @@
 		<div class="status_circle" id="result_status"></div>
 		<img class="avatar" id="result_avatar"  src="{% static 'pages/img_avatars/' %}">
 		<p class="username" id="result_name"></p>
-		<!-- <button class="friend_list_button" id="challenge_button" onclick="friendSendChallenge(`{{ result_name }}`)">Challenge</button> -->
 		<button class="add_button" id="add_button" onclick="sendFriendRequest()">+</button> <!-- Added the + icon here -->
+		<button id="sendbtn" class="needed_hover" onclick="friendSendChallenge('null')" src="{% static 'pages/js/handleFriends.js' %}"><img id="friends_challenge" src="{% static 'pages/images/challenge.png' %}""></button>
+		<!-- <button class="friend_list_button" id="challenge_button" onclick="friendSendChallenge(`{{ result_name }}`)">Challenge</button> -->
 		{% comment %} <button class="invite_tournament_button" id="invite_tournament_button">Invite tournament</button> <!-- Added the + icon here --> {% endcomment %}
 	</div>
 	<div class="friends_list" id="friends_list">
@@ -25,6 +29,7 @@
 				{% endif %}
 				<img id="friend_avatar" src="{% static 'pages/img_avatars/' %}{{ friend.get_avatar_name }}">
 				<p id="friend_username">{{ friend.username }}</p>
+				<p id="friend_username"> </p>
 				<div class="friend_buttons" >
 					{% comment %} <button class="friend_button1" onclick="location.href='{% url 'profile' friend.username %}'">View Profile</button> {% endcomment %}
 					<button id="sendbtn" class="needed_hover" onclick="friendSendChallenge(`{{ friend.username }}`)" src="{% static 'pages/js/main.js' %}"><img id="friends_challenge" src="{% static 'pages/images/challenge.png' %}""></button>

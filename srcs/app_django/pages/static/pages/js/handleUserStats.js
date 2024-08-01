@@ -38,7 +38,7 @@ function updateUIForStats()
 		</div>
 		<div id="rightstats">
 			<ul id="stats_username">${username}</ul>
-			${friends ? `<ul id="stats">0 amis</ul>` : `<ul id="stats">${friends} amis</ul>`}
+			${friends ? `<ul id="stats">0 amis</ul>` : `<ul id="stats">${friends.count} amis</ul>`}
 			<ul id="stats">${win}</ul>
 			<ul id="stats">${lost}</ul>
 		</div>

@@ -100,3 +100,9 @@
 #sendbtn{
 	width: 20%;
 }
+
+#friends_header{
+	display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+}
