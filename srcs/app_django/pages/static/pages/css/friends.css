@@ -1,10 +1,10 @@
 .friends_container
 {
-	visibility: hidden;
-	opacity: 0;
+	visibility: visible;
+	opacity: 1;
 	position:absolute;
-	width:400px;
-	right: 5%;
+	width: 25%;
+	right: 0;
 	height: 70%;
 	border: 2px solid rgba(40, 40, 40, 1);
 	color: white;
@@ -99,4 +99,10 @@
 
 #sendbtn{
 	width: 20%;
+}
+
+#friends_header{
+	display: flex;
+    justify-content: space-around;
+    flex-direction: row;
 }

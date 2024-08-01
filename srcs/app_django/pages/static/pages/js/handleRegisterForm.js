@@ -27,13 +27,21 @@ function handleRegisterForm()
 			.then(response => response.json())
 			.then(data => 
 			{
-				console.log("Registration successful");
-				// alert(data.message);
-				window.location.href = '/';
-
+				console.log("data message:", data.message);
+				if (data.message !== 'Registered successfully')
+				{
+					registerError.textContent = data.message;
+					return ;
+				}
+				else
+				{
+					// loadContent('/');
+					goToLogin();
+				}
 			})
 			.catch(error => 
 			{
+				//WE NEVER GO HERE BRUHHHHHHHHhh
 				console.error('Error:', error);
 				alert('An error occurred during registration.');
 				registerError.textContent = 'This username is already taken. Please take an other one <3   ';

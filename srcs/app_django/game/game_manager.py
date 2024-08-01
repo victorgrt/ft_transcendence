@@ -1,4 +1,5 @@
 import threading
+import asyncio
 import time
 from time import sleep
 import requests
@@ -19,6 +20,8 @@ class Game:
         self.players = []
         self.consumers = []
         self.nb_players = 0
+        self.start_game_at = 0
+        self.countdown = 0
         self.mode = 1
         self.seed = seed(1),
         self.dx = 0.03 + (0.07 - 0.03) * random()
@@ -105,8 +108,7 @@ class Game:
         # self.players.remove(player)
         if consumer in self.consumers:
           self.consumers.remove(consumer)
-        self.nb_players -= 1
-
+            
     def resetBall(self, x):
         self.ball_position[0] = 0
         self.ball_position[1] = 0
@@ -146,6 +148,7 @@ class Game:
                 elif direction == 'null':
                     self.move_2 = 0
 
+<<<<<<< HEAD
     def update(self):
         if (self.player_1_score == 3 or self.player_2_score == 3) and self.state == "playing" :
 
@@ -169,36 +172,44 @@ class Game:
                     }
                 }
             )
+=======
+    async def update(self):
 
-            # Send request to save game history
-            print("Sending request to save game history")
-            requests.post('http://localhost:8000/game/finished_match/', data={
-                'game_id': self.game_id,
-                'player_1_id': self.players[0].id,
-                'player_2_id': self.players[1].id,
-                'player_1_score': self.player_1_score,
-                'player_2_score': self.player_2_score,
-                'winner_id': winner.id
-            })
+        # WAITING STATE
+        if self.state == "waiting":
+            if self.nb_players == 2:
+                self.state = "countdown"
+                print("Game %s starting" % self.game_id)
+                # Start the game after 3 seconds
+                self.start_game_at = time.time() + 3;
+                self.countdown = round(self.start_game_at - time.time())
 
-            print("Game over : %s" % self.game_id)
+        # COUNTDOWN STATE
+        if self.state == "countdown":
+            self.countdown = round(self.start_game_at - time.time())
+            if time.time() > self.start_game_at:
+                self.state = "playing"
+                print("Game %s started" % self.game_id)
+>>>>>>> origin/master
 
-            # Notifies the tournament manager
-            if self.tournament:
-                self.tournament.set_game_result(self.game_id, winner, loser)
-                print("Game result set in tournament")
+        # PLAYING STATE
+        if self.state == "playing":
+            self.update_playing()
 
-            # Set state to finished and remove it from the game manager
-            self.state = "finished"
-            self.game_manager.remove_game(self.game_id)
+        # In any case, send game state to all players
+        self.send_game_state()
 
+    def update_playing(self):
+        # Check if the game is over
+        if self.player_1_score == 3 or self.player_2_score == 3:
+            self.handle_game_over()
             return
 
-        if self.state == "playing":
-            # Handle collision with walls
-            if self.ball_position[0] >= 2.3 or self.ball_position[0] <= -2.3:
-                self.ball_velocity[0] = -self.ball_velocity[0]
+        # Handle collision with walls
+        if self.ball_position[0] >= 2.3 or self.ball_position[0] <= -2.3:
+            self.ball_velocity[0] = -self.ball_velocity[0]
 
+<<<<<<< HEAD
             # Handle collision with paddles
             elif(self.ball_position[1] >= 3.4 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
                 if (self.ball_velocity[1] > 0) :
@@ -284,7 +295,92 @@ class Game:
               self.state = "playing"
               self.launch_time = time.time()
             self.send_game_state()
+=======
+        # Handle collision with paddles
+        elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.3 and self.ball_position[0] < self.player_1_position + 0.3) :
+            self.dy = -self.dy
+            if (self.ball_velocity[1] > 0) :
+                self.ball_velocity[1] = -self.ball_velocity[1]
+            self.ball_velocity[1] *= 1.1
+            self.ball_position[1] = self.ball_position[1] - 0.1
+        elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.3 and self.ball_position[0] < self.player_2_position + 0.3)) :
+            self.dy = -self.dy
+            if (self.ball_velocity[1] < 0) :
+                self.ball_velocity[1] = -self.ball_velocity[1]
+            self.ball_velocity[1] *= 1.1
+            self.ball_position[1] = self.ball_position[1] + 0.1
+        self.defineNextBounce(self.ball_position[0], self.ball_position[1])
 
+        if (self.move_1 != 0):
+            if (self.move_1 > 0 and self.player_1_position < 2.3):
+                self.player_1_position += self.paddleSpeed
+            elif (self.move_1 < 0 and self.player_1_position > -2.3):
+                self.player_1_position -= self.paddleSpeed
+        if self.mode == 2 and self.move_2 != 0 and (self.obj_2 > self.player_2_position -0.2 and self.obj_2  <= self.player_2_position + 0.1) :
+            self.move_2 = 0
+        elif(self.move_2 != 0):
+            if (self.move_2 > 0 and self.player_2_position < 2.4):
+                self.player_2_position -= self.paddleSpeed
+            elif (self.move_2 < 0 and self.player_2_position > -2.4):
+                self.player_2_position += self.paddleSpeed
+        # Handle ball move
+        self.ball_position[0] += self.ball_velocity[0]
+        self.ball_position[1] += self.ball_velocity[1]
+
+        # Detect goal
+        if self.ball_position[1] <= -3.7 or self.ball_position[1] >= 3.7:
+            if self.ball_position[1] <= -3.7 :
+                self.player_1_score += 1
+                self.resetBall(1)
+            elif self.ball_position[1] >= 3.7:
+                self.player_2_score += 1
+                self.resetBall(2)
+
+    def handle_game_over(self):
+        # In IA mode, the match history is not saved
+        if self.mode == 2 :
+            self.state = "finished"
+            self.game_manager.remove_game(self.game_id)
+            return
+        
+        winner = self.players[0] if self.player_1_score == 3 else self.players[1]
+        loser = self.players[0]  if self.player_1_score != 3 else self.players[1]
+        self.state = winner.id
+        # Send game over message
+        print("Sending game over message to group %s" % self.game_id)
+        asyncio.create_task(
+            get_channel_layer().group_send(
+            self.game_id,
+            {
+                'type': 'game_over',
+                'message': {
+                    'winner': winner.id
+                }
+            }
+        ))
+>>>>>>> origin/master
+
+        # Send request to save game history
+        print("Sending request to save game history")
+        requests.post('http://localhost:8000/game/finished_match/', data={
+            'game_id': self.game_id,
+            'player_1_id': self.players[0].id,
+            'player_2_id': self.players[1].id,
+            'player_1_score': self.player_1_score,
+            'player_2_score': self.player_2_score,
+            'winner_id': winner.id
+        })
+
+        print("Game over : %s" % self.game_id)
+
+        # Notifies the tournament manager
+        if self.tournament:
+            self.tournament.set_game_result(self.game_id, winner, loser)
+            print("Game result set in tournament")
+
+        # Set state to finished and remove it from the game manager
+        self.state = "finished"
+        self.game_manager.remove_game(self.game_id)
 
     def send_game_state(self):
         if (self.mode == 1) :
@@ -294,9 +390,10 @@ class Game:
                 player_2_username = "waiting"
         if (self.mode == 2):
             if self.consumers[0]:
-              async_to_sync(self.consumers[0].send_game_state_directly)(
+                asyncio.create_task(self.consumers[0].send_game_state_directly(
                   {
                           'state': self.state,
+                          'countdown': self.countdown,
                           'nb_players': self.nb_players,
                           'player_1_login': self.players[0].username,
                           'player_2_login': "IA",
@@ -310,27 +407,28 @@ class Game:
                           'ballNextBounce': self.ballNextBounce,
                               # Add more game state information as needed
                       }
-              )
+              ))
         else :
             for i in range(len(self.consumers)):
                 if self.consumers[i]:
-                  async_to_sync(self.consumers[i].send_game_state_directly)(
-                      {
-                              'state': self.state,
-                              'nb_players': self.nb_players,
-                              'player_1_login': self.players[0].username,
-                              'player_2_login': player_2_username,
-                              'ball_position': self.ball_position,
-                              'ball_velocity': self.ball_velocity,
-                              'player_1_position': self.player_1_position,
-                              'player_2_position': self.player_2_position,
-                              'player_id': i + 1,
-                              'player_1_score': self.player_1_score,
-                              'player_2_score': self.player_2_score,
-                              'ballNextBounce': self.ballNextBounce,
-                                  # Add more game state information as needed
-                          }
-                  )
+                  asyncio.create_task(self.consumers[i].send_game_state_directly(
+                    {
+                        'state': self.state,
+                        'countdown': self.countdown,
+                        'nb_players': self.nb_players,
+                        'player_1_login': self.players[0].username,
+                        'player_2_login': player_2_username,
+                        'ball_position': self.ball_position,
+                        'ball_velocity': self.ball_velocity,
+                        'player_1_position': self.player_1_position,
+                        'player_2_position': self.player_2_position,
+                        'player_id': i + 1,
+                        'player_1_score': self.player_1_score,
+                        'player_2_score': self.player_2_score,
+                        'ballNextBounce': self.ballNextBounce,
+                            # Add more game state information as needed
+                    }
+                  ))
 
 class GameManager:
     def __init__(self):
@@ -362,7 +460,8 @@ class GameManager:
     def handle_paddle_move(self, game_id, player, direction, coord) :
         with self.lock :
             game = self.get_game(game_id)
-            game.movePaddle(game_id, player, direction, coord)
+            if game:
+                game.movePaddle(game_id, player, direction, coord)
 
     def IAMode(self, game_id) :
         with self.lock :
@@ -393,16 +492,32 @@ class GameManager:
 
     # Main loop
 
-    def update_games(self):
+    async def async_update_games(self):
         while True:
-            start_time = time.time()
-            # print("Updating games. Time : %s" % start_time)
-            for game in list(self.games.values()):
-                game.update()
-            elapsed = time.time() - start_time
+            start_time = asyncio.get_event_loop().time()
+            # Assuming game.update() is adapted to be an async method
+            tasks = [asyncio.create_task(game.update()) for game in list(self.games.values())]
+            await asyncio.gather(*tasks)
+            elapsed = asyncio.get_event_loop().time() - start_time
             sleep_time = max(0.016 - elapsed, 0)  # Ensures non-negative sleep time
+<<<<<<< HEAD
             # sleep_time = 0.1
             time.sleep(sleep_time)
+=======
+            await asyncio.sleep(sleep_time)
+
+    def update_games(self):
+        # Set up a new event loop for this thread
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        
+        try:
+            # Run the main loop of the game updates
+            loop.run_until_complete(self.async_update_games())
+        finally:
+            # Ensure the loop is closed at the end
+            loop.close()
+>>>>>>> origin/master
 
     def update_tournaments(self):
         while True:

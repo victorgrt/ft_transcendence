@@ -1,11 +1,32 @@
-version : '3'
+version: '3'
 
 services:
   django-app:
     build:
-      context: .
+      context: ./app_django
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    networks:
+      - app-network
+    volumes:
+      - django-app:/var/lib/django-app # Adjust the path as necessary
+    depends_on:
+      - postgres
 
-    # command: python manage.py runserver
+  postgres:
+    image: postgres
+    env_file:
+      - ../.env
+    networks:
+      - app-network
+    volumes:
+      - postgres:/var/lib/postgresql
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  django-app:
+  postgres:

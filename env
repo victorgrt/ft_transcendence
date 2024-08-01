@@ -1,5 +1,0 @@
-DB_ACC_PSWD=psw
-DB_ACC_NAME=db_acc
-DB_ACC_ADMIN=db_acc_admin
-DB_ACC_HOST=127.0.0.1
-DB_ACC_PORT=5432

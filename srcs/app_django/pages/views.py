@@ -194,3 +194,6 @@ def accept_friend_request(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
 
     return JsonResponse({'status': 'error', 'message': 'Invalid request.'})
+
+def badGateway(request):
+    return render(request, 'partials/badGateway.html')

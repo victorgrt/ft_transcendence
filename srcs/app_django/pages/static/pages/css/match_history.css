@@ -1,16 +1,17 @@
 .match_history_container
 {
-  visibility: hidden;
-  position:absolute;
-  width:400px;
-  left: 5%;
+  visibility: visible;
+  position: absolute;
+  width: 25%;
+  left: 0;
   height: 70%;
-	border: 2px solid rgba(40, 40, 40, 1);
-	color: white;
-	background-color: rgba(24, 24, 24, 1);
-	padding: 20px;
-	border-radius: 5px;
-	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+  border: 2px solid rgba(40, 40, 40, 1);
+  color: white;
+  background-color: rgba(24, 24, 24, 1);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+  overflow: scroll;
 }
 
 .match_history_list

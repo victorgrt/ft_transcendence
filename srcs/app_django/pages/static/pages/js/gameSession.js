@@ -7,8 +7,6 @@ function setUpSocket(_socket)
 	_socket.onmessage = function(e) {
         // console.log(e.data)
         const data = JSON.parse(e.data);
-        if (data.hasOwnProperty('countdown'))
-            countdown = data;
         if (data.hasOwnProperty('game_state'))
         {
             // if (e.data == "waiting" || e.data == "playing")

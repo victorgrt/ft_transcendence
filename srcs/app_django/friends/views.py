@@ -51,23 +51,67 @@ def send_friend_request(request):
 
 @csrf_exempt
 def accept_friend_request(request):
-	print('IN accept_friend_request')
-	try:
-		if request.method == 'POST':
-			data = json.loads(request.body)
-			notification_data = data.get('data', {})
-			print('	NOTIF FRIEND:', notification_data)
-			from_user_username = notification_data.get('from_user')
-			notification_id = notification_data.get('notification_id')
-			from_user = CustomUser.objects.get(username=from_user_username)
-			to_user = request.user
-			from_user.friends.add(to_user)
-			to_user.friends.add(from_user)
-			print('	friend:', to_user, 'has accepted the friend request from:', from_user)
-			Notification.objects.get(notification_id=notification_id).delete()
-			print('	from_user friends:', from_user.friends.all())
-			return JsonResponse({'success': True})
-	except CustomUser.DoesNotExist:
-		return JsonResponse({'message': 'User does not exist!'}, status=404)
-	except Exception as e:
-		return JsonResponse({'message': str(e)}, status=500)
+    try:
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            notification_data = data.get('data', {})
+            print('NOTIF FRIEND:', notification_data)
+            
+            from_user_username = notification_data.get('from_user_username')
+            notification_id = notification_data.get('notification_id')
+            
+            from_user = CustomUser.objects.get(username=from_user_username)
+            to_user = request.user
+            
+            from_user.friends.add(to_user)
+            to_user.friends.add(from_user)
+            
+            Notification.objects.get(notification_id=notification_id).delete()
+            print(from_user.friends.all())
+            print("WE GOT HERE")
+            return JsonResponse({'success': True})
+    except CustomUser.DoesNotExist:
+        print("HERE MAYBE???")
+        return JsonResponse({'message': 'User does not exist!'}, status=404)
+    except Notification.DoesNotExist:
+        print("LA?")
+        return JsonResponse({'message': 'Friend request does not exist!'}, status=404)
+    except Exception as e:
+        print("HERE???")
+        return JsonResponse({'message': str(e)}, status=500)
+
+@csrf_exempt
+def deny_notification(request):
+    try:
+        if request.method == 'POST':
+            data = json.loads(request.body)
+            notification_data = data.get('data', {})
+            notification_id = notification_data.get('notification_id')
+            
+            Notification.objects.get(notification_id=notification_id).delete()
+            return JsonResponse({'success': True})
+    except CustomUser.DoesNotExist:
+        return JsonResponse({'message': 'User does not exist!'}, status=404)
+    except Notification.DoesNotExist:
+        return JsonResponse({'message': 'Friend request does not exist!'}, status=404)
+    except Exception as e:
+        return JsonResponse({'message': str(e)}, status=500)
+
+def get_user_friends(request):
+    user = request.user
+    if not user.is_authenticated:
+        return JsonResponse({'success': False, 'message': 'User not authenticated'}, status=401)
+    
+    friends = user.friends.all()
+    friends_list = [
+        {
+            'username': friend.username,
+            'email': friend.email,
+            'avatar': friend.avatar.url if friend.avatar else None,
+            'is_online': friend.is_online,
+            'register_date': friend.register_date,
+        }
+        for friend in friends
+    ]
+    
+    return JsonResponse({'success': True, 'friends': friends_list})

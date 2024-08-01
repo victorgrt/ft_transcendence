@@ -15,3 +15,5 @@ uvicorn
 channels
 whitenoise
 django-avatar
+requests
+websockets

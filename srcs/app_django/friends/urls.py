@@ -8,4 +8,6 @@ urlpatterns = [
     path('is_friend/', is_friend, name="is_friend"),
 	path('send_friend_request/', send_friend_request, name="send_friend_request"),
 	path('accept_friend_request/', accept_friend_request, name="accept_friend_request"),
+    path('deny_notification/', deny_notification),
+	path('get_user_friends/', get_user_friends)
 ]

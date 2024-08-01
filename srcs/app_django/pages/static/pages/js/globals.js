@@ -27,6 +27,7 @@ const searchFriendError = document.getElementById('search_friend_error');
 const addButton = document.getElementById('add_button');
 var compteur_notifs = document.getElementById("nb_notifs").textContent;
 const baseSrc = document.getElementById("result_avatar")?.src;
+const friendsBox = document.getElementById("result_box");
 
 // ------------ TOURNAMENT ELEMENTS ---------
 var tournamentPlayersList;
@@ -40,7 +41,9 @@ var socket;
 var gamedata;
 
 // ------------ OTHER ---------
-var matchHistoryBool = false;
+var matchHistoryBool = true;
 var friendsVisible = false;
 var countdown;
 var gameover;
+var notifs_fetched;
+var id_to_accept;

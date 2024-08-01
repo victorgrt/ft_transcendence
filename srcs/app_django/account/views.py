@@ -17,9 +17,6 @@ from django.db import IntegrityError
 import json
 
 
-# def register(request):
-#     return render(request, 'account/register.html')
-
 @csrf_exempt
 def is_user(request):
     print('IN IS USER')
@@ -53,19 +50,14 @@ def settings(request):
 
 		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists() and new_username:
 			messages.error(request, 'Username already taken. Please choose a different one.')
-			print("ON RETURN LA")
 			return redirect('home')
 
 		if new_username:
-			print("COUCOU ON EST LAAAAAAAAAAAAa")
 			user.username = new_username
 
 		if new_avatar:
-			print("COUCOU ON EST ICI")
 			user.avatar = new_avatar
-
 		user.save()
-	print("ON SORT DIRECTEMENT")
 	return redirect('home')
 
 @csrf_exempt
@@ -79,6 +71,7 @@ def createUser(request):
 			return JsonResponse({'success': False, 'message': 'Email is already registered.'},  status=409)
 		password = request.POST.get('password')
 		avatar = request.FILES.get('avatar')
+		print('avatar:', avatar)
 		user = CustomUser.objects.create_user(username=username, email=email, password=password, is_superuser=False, is_staff=False, avatar=avatar)
 		user.is_active = True
 		request.session['username'] = username
@@ -109,15 +102,9 @@ def login(request):
             print(f"Authentication successful for user: {username}")
             django_login(request, user)
             request.session.save()
-            # set user-specific data in the session
             return JsonResponse({"message": "Successfully logged in."}, status=200)
-            # print("After login")
-            # messages.success(request, 'You have successfully logged in.')
-            # return render(request, 'pages/partials/home_page.html')
         else:
             print("failed to log in.")
-            # messages.error(request, 'Invalid username or password. Please try again.')
-            # return error 
             return JsonResponse({"message": "Invalid username or password. Please try again."}, status=401)
     else:
         messages.error(request, 'Please provide both username and password.')
@@ -174,5 +161,24 @@ def get_login_status(request):
         'is_active': user.is_active,
         'user_avatar': user.avatar.url,
     })
+
+def get_user_notifications(request):
+    user = request.user
+    print("trying to retreive notification from '", user.username, "'")
+    # Retrieve notifications that have to_user equal to the current user
+    all_pending_notifications = Notification.objects.filter(to_user=user)
+    print("all pending:", all_pending_notifications)
+    # You can format the notifications into a list of dictionaries to send back as JSON
+    notifications_list = [
+        {
+            'from_user_username': notification.from_user_username,
+            'type_of_notification': notification.type_of_notification,
+            'message': notification.message,
+            'read': notification.read,
+            'notification_id': notification.notification_id,
+        }
+        for notification in all_pending_notifications
+    ]
+    return JsonResponse({'success': True, 'notifications': notifications_list}, safe=False)
 
 # Create your views here.

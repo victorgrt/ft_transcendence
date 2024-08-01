@@ -23,30 +23,30 @@ from django.utils import timezone
 
     
 class UserManager(BaseUserManager):
-    def create_user(self, username, email, password=None, avatar=None, **extra_fields):
-        if not email:
-            raise ValueError('The Email field must be set')
-        if not username:
-            raise ValueError('The Username field must be set')
-        if not password:
-            raise ValueError('The Password field must be set')
+	def create_user(self, username, email, password=None, avatar=None, **extra_fields):
+		if not email:
+			raise ValueError('The Email field must be set')
+		if not username:
+			raise ValueError('The Username field must be set')
+		if not password:
+			raise ValueError('The Password field must be set')
+		if avatar is None:
+			print('AVATAR IS NONE SO LETS FIX THAT')
+			avatar = 'pages/static/pages/img_avatars/default_avatar.jpg'
+		email = self.normalize_email(email)
+		user = self.model(username=username, email=email, avatar=avatar, **extra_fields)
+		user.set_password(password)
+		user.save(using=self._db)
+		return user
 
-        email = self.normalize_email(email)
-        user = self.model(username=username, email=email, avatar=avatar, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_superuser(self, username, email, password=None, **extra_fields):
-        extra_fields.setdefault('is_superuser', True)
-        extra_fields.setdefault('is_staff', True)
-
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-
-        return self.create_user(username=username, email=email, password=password, **extra_fields)
+	def create_superuser(self, username, email, password=None, **extra_fields):
+		extra_fields.setdefault('is_superuser', True)
+		extra_fields.setdefault('is_staff', True)	
+		if extra_fields.get('is_superuser') is not True:
+			raise ValueError('Superuser must have is_superuser=True.')
+		if extra_fields.get('is_staff') is not True:
+			raise ValueError('Superuser must have is_staff=True.')	
+		return self.create_user(username=username, email=email, password=password, **extra_fields)
 
 # avatar_storage = FileSystemStorage(location='pages/static/pages/img_avatars') #a verifier
 class CustomUser(AbstractBaseUser, PermissionsMixin):

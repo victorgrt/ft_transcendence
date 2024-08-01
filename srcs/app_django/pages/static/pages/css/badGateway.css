@@ -1,0 +1,46 @@
+body{
+	margin: 0;
+}
+
+#full_container{
+    display: flex;
+    align-items: center;
+    text-align: center;
+    /* background-color: black; */
+	background: url("../images/badgateway.jpg");
+    color: white;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#container{
+    border: 2px solid rgba(40, 40, 40, 1);
+	background-color: rgba(24, 24, 24, 1);
+	padding: 2%;
+}
+
+#title{
+	text-decoration: underline overline 2px solid white;
+	text-underline-offset: 10px;
+	padding: 2%;
+	border-radius: 20%;
+	animation: loading 3s infinite
+}
+
+@keyframes loading {
+    0% {
+        opacity: 1;
+		color: white;
+    }
+    50% {
+	text-decoration: underline overline 2px solid orangered;
+        opacity: 0.2;
+		color: orangered;
+	}
+    100% {
+	text-decoration: underline overline 2px solid red;
+        opacity: 1;
+		color: red;
+	}
+}

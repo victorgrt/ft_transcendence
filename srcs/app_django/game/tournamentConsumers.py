@@ -140,6 +140,7 @@ class TournamentConsumer(AsyncWebsocketConsumer):
 
     async def tournament_state(self, event):
         message = event['message']
+        print(f"Sending message : {message}")
         await self.send(text_data=json.dumps({
             'message': message
         }))
