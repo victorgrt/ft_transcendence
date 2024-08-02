@@ -5,7 +5,7 @@ function setUpSocket(_socket)
 {
   console.log("SETTING SOCKET UP");
 	_socket.onmessage = function(e) {
-        console.log(e.data)
+        // console.log(e.data)
         const data = JSON.parse(e.data);
         if (data.hasOwnProperty('game_state'))
         {
@@ -212,7 +212,7 @@ async function connectToTournament() {
     }
 
     // Connect to the WebSocket
-    connectWebSocket('wss://' + window.location.host + '/wss/tournament/' + tournamentId + '/')
+    connectWebSocket('ws://' + window.location.host + '/ws/tournament/' + tournamentId + '/')
         .then(socket => {
             setUpSocketTournament(socket);
         });
@@ -223,7 +223,7 @@ function connectToGame(mode = "pvp") {
     const gameId = window.location.pathname.split('/')[2]
     console.log('Connecting to tournament:', gameId);
 
-    connectWebSocket(`wss://${window.location.host}/wss/pong/${gameId}/${mode}/`)
+    connectWebSocket(`ws://${window.location.host}/ws/pong/${gameId}/${mode}/`)
         .then(socket => {
             setUpSocket(socket);
         });

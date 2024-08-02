@@ -149,13 +149,13 @@ $(document).ready(function() {
         //         if (response.status === 'success') {
         //             console.log("la mon reuf");
         //             compteur_notifs++;
-        //             // alert(response.message);
+        //             alert(response.message);
         //         } else {
-        //             // alert(response.message);
+        //             alert(response.message);
         //         }
         //     },
         //     error: function(response) {
-        //         // alert('Error: ' + response.statusText);
+        //         alert('Error: ' + response.statusText);
         //     }
         // });
     });
