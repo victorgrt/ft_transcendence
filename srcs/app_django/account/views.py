@@ -31,7 +31,8 @@ def stats(request):
             ).exclude(winner=user).count()
 
             # Calculate win-loss ratio, handling division by zero
-            ratio = (win / lost) * 100 if lost != 0 else win * 100
+            total = win + lost
+            ratio = (win / total) * 100 if total != 0 else 0
             username = user.username
             avatar = user.get_avatar_name()
             return JsonResponse({
@@ -56,8 +57,8 @@ def is_user(request):
             data = json.loads(request.body.decode('utf-8'))
             username = data.get('username')
             print("USER NAME ICI:", username)
-            
-            if CustomUser.objects.filter(username=username).exists():
+            curr_user = request.user
+            if CustomUser.objects.filter(username=username).exclude(id=curr_user.id).exists():
                 print("USERNAME FOUND HERE")
                 return JsonResponse({'success': True, 'message': 'Username found!'}, status=200)
             else:
