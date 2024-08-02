@@ -22,6 +22,7 @@ function loadHome(){
 }
 function pongIAPageScripts()
 {
+    console.log("launchPongIAScript")
     connectToGame(mode='ia');
     // connectToGame();
     launchGameIA();

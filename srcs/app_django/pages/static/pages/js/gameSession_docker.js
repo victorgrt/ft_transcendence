@@ -5,7 +5,7 @@ function setUpSocket(_socket)
 {
   console.log("SETTING SOCKET UP");
 	_socket.onmessage = function(e) {
-        // console.log(e.data)
+        console.log(e.data)
         const data = JSON.parse(e.data);
         if (data.hasOwnProperty('game_state'))
         {

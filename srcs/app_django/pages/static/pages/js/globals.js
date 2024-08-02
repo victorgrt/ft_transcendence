@@ -39,6 +39,13 @@ var tournamentRanking;
 // ------------ GAME VARIABLES ---------
 var socket;
 var gamedata;
+var isAnimating = false;
+var id;
+var pov_camera;
+var set_camera = 0;
+var score_player_1 = 0;
+var score_player_2 = 0;
+
 
 // ------------ OTHER ---------
 var matchHistoryBool = true;

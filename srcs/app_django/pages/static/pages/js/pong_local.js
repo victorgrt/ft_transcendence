@@ -1,5 +1,6 @@
 function launchGameLocal()
 {
+    isAnimating = true; // Flag to control the animation loop
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -143,7 +144,7 @@ function launchGameLocal()
 
     function animate()
     {
-        showElement(leaveGameButton);
+        console.log("ANIMATING " + gamedata);
         if (gamedata)
         {
             if (set_camera == 0)
@@ -163,18 +164,4 @@ function launchGameLocal()
     }
     animate();
 }
-
-function leaveGame()
-{
-    loadContent('/');
-}
-
-var id;
-var pov_camera;
-var set_camera = 0;
-var score_player_1 = 0;
-var score_player_2 = 0;
-
-var printeur = 0;
-
 
