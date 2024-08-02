@@ -122,7 +122,7 @@ def tournament(request, tournament_id):
         return render(request, 'partials/tournamentPage.html', context)
     else:
         print("IS NOT AJAX")
-        return render(request, 'base.html', {'partial_template': 'partials/tournamentPage.html', 'context': context})
+        return render(request, 'base.html', {'context': context})
 
 # Game menu
 def menuPong(request):
