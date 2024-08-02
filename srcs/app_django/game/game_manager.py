@@ -286,7 +286,7 @@ class Game:
             else :
                 player_2_username = "waiting"
         if (self.mode == 2):
-            if self.consumers[0]:
+            if len(self.consumers) > 0 and self.consumers[0]:
                 asyncio.create_task(self.consumers[0].send_game_state_directly(
                   {
                           'state': self.state,
@@ -306,7 +306,7 @@ class Game:
                       }
               ))
         elif (self.mode == 3):
-            if self.consumers[0]:
+            if len(self.consumers) > 0 and self.consumers[0]:
                 asyncio.create_task(self.consumers[0].send_game_state_directly(
                   {
                           'state': self.state,

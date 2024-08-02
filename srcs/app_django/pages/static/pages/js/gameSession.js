@@ -146,7 +146,7 @@ function setUpSocketTournament(_socket)
 	_socket.onmessage = function(e) {
         // console.log(e.data)
         const data = JSON.parse(e.data);
-        console.log(data);
+        // console.log(data);
         updateTournamentData(data.message);
     };
 }
@@ -218,7 +218,7 @@ async function connectToTournament() {
         });
 }
 
-function connectToGame(mode = "pvp") {
+async function connectToGame(mode = "pvp") {
     // Extract session ID from URL
     const gameId = window.location.pathname.split('/')[2]
     console.log('Connecting to tournament:', gameId);

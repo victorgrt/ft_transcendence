@@ -1,5 +1,7 @@
+
 function launchGameIA()
 {
+    isAnimating = true; // Flag to control the animation loop
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -168,6 +170,9 @@ function launchGameIA()
 
     function animate()
     {
+        console.log("ANIMATING " + isAnimating);
+        console.log("GAMEDATA: " + gamedata);
+        if (!isAnimating) return;
         if (gamedata)
         {
             if (set_camera == 0)
@@ -190,17 +195,6 @@ function launchGameIA()
     animate();
 }
 
-function leaveGame()
-{
-    loadContent('/');
-}
 
-var id;
-var pov_camera;
-var set_camera = 0;
-var score_player_1 = 0;
-var score_player_2 = 0;
-
-var printeur = 0;
 
 

@@ -1,5 +1,7 @@
+
 function launchGame()
 {
+    isAnimating = true;
     console.log("PONG SCRIPT LOADED");
     hideElement(goBackButton);
     const scene = new THREE.Scene();
@@ -178,22 +180,3 @@ function launchGame()
     animate();
 }
 
-// window.addEventListener('resize', () => {
-//     console.log("should auto resize");
-//     const width = window.innerWidth;
-//     const height = window.innerHeight;
-//     renderer.setSize(width, height);
-//     camera.aspect = width / height;
-//     camera.updateProjectionMatrix();
-// });
-
-function leaveGame()
-{
-    loadContent('/');
-}
-
-var id;
-var pov_camera;
-var set_camera = 0;
-var score_player_1 = 0;
-var score_player_2 = 0;
