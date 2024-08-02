@@ -38,8 +38,11 @@ async function updateUIForStats() {
 			const avatar = statsFetched.avatar;
 			const ratio = statsFetched.ratio;
 			const rightstats = document.getElementById('rightstats');
+			const friend_count = statsFetched.friend_count;
+			console.log("Friend count: ", friend_count);
 			rightstats.innerHTML = `
 				<p class="stats_username" style="font-size: 40px;">${username}</p>
+				<p  style="font-size: 30px;">friends: ${friend_count}</p>
 				<p style="color:green; font-size: 30px;">wins: ${win}</p>
 				<p style="color:red; font-size: 30px;">losses: ${lost}</p>
 				<p style="color: yellow; font-size: 30px;">win ratio: ${ratio}%</p>

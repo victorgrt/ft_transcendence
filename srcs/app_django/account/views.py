@@ -35,6 +35,8 @@ def stats(request):
             ratio = round((win / total) * 100, 2) if total != 0 else 0
             username = user.username
             avatar = user.get_avatar_name()
+            friend_count = user.friends.count()
+            print('friend count:', friend_count)
             return JsonResponse({
                 'success': True,
                 'wins': win,
@@ -42,6 +44,7 @@ def stats(request):
                 'ratio': ratio,
                 'username': username,
                 'avatar': avatar,
+                'friend_count': friend_count
             })
         except CustomUser.DoesNotExist:
             return JsonResponse({'success': False, 'message': 'User not found!'}, status=404)
