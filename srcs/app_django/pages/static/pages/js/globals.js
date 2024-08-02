@@ -45,6 +45,7 @@ var pov_camera;
 var set_camera = 0;
 var score_player_1 = 0;
 var score_player_2 = 0;
+let keys = {};
 
 
 // ------------ OTHER ---------

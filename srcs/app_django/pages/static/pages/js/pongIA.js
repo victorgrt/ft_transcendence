@@ -5,6 +5,7 @@ function launchGameIA()
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
+    id = 1;
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.getElementById("pongScene").appendChild(renderer.domElement);
 
@@ -75,32 +76,8 @@ function launchGameIA()
     scene.add(leftWall);
     scene.add(rightWall);
 
-    let keys = {};
-    document.addEventListener('keydown', function(e)
-    {
-        keys[e.key] = true;
-        sendPaddleMovement("down");
-    });
-
-    document.addEventListener('keyup', function(e)
-    {
-        delete keys[e.key];
-        sendPaddleMovement("up");
-    });
-
-    function sendPaddleMovement(state)
-    {
-        if (state == "up")
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'null', coord : 0 }));
-        if ('a' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left', coord : 0 }));
-        else if ('d' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right', coord : 0 }));
-        else if ('ArrowLeft' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'left', coord : 0 }));
-        else if ('ArrowRight' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right', coord : 0 }));
-    }
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
 
     function handleIAMove()
     {
@@ -154,19 +131,18 @@ function launchGameIA()
     };
 
 
-    function updateCountdownHTML()
+    function updateCountdownHTML(countdown)
     {
         let displayText;
-        if (countdown.countdown.countdown > 0)
-            displayText = `${countdown.countdown.countdown}`;
-        else if (countdown.countdown.countdown === 0)
+        if (countdown > 0)
+            displayText = `${countdown}`;
+        else if (countdown === 0)
             displayText = "START";
-        else if (countdown.countdown.countdown == -1)
-        {
+        else if (countdown == -1)
             displayText = "";
-        }
         document.getElementById('countdownDisplay').innerText = displayText;
     }
+
 
     function animate()
     {
@@ -192,8 +168,10 @@ function launchGameIA()
             }
             updateState();
             renderer.render(scene, camera);
-            if (countdown)
-                updateCountdownHTML();
+            if (gamedata.game_state.state == "countdown")
+                updateCountdownHTML(gamedata.game_state.countdown);  // Mettre à jour le compte à rebours en fonction de la valeur reçue
+            else if (gamedata.game_state.state == "playing" && document.getElementById('countdownDisplay').innerText != "")
+                updateCountdownHTML(-1);
         }
         if (gamedata)
             handleIAMove();
