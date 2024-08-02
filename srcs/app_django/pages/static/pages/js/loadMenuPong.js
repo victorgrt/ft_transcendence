@@ -1,5 +1,5 @@
 function loadMenuPong() {
-  console.log("coucou vivi");
+  // console.log("coucou vivi");
   const sessionError = document.getElementById('sessionError');
   document.getElementById('createTournamentBtn').addEventListener('click', handleCreateTournament);
   document.getElementById('createSessionBtn').addEventListener('click', createGame);

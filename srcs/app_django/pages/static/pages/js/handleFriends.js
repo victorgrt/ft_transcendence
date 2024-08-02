@@ -156,7 +156,7 @@ async function isFriend(inputValue) {
 
 async function sendFriendRequest() {
     try {
-        const response = await fetch('friends/send_friend_request/', {
+        const response = await fetch('/friends/send_friend_request/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

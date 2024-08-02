@@ -8,6 +8,8 @@ var paramsVisible = false;
 var statsVisible = false;
 var friendsVisible = true;
 
+dontClick = false;
+
 var isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom;
 var isZooming = false;
 
@@ -152,7 +154,9 @@ function zoomToCoordinates(clickCoordinates) {
                     controls.target.z = targetPosition.z;
                     hideEverything();
                     menuPongVisible = true;
+                    dontClick = true;
                     showElement(menuPongDiv);
+                    
                     loadMenuPong();
                     hideElement(header);
                     showElement(goBackButton);
@@ -321,7 +325,7 @@ function zoomBack() {
     hideElement(goBackButton);
     if (isZoomed === false)
         return; //returns because no zoom back needed
-
+    dontClick = false;
     isZooming = true;
     new TWEEN.Tween(camera.position)
         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)

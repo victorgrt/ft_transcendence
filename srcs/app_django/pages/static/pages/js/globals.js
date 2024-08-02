@@ -54,3 +54,4 @@ var headerMatchHistory;
 var headerFriends;
 var headerSettings;
 var headerLogout;
+var dontClick = false;

@@ -119,7 +119,7 @@ function onMouseMove(event) {
             }
         });
 
-        if (selectedObject) {
+        if (selectedObject && dontClick === false) {
             document.body.style.cursor = 'pointer';
             selecting_clickable = true;
             var objectToHighlight = selectedObject.object;

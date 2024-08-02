@@ -38,9 +38,8 @@ async function acceptNotif(id){
     if (notif_to_accept.type_of_notification === 'play')
     {
         console.log("PLAY on session:", notif_to_accept.message.session_id);
-        loadContent('/pong/' + notif_to_accept.message.session_id + '/');
 		denyNotification(notif_to_accept);
-        // removeNotificationFromDom(notif_to_accept.notification_id);
+        loadContent('/pong/' + notif_to_accept.message.session_id + '/');
         return ;
     }
     else if (notif_to_accept.type_of_notification === 'friend')
@@ -49,7 +48,7 @@ async function acceptNotif(id){
 		console.log("data:", notif_to_accept);
         //logique de ajouter en amis
         try {
-			const raw_data = await fetch(`friends/accept_friend_request/`, {
+			const raw_data = await fetch(`/friends/accept_friend_request/`, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
@@ -142,23 +141,23 @@ $(document).ready(function() {
             return;
         }
 
-        $.ajax({
-            type: 'POST',
-            url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
-            data: formData,
-            success: function(response) {
-                if (response.status === 'success') {
-                    console.log("la mon reuf");
-                    compteur_notifs++;
-                    alert(response.message);
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function(response) {
-                alert('Error: ' + response.statusText);
-            }
-        });
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
+        //     data: formData,
+        //     success: function(response) {
+        //         if (response.status === 'success') {
+        //             console.log("la mon reuf");
+        //             compteur_notifs++;
+        //             // alert(response.message);
+        //         } else {
+        //             // alert(response.message);
+        //         }
+        //     },
+        //     error: function(response) {
+        //         // alert('Error: ' + response.statusText);
+        //     }
+        // });
     });
 });
 
@@ -292,7 +291,7 @@ function removeNotificationFromDom(id_del)
 
 async function denyNotification(notif_to_deny){
     try {
-        const raw_data = await fetch(`friends/deny_notification/`, {
+        const raw_data = await fetch(`/friends/deny_notification/`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
