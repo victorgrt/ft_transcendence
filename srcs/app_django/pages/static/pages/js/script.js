@@ -20,6 +20,7 @@ function loadHome(){
     loadFriends();
 	console.log("here:", loginForm);
 }
+
 function pongIAPageScripts()
 {
     connectToGame(mode='ia');
