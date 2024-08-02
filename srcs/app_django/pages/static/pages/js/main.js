@@ -239,7 +239,6 @@ function centerLoginForm()
     contentdiv.style.align_items = 'center';
 
     loginForm.style.width = '50%';
-    loginForm.style.height = '40%';
 
     registerForm.style.position = 'absolute';
 }
