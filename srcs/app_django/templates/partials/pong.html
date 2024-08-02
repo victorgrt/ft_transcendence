@@ -20,10 +20,16 @@
     <button id="leaveGameButton" class="needed_hover" onclick=leaveGame()>> Leave Game <</button>
 
 	{% if authorized and game_session.tournament_id %}
+    	<button 
+			id="backToTournamentButton" 
+			class="needed_hover" 
+			onclick=backToTournament() 
+			value="{{ game_session.tournament_id }}"
+		>> Back to Tournament <</button>
 		<!-- Display content related to the tournament_id -->
-		<a style="visibility: visible;"
+		<!-- <a style="visibility: visible;"
 			href="/tournament/{{ game_session.tournament_id }}/">
 			Back to Tournament
-		</a>
+		</a> -->
 	{% endif %}
 </div>

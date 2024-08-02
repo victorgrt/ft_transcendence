@@ -74,18 +74,8 @@ function launchGameLocal()
     scene.add(leftWall);
     scene.add(rightWall);
 
-    let keys = {};
-    document.addEventListener('keydown', function(e)
-    {
-        keys[e.key] = true;
-        sendPaddleMovement("down");
-    });
-
-    document.addEventListener('keyup', function(e)
-    {
-        delete keys[e.key];
-        sendPaddleMovement("up");
-    });
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
 
     function sendPaddleMovement()
     {
@@ -120,24 +110,25 @@ function launchGameLocal()
         document.getElementById('score').innerText = displayText;
     };
 
-
-    function updateCountdownHTML()
+    function updateCountdownHTML(countdown)
     {
         let displayText;
-        if (countdown.countdown.countdown > 0)
-            displayText = `${countdown.countdown.countdown}`;
-        else if (countdown.countdown.countdown === 0)
+        if (countdown > 0)
+            displayText = `${countdown}`;
+        else if (countdown === 0)
             displayText = "START";
-        else if (countdown.countdown.countdown == -1)
-        {
+        else if (countdown == -1)
             displayText = "";
-        }
         document.getElementById('countdownDisplay').innerText = displayText;
     }
 
     function animate()
     {
-		if (!isAnimating) return;
+        if (!isAnimating) 
+        {
+            console.log("ANIMATION STOPPED");
+            return;
+        }
         if (gamedata)
         {
             if (set_camera == 0)
@@ -150,8 +141,10 @@ function launchGameLocal()
             }
             updateState();
             renderer.render(scene, camera);
-            if (countdown)
-                updateCountdownHTML();
+            if (gamedata.game_state.state == "countdown")
+                updateCountdownHTML(gamedata.game_state.countdown);  // Mettre à jour le compte à rebours en fonction de la valeur reçue
+            else if (gamedata.game_state.state == "playing" && document.getElementById('countdownDisplay').innerText != "")
+                updateCountdownHTML(-1);
         }
         requestAnimationFrame(animate);
     }

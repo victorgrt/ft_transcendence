@@ -1,6 +1,8 @@
-console.log("LEAVE GAME BUTTON");
-function leaveGame()
+function backToTournament()
 {
+    tournament_id = document.getElementById('backToTournamentButton').value;
+    console.log("BACK TO TOURNAMENT");
+    console.log(tournament_id);
     // stop the animation
     isAnimating = false;
     console.log("LEAVING GAME");
@@ -26,5 +28,5 @@ function leaveGame()
     document.removeEventListener('keyup', handleKeyUp);
 
     // Load the home page
-    loadContent('/');
+    loadContent('/tournament/' + tournament_id + '/'); 
 }

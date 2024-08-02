@@ -79,30 +79,8 @@ function launchGame()
     // var socket = new WebSocket("socket://localhost:8000/socket/pong/your_game_id/");
     //initializeWebSocket(self.gameId);
 
-    let keys = {};
-    document.addEventListener('keydown', function(e) {
-        keys[e.key] = true;
-        sendPaddleMovement("down");
-    });
-
-    document.addEventListener('keyup', function(e) {
-        delete keys[e.key];
-        sendPaddleMovement("up");
-    });
-
-    function sendPaddleMovement(state)
-    {
-        if (state == "up")
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'null', coord: 0 }));
-        if ('a' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'left', coord: 0 }));
-        else if ('d' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'right', coord: 0 }));
-        else if ('ArrowLeft' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'left', coord: 0 }));
-        else if ('ArrowRight' in keys)
-            socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'right', coord: 0 }));
-    }
+    document.addEventListener('keydown', handleKeyDown);
+    document.addEventListener('keyup', handleKeyUp);
 
     function updateState()
     {
@@ -150,6 +128,11 @@ function launchGame()
 
     function animate()
     {
+        if (!isAnimating) 
+        {
+            console.log("ANIMATION STOPPED");
+            return;
+        }
         if (gamedata)
         {
             if (set_camera == 0)

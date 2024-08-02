@@ -5,10 +5,10 @@
 - CHECK handle trying to connect to session where already joined
 - CHECK Tournaments socket
 - CHECK handle trying to GET a pong page when game does not exist
-- polish tournaments page
-- Checker tous les appels asynchrones dans game_manager, tournament et games --> tous doivent être protégés par des locks
+- CHECK polish tournaments page
+- CHECK Checker tous les appels asynchrones dans game_manager, tournament et games --> tous doivent être protégés par des locks
 - CHECK Bug potentiel si users se connectent pas dans le bon ordre jeu tournois
-- implement 404
+- CHECK implement 404
 
 
 NAVIGATION 
