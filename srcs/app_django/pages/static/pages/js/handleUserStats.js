@@ -2,14 +2,14 @@ var statsVisible = false;
 
 async function showStats() {
     if (statsVisible) {
-        zoomBack();
+        // zoomBack();
         statsDiv.style.visibility = 'hidden';
         statsVisible = false;
     } else {
         statsDiv.style.visibility = 'visible';
         statsDiv.style.opacity = '1';
         await updateUIForStats(); // Now waits for the stats to be updated before proceeding
-        showElement(goBackButton);
+        // showElement(goBackButton);
         statsVisible = true;
     }
 }
@@ -40,9 +40,9 @@ async function updateUIForStats() {
 			const rightstats = document.getElementById('rightstats');
 			rightstats.innerHTML = `
 				<p class="stats_username" style="font-size: 40px;">${username}</p>
-				<p style="color:green; font-size: 30px;">${win}</p>
-				<p style="color:red; font-size: 30px;">${lost}</p>
-				<p style="color: yellow; font-size: 30px;">${ratio}%</p>
+				<p style="color:green; font-size: 30px;">wins: ${win}</p>
+				<p style="color:red; font-size: 30px;">losses: ${lost}</p>
+				<p style="color: yellow; font-size: 30px;">win ratio: ${ratio}%</p>
 		`;
         } else {
             console.log('Failed to fetch user stats:', statsFetched.message);
