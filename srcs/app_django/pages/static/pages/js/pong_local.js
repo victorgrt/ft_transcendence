@@ -145,6 +145,11 @@ function launchGameLocal()
     function animate()
     {
         console.log("ANIMATING " + gamedata);
+        if (!isAnimating) 
+        {
+            console.log("ANIMATION STOPPED");
+            return;
+        }
         if (gamedata)
         {
             if (set_camera == 0)

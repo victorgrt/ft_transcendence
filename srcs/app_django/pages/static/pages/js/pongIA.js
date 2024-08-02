@@ -171,8 +171,14 @@ function launchGameIA()
     function animate()
     {
         console.log("ANIMATING " + isAnimating);
-        console.log("GAMEDATA: " + gamedata);
-        if (!isAnimating) return;
+        console.log("GAMEDATA: ");
+        console.log(gamedata);
+        console.log("SET_CAMERA: " + set_camera);
+        if (!isAnimating) 
+        {
+            console.log("ANIMATION STOPPED");
+            return;
+        }
         if (gamedata)
         {
             if (set_camera == 0)
@@ -182,6 +188,7 @@ function launchGameIA()
                 camera.lookAt(0, 0, 0); // The camera looks at the center of the scene
                 controls.update(); // Update controls after setting the camera position
                 set_camera = 1
+                console.log("SET_CAMERA: " + set_camera);
             }
             updateState();
             renderer.render(scene, camera);

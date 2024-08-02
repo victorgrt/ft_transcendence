@@ -153,6 +153,11 @@ function launchGame()
 
     function animate()
     {
+        if (!isAnimating) 
+        {
+            console.log("ANIMATION STOPPED");
+            return;
+        }
         if (gamedata)
         {
             if (set_camera == 0)
