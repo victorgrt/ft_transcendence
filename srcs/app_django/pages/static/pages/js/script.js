@@ -20,6 +20,7 @@ function loadHome(){
     loadFriends();
 	console.log("here:", loginForm);
 }
+
 function pongIAPageScripts()
 {
     console.log("launchPongIAScript")
