@@ -6,15 +6,47 @@
         {% else %}
             <img id="old_avatar" src="{% static '/pages/img_avatars/None.jpg' %}">
         {% endif %}
-        <form method="POST" action="/account/settings/" enctype="multipart/form-data" class="settingsForm">
+        <form method="POST" action="/account/settings/" enctype="multipart/form-data" class="settingsForm" id="settingsForm">
             {% csrf_token %}
             <input type="file" name="new_avatar" id="new_avatar">
             <hr id="sep">
             <h2 id="old_username">{{ user.username }}</h2>
             <input type="text" name="new_username" id="new_username" placeholder="New Username">
-    </div>
-    <div id="bottom">
-        <button type="submit" id="update_profile">Update Profile</button>
+            <div id="bottom">
+                <button type="submit" id="update_profile">Update Profile</button>
+            </div>
         </form>
+        <div id="messageDiv"></div>
     </div>
+    <script>
+        document.getElementById('settingsForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const formData = new FormData(form);
+    const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+
+    fetch(form.action, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': csrfToken
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        const messageDiv = document.getElementById('messageDiv');
+        if (data.success) {
+            messageDiv.innerHTML = '<p>Profile updated successfully!</p>';
+            document.getElementById('old_username').innerText = formData.get('new_username') || document.getElementById('old_username').innerText;
+            console.log("BEFORE loaded content");
+            hideElement(paramsDiv)
+            loadContent('/');
+        } else {
+            messageDiv.innerHTML = `<p>${data.message}</p>`;
+        }
+    })
+    .catch(error => console.error('Error:', error));
+});
+    </script>
 </div>

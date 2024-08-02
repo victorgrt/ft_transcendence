@@ -68,28 +68,26 @@ def is_user(request):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 
+@login_required
 def settings(request):
-	print('IN SETTINGS')
-	if request.method == 'POST':
-		new_username = request.POST.get('new_username')
-		new_avatar = request.FILES.get('new_avatar')
-		user = request.user
+    if request.method == 'POST':
+        new_username = request.POST.get('new_username')
+        new_avatar = request.FILES.get('new_avatar')
+        user = request.user
 
-		# Check if the new username already exists
-		print("USER NAME :'", new_username, "'")
-		print("NEW AVATAR :", new_avatar)
+        if new_username and CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists():
+            return JsonResponse({'success': False, 'message': 'Username already taken.'}, status=400)
 
-		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists() and new_username:
-			messages.error(request, 'Username already taken. Please choose a different one.')
-			return redirect('home')
+        if new_username:
+            user.username = new_username
 
-		if new_username:
-			user.username = new_username
+        if new_avatar:
+            user.avatar = new_avatar
 
-		if new_avatar:
-			user.avatar = new_avatar
-		user.save()
-	return redirect('home')
+        user.save()
+        return JsonResponse({'success': True})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'}, status=400)
 
 @csrf_exempt
 def createUser(request):
@@ -105,7 +103,6 @@ def createUser(request):
 		if not re.match(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', password):
 			return JsonResponse({'success': False, 'message': 'Password must contain at least 8 characters, one uppercase letter, one number, and one symbol.'}, status=405)
 		avatar = request.FILES.get('avatar')
-		print('avatar:', avatar)
 		user = CustomUser.objects.create_user(username=username, email=email, password=password, is_superuser=False, is_staff=False, avatar=avatar)
 		user.is_active = True
 		request.session['username'] = username
@@ -117,13 +114,8 @@ def createUser(request):
 
 @csrf_exempt
 def login(request):
-    print("IN loggin")
     username = request.POST.get('username')
     password = request.POST.get('password')
-
-    print("	USERNAME:", username)
-    print("	PASSWORD:", password)
- 
     if username and password:
         print(f"Attempting to authenticate user: {username}")
         # Authenticate user
@@ -157,7 +149,6 @@ def user_avatar(request):
     return render(request, 'index.html', {'avatar_url': avatar_url})
 
 def logout(request):
-	print('IN LOGOUT')
 	request.user.is_online = False
 	request.user.save()
 	django_logout(request)
@@ -198,11 +189,7 @@ def get_login_status(request):
 
 def get_user_notifications(request):
     user = request.user
-    print("trying to retreive notification from '", user.username, "'")
-    # Retrieve notifications that have to_user equal to the current user
     all_pending_notifications = Notification.objects.filter(to_user=user)
-    print("all pending:", all_pending_notifications)
-    # You can format the notifications into a list of dictionaries to send back as JSON
     notifications_list = [
         {
             'from_user_username': notification.from_user_username,
@@ -214,5 +201,3 @@ def get_user_notifications(request):
         for notification in all_pending_notifications
     ]
     return JsonResponse({'success': True, 'notifications': notifications_list}, safe=False)
-
-# Create your views here.
