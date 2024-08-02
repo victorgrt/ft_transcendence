@@ -142,23 +142,23 @@ $(document).ready(function() {
             return;
         }
 
-        $.ajax({
-            type: 'POST',
-            url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
-            data: formData,
-            success: function(response) {
-                if (response.status === 'success') {
-                    console.log("la mon reuf");
-                    compteur_notifs++;
-                    alert(response.message);
-                } else {
-                    alert(response.message);
-                }
-            },
-            error: function(response) {
-                alert('Error: ' + response.statusText);
-            }
-        });
+        // $.ajax({
+        //     type: 'POST',
+        //     url: '/send-notification/',  // L'URL doit correspondre à celle définie dans urls.py
+        //     data: formData,
+        //     success: function(response) {
+        //         if (response.status === 'success') {
+        //             console.log("la mon reuf");
+        //             compteur_notifs++;
+        //             alert(response.message);
+        //         } else {
+        //             alert(response.message);
+        //         }
+        //     },
+        //     error: function(response) {
+        //         alert('Error: ' + response.statusText);
+        //     }
+        // });
     });
 });
 
