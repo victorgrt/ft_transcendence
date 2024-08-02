@@ -17,3 +17,5 @@ TEMPLATES = [
         },
     },
 ]
+
+# settings

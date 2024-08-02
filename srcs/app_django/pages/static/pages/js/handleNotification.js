@@ -39,7 +39,8 @@ async function acceptNotif(id){
     {
         console.log("PLAY on session:", notif_to_accept.message.session_id);
         loadContent('/pong/' + notif_to_accept.message.session_id + '/');
-        removeNotificationFromDom(notif_to_accept.notification_id);
+		denyNotification(notif_to_accept);
+        // removeNotificationFromDom(notif_to_accept.notification_id);
         return ;
     }
     else if (notif_to_accept.type_of_notification === 'friend')
@@ -135,7 +136,7 @@ $(document).ready(function() {
                     loadContent('/pong/' + response.session_id + '/');
                 },
                 error: function(response) {
-                    alert('Error: ' + response.statusText);
+					// alert('Error: ' + response.statusText);
                 }
             });
             return;
@@ -286,6 +287,7 @@ function removeNotificationFromDom(id_del)
         console.log("deleting row of id :", id_del);
         row.remove();
     }
+    
 }
 
 async function denyNotification(notif_to_deny){

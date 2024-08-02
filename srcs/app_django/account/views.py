@@ -11,10 +11,41 @@ from django.contrib import messages
 # from .models import GameSession
 from notification.models import FriendRequest
 from notification.models import Notification
+from game.models import MatchHistory
 import uuid
 from django.core.exceptions import ValidationError
 from django.db import IntegrityError
 import json
+import re
+from django.db import models
+
+
+
+def stats(request):
+    if request.method == 'GET':
+        user = request.user
+        try:
+            win = MatchHistory.objects.filter(winner=user).count()
+            lost = MatchHistory.objects.filter(
+                models.Q(player_1=user) | models.Q(player_2=user)
+            ).exclude(winner=user).count()
+
+            # Calculate win-loss ratio, handling division by zero
+            total = win + lost
+            ratio = (win / total) * 100 if total != 0 else 0
+            username = user.username
+            avatar = user.get_avatar_name()
+            return JsonResponse({
+                'success': True,
+                'wins': win,
+                'losses': lost,
+                'ratio': ratio,
+                'username': username,
+                'avatar': avatar,
+            })
+        except CustomUser.DoesNotExist:
+            return JsonResponse({'success': False, 'message': 'User not found!'}, status=404)
+    return render(request, 'stats.html')
 
 
 @csrf_exempt
@@ -26,8 +57,8 @@ def is_user(request):
             data = json.loads(request.body.decode('utf-8'))
             username = data.get('username')
             print("USER NAME ICI:", username)
-            
-            if CustomUser.objects.filter(username=username).exists():
+            curr_user = request.user
+            if CustomUser.objects.filter(username=username).exclude(id=curr_user.id).exists():
                 print("USERNAME FOUND HERE")
                 return JsonResponse({'success': True, 'message': 'Username found!'}, status=200)
             else:
@@ -37,28 +68,26 @@ def is_user(request):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 
+@login_required
 def settings(request):
-	print('IN SETTINGS')
-	if request.method == 'POST':
-		new_username = request.POST.get('new_username')
-		new_avatar = request.FILES.get('new_avatar')
-		user = request.user
+    if request.method == 'POST':
+        new_username = request.POST.get('new_username')
+        new_avatar = request.FILES.get('new_avatar')
+        user = request.user
 
-		# Check if the new username already exists
-		print("USER NAME :'", new_username, "'")
-		print("NEW AVATAR :", new_avatar)
+        if new_username and CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists():
+            return JsonResponse({'success': False, 'message': 'Username already taken.'}, status=400)
 
-		if CustomUser.objects.filter(username=new_username).exclude(pk=user.pk).exists() and new_username:
-			messages.error(request, 'Username already taken. Please choose a different one.')
-			return redirect('home')
+        if new_username:
+            user.username = new_username
 
-		if new_username:
-			user.username = new_username
+        if new_avatar:
+            user.avatar = new_avatar
 
-		if new_avatar:
-			user.avatar = new_avatar
-		user.save()
-	return redirect('home')
+        user.save()
+        return JsonResponse({'success': True})
+
+    return JsonResponse({'success': False, 'message': 'Invalid request method.'}, status=400)
 
 @csrf_exempt
 def createUser(request):
@@ -70,8 +99,10 @@ def createUser(request):
 		if CustomUser.objects.filter(email=email).exists():
 			return JsonResponse({'success': False, 'message': 'Email is already registered.'},  status=409)
 		password = request.POST.get('password')
+		# Password validation
+		if not re.match(r'^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$', password):
+			return JsonResponse({'success': False, 'message': 'Password must contain at least 8 characters, one uppercase letter, one number, and one symbol.'}, status=405)
 		avatar = request.FILES.get('avatar')
-		print('avatar:', avatar)
 		user = CustomUser.objects.create_user(username=username, email=email, password=password, is_superuser=False, is_staff=False, avatar=avatar)
 		user.is_active = True
 		request.session['username'] = username
@@ -83,13 +114,8 @@ def createUser(request):
 
 @csrf_exempt
 def login(request):
-    print("IN loggin")
     username = request.POST.get('username')
     password = request.POST.get('password')
-
-    print("	USERNAME:", username)
-    print("	PASSWORD:", password)
- 
     if username and password:
         print(f"Attempting to authenticate user: {username}")
         # Authenticate user
@@ -123,7 +149,6 @@ def user_avatar(request):
     return render(request, 'index.html', {'avatar_url': avatar_url})
 
 def logout(request):
-	print('IN LOGOUT')
 	request.user.is_online = False
 	request.user.save()
 	django_logout(request)
@@ -164,11 +189,7 @@ def get_login_status(request):
 
 def get_user_notifications(request):
     user = request.user
-    print("trying to retreive notification from '", user.username, "'")
-    # Retrieve notifications that have to_user equal to the current user
     all_pending_notifications = Notification.objects.filter(to_user=user)
-    print("all pending:", all_pending_notifications)
-    # You can format the notifications into a list of dictionaries to send back as JSON
     notifications_list = [
         {
             'from_user_username': notification.from_user_username,
@@ -180,5 +201,3 @@ def get_user_notifications(request):
         for notification in all_pending_notifications
     ]
     return JsonResponse({'success': True, 'notifications': notifications_list}, safe=False)
-
-# Create your views here.

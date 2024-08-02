@@ -13,11 +13,13 @@ services:
       - django-app:/var/lib/django-app # Adjust the path as necessary
     depends_on:
       - postgres
+    env_file:
+      - ./app_django/.env
 
   postgres:
     image: postgres
     env_file:
-      - ../.env
+      - ./app_django/.env
     networks:
       - app-network
     volumes:

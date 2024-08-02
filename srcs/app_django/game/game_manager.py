@@ -24,8 +24,8 @@ class Game:
         self.countdown = 0
         self.mode = 1
         self.seed = seed(1),
-        self.dx = 0.05
-        self.dy = 0.05
+        self.dx = 0.03 + (0.07 - 0.03) * random()
+        self.dy = 0.03 + (0.07 - 0.03) * random()
         self.ball_velocity = [self.dx, self.dy]
         self.ballRadius = 10
         self.paddleWidth = 0.8
@@ -38,6 +38,8 @@ class Game:
         self.ballNextBounce = [0, 0]  #pas modifier
         self.player_1_position = 0
         self.player_2_position = 0
+        self.launch_time = 0
+        # self.old_next_bounce = (time.time() - self.launch_time)
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])#pas modifier
         self.move_1 = 0
         self.move_2 = 0
@@ -49,23 +51,51 @@ class Game:
         self.game_over = False
         self.state = "waiting"  # waiting, playing, Player1 or Player2 for winner
 
+    # def defineNextNextBounce(self, x2, y2, ball_tmp_velocity_x, ball_tmp_velocity_y):
+    #     if (x2 >= 2.5 or x2 <= 2.5) :
+    #         ball_tmp_velocity_x = -ball_tmp_velocity_x
+    #     if (y2 >= 2.5 or y2 <= 2.5) :
+    #         ball_tmp_velocity_y = -ball_tmp_velocity_y
+    #     while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
+    #         x2 += ball_tmp_velocity_x / 10
+    #         y2 += ball_tmp_velocity_y / 10
+    #     if (x2 > 2.5) :
+    #         x2 = 2.5
+    #     elif (x2 < -2.5) :
+    #         x2 = -2.5
+    #     if (y2 > 3.7) :
+    #         y2 = 3.7
+    #     elif (y2 < -3.7) :
+    #         y2 = -3.7
+    #     self.ballNextBounce[0] = x2
+    #     self.ballNextBounce[1] = y2
+
     def defineNextBounce(self, x, y):
+        # if (time.time() - self.old_next_bounce < 1) :
+        #     return
+        # self.old_next_bounce = time.time()
         x2 = x
         y2 = y
         while (x2 > -2.5 and x2 < 2.5) and (y2 > -4 and y2 < 4) :
             x2 += self.ball_velocity[0] / 10
             y2 += self.ball_velocity[1] / 10
-
         if (x2 > 2.5) :
             x2 = 2.5
         elif (x2 < -2.5) :
             x2 = -2.5
-        if (y2 > 2.5) :
-            y2 = 2.5
-        elif (y2 < -2.5) :
-            y2 = -2.5
+        if (y2 > 3.7) :
+            y2 = 3.7
+        elif (y2 < -3.7) :
+            y2 = -3.7
         self.ballNextBounce[0] = x2
         self.ballNextBounce[1] = y2
+        # count = 5
+        # while (self.ballNextBounce[1] >= -3.7 and count > 0) :
+        #     tmp_x = self.ball_velocity[0]
+        #     tmp_y = self.ball_velocity[1]
+        #     self.defineNextNextBounce(self.ballNextBounce[0], self.ballNextBounce[1], tmp_x, tmp_y)
+        #     count = count - 1
+        #     print ("BALL NEXT BOUCE N - ", count , " = ", self.ballNextBounce[0], ", ", self.ballNextBounce[1])
 
     def add_player(self, consumer, user):
         # If player is not subscribed to the game, add it
@@ -78,16 +108,23 @@ class Game:
         # self.players.remove(player)
         if consumer in self.consumers:
           self.consumers.remove(consumer)
-            
+
     def resetBall(self, x):
         self.ball_position[0] = 0
         self.ball_position[1] = 0
-        self.ball_velocity[0] =  0.05
-        self.ball_velocity[1] =  0.05
+        self.ball_velocity[0] =  0.03 + (0.07 - 0.03) * random()
+        self.ball_velocity[1] =  0.03 + (0.07 - 0.03) * random()
+        if (x == 2) :
+            self.ball_velocity[0] = -self.ball_velocity[0]
+            self.ball_velocity[1] = -self.ball_velocity[1]
 
     def checkIAMode(self, game_id) :
         self.nb_players = 2
         self.mode = 2
+
+    def checkLocalMode(self, game_id) :
+        self.nb_players = 2
+        self.mode = 3
 
     def movePaddle(self, game_id, player, direction, coord) :
         if player == 1 :
@@ -98,7 +135,14 @@ class Game:
             elif direction == 'null':
                 self.move_1 = 0
         elif player == 2 :
-            if (coord != 0) :
+            if (self.mode == 1):
+                if direction == 'right' and self.player_2_position > -2.5 :
+                    self.move_2 = -1
+                elif direction == 'left' and self.player_2_position < 2.5 :
+                    self.move_2 = 1
+                elif direction == 'null':
+                    self.move_2 = 0
+            elif (coord != 0) :
                 if direction == 'left' and self.player_2_position > -2.5 :
                     self.move_2 = -1
                     self.obj_2 = coord
@@ -151,38 +195,38 @@ class Game:
             self.ball_velocity[0] = -self.ball_velocity[0]
 
         # Handle collision with paddles
-        elif(self.ball_position[1] >= 3.4 and self.ball_position[1] <= 3.5 and self.ball_position[0] > self.player_1_position - 0.3 and self.ball_position[0] < self.player_1_position + 0.3) :
-            self.dy = -self.dy
+        elif(self.ball_position[1] >= 3.4 and self.ball_position[0] > self.player_1_position - 0.4 and self.ball_position[0] < self.player_1_position + 0.4) :
             if (self.ball_velocity[1] > 0) :
                 self.ball_velocity[1] = -self.ball_velocity[1]
-            self.ball_velocity[1] *= 1.1
-            self.ball_position[1] = self.ball_position[1] - 0.1
-        elif(self.ball_position[1] <= -3.4 and self.ball_position[1] >= -3.5 and (self.ball_position[0] > self.player_2_position - 0.3 and self.ball_position[0] < self.player_2_position + 0.3)) :
-            self.dy = -self.dy
+            self.ball_velocity[1] *= 1.05
+            if (self.ball_position[1] > 3.5) :
+                self.ball_position[1] = 3.4
+            # self.ball_position[1] = self.ball_position[1] - 0.1
+        elif(self.ball_position[1] <= -3.4 and (self.ball_position[0] > self.player_2_position - 0.4 and self.ball_position[0] < self.player_2_position + 0.4)) :
             if (self.ball_velocity[1] < 0) :
                 self.ball_velocity[1] = -self.ball_velocity[1]
-            self.ball_velocity[1] *= 1.1
-            self.ball_position[1] = self.ball_position[1] + 0.1
+            self.ball_velocity[1] *= 1.05
+            if (self.ball_position[1] < -3.5) :
+                self.ball_position[1] = -3.4
+            # self.ball_position[1] = self.ball_position[1] + 0.1
         self.defineNextBounce(self.ball_position[0], self.ball_position[1])
-
         if (self.move_1 != 0):
             if (self.move_1 > 0 and self.player_1_position < 2.3):
                 self.player_1_position += self.paddleSpeed
             elif (self.move_1 < 0 and self.player_1_position > -2.3):
                 self.player_1_position -= self.paddleSpeed
-        if self.mode == 2 and self.move_2 != 0 and (self.obj_2 > self.player_2_position -0.2 and self.obj_2  <= self.player_2_position + 0.1) :
-            self.move_2 = 0
-        elif(self.move_2 != 0):
-            if (self.move_2 > 0 and self.player_2_position < 2.4):
-                self.player_2_position -= self.paddleSpeed
-            elif (self.move_2 < 0 and self.player_2_position > -2.4):
+        if (self.move_2 != 0):
+            if (self.move_2 > 0 and self.player_2_position < 2.3):
                 self.player_2_position += self.paddleSpeed
+            elif (self.move_2 < 0 and self.player_2_position > -2.3):
+                self.player_2_position -= self.paddleSpeed
         # Handle ball move
         self.ball_position[0] += self.ball_velocity[0]
         self.ball_position[1] += self.ball_velocity[1]
 
         # Detect goal
         if self.ball_position[1] <= -3.7 or self.ball_position[1] >= 3.7:
+            # print("GOAL POSITION : x = ", self.ball_position[0], " y = ", self.ball_position[1])
             if self.ball_position[1] <= -3.7 :
                 self.player_1_score += 1
                 self.resetBall(1)
@@ -192,11 +236,11 @@ class Game:
 
     def handle_game_over(self):
         # In IA mode, the match history is not saved
-        if self.mode == 2 :
+        if self.mode == 2 or self.mode == 3:
             self.state = "finished"
             self.game_manager.remove_game(self.game_id)
             return
-        
+
         winner = self.players[0] if self.player_1_score == 3 else self.players[1]
         loser = self.players[0]  if self.player_1_score != 3 else self.players[1]
         self.state = winner.id
@@ -261,6 +305,26 @@ class Game:
                               # Add more game state information as needed
                       }
               ))
+        elif (self.mode == 3):
+            if self.consumers[0]:
+                asyncio.create_task(self.consumers[0].send_game_state_directly(
+                  {
+                          'state': self.state,
+                          'countdown': self.countdown,
+                          'nb_players': self.nb_players,
+                          'player_1_login': self.players[0].username,
+                          'player_2_login': "Ton Pote",
+                          'ball_position': self.ball_position,
+                          'ball_velocity': self.ball_velocity,
+                          'player_1_position': self.player_1_position,
+                          'player_2_position': self.player_2_position,
+                          'player_id': 1,
+                          'player_1_score': self.player_1_score,
+                          'player_2_score': self.player_2_score,
+                          'ballNextBounce': self.ballNextBounce,
+                              # Add more game state information as needed
+                      }
+              ))
         else :
             for i in range(len(self.consumers)):
                 if self.consumers[i]:
@@ -302,7 +366,7 @@ class GameManager:
 
     def get_game(self, game_id):
         return self.games.get(game_id)
-    
+
 
     def remove_game(self, game_id):
         with self.lock:
@@ -320,6 +384,11 @@ class GameManager:
         with self.lock :
             game = self.get_game(game_id)
             game.checkIAMode(game_id)
+
+    def LocalMode(self, game_id) :
+        with self.lock :
+            game = self.get_game(game_id)
+            game.checkLocalMode(game_id)
 
     # Tournament management
 
@@ -339,10 +408,10 @@ class GameManager:
             if tournament_id in self.tournaments:
                 del self.tournaments[tournament_id]
                 print(f"Removed tournament {tournament_id}")
-        
+
     def get_tournament(self, tournament_id):
         return self.tournaments.get(tournament_id)
-    
+
     # Main loop
 
     async def async_update_games(self):
@@ -359,7 +428,7 @@ class GameManager:
         # Set up a new event loop for this thread
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        
+
         try:
             # Run the main loop of the game updates
             loop.run_until_complete(self.async_update_games())

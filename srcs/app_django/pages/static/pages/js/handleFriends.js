@@ -3,7 +3,7 @@
 let value = '';
 console.log("base:", baseSrc);
 
-var toUser;
+
 
 document.addEventListener('DOMContentLoaded', () => {
 
@@ -15,7 +15,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function handleInput(event)
 {
-	inputValue = event.target.value;
+	var inputValue = event.target.value;
+	console.log("INPUTVALUE:", inputValue);
 	friendsList.style.visibility = 'hidden';
 	if (inputValue !== "") 
 	{
@@ -31,6 +32,7 @@ async function handleInput(event)
 		}
 		else 
 		{
+			console.log("USER DOES NOT EXIST")
 			searchFriendError.textContent = 'No user or friend found';
 			searchFriendError.style.visibility = 'visible';
 			resultBox.style.visibility = 'hidden';
@@ -52,7 +54,7 @@ async function handleInput(event)
 async function getUserData(username) {
 	console.log("In get_user_data 2222make re");
 	try {
-		const raw_data = await fetch(`account/get_user_data/?username=${encodeURIComponent(username)}`, {
+		const raw_data = await fetch(`/account/get_user_data/?username=${encodeURIComponent(username)}`, {
 		method: 'GET',
 		headers: {
 			'Content-Type': 'application/json',
@@ -79,6 +81,7 @@ async function getUserData(username) {
 
 async function displayResultBox(inputValue)
 {
+	console.log("DISPLAYING RESULT BOX", inputValue);
 	username = inputValue;
 	console.log("In display_result_box : ");
 	resultBox.style.visibility ='visible';
@@ -127,7 +130,7 @@ async function isFriend(inputValue) {
 	console.log("In isFriend");
 	console.log('	Input value:', inputValue);
     try {
-        const response = await fetch('friends/is_friend/', {
+        const response = await fetch('/friends/is_friend/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -183,7 +186,7 @@ async function sendFriendRequest() {
 
 async function isUser(inputValue) {
     try {
-        const response = await fetch('account/is_user/', {
+        const response = await fetch('/account/is_user/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

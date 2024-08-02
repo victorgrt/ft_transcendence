@@ -20,9 +20,7 @@
 </head>
 
 <body>
-  <div style="color:white; font-size:20px">{{ user.username }} </div>
     <!-- HEADER -->
-    {% comment %} {% include 'partials/header.html' %} {% endcomment %}
 
     <!-- CONTENT -->
     <div id="content">
@@ -35,7 +33,7 @@
     <!-- 3D LOBBY SCENE -->
     <div id="scene"/>
 
-    
+
     <!-- Include common scripts -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -47,16 +45,19 @@
     <script type="text/javascript" src="{% static 'pages/js/gameSession.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/loadMenuPong.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/loadTournament.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/loadHeader.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/globals.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/pong.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/pongIA.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/pong_local.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/handleNotification.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/handleRegisterForm.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/handleLogout.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/handleFriends.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/loadFriends.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/setupNotificationSocket.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/handleUserStats.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/handleMatchHistory.js' %}"></script>

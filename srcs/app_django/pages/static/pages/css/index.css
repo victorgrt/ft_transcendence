@@ -307,7 +307,6 @@ input[type="submit"]:hover {
 
 /* FOOTER */
 #footer {
-	visibility: hidden;
 	display: flex;
 	width: 100%;
 	position: absolute;
@@ -641,7 +640,7 @@ selectnotif{
 	width: 30%;
 }
 
-#header_button{
+.header_hover{
 	cursor: pointer;
 	background-color: white;
 	padding: 1%;

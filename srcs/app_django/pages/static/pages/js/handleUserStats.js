@@ -1,46 +1,53 @@
-
 var statsVisible = false;
-function showStats(){
-    if (statsVisible === true)
-    {
-        zoomBack();
-		statsDiv.style.visibility = 'hidden'
-		statsVisible = false;
-        return;
+
+async function showStats() {
+    if (statsVisible) {
+        // zoomBack();
+        statsDiv.style.visibility = 'hidden';
+        statsVisible = false;
+    } else {
+        statsDiv.style.visibility = 'visible';
+        statsDiv.style.opacity = '1';
+        await updateUIForStats(); // Now waits for the stats to be updated before proceeding
+        // showElement(goBackButton);
+        statsVisible = true;
     }
-	else
-	{
-		statsDiv.style.visibility = 'visible';
-		statsDiv.style.opacity = '1';
-		statsVisible = true;
-		// updateUIForStats() 
-		showElement(goBackButton);
-	}
 }
 
+async function updateUIForStats() {
+    console.log("Updating UI for stats");
+    const userDiv = document.getElementById('user_stats');
+    // Assuming avatar, username, and friends are defined globally or fetched elsewhere
 
-// function updateUIForStats() 
-// {
-// 	console.log("Updating UI for stats");
-//     const userDiv = document.getElementById('user_stats');
+    try {
+        const response = await fetch('/account/stats/', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
 
-// 	// Retrieve data from data attributes
-// 	const username = userDiv.getAttribute('data-username');
-// 	const avatar = userDiv.getAttribute('data-avatar');
-// 	const friends = userDiv.getAttribute('data-friends');
-// 	const win = userDiv.getAttribute('data-win');
-// 	const lost = userDiv.getAttribute('data-lost');
-
-//     userDiv.innerHTML =
-// 	`
-// 		<div id="leftstats">
-// 			${avatar ? `<ul id="stats"><img src="staticfiles/pages/img_avatars/${avatar}" id="avatar"></ul>` : ''}
-// 		</div>
-// 		<div id="rightstats">
-// 			<ul id="stats_username">${username}</ul>
-// 			${friends ? `<ul id="stats">0 amis</ul>` : `<ul id="stats">${friends.count} amis</ul>`}
-// 			<ul id="stats">${win}</ul>
-// 			<ul id="stats">${lost}</ul>
-// 		</div>
-//     `;
-// }
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const statsFetched = await response.json();
+        if (statsFetched.success) {
+            const win = statsFetched.wins;
+            const lost = statsFetched.losses;
+			const username = statsFetched.username;
+			const avatar = statsFetched.avatar;
+			const ratio = statsFetched.ratio;
+			const rightstats = document.getElementById('rightstats');
+			rightstats.innerHTML = `
+				<p class="stats_username" style="font-size: 40px;">${username}</p>
+				<p style="color:green; font-size: 30px;">wins: ${win}</p>
+				<p style="color:red; font-size: 30px;">losses: ${lost}</p>
+				<p style="color: yellow; font-size: 30px;">win ratio: ${ratio}%</p>
+		`;
+        } else {
+            console.log('Failed to fetch user stats:', statsFetched.message);
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+}
