@@ -135,16 +135,9 @@ function launchGameLocal()
         document.getElementById('countdownDisplay').innerText = displayText;
     }
 
-    function showElement(element)
-    {
-        element.style.opacity = '1';
-        element.style.visibility = 'visible';
-        element.style.z_index = '2';
-    }
-
     function animate()
     {
-        console.log("ANIMATING " + gamedata);
+		if (!isAnimating) return;
         if (gamedata)
         {
             if (set_camera == 0)

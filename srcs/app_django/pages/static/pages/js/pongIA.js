@@ -170,8 +170,6 @@ function launchGameIA()
 
     function animate()
     {
-        console.log("ANIMATING " + isAnimating);
-        console.log("GAMEDATA: " + gamedata);
         if (!isAnimating) return;
         if (gamedata)
         {

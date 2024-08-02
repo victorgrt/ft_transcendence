@@ -2,7 +2,6 @@
 function launchGame()
 {
     isAnimating = true;
-    console.log("PONG SCRIPT LOADED");
     hideElement(goBackButton);
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
@@ -122,8 +121,6 @@ function launchGame()
 
     function updateCountdownHTML(countdown)
     {
-        console.log("COUNTDOWN: ");
-        console.log(countdown);
         let displayText;
         if (countdown > 0)
             displayText = `${countdown}`;

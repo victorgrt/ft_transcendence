@@ -63,6 +63,8 @@ function loadContent(url, pushState = true) {
         page_url = '/pong/';
     } else if (url.includes('/pongIA/')) {
         page_url = '/pongIA/';
+	} else if (url.includes('/pong_local/')) {
+		page_url = '/pong_local/';
     } else if (url.includes('/tournament/')) {
         page_url = '/tournament/';
     } else {
