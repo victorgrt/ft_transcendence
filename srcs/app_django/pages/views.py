@@ -16,7 +16,6 @@ import uuid
 from game.models import MatchHistory, Tournament, GameSession
 
 
-#notifs par chatgpt
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
 
@@ -127,13 +126,6 @@ def tournament(request, tournament_id):
 # Game menu
 def menuPong(request):
     return render(request, 'partials/menuPong.html')
-
-# def account(request):
-#     return render(request, 'partials/account.html')
-
-# Chat page
-def chat(request):
-    return render(request, 'partials/chat.html')
 
 @csrf_exempt
 def send_notification(request):
