@@ -9,6 +9,7 @@ var selecting_clickable;
 var ambientLight;
 var initialControlPosition;
 var clickCoordinates = null;
+var interval;
 let lampOn = true;
 function init() {
     console.warn("inside init");
@@ -37,7 +38,7 @@ function init() {
     scene.add(ambientLight);
 
     loader = new THREE.GLTFLoader();
-    const sceneurl = "/staticfiles/pages/images/scene_final.glb";
+    const sceneurl = "/staticfiles/pages/images/scene_final2.glb";
 
     loader.load(
         sceneurl,
@@ -94,12 +95,12 @@ function init() {
 }
 init();
 animate();
-const intensityValues = [1.5, 1.4 , 1.3, 1.2, 1.1, 1,0.9, 0.8, 0.7,0.6, 0.5,0.4, 0.3,0.2, 0.1, 0, -0.1,-0.2, -0.3,-0.4, -0.5,-0.6, -0.7, -0.8,-0.9, -1, -1.1 ,-1.2, -1.3, -1.4, -1.5, -1.6, -1.7, -1.8, -1.9, -2];
+const intensityValues = [1.5, 1.45, 1.4, 1.35, 1.3, 1.25, 1.2, 1.15, 1.1, 1.05, 1, 0.95, 0.9, 0.85, 0.8, 0.75, 0.7, 0.65, 0.6, 0.55, 0.5, 0.45, 0.4, 0.35, 0.3, 0.25, 0.2, 0.15, 0.1, 0.05, 0, -0.05, -0.1, -0.15, -0.2, -0.25, -0.3, -0.35, -0.4,  -0.45, -0.5, -0.55, -0.6, -0.65, -0.7, -0.75, -0.8, -0.85, -0.9, -0.95, -1, -1.05, -1.1 , -1.15, -1.2, -1.25, -1.3, -1.35, -1.4, -1.45, -1.5, -1.55, -1.6, -1.65, -1.7, -1.75, -1.8, -1.85, -1.9, -1.95, -2];
 let currentIndex = 0;
 
 // Function to update the intensity
 let forward = true; // Direction flag
-
+let updatingIntensity = false;
 // Function to update the intensity
 function updateIntensity() {
     ambientLight.intensity = intensityValues[currentIndex];
@@ -118,8 +119,6 @@ function updateIntensity() {
         }
     }
 }
-// Set an interval to update the intensity every second
-setInterval(updateIntensity, 100); // 1000 milliseconds = 1 second
 
 function onMouseMove(event) {
     // Mettre à jour la position du pointeur de la souris
@@ -149,8 +148,7 @@ function onMouseMove(event) {
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
             // console.log("name:", intersect.object.name);
-            if ((intersect.object.name === 'GameScreen_Plane' || intersect.object.name === 'computerScreen_2_1' || intersect.object.name === 'lampSquareFloor_2' || intersect.object.name === 'defaultMaterial' || intersect.object.name === 'Plane001_Door_0') && isZooming === false) {
-                console.log("HERE:", intersect.object);
+            if ((intersect.object.name === 'GameScreen_Plane' || intersect.object.name === 'computerScreen_2_1' || intersect.object.name === 'lampSquareFloor_2' || intersect.object.name === 'group780585218' || intersect.object.name === 'Plane001_Door_0' || intersect.object.name === "Couch") && isZooming === false) {
                 selected_object_name = intersect.object.name;
                 return intersect.object.name;
             }
@@ -171,17 +169,14 @@ function onMouseMove(event) {
                 // objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
                 objectToHighlight.material.color.setHex(0xFFFFFF);
             }
-            else if (selectedObject.object.name === 'defaultMaterial') {
-                // objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
-                objectToHighlight.material.color.setHex(0xFFFFFF);
+            else if (selectedObject.object.name === 'group780585218') {
+                // objectToHighlight.material.emissive = 0.5;
+                objectToHighlight.material.emissiveIntensity = 1; // Exemple: intensité d'émission pour la surbrillance
+                objectToHighlight.material.color.setRGB(0.7454042095350284, 0.010960094003125918, 0.01764195448412081);
             }
             else if (selectedObject.object.name === 'Plane001_Door_0') {
-                // objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
-                objectToHighlight.material.color.setHex(0xFFFFFF);
-                // objectToHighlight.material.emissive = -5;
-                // objectToHighlight.material.emissiveIntensity = 100;
+                objectToHighlight.material.emissiveIntensity = 100;
             }
-
             // Autres ajustements de surbrillance si nécessaire
             highlightedObject = objectToHighlight;
         }
@@ -224,6 +219,21 @@ window.addEventListener('resize', () => {
 
 window.addEventListener('click', onClickScene);
 
+function toggleInterval() {
+    if (updatingIntensity === false) {
+        interval = setInterval(updateIntensity, 75);
+        updatingIntensity = true;
+        console.log("Interval started");
+    } else {
+        console.log("Stopping interval");
+        clearInterval(interval);
+        updatingIntensity = false;
+        ambientLight.intensity = 1;
+        console.log("Interval stopped");
+    }
+}
+
+
 function onClickScene(event) {
     if (isZooming === true || isZoomed === true)
         return;
@@ -256,7 +266,66 @@ function onClickScene(event) {
             }
             return ;
         }
+        else if (intersection.object.name === "group780585218")
+        {
+            
+            if (acceptedModal === false)
+                showModal();
+            else
+            {
+                toggleInterval();
+            }
+            return;
+        }
+        else if (intersection.object.name === "Couch")
+        {
+            zoomToCouch();
+            return;
+        }
+        else if (intersection.object.name === "Plane001_Door_0")
+        {
+            console.log("should be showing error modal")
+            //check if user is auth;
+            showErrorModal();
+            // zoomToDoor();
+            return ;
+        }
         clickCoordinates = intersection.point;
         zoomToCoordinates(clickCoordinates);
     }
+}
+
+function modalLogin()
+{
+    hideErrorModal();
+    zoomToPC();
+    showElement(loginForm);
+    showElement(registerForm);
+}
+
+function hideErrorModal()
+{
+    $('#container-modal-error').modal('hide');
+}
+
+function showErrorModal()
+{
+    $('#container-modal-error').modal('show');
+}
+
+function showModal() {
+    // Use jQuery to select the modal and show it
+    $('#container-modal').modal('show');
+}
+
+function dontAcceptModal()
+{
+    $('#container-modal').modal('hide');
+    acceptModal = false;
+}
+
+function acceptModal()
+{
+    $('#container-modal').modal('hide');
+    acceptedModal = true;
 }

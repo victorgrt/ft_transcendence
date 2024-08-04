@@ -18,7 +18,6 @@ function loadHome(){
     handleLoginForm();
 	handleRegisterForm();
     loadFriends();
-	console.log("here:", loginForm);
 }
 
 function pongIAPageScripts()

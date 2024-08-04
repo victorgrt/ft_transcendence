@@ -55,6 +55,7 @@ var countdown;
 var gameover;
 var notifs_fetched;
 var id_to_accept;
+var acceptedModal = false;
 
 // ------------ HEADER VARIABLES ---------
 var headerUser;

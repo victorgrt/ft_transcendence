@@ -57,6 +57,62 @@ function hideEverything(){
 }
 
 //=== ZOOM INTO OBJECTS ===//
+function zoomToCouch() {
+    if (!isZoomed && !isZooming)
+    {
+        isZooming = true;
+        targetPosition = new THREE.Vector3(10, 2.5, 2);
+        hideEverything();
+        hideElement(header);
+        const notifbtn = document.getElementById("notifbtn");
+        hideElement(notifbtn);
+        new TWEEN.Tween(camera.position)
+            .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate(() => {
+                controls.target.x = initialCameraLookAt.x;
+                controls.target.y = initialCameraLookAt.y + 2;
+                controls.target.z = initialCameraLookAt.z - 1.5;
+            })
+            .onComplete(() => {
+                isZooming = false;
+                isZoomed = true;
+                showElement(goBackButton);
+            })
+            .start();
+    }
+}
+
+function zoomToDoor() {
+    console.log(isZoomed, " ", isZooming);
+    if (!isZoomed && !isZooming)
+    {
+        isZooming = true;
+        targetPosition = new THREE.Vector3(7, 4, 0);
+        hideEverything();
+        hideElement(header);
+        const notifbtn = document.getElementById("notifbtn");
+        hideElement(notifbtn);
+        new TWEEN.Tween(camera.position)
+            .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
+            .easing(TWEEN.Easing.Quadratic.InOut)
+            .onUpdate(() => {
+                controls.target.x = targetPosition.x;
+                controls.target.y = targetPosition.y;
+                controls.target.z = targetPosition.z ;
+            })
+            .onComplete(() => {
+                isZooming = false;
+                isZoomed = true;
+                headerLogoutFunction();
+                loadContent("/");
+            })
+            .start();
+    }
+}
+
+
+
 function zoomToCoordinates(clickCoordinates) {
     var targetPosition;
     if (isZoomed && selecting_clickable === true) {

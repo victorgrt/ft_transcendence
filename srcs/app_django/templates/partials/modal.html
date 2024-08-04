@@ -1,0 +1,42 @@
+{% if user.is_authenticated %}
+    <div id="container-modal" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center" id="exampleModalLabel">⚠️ WARNING ⚠️</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="dontAcceptModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Minima doloribus praesentium vero iure. Velit quos ex voluptas, vero reprehenderit fugit, error, autem quod animi minus atque accusamus repudiandae doloribus. Modi.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="acceptModal()">CONTINUE</button>
+                    <button type="button" class="btn btn-danger" onclick="dontAcceptModal()">GO BACK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div id="container-modal-error" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title w-100 text-center" id="exampleModalLabel">🔥 ERROR 🔥</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="dontAcceptModal()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>This door is used to logout. You can't use it if you're not logged in! Duhhh.</p>
+                </div>
+                <div class="modal-footer justify-content-center">
+					<button type="button" class="btn btn-primary" data-dismiss="modal" onclick="modalLogin()">LOGIN/REGISTER</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="hideErrorModal()">NO THANKS</button>
+				</div>
+            </div>
+        </div>
+    </div>
+{% endif %}
+
