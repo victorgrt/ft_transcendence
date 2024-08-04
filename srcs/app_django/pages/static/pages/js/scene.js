@@ -272,9 +272,7 @@ function onClickScene(event) {
             if (acceptedModal === false)
                 showModal();
             else
-            {
                 toggleInterval();
-            }
             return;
         }
         else if (intersection.object.name === "Couch")
@@ -284,48 +282,21 @@ function onClickScene(event) {
         }
         else if (intersection.object.name === "Plane001_Door_0")
         {
-            console.log("should be showing error modal")
-            //check if user is auth;
-            showErrorModal();
-            // zoomToDoor();
+            console.log("here duhhhh");
+            try {
+                const pseudo = document.getElementById("user_stats");
+                if (pseudo != null)
+                {
+                    zoomToDoor();   
+                    
+                }
+            }
+            catch {
+                showErrorModal();
+            }
             return ;
         }
         clickCoordinates = intersection.point;
         zoomToCoordinates(clickCoordinates);
     }
-}
-
-function modalLogin()
-{
-    hideErrorModal();
-    zoomToPC();
-    showElement(loginForm);
-    showElement(registerForm);
-}
-
-function hideErrorModal()
-{
-    $('#container-modal-error').modal('hide');
-}
-
-function showErrorModal()
-{
-    $('#container-modal-error').modal('show');
-}
-
-function showModal() {
-    // Use jQuery to select the modal and show it
-    $('#container-modal').modal('show');
-}
-
-function dontAcceptModal()
-{
-    $('#container-modal').modal('hide');
-    acceptModal = false;
-}
-
-function acceptModal()
-{
-    $('#container-modal').modal('hide');
-    acceptedModal = true;
 }

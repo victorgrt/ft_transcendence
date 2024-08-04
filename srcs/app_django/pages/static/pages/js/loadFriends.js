@@ -19,7 +19,6 @@ function loadFriendElements(){
 	console.log("friendsList:", friendsList);
 	console.log("searchFriendError:", searchFriendError);
 	console.log("addButton:", addButton);
-	console.log("compteur_notifs:", compteur_notifs);
 	console.log("baseSrc:", baseSrc);
 	console.log("friendsBox:", friendsBox);
 	console.log("toUser:", toUser);

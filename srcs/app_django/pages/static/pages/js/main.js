@@ -102,10 +102,9 @@ function zoomToDoor() {
                 controls.target.z = targetPosition.z ;
             })
             .onComplete(() => {
-                isZooming = false;
-                isZoomed = true;
                 headerLogoutFunction();
-                loadContent("/");
+                isZooming = false;
+                isZoomed = false;
             })
             .start();
     }
@@ -539,15 +538,12 @@ function headerLogoutFunction(){
     .then(data => {
         if (data.success) {
             console.log("LOGOUT SUCCES");
-            // Handle successful logout
+            // Handle su     ccessful logout
             isZooming = false;
             isZoomed = false;
             loadContent('/');
-            // alert(data.message);
-            // window.location.href = '/'; // Reload the page or update the UI as needed
-            // updateUIForLogout();
+            loggedOutModalShow();
         } else {
-            // Handle failure
             console.log("LOGOUT FAIL");
             alert(data.message);
         }

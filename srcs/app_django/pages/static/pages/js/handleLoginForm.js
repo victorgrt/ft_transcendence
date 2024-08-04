@@ -28,9 +28,9 @@ function handleLoginForm() {
 			  return response.json(); // Assuming the server responds with JSON
 		  })
 		  .then(data => {
-			  // Handle success, redirect or update UI accordingly
-			  console.log(data);
-			  window.location.href = '/'; // Adjust as needed
+			console.log(data);
+			isZooming = false;
+			loadContent("/");
 		  })
 		  .catch(error => {
 			  console.error('There was a problem with the fetch operation:', error);
