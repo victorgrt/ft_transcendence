@@ -1,35 +1,36 @@
 
 function modalLogin()
 {
-    hideErrorModal();
+    hidePongErrorModal()
+    hideLoggoutErrorModal();
     zoomToPC();
     showElement(loginForm);
     showElement(registerForm);
 }
 
-function hideErrorModal()
+function hideLoggoutErrorModal()
 {
-    $('#container-modal-error').modal('hide');
+    $('#container-modal-error-loggout').modal('hide');
 }
 
-function showErrorModal()
+function showLoggoutErrorModal()
 {
-    $('#container-modal-error').modal('show');
+    $('#container-modal-error-loggout').modal('show');
 }
 
-function showModal() {
-    $('#container-modal').modal('show');
+function showWarningModal() {
+    $('#container-modal-warning').modal('show');
 }
 
-function dontAcceptModal()
+function refuseWarningModal()
 {
-    $('#container-modal').modal('hide');
+    $('#container-modal-warning').modal('hide');
     acceptModal = false;
 }
 
-function acceptModal()
+function acceptWarningModal()
 {
-    $('#container-modal').modal('hide');
+    $('#container-modal-warning').modal('hide');
     acceptedModal = true;
 }
 
@@ -41,4 +42,14 @@ function loggedOutModalShow()
 function loggedOutModalHide()
 {
     $('#container-modal-log').modal('hide');
+}
+
+function showPongErrorModal()
+{
+    $('#container-modal-error-pong').modal('show');
+}
+
+function hidePongErrorModal()
+{
+    $('#container-modal-error-pong').modal('hide');
 }

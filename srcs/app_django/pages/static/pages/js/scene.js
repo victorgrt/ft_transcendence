@@ -11,6 +11,8 @@ var initialControlPosition;
 var clickCoordinates = null;
 var interval;
 let lampOn = true;
+var acceptedModal = false;
+
 function init() {
     console.warn("inside init");
     console.warn("inside init");
@@ -250,6 +252,10 @@ function onClickScene(event) {
     if (intersects.length > 0) {
         const intersection = intersects[0];
         // console.log("here:", intersection);
+        if (intersection.object.name === "Couch")
+        {
+            zoomToCouch();
+        }
         if (intersection.object.name === "lampSquareFloor_2")
         {
             console.log("clicked on lamp :", intersection);
@@ -266,37 +272,56 @@ function onClickScene(event) {
             }
             return ;
         }
-        else if (intersection.object.name === "group780585218")
+        if (intersection.object.name === "group780585218")
         {
-            
+            console.log("acceptedModal:", acceptedModal);
             if (acceptedModal === false)
-                showModal();
+            {
+                console.log("entering");
+                showWarningModal();
+            }
             else
                 toggleInterval();
             return;
         }
-        else if (intersection.object.name === "Couch")
-        {
-            zoomToCouch();
-            return;
-        }
-        else if (intersection.object.name === "Plane001_Door_0")
+
+        if (intersection.object.name === "Plane001_Door_0")
         {
             console.log("here duhhhh");
-            try {
-                const pseudo = document.getElementById("user_stats");
-                if (pseudo != null)
-                {
-                    zoomToDoor();   
-                    
-                }
+            const pseudo = document.getElementById("user_stats");
+            console.log("pseudo:", pseudo)
+            if (pseudo)
+            {
+                zoomToDoor();   
+                return ;
             }
-            catch {
-                showErrorModal();
+            else
+            {
+                console.log("should enter here right")
+                showLoggoutErrorModal();
+                return;
             }
             return ;
         }
-        clickCoordinates = intersection.point;
-        zoomToCoordinates(clickCoordinates);
+        if (intersection.object.name === "GameScreen_Plane")
+            {
+                console.log("ARCADE CLICKED");
+                const pseudo = document.getElementById("user_stats");
+                console.log("pseudo:", pseudo)
+                if (pseudo)
+                {
+                    //ZOOM TO ARCADE + DISPLAY MENU PONG
+                    return ;
+                }
+                else
+                {
+                    console.log("should enter here right")
+                    showPongErrorModal();
+                    return;
+                }
+                return ;
+            }
+        // clickCoordinates = intersection.point;
+        // zoomToCoordinates(clickCoordinates);
     }
 }
