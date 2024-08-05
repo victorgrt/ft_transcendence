@@ -7,7 +7,6 @@ function loadFriendElements(){
 	friendsList = document.getElementById("friends_list");
 	searchFriendError = document.getElementById('search_friend_error');
 	addButton = document.getElementById('add_button');
-	compteur_notifs = document.getElementById("nb_notifs").textContent;
 	baseSrc = document.getElementById("result_avatar")?.src;
 	friendsBox = document.getElementById("result_box");
 	toUser = "";

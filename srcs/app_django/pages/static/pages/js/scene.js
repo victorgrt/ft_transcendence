@@ -150,7 +150,7 @@ function onMouseMove(event) {
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
             // console.log("name:", intersect.object.name);
-            if ((intersect.object.name === 'GameScreen_Plane' || intersect.object.name === 'computerScreen_2_1' || intersect.object.name === 'lampSquareFloor_2' || intersect.object.name === 'group780585218' || intersect.object.name === 'Plane001_Door_0' || intersect.object.name === "Couch") && isZooming === false) {
+            if ((intersect.object.name === 'GameScreen_Plane' || intersect.object.name === 'computerScreen_2_1' || intersect.object.name === 'lampSquareFloor_2' || intersect.object.name === 'group780585218' || intersect.object.name === 'Plane001_Door_0' || intersect.object.name === "Couch" || intersect.object.name === "Node-Mesh") && isZooming === false) {
                 selected_object_name = intersect.object.name;
                 return intersect.object.name;
             }
@@ -179,6 +179,8 @@ function onMouseMove(event) {
             else if (selectedObject.object.name === 'Plane001_Door_0') {
                 objectToHighlight.material.emissiveIntensity = 100;
             }
+            else if (selectedObject.object.name === "Node-Mesh")
+                objectToHighlight.material.emissiveIntensity = 100;
             // Autres ajustements de surbrillance si nécessaire
             highlightedObject = objectToHighlight;
         }
@@ -272,6 +274,15 @@ function onClickScene(event) {
             }
             return ;
         }
+        if (intersection.object.name === "Node-Mesh")
+        {
+            console.log("clicked on switch :");
+            if (ambientLight.intensity == 0)
+                ambientLight.intensity = 1;
+            else
+                ambientLight.intensity = 0;
+            return ;
+        }
         if (intersection.object.name === "group780585218")
         {
             console.log("acceptedModal:", acceptedModal);
@@ -311,6 +322,7 @@ function onClickScene(event) {
                 if (pseudo)
                 {
                     //ZOOM TO ARCADE + DISPLAY MENU PONG
+                    zoomToArcade();
                     return ;
                 }
                 else

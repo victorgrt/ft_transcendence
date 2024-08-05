@@ -32,7 +32,7 @@ function zoomBack() {
     const targetPosition = initialCameraPosition;
 	const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
-	if (isZoomed === true)
+	if (isZoomed === true || couchZoomed === true)
 	{
 		new TWEEN.Tween(camera.position)
 		.to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
@@ -51,12 +51,36 @@ function zoomBack() {
 	}
 }
 
+var couchZoomed = false;
+
+function zoomToArcade() {
+    zoomTo(
+		new THREE.Vector3(1, 4, 4),
+		new THREE.Vector3(-20, 4, 0),
+        () => {
+			showElement(menuPongDiv);
+			
+		}
+    );
+	hideVisible();
+	loadMenuPong();
+	menuPongVisible = true;
+	dontClick = true;
+}
+
+function varCouch()
+{
+	isZoomed = false;
+	couchZoomed = true;
+	console.log("couch:", couchZoomed);
+}
+
 function zoomToCouch() {
     zoomTo(
         new THREE.Vector3(10, 2.5, 2), 
         new THREE.Vector3(initialCameraLookAt.x, initialCameraLookAt.y + 2, initialCameraLookAt.z - 1.5),
         () => {
-
+			varCouch();
 		}
     );
 }

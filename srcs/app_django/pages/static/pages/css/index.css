@@ -403,20 +403,20 @@ input[type="password"] {
 .needed_hover2{
 	width: 50%;
 	border-color: white;
+	margin: 5px;
 }
 
-.needed_hover2:hover {
+/* .needed_hover2:hover {
 	background-color: white;
 	color: black;
 	transition: 1s;
 	text-decoration: 2px solid underline overline;
-	/* text-decoration: 1px solid black; */
 	text-underline-offset: 5px;
 	box-shadow: 0 0 15px white;
 	transition: all .45s ease-Out;
 	width: 50%;
 	margin: 1%;
-}
+} */
 
 /* STATS */
 #user_stats{
@@ -624,7 +624,8 @@ selectnotif{
 }
 
 .needed_hover2:hover {
-	background-color: red;
+	background-color: white;
+
 	color: black;
 	transition: 1s;
 	text-decoration: 2px solid underline overline;

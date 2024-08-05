@@ -131,7 +131,6 @@ $(document).ready(function() {
                 ,
                 success: function(response) {
                     console.log(response);
-                    compteur_notifs++;
                     loadContent('/pong/' + response.session_id + '/');
                 },
                 error: function(response) {
@@ -235,7 +234,6 @@ async function handleNotification() {
         var tdAccept = document.createElement("td");
         tdAccept.id = "notiftd_from_notif";
         var acceptButton = document.createElement("button");
-        acceptButton.className = compteur_notifs;
         acceptButton.id = "notifaccept";
         acceptButton.value = type;
         acceptButton.textContent = "V";
@@ -251,7 +249,6 @@ async function handleNotification() {
         var tdDecline = document.createElement("td");
         tdDecline.id = "notiftd_from_notif";
         var declineButton = document.createElement("button");
-        declineButton.className = compteur_notifs;
         declineButton.id = "notifdecline";
         declineButton.textContent = "X";
         
