@@ -30,6 +30,7 @@ function handleLoginForm() {
 		  .then(data => {
 			console.log(data);
 			isZooming = false;
+			isZoomed = true;
 			loadContent("/");
 		  })
 		  .catch(error => {

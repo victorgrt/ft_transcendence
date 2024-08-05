@@ -57,31 +57,31 @@ function hideEverything(){
 }
 
 //=== ZOOM INTO OBJECTS ===//
-function zoomToCouch() {
-    if (!isZoomed && !isZooming)
-    {
-        isZooming = true;
-        targetPosition = new THREE.Vector3(10, 2.5, 2);
-        hideEverything();
-        hideElement(header);
-        const notifbtn = document.getElementById("notifbtn");
-        hideElement(notifbtn);
-        new TWEEN.Tween(camera.position)
-            .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
-            .easing(TWEEN.Easing.Quadratic.InOut)
-            .onUpdate(() => {
-                controls.target.x = initialCameraLookAt.x;
-                controls.target.y = initialCameraLookAt.y + 2;
-                controls.target.z = initialCameraLookAt.z - 1.5;
-            })
-            .onComplete(() => {
-                isZooming = false;
-                isZoomed = true;
-                showElement(goBackButton);
-            })
-            .start();
-    }
-}
+// function zoomToCouch() {
+//     if (!isZoomed && !isZooming)
+//     {
+//         isZooming = true;
+//         targetPosition = new THREE.Vector3(10, 2.5, 2);
+//         hideEverything();
+//         hideElement(header);
+//         const notifbtn = document.getElementById("notifbtn");
+//         hideElement(notifbtn);
+//         new TWEEN.Tween(camera.position)
+//             .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
+//             .easing(TWEEN.Easing.Quadratic.InOut)
+//             .onUpdate(() => {
+//                 controls.target.x = initialCameraLookAt.x;
+//                 controls.target.y = initialCameraLookAt.y + 2;
+//                 controls.target.z = initialCameraLookAt.z - 1.5;
+//             })
+//             .onComplete(() => {
+//                 isZooming = false;
+//                 isZoomed = true;
+//                 showElement(goBackButton);
+//             })
+//             .start();
+//     }
+// }
 
 function zoomToDoor() {
     console.log(isZoomed, " ", isZooming);
@@ -254,33 +254,33 @@ function goToRegister() {
     registerForm.style.z_index = '2';
 }
 
-function zoomToPC() {
+// function zoomToPC() {
 
-    var clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
-    isZooming = true;
-    isZoomed = true;
-    //position we want to be
-    targetPosition = new THREE.Vector3(2, 2.8, 0.02);
-    //position we want to look at
-    hardClickCoordinates = new THREE.Vector3(1.8, 2.8, -2.3);
-    new TWEEN.Tween(camera.position)
-        .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, duration)
-        .easing(TWEEN.Easing.Quadratic.InOut)
-        .onUpdate(() => {
-            controls.target.x = hardClickCoordinates.x;
-            controls.target.y = hardClickCoordinates.y;
-            controls.target.z = hardClickCoordinates.z;
-        })
-    .onComplete(() => {
-        console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
-        isZooming = false;
-        controls.target.x = hardClickCoordinates.x;
-        controls.target.y = hardClickCoordinates.y;
-        controls.target.z = hardClickCoordinates.z;
-        showElement(goBackButton);
-    })
-    .start();
-}
+//     var clickCoordinates = new THREE.Vector3(2.224749245944513, 2.670698308531501, -2.3195560957531383); // Remplacez x, y, z par les coordonnées de l'objet
+//     isZooming = true;
+//     isZoomed = true;
+//     //position we want to be
+//     targetPosition = new THREE.Vector3(2, 2.8, 0.02);
+//     //position we want to look at
+//     hardClickCoordinates = new THREE.Vector3(1.8, 2.8, -2.3);
+//     new TWEEN.Tween(camera.position)
+//         .to({ x: targetPosition.x, y: targetPosition.y, z: -targetPosition.z }, duration)
+//         .easing(TWEEN.Easing.Quadratic.InOut)
+//         .onUpdate(() => {
+//             controls.target.x = hardClickCoordinates.x;
+//             controls.target.y = hardClickCoordinates.y;
+//             controls.target.z = hardClickCoordinates.z;
+//         })
+//     .onComplete(() => {
+//         console.log("coord: x", targetPosition.x, "y:", targetPosition.y, "z:", targetPosition.z)
+//         isZooming = false;
+//         controls.target.x = hardClickCoordinates.x;
+//         controls.target.y = hardClickCoordinates.y;
+//         controls.target.z = hardClickCoordinates.z;
+//         showElement(goBackButton);
+//     })
+//     .start();
+// }
 
 function centerRegisterForm()
 {
@@ -341,7 +341,7 @@ function resetStyleForms(){
     registerForm.style.removeProperty('position');
 }
 
-function zoomBack() {
+function hideVisible(){
     if (registerVisible === true)
     {
         hideElement(registerForm);
@@ -378,39 +378,43 @@ function zoomBack() {
         matchHistoryBool = false;
     }
     hideElement(goBackButton);
-    if (isZoomed === false)
-        return; //returns because no zoom back needed
-    dontClick = false;
-    isZooming = true;
-    new TWEEN.Tween(camera.position)
-        .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
-        .easing(TWEEN.Easing.Back.InOut)
-        .onUpdate(() => {
-            if (clickCoordinates != null)
-            {
-                controls.target.x = clickCoordinates.x;
-                controls.target.y = clickCoordinates.y;
-                controls.target.z = clickCoordinates.z;
-            }
-            else
-            {
-                controls.target.x = initialCameraLookAt.x;
-                controls.target.y = initialCameraLookAt.y;
-                controls.target.z = initialCameraLookAt.z;
-            }
-        })
-        .onComplete(() => {
-            isZoomed = false;
-            isZooming = false;
-            localStorage.setItem('isZoomed', isZoomed);
-            controls.position = new THREE.Vector3(12, 5, 12);
-            controls.target.x = initialCameraLookAt.x;
-            controls.target.y = initialCameraLookAt.y;
-            controls.target.z = initialCameraLookAt.z;
-            showElement(header);
-        })
-        .start();
 }
+
+// function zoomBack() {
+  
+//     if (isZoomed === false)
+//         return; //returns because no zoom back needed
+//     dontClick = false;
+//     isZooming = true;
+//     new TWEEN.Tween(camera.position)
+//         .to({ x: initialCameraPosition.x, y: initialCameraPosition.y, z: initialCameraPosition.z }, duration)
+//         .easing(TWEEN.Easing.Back.InOut)
+//         .onUpdate(() => {
+//             if (clickCoordinates != null)
+//             {
+//                 controls.target.x = clickCoordinates.x;
+//                 controls.target.y = clickCoordinates.y;
+//                 controls.target.z = clickCoordinates.z;
+//             }
+//             else
+//             {
+//                 controls.target.x = initialCameraLookAt.x;
+//                 controls.target.y = initialCameraLookAt.y;
+//                 controls.target.z = initialCameraLookAt.z;
+//             }
+//         })
+//         .onComplete(() => {
+//             isZoomed = false;
+//             isZooming = false;
+//             localStorage.setItem('isZoomed', isZoomed);
+//             controls.position = new THREE.Vector3(12, 5, 12);
+//             controls.target.x = initialCameraLookAt.x;
+//             controls.target.y = initialCameraLookAt.y;
+//             controls.target.z = initialCameraLookAt.z;
+//             showElement(header);
+//         })
+//         .start();
+// }
 
 
 // SHOW ELEMENT //

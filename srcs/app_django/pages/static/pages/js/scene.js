@@ -321,6 +321,22 @@ function onClickScene(event) {
                 }
                 return ;
             }
+        else if (intersection.object.name === "computerScreen_2_1")
+        {
+            console.log("SCREEN CLICKED")
+            const pseudo = document.getElementById("user_stats");
+            console.log("pseudo:", pseudo)
+            //CHECK IF NOT LOGGED IN
+            if (!pseudo)
+            {
+                //ZOOM TO SCREEN
+                zoomToPC();
+            }
+            else {
+                zoomToPCWhileLogged();
+            }
+            return ;
+        }
         // clickCoordinates = intersection.point;
         // zoomToCoordinates(clickCoordinates);
     }
