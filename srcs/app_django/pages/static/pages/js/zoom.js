@@ -29,18 +29,18 @@ async function zoomTo(targetPosition, lookAtCoordinates, onCompleteActions) {
 
 function zoomBack() {
 	hideVisible();
+	const initialLook = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
     const targetPosition = initialCameraPosition;
-	const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
 
-	if (isZoomed === true || couchZoomed === true)
+	if (isZoomed === true || couchZoomed === true || loaded === true)
 	{
 		new TWEEN.Tween(camera.position)
 		.to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
 		.easing(TWEEN.Easing.Quadratic.InOut)
 		.onUpdate(() => {
-			controls.target.x = initialCameraLookAt.x;
-			controls.target.y = initialCameraLookAt.y;
-			controls.target.z = initialCameraLookAt.z;
+			controls.target.x = initialLook.x;
+			controls.target.y = initialLook.y;
+			controls.target.z = initialLook.z;
 		})
 		.onComplete(() => {
 			isZooming = false;

@@ -14,10 +14,8 @@ var isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'ét
 var isZooming = false;
 var couchZoomed = false;
 
-const initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
-const initialCameraLookAt = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
-const duration = 2000; //Duree du zoom
-
+ // Point vers lequel la caméra regarde initialement
+duration = 2000; //Duree du zoom
 
 function hideEverything(){
     if (registerVisible === true)
@@ -267,39 +265,6 @@ function showMatchHistory(){
 	}
 }
 
-function headerLogoutFunction(){
-    console.log("LOGING OUT");
-    fetch('/account/logout/', {
-        // Resquest type
-        method: 'POST',
-        // Request header
-        headers: {
-            // Specifies that the body of the request is JSON
-            'Content-Type': 'application/json',
-            // Retrieves csrftoken from cookie
-            'X-CSRFToken': getCookie('csrftoken') // Ensure you handle CSRF token
-        },
-        // Sends a empty JSON body as a request (no data needed to be shared)
-        body: JSON.stringify({})
-    })
-    // Parses the JSON repsonse 
-    .then(response => response.json())
-    // Handles the parsed JSON response
-    .then(data => {
-        if (data.success) {
-            console.log("LOGOUT SUCCES");
-            // Handle su     ccessful logout
-            isZooming = false;
-            isZoomed = false;
-            loadContent('/');
-            dontClick = true;
-        } else {
-            console.log("LOGOUT FAIL");
-            alert(data.message);
-        }
-    })
-    .catch(error => console.error('Error:', error));
-}
 
  // Function to get the CSRF token
  function getCookie(name) {

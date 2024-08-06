@@ -14,6 +14,7 @@ var notifDiv = document.getElementById("notif");
 var paramsDiv = document.getElementById("change_prof");
 var menuPongDiv = document.getElementById("menuPongDiv");
 var notifsDiv = document.getElementById("notifications");
+var settings = document.getElementById("settingsForm");
 
 // ------------ Friends div---------
 var inputSearchFriend = document.getElementById("input_search_friend");
@@ -55,6 +56,10 @@ var gameover;
 var notifs_fetched;
 var id_to_accept;
 
+// CAMERA UTILS
+var duration = 2000;
+var initialCameraPosition;
+var initialCameraLookAt;
 // ------------ HEADER VARIABLES ---------
 var headerUser;
 var headerMatchHistory;
