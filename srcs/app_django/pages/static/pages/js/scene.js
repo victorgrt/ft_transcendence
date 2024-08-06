@@ -303,7 +303,9 @@ function onClickScene(event) {
             console.log("pseudo:", pseudo)
             if (pseudo)
             {
-                zoomToDoor();   
+                zoomToDoor();
+                showLoggedOutModal();
+                headerLogoutFunction();
                 return ;
             }
             else

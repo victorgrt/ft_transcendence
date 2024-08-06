@@ -34,14 +34,22 @@ function acceptWarningModal()
     acceptedModal = true;
 }
 
-function loggedOutModalShow()
+function showLoggedOutModal()
 {
+    console.log("showing loggout modal");
     $('#container-modal-log').modal('show');
+    console.log("show :", $('#container-modal-log'));
 }
 
-function loggedOutModalHide()
+function hideLoggedOutModal()
 {
-    $('#container-modal-log').modal('hide');
+    const test = document.getElementById("container-modal-log");
+    test.style.display = "none";
+    // document.getElementsByClassName('modal-backdrop fade show').remove();
+    document.querySelector("modal-backdrop fade show").remove();
+    // console.log("hiding loggout modal");
+    // $('#container-modal-log').modal('hide');
+    // console.log("hide :", $('#container-modal-log'));
 }
 
 function showPongErrorModal()

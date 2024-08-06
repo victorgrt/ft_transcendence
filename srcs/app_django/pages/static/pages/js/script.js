@@ -8,8 +8,11 @@ function pongPageScripts () {
 }
 
 function loadHome(){
+    
     console.log("LOADING HOME PAGE")
-    zoomBack();
+    isZoomed = true;
+    isZooming = false;
+    // zoomBack();
 	loginForm = document.getElementsByClassName("login_form")[0];
 	registerForm = document.getElementsByClassName("register_form")[0];
 	goBackButton = document.getElementById("footer");

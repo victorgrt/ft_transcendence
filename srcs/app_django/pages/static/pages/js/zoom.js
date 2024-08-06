@@ -1,4 +1,4 @@
-function zoomTo(targetPosition, lookAtCoordinates, onCompleteActions) {
+async function zoomTo(targetPosition, lookAtCoordinates, onCompleteActions) {
 	console.log("inside zoom to");
     if (!isZooming) {
         isZooming = true;
@@ -115,4 +115,30 @@ function zoomToPCWhileLogged() {
 		}
     );
 	friendsVisible = true;
+}
+
+function zoomToDoor() {
+    console.log(isZoomed, " ", isZooming);
+    if (!isZoomed && !isZooming)
+    {
+        isZooming = true;
+        var targetPosition = new THREE.Vector3(7, 4, 0);
+        hideEverything();
+        hideElement(header);
+        const notifbtn = document.getElementById("notifbtn");
+        hideElement(notifbtn);
+        isZooming = false;
+        isZoomed = false;
+        zoomTo(
+            targetPosition,
+            targetPosition,
+            () => {
+                zoomBack(); 
+            }
+            );
+        }
+        // setTimeout(3000)
+        isZoomed = false;
+        isZooming = false;
+
 }

@@ -33,16 +33,16 @@
             <div class="modal-header">
                 <h5 class="modal-title w-100 text-center" id="exampleModalLabel">ℹ️ INFORMATION ℹ️</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"
-                    onclick="loggedOutModalHide()">
+                    onclick="hideLoggedOutModal()">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>You've logged out succesfully ! Thanks for stopping by, {{user.username}}.</p>
+                <p>You've logged out succesfully ! Thanks for stopping by, <span class="text-primary">{{user.username}}</span>.</p>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                    onclick="loggedOutModalHide()">THANKS!</button>
+                    onclick="hideLoggedOutModal()">THANKS!</button>
             </div>
         </div>
     </div>
@@ -60,13 +60,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>This door is used to logout. You can't use it if you're not logged in! Duhhh.</p>
+                <p>This door is used to <span class="text-danger">logout</span>. You can't use it if you're not <span class="text-primary">logged in</span>! Duhhh.</p>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                     onclick="modalLogin()">LOGIN/REGISTER</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="hideLoggoutErrorModal()">NO
-                    THANKS</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="hideLoggoutErrorModal()">NO THANKS</button>
             </div>
         </div>
     </div>
@@ -84,13 +83,12 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>This arcade is used to play Pong. You can't use it if you're not logged in! Sorry bruh.</p>
+                <p>This arcade is used to play <span class="text-primary">Pong</span>. You can't use it if you're not <span class="text-primary">logged in</span>! Sorry bruh.</p>
             </div>
             <div class="modal-footer justify-content-center">
                 <button type="button" class="btn btn-primary" data-dismiss="modal"
                     onclick="modalLogin()">LOGIN/REGISTER</button>
-                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="hidePongErrorModal()">NO
-                    THANKS</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="hidePongErrorModal()">NO THANKS</button>
             </div>
         </div>
     </div>

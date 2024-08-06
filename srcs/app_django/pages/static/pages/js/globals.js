@@ -24,7 +24,6 @@ var resultAvatar = document.getElementById("result_avatar");
 var friendsList = document.getElementById("friends_list");
 var searchFriendError = document.getElementById('search_friend_error');
 var addButton = document.getElementById('add_button');
-var compteur_notifs = document.getElementById("nb_notifs").textContent;
 var baseSrc = document.getElementById("result_avatar")?.src;
 var friendsBox = document.getElementById("result_box");
 var toUser;
