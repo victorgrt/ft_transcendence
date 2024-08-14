@@ -19,9 +19,9 @@ function headerLogoutFunction(){
     .then(data => {
         if (data.success) {
             console.log("LOGOUT SUCCES");
-            // Handle su     ccessful logout
             isZooming = false;
             isZoomed = false;
+            
             loadContent('/');
             dontClick = true;
         } else {

@@ -58,8 +58,8 @@ var id_to_accept;
 
 // CAMERA UTILS
 var duration = 2000;
-var initialCameraPosition;
-var initialCameraLookAt;
+var initialCameraPosition = new THREE.Vector3(12, 5, 12);
+var initialCameraLookAt = new THREE.Vector3(0, 0, 0);
 // ------------ HEADER VARIABLES ---------
 var headerUser;
 var headerMatchHistory;
@@ -67,3 +67,15 @@ var headerFriends;
 var headerSettings;
 var headerLogout;
 var dontClick = false;
+
+var loginVisible;
+var registerVisible;
+var menuPongVisible;
+var notifsVisible = false;
+var paramsVisible = false;
+var statsVisible = false;
+var friendsVisible = true;
+
+var isZoomed;
+var isZooming;
+var couchZoomed;

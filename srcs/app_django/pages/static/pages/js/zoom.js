@@ -28,7 +28,7 @@ async function zoomTo(targetPosition, lookAtCoordinates, onCompleteActions) {
 }
 
 function zoomBack() {
-	hideVisible();
+	hideEverything();
 	const initialLook = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
     const targetPosition = initialCameraPosition;
 
@@ -62,7 +62,7 @@ function zoomToArcade() {
 			
 		}
     );
-	hideVisible();
+	hideEverything();
 	loadMenuPong();
 	menuPongVisible = true;
 	dontClick = true;

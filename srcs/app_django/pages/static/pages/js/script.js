@@ -12,7 +12,7 @@ function checkModalBug()
     const test = document.getElementsByClassName('modal-backdrop fade show');
     console.log("test:", test);
     if (test && test[0])
-        test[0].style.opacity = 0;
+        test[0].style.display = 'none';
 }
 
 var loaded;
@@ -96,8 +96,6 @@ function loadContent(url, pushState = true) {
     })
     .then(response => response.text())
     .then(data => {
-        console.log("Fetched URL:", url);
-        console.log("DATA OF LOADCONTENT:", data);
 
         // Update page content
         const mainDiv = document.getElementById('content');
