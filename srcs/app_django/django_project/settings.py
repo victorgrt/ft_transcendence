@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+
 # For charging files (avatars, images, etc.)
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static',]
@@ -196,3 +197,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
+
+CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000', 'https://0.0.0.0:8001']

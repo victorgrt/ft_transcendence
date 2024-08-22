@@ -10,7 +10,8 @@ services:
     networks:
       - app-network
     volumes:
-      - django-app:/var/lib/django-app # Adjust the path as necessary
+      - django-app-static:/usr/src/django-app/pages/static/pages # Adjust the path as necessary
+      - django-app-media:/usr/src/django-app/pages/static/pages/img_avatars # Adjust the path as necessary
     depends_on:
       - postgres
     env_file:
@@ -24,11 +25,27 @@ services:
       - app-network
     volumes:
       - postgres:/var/lib/postgresql
+    
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    ports:
+      - "8001:443"
+    depends_on:
+      - django-app
+    volumes:
+     - django-app-static:/var/lib/django-app
+     - django-app-media:/var/lib/media
+     
 
 networks:
   app-network:
     driver: bridge
 
 volumes:
-  django-app:
+  django-app-static:
+  django-app-media:
   postgres:

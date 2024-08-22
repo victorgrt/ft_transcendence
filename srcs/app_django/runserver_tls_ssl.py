@@ -1,8 +1,8 @@
 import uvicorn
 import os
 
-cert_file = "../secrets/server/server-cert.pem"
-key_file = "../secrets/server/server-key.pem"
+cert_file = "./secrets/server/server-cert.pem"
+key_file = "./secrets/server/server-key.pem"
 ssl_keyfile_password = "pswpsw"  # Replace with your actual password if applicable
 
 # Print file paths to confirm they are correct
