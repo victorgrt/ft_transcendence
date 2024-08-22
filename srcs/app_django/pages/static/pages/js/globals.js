@@ -14,6 +14,7 @@ var notifDiv = document.getElementById("notif");
 var paramsDiv = document.getElementById("change_prof");
 var menuPongDiv = document.getElementById("menuPongDiv");
 var notifsDiv = document.getElementById("notifications");
+var settings = document.getElementById("settingsForm");
 
 // ------------ Friends div---------
 var inputSearchFriend = document.getElementById("input_search_friend");
@@ -24,7 +25,6 @@ var resultAvatar = document.getElementById("result_avatar");
 var friendsList = document.getElementById("friends_list");
 var searchFriendError = document.getElementById('search_friend_error');
 var addButton = document.getElementById('add_button');
-var compteur_notifs = document.getElementById("nb_notifs").textContent;
 var baseSrc = document.getElementById("result_avatar")?.src;
 var friendsBox = document.getElementById("result_box");
 var toUser;
@@ -56,6 +56,10 @@ var gameover;
 var notifs_fetched;
 var id_to_accept;
 
+// CAMERA UTILS
+var duration = 2000;
+var initialCameraPosition = new THREE.Vector3(12, 5, 12);
+var initialCameraLookAt = new THREE.Vector3(0, 0, 0);
 // ------------ HEADER VARIABLES ---------
 var headerUser;
 var headerMatchHistory;
@@ -63,3 +67,15 @@ var headerFriends;
 var headerSettings;
 var headerLogout;
 var dontClick = false;
+
+var loginVisible;
+var registerVisible;
+var menuPongVisible;
+var notifsVisible = false;
+var paramsVisible = false;
+var statsVisible = false;
+var friendsVisible = true;
+
+var isZoomed;
+var isZooming;
+var couchZoomed;

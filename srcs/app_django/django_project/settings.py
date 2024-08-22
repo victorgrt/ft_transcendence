@@ -41,22 +41,18 @@ STATICFILES_DIRS = [BASE_DIR / 'static',]
 INSTALLED_APPS = [
     #SESSION COOKIES
     'django.contrib.sessions',
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
-    # 'django.contrib.authchat',
     'django.contrib.contenttypes',
-    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
-    'chat',
     'game',
     'channels',
     'account',
     'notification',
     'friends',
-    # 'avatar'
 ]
 
 # WSGI_APPLICATION = 'django_project.wsgi.application'

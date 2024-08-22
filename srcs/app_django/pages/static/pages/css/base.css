@@ -1,5 +1,3 @@
-/* styles.css */
-
 /* Reset styles */
 html, body {
     margin: 0;
@@ -89,51 +87,4 @@ html, body {
 .button1:hover, .button2:hover, .button3.hover {
     background-color: #0056b3;
     border-color: #0056b3;
-}
-
-.chat-container {
-    position: fixed;
-    bottom: 20px;
-    left: 20px;
-    text-align: left;
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#chat-log {
-    width: 100%;
-    max-width: 600px;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    height: 200px;
-    overflow-y: auto;
-}
-
-#chat-message-input {
-    width: calc(100% - 20px);
-    max-width: 600px;
-    margin-bottom: 10px;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1em;
-}
-
-#chat-message-submit {
-    padding: 12px 24px;
-    background-color: #28a745;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    font-size: 1.1em;
-}
-
-#chat-message-submit:hover {
-    background-color: #218838;
 }

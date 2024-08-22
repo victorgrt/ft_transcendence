@@ -290,7 +290,6 @@ function friendSendChallenge(friend_username){
 			,
 			success: function(response) {
 				console.log(response);
-				compteur_notifs++;
 				loadContent('/pong/' + response.session_id + '/');
 			},
 			error: function(response) {

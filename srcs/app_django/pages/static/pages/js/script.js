@@ -7,18 +7,35 @@ function pongPageScripts () {
     launchGame();
 }
 
+function checkModalBug()
+{
+    const test = document.getElementsByClassName('modal-backdrop fade show');
+    console.log("test:", test);
+    if (test && test[0])
+        test[0].style.display = 'none';
+}
+
+var loaded;
 function loadHome(){
+    loaded = isZoomed;
     console.log("LOADING HOME PAGE")
+    isZoomed = false;
+    isZooming = false;
+    duration = 2000;
+    initialCameraPosition = new THREE.Vector3(12, 5, 12); // Position initiale de la caméra
+    initialCameraLookAt = new THREE.Vector3(0, 0, 0);
     zoomBack();
 	loginForm = document.getElementsByClassName("login_form")[0];
 	registerForm = document.getElementsByClassName("register_form")[0];
 	goBackButton = document.getElementById("footer");
 	header = document.getElementById("header");
+    settings = document.getElementById('settingsForm');
     loadHeader();
     handleLoginForm();
 	handleRegisterForm();
     loadFriends();
-	console.log("here:", loginForm);
+    loadChangeProfile();
+    checkModalBug();
 }
 
 function pongIAPageScripts()
@@ -79,8 +96,6 @@ function loadContent(url, pushState = true) {
     })
     .then(response => response.text())
     .then(data => {
-        console.log("Fetched URL:", url);
-        console.log("DATA OF LOADCONTENT:", data);
 
         // Update page content
         const mainDiv = document.getElementById('content');
