@@ -13,10 +13,10 @@
             <img id="header_profile_image" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}" alt="profile picture">  
           </div>
           <span id="header_username">{{user.username}}</span>
-          <button id="header_button_logout">
+          <div id="header_button_logout">
               <img class="header_logout_icon" src="{% static '/pages/images/logout-icon.svg' %}" alt="LOG OUT">
               LOG OUT
-          </button>
+          </div>
         </div>
     {% endif %}
 </div>
