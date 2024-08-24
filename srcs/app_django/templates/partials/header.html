@@ -8,5 +8,9 @@
         <button id="header_button_friends" class="header_hover"><img class="header_icon" src="{% static '/pages/images/grouper.png' %}"></button>
         <button id="header_button_settings" class="header_hover"><img class="header_icon" src="{% static '/pages/images/parametres.png' %}"></button>
         <button id="header_button_logout" class="header_hover"><img class="header_icon" src="{% static '/pages/images/deconnexion.png' %}" alt="LOG OUT"></button>
+        <!-- <div id="header_profile">
+            <img id="header_avatar" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}">
+            <span id="header_username">{{user.username}}</span>
+        </div> -->
     {% endif %}
 </div>

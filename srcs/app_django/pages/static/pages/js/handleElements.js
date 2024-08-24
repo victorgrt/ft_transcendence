@@ -135,9 +135,6 @@ function hideVisible(){
 }
 
 function showFriends(){
-    console.log("calling showFriends:", friendsDiv);
-    console.log("bool:", friendsVisible);
-    // const element = document.getElementById("friends_list");
     if (friendsVisible === true)
     {
         console.log("friends should be visible");
@@ -146,7 +143,6 @@ function showFriends(){
         friendsVisible = false;
         return;
     }
-    console.log("friends should not be visible");
     showElement(friendsDiv);
     friendsDiv.style.z_index = '2';
     friendsVisible = true;
@@ -171,6 +167,7 @@ function showParams()
 }
 
 
+console.log("Defined showStats");
 var statsVisible = false;
 function showStats(){
     console.log("stats:", statsDiv);

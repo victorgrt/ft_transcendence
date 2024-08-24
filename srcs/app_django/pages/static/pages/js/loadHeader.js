@@ -26,17 +26,12 @@ function loadHeader(){
     const headerSettings = document.getElementById("header_button_settings");
     const headerLogout = document.getElementById("header_button_logout");
 
-    console.log(headerUser);
-	console.log(headerMatchHistory);
-	console.log(headerFriends);
-	console.log(headerSettings);
-    console.log(headerLogout);
 
-	notifsVisible = false;
-	paramsVisible = false;
-	statsVisible = false;
-	friendsVisible = true;
-	matchHistoryBool = true;
+    notifsVisible = false;
+    paramsVisible = false;
+    statsVisible = false;
+    friendsVisible = true;
+    matchHistoryBool = true;
 
     if (headerUser) {
         headerUser.addEventListener('click', showStats);
