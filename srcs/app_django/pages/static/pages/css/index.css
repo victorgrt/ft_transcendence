@@ -40,19 +40,19 @@ body {
 }
 
 #header {
-	/* background:rgba(0,0,0,0.1); */
-	top: 0;
-	padding: 10px;
-	text-align: center;
-	align-items: center;
-	justify-content: center;
-	height: 5%;
-	width: 100%;
-	font-family: 'Arcade', Arial, Helvetica, sans-serif;
-	position: fixed;
-	color : white;
-	display: flex;
-	margin-top: 1.5%;
+  /* background: rgb(0 0 0 / 46%); */
+  top: 0;
+  padding: 10px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  /* height: 5%; */
+  width: 100%;
+  font-family: 'Arcade', Arial, Helvetica, sans-serif;
+  position: fixed;
+  color: white;
+  display: flex;
+  /* margin-top: 1.5%;*/
 }
 
 #param_img {
@@ -73,52 +73,63 @@ body {
 
 /* change profile settings div */
 #change_prof{
-    transition: opacity 2s ease-out;
-    visibility: hidden;
-    opacity: 0;
-    background-color: rgba(24, 24, 24, 1);
-    color: white;
-    border: 2px solid rgba(40, 40, 40, 1);
-    border-radius: 10%;
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin-top: 10%;
-    margin-right: 20%;
-    height: 60%;
-    width: 20%;
-    display: flex;
-    flex-direction: column;
+  overflow: hidden;
+  transition: opacity 2s ease-out;
+  visibility: hidden;
+  opacity: 0;
+  background-color: rgba(24, 24, 24, 1);
+  color: white;
+  border: 2px solid rgba(40, 40, 40, 1);
+  border-radius: 20px;
+  position: absolute;
+  right: 0;
+  top: 80px;
+  margin-top: 20px;
+  margin-right: 20px;
+  height: 60%;
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+#settingsForm
+{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #top{
-	height: 85%;
-	width: 100%;
-	margin-bottom: 15%;
-	text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
 }
 
 #old_avatar{
-	margin-top: 10%;
+  margin-top: 10%;
 
-    width: 50%;
-    border-radius: 100%;
-    height: 35%;
-    object-fit: cover;
+  width: 50%;
+  border-radius: 100%;
+  height: 35%;
+  object-fit: cover;
 
-	border: 2px solid rgba(40, 40, 40, 1);
-	box-shadow: 1px 12px 10px black;
+  border: 2px solid rgba(40, 40, 40, 1);
+  box-shadow: 1px 12px 10px black;
 }
 
 #new_avatar{
-    margin-top: 5%;
-    padding: 0;
-	margin-bottom: 5%;
-    margin-left: 15%;
+  margin-top: 5%;
+  padding: 0;
+  margin-bottom: 5%;
+  margin-left: 15%;
 }
 
 #sep{
-	border : 2px double rgb(40, 40, 40);
+  border: 2px double rgb(40, 40, 40);
+  width: 100%;
 }
 
 #old_username{
@@ -127,13 +138,14 @@ body {
 }
 
 #new_username{
-	color: white;
-	border: 2px solid rgba(18, 18, 18, 1);
-	background-color: rgba(40, 40, 40, 1);
-	padding: 0;
-    font-size: large;
-    margin: 0;
-	text-align: center;
+  width: 80%;
+  margin-bottom: 20px;
+  color: white;
+  border: 2px solid rgba(18, 18, 18, 1);
+  background-color: rgba(40, 40, 40, 1);
+  padding: 0;
+  font-size: large;
+  text-align: center;
 }
 
 #bottom {
@@ -639,23 +651,8 @@ selectnotif{
 	padding : 0;
 }
 
-.header_icon{
-	width: 30%;
-}
 
-.header_hover{
-	cursor: pointer;
-	background-color: white;
-	padding: 1%;
-	border: 2px solid white;
-	border-radius: 1vh;
-	font: larger;
-	font-weight: bold;
-	margin-left: 5%;
-	margin-right: 5%;
-	text-decoration: none;
-	color: white;
-}
+
 
 .header_hover:hover{
 	/* background-color: red; */
@@ -664,20 +661,20 @@ selectnotif{
 	transition: all .45s ease-in-out;
 }
 
-#header_button_logout{
-	cursor: pointer;
-	background-color: white;
-	padding: 1%;
-	border: 2px solid white;
-	border-radius: 1vh;
-	font: larger;
-	font-weight: bold;
-	margin-left: 5%;
-	margin-right: 5%;
-	text-decoration: none;
-	color: white;
+
+#profile_avatar
+{
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-.header_button{
-
+#profile_image
+{
+  width: 100%;
 }

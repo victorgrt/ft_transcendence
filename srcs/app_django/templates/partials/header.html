@@ -6,11 +6,17 @@
         <button id="header_button_stats" class="header_hover"><img class="header_icon" src="{% static '/pages/images/mon-profil.png' %}" alt="PROFILE"></button>
         <button id="header_button_history" class="header_hover"><img class="header_icon" src="{% static '/pages/images/livre-dhistoire.png' %}" alt="MATCH HISTORY"></button>
         <button id="header_button_friends" class="header_hover"><img class="header_icon" src="{% static '/pages/images/grouper.png' %}"></button>
-        <button id="header_button_settings" class="header_hover"><img class="header_icon" src="{% static '/pages/images/parametres.png' %}"></button>
-        <button id="header_button_logout" class="header_hover"><img class="header_icon" src="{% static '/pages/images/deconnexion.png' %}" alt="LOG OUT"></button>
-        <!-- <div id="header_profile">
-            <img id="header_avatar" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}">
-            <span id="header_username">{{user.username}}</span>
-        </div> -->
+        <!-- <button id="header_button_settings" class="header_hover"><img class="header_icon" src="{% static '/pages/images/parametres.png' %}"></button> -->
+        <!-- <button id="header_button_logout" class="header_hover"><img class="header_icon" src="{% static '/pages/images/deconnexion.png' %}" alt="LOG OUT"></button> -->
+        <div id="header_profile" class="header_profile_content">
+          <div id="header_avatar">
+            <img id="header_profile_image" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}" alt="profile picture">  
+          </div>
+          <span id="header_username">{{user.username}}</span>
+          <button id="header_button_logout">
+              <img class="header_logout_icon" src="{% static '/pages/images/logout-icon.svg' %}" alt="LOG OUT">
+              LOG OUT
+          </button>
+        </div>
     {% endif %}
 </div>

@@ -2,7 +2,9 @@
 <div id="change_prof">
     <div id="top">
         {% if user.avatar %}
-            <img id="old_avatar" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}" alt="profile picture">
+          <div id="profile_avatar">
+            <img id="profile_image" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}" alt="profile picture">  
+          </div>
         {% else %}
             <img id="old_avatar" src="{% static '/pages/img_avatars/default_profile.png' %}" alt="profile picture">
         {% endif %}

@@ -151,6 +151,12 @@ function showFriends(){
 
 function showParams()
 {
+    // Make friends invisible 
+    if (friendsVisible === true)
+    {
+        hideElement(friendsDiv);
+        friendsVisible = false;
+    }
     console.log("calling showParams with visible : ", paramsVisible);
     if (paramsVisible === false)
     {
