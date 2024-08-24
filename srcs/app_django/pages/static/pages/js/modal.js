@@ -44,7 +44,8 @@ function hideLoggedOutModal()
 {
     const test = document.getElementById("container-modal-log");
     test.style.display = "none";
-    document.querySelector("modal-backdrop fade show").remove();
+    // const test2 = document.getElementById("modal-backdrop fade show")
+    // document.test2.remove();
 }
 
 function showPongErrorModal()

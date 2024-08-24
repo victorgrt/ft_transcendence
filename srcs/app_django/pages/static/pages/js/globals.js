@@ -1,4 +1,3 @@
-
 // ------------ DOM ELEMENTS ---------
 
 var loginForm = document.getElementsByClassName("login_form")[0];

@@ -118,6 +118,10 @@ function zoomToPCWhileLogged() {
 	friendsVisible = true;
 }
 
+function zoomLogout() {
+    showLoggedModal();    
+}
+
 function zoomToDoor() {
     console.log(isZoomed, " ", isZooming);
     if (!isZoomed && !isZooming)
@@ -134,7 +138,7 @@ function zoomToDoor() {
             targetPosition,
             targetPosition,
             () => {
-                zoomBack(); 
+                // zoomBack(); 
             }
             );
         }

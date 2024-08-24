@@ -135,7 +135,6 @@ function isMouseOverElement(event, element) {
 }
 
 function onMouseMove(event) {
-    console.log("mouse move:", event);
     // Mettre à jour la position du pointeur de la souris
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -152,6 +151,12 @@ function onMouseMove(event) {
         }
         if (event.target.id === "notifications" || event.target.id === "notiftitle" || event.target.id === "closeNotifs")
         {
+            document.body.style.cursor = 'default';
+            return;
+        }
+        if (event.target.id === "change_prof" || event.target.id === "top")
+        {
+            console.log("HIDDDDDDING");
             document.body.style.cursor = 'default';
             return;
         }
@@ -273,7 +278,7 @@ function checkEvent(event)
 {
     console.log("event:", event);
     console.log("tagname: ", event.target.id);
-    if (event.target.id === "notifications" || event.target.id === "notiftitle" || event.target.id === "closeNotifs")
+    if (event.target.id === "notifications" || event.target.id === "notiftitle" || event.target.id === "closeNotifs" || event.target.id === "top" || event.target.id === "change_prof" || event.target.id === "update_profile" || event.target.id === "new_username" || event.target.id === "new_avatarg" || event.target.id === "settingsForm" || event.target.id === "messageDiv" || event.target.id === "bottom" || event.target.id === "sep" || event.target.id === "old_username")
     {
         console.log("positiv boss");
         return (true);
@@ -346,14 +351,17 @@ function onClickScene(event) {
             const pseudo = document.getElementById("user_stats");
             if (pseudo)
             {
-                if (isMouseOverElement(event, friendsDiv)) {
+                if (isMouseOverElement(event, friendsDiv) || checkEvent(event)) {
                     document.body.style.cursor = 'default';
                     return;
                 }
+                else if (checkEvent(event))
+                    return
                 else
                 {
-                    zoomToDoor();
-                    // showLoggedOutModal();
+                    showLoggedOutModal();
+                    // zoomLogout();
+                    // zoomToDoor();
                     headerLogoutFunction();
                     return;
                 }
