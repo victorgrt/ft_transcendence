@@ -123,19 +123,19 @@ function updateIntensity() {
 }
 
 function isMouseOverElement(event, element) {
-    if (!element || friendsVisible === false) {
-        console.log("here big boy", friendsVisible);
+    if (!element || friendsVisible === false || notifsVisible === false) {
         return false;
     }
 
     // Get the bounding rectangle of the element
     var rect = element.getBoundingClientRect();
-
+    console.log("should be returning true???");
     return event.clientX >= rect.left && event.clientX <= rect.right &&
            event.clientY >= rect.top && event.clientY <= rect.bottom;
 }
 
 function onMouseMove(event) {
+    console.log("mouse move:", event);
     // Mettre à jour la position du pointeur de la souris
     mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
     mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
@@ -150,13 +150,17 @@ function onMouseMove(event) {
             document.body.style.cursor = 'default';
             return;
         }
+        if (event.target.id === "notifications" || event.target.id === "notiftitle" || event.target.id === "closeNotifs")
+        {
+            document.body.style.cursor = 'default';
+            return;
+        }
     }
     // Trouver les intersections avec les objets de la scène
     var intersects = raycaster.intersectObjects(scene.children, true);
     // Réinitialiser l'objet surligné précédent
     if (highlightedObject) {
         if (highlightedObject.name === "lampSquareFloor_2") {
-            // 0.7454042095350284, g: 0.010960094003125918, b: 0.01764195448412081 }
             highlightedObject.material.color.setRGB(0.7454042095350284, 0.010960094003125918, 0.01764195448412081);
             highlightedObject = null;
             return;
@@ -265,6 +269,22 @@ function toggleInterval() {
     }
 }
 
+function checkEvent(event)
+{
+    console.log("event:", event);
+    console.log("tagname: ", event.target.id);
+    if (event.target.id === "notifications" || event.target.id === "notiftitle" || event.target.id === "closeNotifs")
+    {
+        console.log("positiv boss");
+        return (true);
+    }
+    else
+    {
+        console.log("negatif boss");
+        return (false);
+    }
+}
+
 
 function onClickScene(event) {
     if (isZooming === true || isZoomed === true)
@@ -285,7 +305,10 @@ function onClickScene(event) {
         const intersection = intersects[0];
         // console.log("here:", intersection);
         if (intersection.object.name === "Couch") {
-            zoomToCouch();
+            if (checkEvent(event) === true)
+                return;
+            else
+                zoomToCouch();
         }
         if (intersection.object.name === "lampSquareFloor_2") {
             console.log("clicked on lamp :", intersection);

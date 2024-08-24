@@ -46,6 +46,7 @@ function zoomBack() {
 			isZooming = false;
 			isZoomed = false;
             showElement(header);
+            showElement(notifbtn);
 		})
 		.start();
 	}
