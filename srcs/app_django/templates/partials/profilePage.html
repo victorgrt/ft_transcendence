@@ -1,4 +1,6 @@
 {% load static %}
+
+{% include 'partials/header.html' %}
 <div id="profile-container">
   <div id="profile_avatar">
     <img id="profile_image" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}" alt="profile picture">  

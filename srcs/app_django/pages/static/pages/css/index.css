@@ -42,6 +42,7 @@ body {
 #header {
   /* background: rgb(0 0 0 / 46%); */
   top: 0;
+  height: 90px;
   padding: 10px;
   text-align: center;
   align-items: center;

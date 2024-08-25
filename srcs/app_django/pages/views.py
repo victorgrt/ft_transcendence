@@ -49,9 +49,9 @@ def starting_page(request):
 		# return render(request, 'base.html', {'username': request.user.username})
 		match_history = get_user_match_history(request.user)
 		if is_ajax(request):
-			return render(request, 'index.html', {'user': request.user, 'match_history': match_history})
+			return render(request, 'index.html', {'user': request.user, 'match_history': match_history, 'header_mode_complete': True})
 		else:
-			return render(request, 'base.html', {'user': request.user, 'match_history': match_history})
+			return render(request, 'base.html', {'user': request.user, 'match_history': match_history, 'header_mode_complete': True})
 	else:
 		print(f"user not authenticated : {request}")
 		if is_ajax(request):
