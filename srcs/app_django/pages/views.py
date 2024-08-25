@@ -127,7 +127,7 @@ def tournament(request, tournament_id):
 def profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
     match_history = get_user_match_history(user)
-    context = {'user': user, 'match_history': match_history}
+    context = {'looked_user': user, 'match_history': match_history, 'user': request.user}
     if is_ajax(request):
         return render(request, 'partials/profilePage.html', context)
     else:

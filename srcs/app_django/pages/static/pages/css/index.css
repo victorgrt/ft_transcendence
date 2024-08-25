@@ -39,23 +39,6 @@ body {
 	align-items: center; /* Center elements horizontally */
 }
 
-#header {
-  /* background: rgb(0 0 0 / 46%); */
-  top: 0;
-  height: 90px;
-  padding: 10px;
-  text-align: center;
-  align-items: center;
-  justify-content: center;
-  /* height: 5%; */
-  width: 100%;
-  font-family: 'Arcade', Arial, Helvetica, sans-serif;
-  position: fixed;
-  color: white;
-  display: flex;
-  /* margin-top: 1.5%;*/
-}
-
 #param_img {
 	width: 100%;
 	transition: transform 2s ease ;
@@ -466,9 +449,8 @@ input[type="password"] {
 }
 
 #rightstats{
-	width: 50%;
-    border: 2px solid rgba(40, 40, 40, 1);
-
+	width: 100%;
+  border: 2px solid rgba(40, 40, 40, 1);
 }
 
 #stats_username{
