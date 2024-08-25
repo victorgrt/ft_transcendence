@@ -9,6 +9,7 @@
   margin-top: 50px;
 
   width: 80%;
+  max-width: 1150px;
   height: 80%;
 
   /* Style */
@@ -41,12 +42,22 @@
 {
   width: 70%;
   height:100%;
+
+  border: 2px solid rgba(40, 40, 40, 1);
+  /* margin-top: 50px; */
+  padding: 20px;
+  border-radius: 15px;
+  background: #71717124;
 }
 
 .profile-stats
 {
   font-size: 18px;
   font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 10px;
 }
 
 #friends-stats
@@ -61,7 +72,18 @@
 
 #defeat-stats
 {
-  color: rgb(101, 90, 133);
+  color: rgb(161 162 219);
+}
+
+.profile-stats-data
+{
+  font-size: 30px;
+  font-weight: 800;
+  display: flex; /* Makes .profile-stats-data a flex container */
+  align-items: flex-end; /* Aligns children (text) vertically at the bottom */
+  justify-content: center; /* Centers children (text) horizontally */
+  height: 100%; /* Ensure it has a height to align the text at the bottom */
+  margin-bottom: -4px;
 }
 
 #win-rate

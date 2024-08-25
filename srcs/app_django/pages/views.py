@@ -13,6 +13,7 @@ from django.db.models import Q
 from notification.models import FriendRequest
 from notification.models import Notification
 import uuid
+from django.db import models
 from game.models import MatchHistory, Tournament, GameSession
 
 
@@ -126,6 +127,18 @@ def tournament(request, tournament_id):
 # User profile page
 def profile(request, username):
     user = get_object_or_404(CustomUser, username=username)
+
+    # Compute user stats
+    user.win = MatchHistory.objects.filter(winner=user).count()
+    user.lost = MatchHistory.objects.filter(
+        models.Q(player_1=user) | models.Q(player_2=user)
+      ).exclude(winner=user).count()
+
+    # Calculate win-loss ratio, handling division by zero
+    total = user.win + user.lost
+    user.ratio = round((user.win / total) * 100) if total != 0 else 0
+
+
     match_history = get_user_match_history(user)
     context = {'looked_user': user, 'match_history': match_history, 'user': request.user}
     if is_ajax(request):

@@ -449,8 +449,12 @@ input[type="password"] {
 }
 
 #rightstats{
-	width: 100%;
+  width: 100%;
   border: 2px solid rgba(40, 40, 40, 1);
+  margin-top: 50px;
+  padding: 20px;
+  border-radius: 15px;
+  background: #71717124;
 }
 
 #stats_username{
