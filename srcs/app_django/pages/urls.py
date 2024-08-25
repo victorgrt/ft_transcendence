@@ -7,6 +7,8 @@ from .views import *
 urlpatterns = [
   # path('partial/<str:page>/', partial_content, name='partial_content'),
 
+  path('profile/<str:username>/', profile, name='profile'),
+
   # navigation
   path("", starting_page, name="home"),
   path("home/", starting_page, name="home"),
@@ -16,10 +18,8 @@ urlpatterns = [
   # account
 	path('account/', include("account.urls")),
 
-
   # notification
 	path('notification/', include("notification.urls")),
-
 
   # notifs
   path('send-notification/', send_notification, name='send_notification'),

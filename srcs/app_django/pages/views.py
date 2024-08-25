@@ -122,6 +122,16 @@ def tournament(request, tournament_id):
     else:
         print("IS NOT AJAX")
         return render(request, 'base.html', {'context': context})
+    
+# User profile page
+def profile(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+    match_history = get_user_match_history(user)
+    context = {'user': user, 'match_history': match_history}
+    if is_ajax(request):
+        return render(request, 'partials/profilePage.html', context)
+    else:
+        return render(request, 'base.html', {'context': context})
 
 # Game menu
 def menuPong(request):

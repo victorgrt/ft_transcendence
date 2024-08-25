@@ -28,7 +28,7 @@
 					<div class="status_circle" style="background-color: red;"></div>
 				{% endif %}
 				<img id="friend_avatar" src="{% static 'pages/img_avatars/' %}{{ friend.get_avatar_name }}">
-				<p id="friend_username">{{ friend.username }}</p>
+				<a id="friend_username" href="{% url 'profile' friend.username %}">{{ friend.username }}</a>
 				<p id="friend_username"> </p>
 				<div class="friend_buttons" >
 					{% comment %} <button class="friend_button1" onclick="location.href='{% url 'profile' friend.username %}'">View Profile</button> {% endcomment %}
