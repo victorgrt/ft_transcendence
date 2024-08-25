@@ -1,0 +1,28 @@
+#profile-container
+{
+  /* Layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 50px;
+
+  width: 80%;
+  height: 80%;
+
+  /* Style */
+  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  padding: 40px; /* Increased padding */
+  border-radius: 20px; /* Increased border radius */
+  border: 1px solid white;
+  /* Text */
+  color: white;
+      
+}
+
+#profile_username 
+{
+  font-size: 30px;
+  font-weight: bold;
+}

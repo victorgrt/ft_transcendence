@@ -1,7 +1,6 @@
-console.log("loaded script.js");
-function pongPageScripts () {
-    console.log("launchPongScript")
+// console.log("loaded script.js");
 
+function pongPageScripts () {
     // connect to game
     connectToGame();
     launchGame();
@@ -18,7 +17,6 @@ function checkModalBug()
 var loaded;
 function loadHome(){
     loaded = isZoomed;
-    console.log("LOADING HOME PAGE")
     isZoomed = false;
     isZooming = false;
     duration = 2000;
@@ -40,7 +38,6 @@ function loadHome(){
 
 function pongIAPageScripts()
 {
-    console.log("launchPongIAScript")
     connectToGame(mode='ia');
     // connectToGame();
     launchGameIA();
@@ -154,7 +151,7 @@ function loadPageScripts() {
 
 // Function to prevent all default navigation actions and handle them with loadContent
 function handleNavigationEvents () {
-    console.log("HANDLING NAVIGATION EVENTS");
+    // console.log("HANDLING NAVIGATION EVENTS");
 
     function handleNavigation(event) {
         event.preventDefault();

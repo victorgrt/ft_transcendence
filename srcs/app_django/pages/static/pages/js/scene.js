@@ -124,7 +124,6 @@ function updateIntensity() {
 
 function isMouseOverElement(event, element) {
     if (!element || friendsVisible === false) {
-        console.log("here big boy", friendsVisible);
         return false;
     }
 
