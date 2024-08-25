@@ -1,39 +1,39 @@
 function hideEverything(){
     if (registerVisible === true)
-        {
-            hideElement(registerForm);
-            registerVisible = false;
-        }
-        if (loginVisible === true)
-        {
-            hideElement(loginForm);
-            loginVisible = false;
-        }
-        if (menuPongVisible === true)
-        {
-            hideElement(menuPongDiv);
-            menuPongVisible = false;
-        }
-        if (statsVisible === true)
-        {
-            hideElement(statsDiv);
-            statsVisible = false;
-        }
-        if (friendsVisible === true)
-        {
-            hideElement(friendsDiv);
-            friendsVisible = false;
-        }
-        if (paramsVisible === true)
-        {
-            hideElement(paramsDiv);
-            paramsVisible = false;
-        }
-        if (matchHistoryBool === true)
-        {
-            hideElement(matchHistoryDiv);
-            matchHistoryBool = false;
-        }
+    {
+        hideElement(registerForm);
+        registerVisible = false;
+    }
+    if (loginVisible === true)
+    {
+        hideElement(loginForm);
+        loginVisible = false;
+    }
+    if (menuPongVisible === true)
+    {
+        hideElement(menuPongDiv);
+        menuPongVisible = false;
+    }
+    if (statsVisible === true)
+    {
+        hideElement(statsDiv);
+        statsVisible = false;
+    }
+    if (friendsVisible === true)
+    {
+        hideElement(friendsDiv);
+        friendsVisible = false;
+    }
+    if (paramsVisible === true)
+    {
+        hideElement(paramsDiv);
+        paramsVisible = false;
+    }
+    if (matchHistoryBool === true)
+    {
+        hideElement(matchHistoryDiv);
+        matchHistoryBool = false;
+    }
 }
 
 function centerRegisterForm()
@@ -173,7 +173,6 @@ function showParams()
 }
 
 
-console.log("Defined showStats");
 var statsVisible = false;
 function showStats(){
     console.log("stats:", statsDiv);
@@ -194,21 +193,3 @@ function showStats(){
 	}
 }
 
-function showMatchHistory(){
-	console.log("Display match history:", matchHistoryDiv);
-	console.log("Display match history:", matchHistoryBool);
-    if (matchHistoryBool === true)
-    {
-		console.log("Disabling match history");
-		matchHistoryDiv.style.visibility = 'hidden'
-		matchHistoryBool = false;
-        return;
-    }
-	else
-	{
-		console.log("Activating match history");
-		matchHistoryDiv.style.visibility = 'visible';
-		matchHistoryDiv.style.opacity = '1';
-		matchHistoryBool = true;
-	}
-}

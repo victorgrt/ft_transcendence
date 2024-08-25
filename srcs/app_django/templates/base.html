@@ -15,6 +15,7 @@
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/friends.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/notif.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/tournamentPage.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/profilePage.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/pong.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'pages/css/header.css' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'pages/images/transcendence.png' %}">
@@ -22,10 +23,11 @@
 
 <body>
     <!-- HEADER -->
+    {% include 'partials/header.html' %}
 
     <!-- CONTENT -->
     <div id="content">
-        {% include 'index.html' %}
+
     </div>
 
 
@@ -49,24 +51,24 @@
     <script type="text/javascript" src="{% static 'pages/js/handleUserStats.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/handleLoggout.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/loadHeader.js' %}"></script>    
+    <script type="text/javascript" src="{% static 'pages/js/loadFriends.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/globals.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/changeProfile.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleRegisterForm.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleNotification.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleFriends.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/setupNotificationSocket.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleMatchHistory.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/pongIA.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/pong.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/pong_local.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/modal.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/leaveGameButton.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/backToTournament.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/paddleMovements.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/pong.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/pongIA.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/pong_local.js' %}"></script>
     <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/changeProfile.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/handleNotification.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/handleRegisterForm.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/handleFriends.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/loadFriends.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/setupNotificationSocket.js' %}"></script>
-    <script type="text/javascript" src="{% static 'pages/js/handleMatchHistory.js' %}"></script>
 </body>
 
 </html>
