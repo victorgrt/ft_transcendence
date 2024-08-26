@@ -42,10 +42,13 @@ function showLoggedOutModal()
 
 function hideLoggedOutModal()
 {
+    console.log("HERE");
     const test = document.getElementById("container-modal-log");
     test.style.display = "none";
-    // const test2 = document.getElementById("modal-backdrop fade show")
-    // document.test2.remove();
+    // $('#container-modal-log').modal('hide');
+    const test2 = document.getElementById("modal-backdrop fade show")
+    document.test2.remove();
+    console.log("AFTER");
 }
 
 function showPongErrorModal()
@@ -56,4 +59,21 @@ function showPongErrorModal()
 function hidePongErrorModal()
 {
     $('#container-modal-error-pong').modal('hide');
+}
+
+function showSureLoggout() {
+    $('#container-modal-sure-log').modal('show');
+}
+
+function hideSureLoggout()
+{
+    $('#container-modal-sure-log').modal('hide');
+}
+
+function acceptSureLoggout()
+{
+    hideSureLoggout();
+    // console.warn("SHOULD LOGGOUT");
+    // showLoggedOutModal();
+    headerLogoutFunction();
 }

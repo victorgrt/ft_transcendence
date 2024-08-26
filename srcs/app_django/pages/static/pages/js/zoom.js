@@ -5,7 +5,8 @@ async function zoomTo(targetPosition, lookAtCoordinates, onCompleteActions) {
         hideEverything();
         hideElement(header);
         const notifbtn = document.getElementById("notifbtn");
-        hideElement(notifbtn);
+        if (notifbtn)
+            hideElement(notifbtn);
 
         new TWEEN.Tween(camera.position)
             .to({ x: targetPosition.x, y: targetPosition.y, z: targetPosition.z }, duration)
@@ -31,6 +32,7 @@ function zoomBack() {
 	hideEverything();
 	const initialLook = new THREE.Vector3(0, 0, 0); // Point vers lequel la caméra regarde initialement
     const targetPosition = initialCameraPosition;
+    const notifbtn = document.getElementById("notifbtn");
 
 	if (isZoomed === true || couchZoomed === true || loaded === true)
 	{
@@ -46,7 +48,8 @@ function zoomBack() {
 			isZooming = false;
 			isZoomed = false;
             showElement(header);
-            showElement(notifbtn);
+            if (notifbtn)
+                showElement(notifbtn);
 		})
 		.start();
 	}
@@ -131,7 +134,8 @@ function zoomToDoor() {
         hideEverything();
         hideElement(header);
         const notifbtn = document.getElementById("notifbtn");
-        hideElement(notifbtn);
+        if (notifbtn)
+            hideElement(notifbtn);
         isZooming = false;
         isZoomed = false;
         zoomTo(
