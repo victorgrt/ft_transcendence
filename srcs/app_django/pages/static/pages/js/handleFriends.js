@@ -92,6 +92,8 @@ async function displayResultBox(inputValue)
 	const friendExists = await isFriend(inputValue);
 	if (user_data)	
 	{	
+    
+	  console.log("	Found user");
 		if (user_data.is_active === true)
 		{
 			resultStatus.style.backgroundColor = 'green';
@@ -103,7 +105,7 @@ async function displayResultBox(inputValue)
 			console.log("HERE :", user_data.username);
 			resultAvatar.src = friend_data.avatar;
 		}
-		if (friendExists === false)
+		if (friendExists)
 		{
 			console.log("	user box generated");
 			resultBox.style.visibility ='visible';

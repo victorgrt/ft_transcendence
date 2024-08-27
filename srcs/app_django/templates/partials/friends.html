@@ -37,8 +37,10 @@
   <div id="search_friend_error"></div>
   <div class="friend_box" id="result_box" style="visibility:hidden;height:0px">
     <div class="status_circle" id="result_status"></div>
-    <img class="avatar" id="result_avatar"  src="{% static 'pages/img_avatars/' %}">
-    <p class="username" id="result_name"></p>
+    <div id="friend_avatar">
+      <img class="avatar" id="result_avatar"  src="{% static 'pages/img_avatars/' %}">
+    </div>  
+    <div class="friend_username" id="result_name"></div>
     <button class="add_button" id="add_button" onclick="sendFriendRequest()">+</button> <!-- Added the + icon here -->
     <button id="sendbtn" class="needed_hover" onclick="friendSendChallenge('null')" src="{% static 'pages/js/handleFriends.js' %}"><img id="friends_challenge" src="{% static 'pages/images/challenge.png' %}""></button>
     <!-- <button class="friend_list_button" id="challenge_button" onclick="friendSendChallenge(`{{ result_name }}`)">Challenge</button> -->
