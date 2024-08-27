@@ -80,3 +80,5 @@ var isZooming;
 var couchZoomed;
 
 var base_color_couch;
+var leftTournament = false;
+var tournament_id_just_left;

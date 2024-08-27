@@ -1,13 +1,18 @@
-function backToTournament()
+function backToTournament(previous_id)
 {
-    tournament_id = document.getElementById('backToTournamentButton').value;
-    console.log("BACK TO TOURNAMENT");
-    console.log(tournament_id);
-    // stop the animation
-    isAnimating = false;
-    console.log("LEAVING GAME");
-    console.log(isAnimating);
-
+    if (!previous_id)
+    {    
+        tournament_id = document.getElementById('backToTournamentButton').value;
+        console.log("BACK TO TOURNAMENT");
+        console.log(tournament_id);
+        // stop the animation
+        isAnimating = false;
+        console.log("LEAVING GAME");
+        console.log(isAnimating);
+    }
+    else
+        tournament_id = previous_id;
+    console.log("inside :", tournament_id);
     // Remove the game sockets 
     if (socket)
     {

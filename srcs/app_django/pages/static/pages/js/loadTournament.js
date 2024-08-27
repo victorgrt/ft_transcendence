@@ -17,3 +17,13 @@ function loadTournament()
     connectToTournament();
 }
 
+function closeTournamentPage()
+{
+    leftTournament = true;
+    var tournament_id = window.location.pathname.split('/')[2]
+    tournament_id_just_left = tournament_id;
+    console.log("just left: ", tournament_id_just_left);
+    console.log("tournament id :", tournament_id);  
+    loadContent("/");
+    return;
+}

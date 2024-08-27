@@ -169,13 +169,6 @@ function onMouseMove(event) {
             highlightedObject = null;
             return;
         }
-        else if (highlightedObject.name === "Couch")
-        {
-            highlightedObject.material.emissive.setRGB(0, 0, 0);
-            highlightedObject.material.emissiveIntensity = 0;
-            highlightedObject = null;
-            return ;
-        }
         highlightedObject.material.emissiveIntensity = 1; // Réinitialiser l'intensité d'émission
         highlightedObject = null;
     }
@@ -210,13 +203,7 @@ function onMouseMove(event) {
             else if (selectedObject.object.name === "Node-Mesh")
                 objectToHighlight.material.emissiveIntensity = 100;
             else if (selectedObject.object.name === "Couch")
-            {
-                console.log("selecting couch");
-                console.log(selectedObject.object);
-                // objectToHighlight.material.color.setRGB(1, 1, 1);
-                objectToHighlight.material.emissive.setRGB(1, 1, 1);
-                objectToHighlight.material.emissiveIntensity = 100;
-            }
+                document.body.style.cursor = 'pointer';
             highlightedObject = objectToHighlight;
         }
         else if (!selectedObject) {
