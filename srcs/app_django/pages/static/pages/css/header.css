@@ -40,6 +40,12 @@
   overflow: hidden; /* Ensures no part of the image spills out of the circular shape */
 }
 
+#header_avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 #header_profile_image
 {
   width: 100%;

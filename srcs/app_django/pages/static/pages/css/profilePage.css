@@ -13,10 +13,10 @@
   height: 80%;
 
   /* Style */
-  background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
+  /* background-color: rgba(0, 0, 0, 0.7); Semi-transparent black background */
   padding: 40px; /* Increased padding */
   border-radius: 20px; /* Increased border radius */
-  border: 1px solid white;
+  border: 2px solid rgb(61 61 61 / 52%);
   /* Text */
   color: white;
       
@@ -43,7 +43,8 @@
   width: 70%;
   height:100%;
 
-  border: 2px solid rgba(40, 40, 40, 1);
+  /* border: 2px solid rgba(40, 40, 40, 1); */
+  border: 1px solid rgb(139 139 139 / 32%);
   /* margin-top: 50px; */
   padding: 20px;
   border-radius: 15px;
