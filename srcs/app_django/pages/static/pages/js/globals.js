@@ -1,4 +1,3 @@
-
 // ------------ DOM ELEMENTS ---------
 
 var loginForm = document.getElementsByClassName("login_form")[0];
@@ -79,3 +78,5 @@ var friendsVisible = true;
 var isZoomed;
 var isZooming;
 var couchZoomed;
+
+var base_color_couch;

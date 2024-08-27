@@ -21,7 +21,7 @@
             var data = JSON.parse(event.data);
             // alert('Notification received from ' + data.from_user);
             handleNotification(data);
-            // showToast();
+            showToast();
         };
 
         function sendNotificationSocket(username){

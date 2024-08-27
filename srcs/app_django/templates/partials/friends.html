@@ -19,7 +19,7 @@
 	</div>
 	<div class="friends_list" id="friends_list">
 		{% if user.friends.all %}
-			<p>Friends count: {{ user.friends.count }}</p>
+			<p id="friend_count">Friends count: {{ user.friends.count }}</p>
 			{% for friend in user.friends.all %}
 			<div class="friend_box" id="friend_box">
 				{% if friend.is_online %}
