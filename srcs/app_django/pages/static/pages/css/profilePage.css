@@ -67,7 +67,7 @@
 
 #victory-stats
 {
-  color: rgb(247, 243, 50);
+  color: rgb(255 220 38);
 }
 
 #defeat-stats
@@ -89,4 +89,35 @@
 #win-rate
 {
   width: 100%;
+}
+
+
+#profile_avatar {
+  width: 150px; /* Adjust the size as needed */
+  height: 150px; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes the container circular */
+  overflow: hidden; /* Ensures that overflow is hidden */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+#profile_avatar
+{
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  overflow: hidden; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#profile_avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }

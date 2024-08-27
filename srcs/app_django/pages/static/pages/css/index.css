@@ -501,9 +501,6 @@ td{
 	border: 2px solid white;
 }
 
-.friend_username{
-	background-color: rgba(0, 0, 0, 0.5);
-}
 
 .victories{
 	background-color: rgba(0,128,0, 0.5);
@@ -649,19 +646,3 @@ selectnotif{
 }
 
 
-#profile_avatar
-{
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  border: 2px solid #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-}
-
-#profile_image
-{
-  width: 100%;
-}

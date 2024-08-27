@@ -19,21 +19,23 @@
 	</div>
 	<div class="friends_list" id="friends_list">
 		{% if user.friends.all %}
-			<p id="friend_count">Friends count: {{ user.friends.count }}</p>
+			<p id="friend_count">{{ user.friends.count }} friends</p>
 			{% for friend in user.friends.all %}
 			<div class="friend_box" id="friend_box">
-				{% if friend.is_online %}
-					<div class="status_circle" style="background-color: green;"></div>
-				{% else %}
-					<div class="status_circle" style="background-color: red;"></div>
-				{% endif %}
-				<img id="friend_avatar" src="{% static 'pages/img_avatars/' %}{{ friend.get_avatar_name }}">
-				<a id="friend_username" href="{% url 'profile' friend.username %}">{{ friend.username }}</a>
-				<p id="friend_username"> </p>
-				<div class="friend_buttons" >
-					{% comment %} <button class="friend_button1" onclick="location.href='{% url 'profile' friend.username %}'">View Profile</button> {% endcomment %}
-					<button id="sendbtn" class="needed_hover" onclick="friendSendChallenge(`{{ friend.username }}`)" src="{% static 'pages/js/main.js' %}"><img id="friends_challenge" src="{% static 'pages/images/challenge.png' %}""></button>
+
+        <div class="friend-box-right-part">
+          {% if friend.is_online %}
+					<div class="status_circle" style="background-color: #41ff41;"></div>
+          {% else %}
+            <div class="status_circle" style="background-color: red;"></div>
+          {% endif %}
+          <div id="friend_avatar">
+            <img src="{% static 'pages/img_avatars/' %}{{ friend.get_avatar_name }}">
+          </div>
+          <a class="friend_username" href="{% url 'profile' friend.username %}">{{ friend.username }}</a>
 				</div>
+        
+        <button id="sendbtn" class="needed_hover" onclick="friendSendChallenge(`{{ friend.username }}`)" src="{% static 'pages/js/main.js' %}"><img id="friends_challenge" src="{% static 'pages/images/challenge.png' %}""></button>
 			</div>
 			{% endfor %}
 		{% else %}
