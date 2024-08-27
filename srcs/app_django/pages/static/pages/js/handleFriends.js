@@ -17,7 +17,7 @@ async function handleInput(event)
 {
 	var inputValue = event.target.value;
 	console.log("INPUTVALUE:", inputValue);
-	friendsList.style.visibility = 'hidden';
+	// friendsList.style.visibility = 'hidden';
 	if (inputValue !== "") 
 	{
 		// console.log(inputValue);
@@ -84,7 +84,8 @@ async function displayResultBox(inputValue)
 	console.log("DISPLAYING RESULT BOX", inputValue);
 	username = inputValue;
 	console.log("In display_result_box : ");
-	resultBox.style.visibility ='visible';
+	resultBox.style.height ='56px';
+  resultBox.style.visibility = 'visible';
 	resultBox.style.opacity = '1';
 	const user_data = await getUserData(username);
 	console.log("	user data: ", user_data);

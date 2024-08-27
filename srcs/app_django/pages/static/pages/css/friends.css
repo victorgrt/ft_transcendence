@@ -1,18 +1,33 @@
 .friends_container
 {
-	visibility: visible;
-	opacity: 1;
-	position:absolute;
-	width: 25%;
-	right: 0;
-	height: 70%;
-	border: 2px solid rgba(40, 40, 40, 1);
-	color: white;
-	background-color: rgba(24, 24, 24, 1);
-	padding: 20px;
-	border-radius: 5px;
-	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
-	overflow: scroll;
+  visibility: visible;
+  opacity: 1;
+  position: absolute;
+  width: 350px;
+  right: 20px;
+  height: 70%;
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+
+  display: flex;
+  flex-direction: column;
+
+  /* overflow: scroll; */
+  border: 2px solid rgb(61 61 61 / 52%);
+  box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+  background-color: rgb(37 37 37 / 58%);
+  /* backdrop-filter: blur(5px) brightness(0.92); */
+  backdrop-filter: blur(10px) brightness(0.52);
+  /* background-color:rgba(5, 12, 57, 0.4);
+  backdrop-filter: blur(18px) brightness(0.84) contrast(82%) opacity(99%) sepia(26%); */
+}
+
+.friends_list {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 .search_bar {
@@ -131,6 +146,6 @@
 
 #friends_header{
 	display: flex;
-    justify-content: space-around;
-    flex-direction: row;
+  justify-content: space-between;
+  flex-direction: row;
 }
