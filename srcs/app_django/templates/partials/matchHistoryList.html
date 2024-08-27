@@ -24,7 +24,7 @@
             {{ match.player_2_score }} 
           </div>
           <div class="match_history_username"> {{ match.player_2.username }} </div>
-          <div class="match_history_date" > {{ match.date|date:"Y-m-d H:i" }} </div>
+          <div class="match_history_date" > {{ match.date|date:"Y-m-d" }} </div>
       </div>
   {% empty %}
       <li>No match history found.</li>
