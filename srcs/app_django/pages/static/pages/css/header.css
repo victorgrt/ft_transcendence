@@ -1,0 +1,108 @@
+#header {
+  /* background: rgb(0 0 0 / 46%); */
+  top: 0;
+  height: 90px;
+  padding: 10px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  /* height: 5%; */
+  width: 100%;
+  font-family: 'Arcade', Arial, Helvetica, sans-serif;
+  position: fixed;
+  color: white;
+  display: flex;
+  /* margin-top: 1.5%;*/
+}
+
+.header_profile_content {
+  width: 350px;
+  position: absolute;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  overflow: visible;
+}
+
+.header_profile_content:hover {
+  cursor: pointer;
+}
+
+#header_avatar {
+  width: 50px; /* Fixed width */
+  height: 50px; /* Fixed height, equal to width to ensure circle */
+  border-radius: 50%; /* Ensures round shape */
+  border: 2px solid #fff; /* Border color */
+  display: flex; /* Use flex to center the image inside */
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  overflow: hidden; /* Ensures no part of the image spills out of the circular shape */
+}
+
+#header_avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#header_profile_image
+{
+  width: 100%;
+}
+
+#header_username {
+  font-size: 20px;
+  margin-left: 10px;
+  margin-right: 20px;
+  color: #fff;
+  font-weight: bold;
+}
+
+.header_hover{
+  width: 100px;
+  height: 70px;
+  cursor: pointer;
+  background-color: white;
+  padding: 0%;
+  border: 2px solid white;
+  border-radius: 1vh;
+  font: larger;
+  font-weight: bold;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-decoration: none;
+  color: white;
+}
+
+#header_button_logout{
+  /* display: flex; */
+  width: 130px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  /* width: 50px; */
+  height: 50px;
+  cursor: pointer;
+  /* background-color: #414141; */
+  padding: 10px;
+  /* border: 2px solid white; */
+  border-radius: 1vh;
+  font: larger;
+  font-size: 12px;
+  font-weight: bold;
+  margin-left: 5%;
+  margin-right: 5%;
+  text-decoration: none;
+  color: gray;
+}
+
+
+.header_icon{
+  width: 50px;
+}
+
+.header_logout_icon{
+  width: 30px;
+}
+

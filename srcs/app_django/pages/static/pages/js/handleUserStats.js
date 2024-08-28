@@ -1,5 +1,4 @@
 var statsVisible = false;
-
 async function showStats() {
     if (statsVisible) {
         // zoomBack();

@@ -32,7 +32,7 @@ class UserManager(BaseUserManager):
 			raise ValueError('The Password field must be set')
 		if avatar is None:
 			print('AVATAR IS NONE SO LETS FIX THAT')
-			avatar = 'pages/static/pages/img_avatars/default_avatar.jpg'
+			avatar = 'pages/static/pages/img_avatars/default_avatar.jpeg'
 		email = self.normalize_email(email)
 		user = self.model(username=username, email=email, avatar=avatar, **extra_fields)
 		user.set_password(password)

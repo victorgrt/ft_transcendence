@@ -5,7 +5,7 @@ function loadElementForHeader(){
     header = document.getElementById("header");
     contentdiv = document.getElementById("content");
     statsDiv = document.getElementById("user_stats");
-    matchHistoryDiv = document.getElementById("match_history");
+    matchHistoryDiv = document.getElementById("match_history_container");
     GHDiv = document.getElementById("game_history");
     friendsDiv = document.getElementById("friends");
     notifDiv = document.getElementById("notif");
@@ -23,20 +23,15 @@ function loadHeader(){
     const headerUser = document.getElementById("header_button_stats");
     const headerMatchHistory = document.getElementById("header_button_history");
     const headerFriends = document.getElementById("header_button_friends");
-    const headerSettings = document.getElementById("header_button_settings");
+    const headerSettings = document.getElementById("header_profile");
     const headerLogout = document.getElementById("header_button_logout");
 
-    console.log(headerUser);
-	console.log(headerMatchHistory);
-	console.log(headerFriends);
-	console.log(headerSettings);
-    console.log(headerLogout);
 
-	notifsVisible = false;
-	paramsVisible = false;
-	statsVisible = false;
-	friendsVisible = true;
-	matchHistoryBool = true;
+    notifsVisible = false;
+    paramsVisible = false;
+    statsVisible = false;
+    friendsVisible = true;
+    matchHistoryBool = true;
 
     if (headerUser) {
         headerUser.addEventListener('click', showStats);

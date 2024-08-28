@@ -13,6 +13,7 @@ from django.db.models import Q
 from notification.models import FriendRequest
 from notification.models import Notification
 import uuid
+from django.db import models
 from game.models import MatchHistory, Tournament, GameSession
 
 
@@ -49,9 +50,9 @@ def starting_page(request):
 		# return render(request, 'base.html', {'username': request.user.username})
 		match_history = get_user_match_history(request.user)
 		if is_ajax(request):
-			return render(request, 'index.html', {'user': request.user, 'match_history': match_history})
+			return render(request, 'index.html', {'user': request.user, 'match_history': match_history, 'header_mode_complete': True})
 		else:
-			return render(request, 'base.html', {'user': request.user, 'match_history': match_history})
+			return render(request, 'base.html', {'user': request.user, 'match_history': match_history, 'header_mode_complete': True})
 	else:
 		print(f"user not authenticated : {request}")
 		if is_ajax(request):
@@ -121,6 +122,28 @@ def tournament(request, tournament_id):
         return render(request, 'partials/tournamentPage.html', context)
     else:
         print("IS NOT AJAX")
+        return render(request, 'base.html', {'context': context})
+    
+# User profile page
+def profile(request, username):
+    user = get_object_or_404(CustomUser, username=username)
+
+    # Compute user stats
+    user.win = MatchHistory.objects.filter(winner=user).count()
+    user.lost = MatchHistory.objects.filter(
+        models.Q(player_1=user) | models.Q(player_2=user)
+      ).exclude(winner=user).count()
+
+    # Calculate win-loss ratio, handling division by zero
+    total = user.win + user.lost
+    user.ratio = round((user.win / total) * 100) if total != 0 else 0
+
+
+    match_history = get_user_match_history(user)
+    context = {'looked_user': user, 'match_history': match_history, 'user': request.user}
+    if is_ajax(request):
+        return render(request, 'partials/profilePage.html', context)
+    else:
         return render(request, 'base.html', {'context': context})
 
 # Game menu

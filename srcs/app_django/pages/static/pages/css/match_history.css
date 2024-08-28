@@ -1,16 +1,18 @@
-.match_history_container
+#match_history_container
 {
-  	visibility: visible;
-  	position: absolute;
-  	width: 25%;
-  	left: 0;
-  	height: 70%;
-	border: 2px solid rgba(40, 40, 40, 1);
+  visibility: visible;
+  position: absolute;
+  width: 25%;
+  min-width:440px;
+  margin-left: 20px;
+  left: 0;
+  height: 70%;
+	/* border: 2px solid rgba(40, 40, 40, 1); */
 	color: white;
-	background-color: rgba(24, 24, 24, 1);
+	/* background-color: rgba(24, 24, 24, 1); */
 	padding: 20px;
 	border-radius: 5px;
-	box-shadow: 0 0 100px rgba(1, 0, 0, 0.1);
+	/* box-shadow: 0 0 100px rgba(1, 0, 0, 0.1); */
 	overflow: auto; /* Enables scrolling */
 }
 
@@ -19,6 +21,9 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: 10px;
+
+  margin-top:20px;
 }
 
 .match_history_item
@@ -29,12 +34,12 @@
   justify-content: space-between;
   align-items: center;
 
-  padding:5px;
+
 }
 
 .match_history_item:hover 
 {
-  background-color: rgba(40, 40, 40, 1);
+  background-color: rgba(40, 40, 40, 0.432);
 }
 
 .match_history_win_icon
@@ -49,18 +54,21 @@
 {
   font-size: 16px;
   width:17%;
+  
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 .match_history_score
 {
   font-size: 22px;
   font-weight: bold;
-  width:17%;
+  width:10%;
 }
 
 .match_history_date
 {
-  font-size: 14px;
+  font-size: 12px;
   color: gray;
   width:17%;
 }

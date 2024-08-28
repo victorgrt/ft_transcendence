@@ -1,0 +1,11 @@
+- DONE Change Header : 
+  - DONE Display avatar et username
+  - DONE Put user menu on click of avatar username 
+  - DONE move logout button in user menu
+- DONE Pas d'Avatar par défaut
+- DONE No user page accessible to other users
+- Online icon not working
+- polish friends list
+- fix avatar size
+
+- bugs clics sur le menu s'applique à la scène 3D

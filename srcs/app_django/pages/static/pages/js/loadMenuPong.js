@@ -32,28 +32,4 @@ function loadMenuPong() {
     });
 }
 
-document.addEventListener('DOMContentLoaded', function() {
 
-  function handleNavigation(event) {
-      event.preventDefault();
-      const url = event.target.getAttribute('href');
-      loadContent(url);
-  }
-
-  document.querySelectorAll('.nav, .button1, .button2').forEach(link => {
-      link.addEventListener('click', handleNavigation);
-  });
-
-  window.addEventListener('popstate', function(event) {
-      if (event.state && event.state.url) {
-          loadContent(event.state.url, false);
-      } else {
-          loadContent(document.location.pathname, false);
-      }
-  });
-
-  // Initial load to handle direct access or page refresh
-  if (document.location.pathname !== '/') {
-      loadContent(document.location.pathname, false);
-  }
-});

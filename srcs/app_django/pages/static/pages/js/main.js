@@ -1,5 +1,4 @@
-console.log("main script is loaded")
-loadHeader();
+
 
 dontClick = false;
 var isZoomed = localStorage.getItem('isZoomed') === 'true'; // Pour suivre l'état de zoom;

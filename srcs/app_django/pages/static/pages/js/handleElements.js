@@ -1,39 +1,39 @@
 function hideEverything(){
     if (registerVisible === true)
-        {
-            hideElement(registerForm);
-            registerVisible = false;
-        }
-        if (loginVisible === true)
-        {
-            hideElement(loginForm);
-            loginVisible = false;
-        }
-        if (menuPongVisible === true)
-        {
-            hideElement(menuPongDiv);
-            menuPongVisible = false;
-        }
-        if (statsVisible === true)
-        {
-            hideElement(statsDiv);
-            statsVisible = false;
-        }
-        if (friendsVisible === true)
-        {
-            hideElement(friendsDiv);
-            friendsVisible = false;
-        }
-        if (paramsVisible === true)
-        {
-            hideElement(paramsDiv);
-            paramsVisible = false;
-        }
-        if (matchHistoryBool === true)
-        {
-            hideElement(matchHistoryDiv);
-            matchHistoryBool = false;
-        }
+    {
+        hideElement(registerForm);
+        registerVisible = false;
+    }
+    if (loginVisible === true)
+    {
+        hideElement(loginForm);
+        loginVisible = false;
+    }
+    if (menuPongVisible === true)
+    {
+        hideElement(menuPongDiv);
+        menuPongVisible = false;
+    }
+    if (statsVisible === true)
+    {
+        hideElement(statsDiv);
+        statsVisible = false;
+    }
+    if (friendsVisible === true)
+    {
+        hideElement(friendsDiv);
+        friendsVisible = false;
+    }
+    if (paramsVisible === true)
+    {
+        hideElement(paramsDiv);
+        paramsVisible = false;
+    }
+    if (matchHistoryBool === true)
+    {
+        hideElement(matchHistoryDiv);
+        matchHistoryBool = false;
+    }
 }
 
 function centerRegisterForm()
@@ -135,9 +135,6 @@ function hideVisible(){
 }
 
 function showFriends(){
-    console.log("calling showFriends:", friendsDiv);
-    console.log("bool:", friendsVisible);
-    // const element = document.getElementById("friends_list");
     if (friendsVisible === true)
     {
         console.log("friends should be visible");
@@ -146,7 +143,6 @@ function showFriends(){
         friendsVisible = false;
         return;
     }
-    console.log("friends should not be visible");
     showElement(friendsDiv);
     friendsDiv.style.z_index = '2';
     friendsVisible = true;
@@ -155,6 +151,12 @@ function showFriends(){
 
 function showParams()
 {
+    // Make friends invisible 
+    if (friendsVisible === true)
+    {
+        hideElement(friendsDiv);
+        friendsVisible = false;
+    }
     console.log("calling showParams with visible : ", paramsVisible);
     if (paramsVisible === false)
     {
@@ -191,21 +193,3 @@ function showStats(){
 	}
 }
 
-function showMatchHistory(){
-	console.log("Display match history:", matchHistoryDiv);
-	console.log("Display match history:", matchHistoryBool);
-    if (matchHistoryBool === true)
-    {
-		console.log("Disabling match history");
-		matchHistoryDiv.style.visibility = 'hidden'
-		matchHistoryBool = false;
-        return;
-    }
-	else
-	{
-		console.log("Activating match history");
-		matchHistoryDiv.style.visibility = 'visible';
-		matchHistoryDiv.style.opacity = '1';
-		matchHistoryBool = true;
-	}
-}

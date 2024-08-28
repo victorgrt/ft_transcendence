@@ -1,0 +1,37 @@
+{% load static %}
+
+{% include 'partials/header.html' %}
+
+{% with user=looked_user %}
+  <div id="profile-container" class="basic-container">
+    <div class="profile-left-part">
+
+      <div id="profile_avatar">
+        <img id="profile_image" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}" alt="profile picture">  
+      </div>
+      <div id="profile_username">{{ user.username }}</div>
+      
+      <div id="rightstats">
+        <ul class="profile-stats" id="friends-stats">
+          <div class="profile-stats-data">{{user.friends.count}}</div> Friends
+        </ul>
+        <ul class="profile-stats" id="victory-stats">
+          <div class="profile-stats-data">{{ user.win }}</div> Victories
+        </ul>
+        <ul class="profile-stats" id="defeat-stats">
+          <div class="profile-stats-data">{{ user.lost }}</div> Defeats
+        </ul>
+        <ul class="profile-stats" id="win-rate">
+          <div class="profile-stats-data">{{ user.ratio }}%</div> Win Rate
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="profile-right-part">
+      <h1 style="padding-left: 15px;">Games</h1>
+      {% include 'partials/matchHistoryList.html' %}
+    </div>
+
+  </div>
+{% endwith %}
