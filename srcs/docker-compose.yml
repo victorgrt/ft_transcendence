@@ -10,8 +10,9 @@ services:
     networks:
       - app-network
     volumes:
-      - django-app-static:/usr/src/django-app/pages/static/pages # Adjust the path as necessary
-      - django-app-media:/usr/src/django-app/pages/static/pages/img_avatars # Adjust the path as necessary
+      - django-app-static:/usr/src/django-app/pages/static/pages
+      - django-app-media:/usr/src/django-app/pages/static/pages/img_avatars
+      - nginx-ssl:/etc/ssl-nginx
     depends_on:
       - postgres
     env_file:
@@ -39,6 +40,7 @@ services:
     volumes:
      - django-app-static:/var/lib/django-app
      - django-app-media:/var/lib/media
+     - nginx-ssl:/etc/nginx/ssl
      
 
 networks:
@@ -46,6 +48,7 @@ networks:
     driver: bridge
 
 volumes:
+  nginx-ssl:
   django-app-static:
   django-app-media:
   postgres:

@@ -1,3 +1,0 @@
-- wss notif / game
-- database
-- uvicorn launch command

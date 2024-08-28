@@ -4,7 +4,6 @@ WORKDIR /usr/src/django-app
 
 COPY ./ .
 
-# RUN mkdir -p /etc/ssl/certs /etc/ssl/private
 # COPY ./secrets/server/server-cert.pem /etc/ssl/certs/cert.pem
 # COPY ./secrets/server/server-key.pem /etc/ssl/private/key.pem
 

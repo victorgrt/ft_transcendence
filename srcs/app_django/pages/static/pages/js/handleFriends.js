@@ -116,8 +116,9 @@ async function displayResultBox(inputValue)
 		else
 		{
 			console.log("	friend box generated");
+			console.log("HERE MFF:", user_data);
 			resultBox.visibility ='visible';
-			resultUsername.textContent = user_data.get_avatar_name;
+			resultUsername.textContent = user_data.username;
 			var tmpSrc = baseSrc + user_data.avatar;
 			resultAvatar.src = tmpSrc;
 			addButton.style.visibility = 'hidden';
@@ -259,7 +260,7 @@ function friendSendChallenge(friend_username){
 	console.log(friend_username);
 	if (friend_username === 'null')
 	{
-		friend_username = resultUsername.textContent;	
+		friend_username = resultUsername.textContent;
 	}
 	console.log(friend_username);
 	var formData = {

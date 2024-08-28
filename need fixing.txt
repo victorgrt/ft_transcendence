@@ -1,5 +1,0 @@
-REGISTER:
-	- quand email deja utilisee -> crash
-	- join sans URL -> pong// = bugg
-
-
