@@ -10,6 +10,7 @@ function handleKeyUp(e) {
 
 function sendPaddleMovement(state)
 {
+    console.log("We are not in local");
     if (state == "up")
         socket.send(JSON.stringify({ action: 'move_paddle', player: id, direction: 'null', coord: 0 }));
     if ('a' in keys)

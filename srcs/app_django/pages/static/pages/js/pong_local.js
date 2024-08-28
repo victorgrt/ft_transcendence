@@ -74,10 +74,20 @@ function launchGameLocal()
     scene.add(leftWall);
     scene.add(rightWall);
 
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
+    
+    function handleKeyDownLoc(e) {
+        keys[e.key] = true;
+        sendPaddlesMovement("down");
+    }
+    
+    function handleKeyUpLoc(e) {
+        delete keys[e.key];
+        sendPaddlesMovement("up");
+    }
+    document.addEventListener('keydown', handleKeyDownLoc);
+    document.addEventListener('keyup', handleKeyUpLoc);
 
-    function sendPaddleMovement()
+    function sendPaddlesMovement()
     {
         // Player 1 controls
         if ('a' in keys)
@@ -86,7 +96,6 @@ function launchGameLocal()
             socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'right', coord: 0 }));
         else
             socket.send(JSON.stringify({ action: 'move_paddle', player: 1, direction: 'null', coord: 0 }));
-
         // Player 2 controls
         if ('ArrowLeft' in keys)
             socket.send(JSON.stringify({ action: 'move_paddle', player: 2, direction: 'left', coord: 0 }));
