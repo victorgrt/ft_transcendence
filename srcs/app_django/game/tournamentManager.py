@@ -152,7 +152,7 @@ class TournamentManager:
             "all_games" : self.all_games,
             "nb_players" : self.nb_players,
             "state" : self.state,
-            "finished" : False,
+            "finished" : False
         }
 
         # Group send the state to all consumers
