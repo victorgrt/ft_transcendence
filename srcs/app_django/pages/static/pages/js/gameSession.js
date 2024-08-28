@@ -36,10 +36,15 @@ function createGameElement(game) {
     const vsText = document.createTextNode(' ⚔️ ');
 
     // Create the GO link
-    const goLink = document.createElement('a');
-    goLink.className = 'go_button';
-    goLink.href = `/pong/${game.game_id}/`; // Assuming game.session_id is available in this context
-    goLink.textContent = 'GO';
+    // Create the GO link
+    var goLink = null;
+    if(!game.finished && (game.player1 == username || game.player2 == username))
+    {
+        goLink = document.createElement('a');
+        goLink.className = 'go_button';
+        goLink.href = `/pong/${game.game_id}/`; 
+        goLink.textContent = 'GO';
+    }
 
     // Create the game_winner div
     const winnerDiv = document.createElement('div');
@@ -56,7 +61,8 @@ function createGameElement(game) {
     gameDiv.appendChild(player1Span);
     gameDiv.appendChild(vsText);
     gameDiv.appendChild(player2Span);
-    gameDiv.appendChild(goLink);
+    if(goLink)
+        gameDiv.appendChild(goLink);
     gameDiv.appendChild(winnerDiv);
 
     return gameDiv;

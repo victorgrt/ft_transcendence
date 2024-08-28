@@ -34,6 +34,7 @@ var tournamentSemiFinals;
 var tournamentFinal;
 var tournamentSmallFinal;
 var tournamentRanking;
+var username;
 
 // ------------ GAME VARIABLES ---------
 var socket;

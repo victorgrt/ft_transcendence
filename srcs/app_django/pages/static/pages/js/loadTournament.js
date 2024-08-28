@@ -6,8 +6,10 @@ function loadTournament()
     tournamentFinal = document.getElementById("tournament_final");
     tournamentSmallFinal = document.getElementById("tournament_small_final");
     tournamentRanking = document.getElementById("tournsemi_final_game1ament_ranking");
-
-    
+    logoutButton = document.getElementById("header_button_logout");
+    username = document.getElementById("header_username").textContent;
+    console.log("USERNAMEEEEEEEE:", username);
+    logoutButton.addEventListener('click', headerLogoutFunction);
     console.log("Loading tournament page");
     console.log("tournamentPlayersList:", tournamentPlayersList);
     console.log("tournamentSemiFinals:", tournamentSemiFinals);

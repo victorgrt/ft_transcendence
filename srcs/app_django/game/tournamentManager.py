@@ -145,14 +145,28 @@ class TournamentManager:
             self.update_finals()
 
     def send_tournament_state(self):
+        # Convert all games so that winner and loser are usernames
+        # store it in serialized_games
+        serialized_games = []
+        for game in self.all_games:
+            serialized_game = {
+                "game_id": game["game_id"],
+                "finished": game["finished"],
+                "player1": game["player1"],
+                "player2": game["player2"],
+                "winner": game["winner"].username if game["winner"] else None,
+                "loser": game["loser"].username if game["loser"] else None
+            }
+            serialized_games.append(serialized_game)
+
         state = {
             "players" : [player.username for player in self.players],
             "rankings" : self.rankings,
             "tournament_id" : self.tournament_id,
-            "all_games" : self.all_games,
+            "all_games" : serialized_games,
             "nb_players" : self.nb_players,
             "state" : self.state,
-            "finished" : False,
+            "finished" : False
         }
 
         # Group send the state to all consumers
