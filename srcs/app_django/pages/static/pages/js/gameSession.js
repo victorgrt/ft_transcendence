@@ -212,7 +212,7 @@ async function connectToTournament() {
     }
 
     // Connect to the WebSocket
-    connectWebSocket('ws://' + window.location.host + '/ws/tournament/' + tournamentId + '/')
+    connectWebSocket('wss://' + window.location.host + '/wss/tournament/' + tournamentId + '/')
         .then(socket => {
             setUpSocketTournament(socket);
         });
@@ -223,7 +223,7 @@ async function connectToGame(mode = "pvp") {
     const gameId = window.location.pathname.split('/')[2]
     console.log('Connecting to tournament:', gameId);
 
-    connectWebSocket(`ws://${window.location.host}/ws/pong/${gameId}/${mode}/`)
+    connectWebSocket(`wss://${window.location.host}/wss/pong/${gameId}/${mode}/`)
         .then(socket => {
             setUpSocket(socket);
         });

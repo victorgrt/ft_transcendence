@@ -115,7 +115,7 @@ def tournament(request, tournament_id):
         print("Pong View: Tournament " + tournament_id + " does not exist")
         return render(request, '404.html')
 
-    context = {'tournament': tournament}
+    context = {'tournament': tournament, 'user': request.user}
 
     if is_ajax(request):
         print("IS AJAX")

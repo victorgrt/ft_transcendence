@@ -23,7 +23,7 @@ function loadHeader(){
     const headerUser = document.getElementById("header_button_stats");
     const headerMatchHistory = document.getElementById("header_button_history");
     const headerFriends = document.getElementById("header_button_friends");
-    const headerSettings = document.getElementById("header_profile");
+    const headerSettings = document.getElementById("header_avatar");
     const headerLogout = document.getElementById("header_button_logout");
 
 
