@@ -71,7 +71,7 @@ def is_user(request):
     else:
         return JsonResponse({'success': False, 'message': 'Invalid request method'}, status=405)
 
-@login_required
+@csrf_exempt
 def settings(request):
     if request.method == 'POST':
         new_username = request.POST.get('new_username')
