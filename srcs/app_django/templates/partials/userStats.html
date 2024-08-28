@@ -1,0 +1,12 @@
+{% load static %}
+<div id="user_stats">
+    <div id="leftstats">
+        <img id="avatar" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}">
+    </div>
+    <div id="rightstats">
+        <ul id="stats_username">{{user.username}}</ul>
+        <ul id="stats">{{user.friends.count}} amis</ul>
+		<ul id="stats" style="color:green;">{{ user.win }}</ul>
+		<ul id="stats" style="color:red;">{{ user.lost }}</ul>
+    </div>
+</div>

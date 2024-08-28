@@ -1,0 +1,36 @@
+{% load static %}
+
+{% if not authorized %}
+	<div id="private-game-message" >
+	<h1>PRIVATE GAME</h1>
+		This game is private and you are not authorized to join or spectate it.
+		<a style="visibility: visible;"
+			href="/">
+				Back to Home
+		</a>
+	</div>
+{% endif %}
+
+<div id="pongScene">
+	<script src="{% static 'pages/js/pong.js' %}"></script>
+	<div id="countdownDisplay" style="position: absolute; top: 250px; left: 50%; transform: translateX(-50%); font-size: 240px; color: white;"></div>
+	<div id="score" style="position: absolute; top: 50px; left: 50%; transform: translateX(-50%); font-size: 80px; color: white;"></div>
+</div>
+
+<div id="footer">
+    <button id="leaveGameButton" class="needed_hover" onclick=leaveGame()>> Leave Game <</button>
+
+	{% if authorized and game_session.tournament_id %}
+    	<button 
+			id="backToTournamentButton" 
+			class="needed_hover" 
+			onclick=backToTournament() 
+			value="{{ game_session.tournament_id }}"
+		>> Back to Tournament <</button>
+		<!-- Display content related to the tournament_id -->
+		<!-- <a style="visibility: visible;"
+			href="/tournament/{{ game_session.tournament_id }}/">
+			Back to Tournament
+		</a> -->
+	{% endif %}
+</div>

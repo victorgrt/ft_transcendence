@@ -1,10 +1,14 @@
 # pages/urls.py
 from django.urls import path
 # from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from django.urls import path
+from django.urls import path, include
 from .views import *
 
 urlpatterns = [
+  # path('partial/<str:page>/', partial_content, name='partial_content'),
+
+  path('profile/<str:username>/', profile, name='profile'),
+
   # navigation
   path("", scene, name="home"),
   path("partials/home_page/", home_page),

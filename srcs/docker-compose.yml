@@ -1,11 +1,54 @@
-version : '3'
+version: '3'
 
 services:
   django-app:
     build:
-      context: .
+      context: ./app_django
       dockerfile: Dockerfile
     ports:
       - "8000:8000"
+    networks:
+      - app-network
+    volumes:
+      - django-app-static:/usr/src/django-app/pages/static/pages
+      - django-app-media:/usr/src/django-app/pages/static/pages/img_avatars
+      - nginx-ssl:/etc/ssl-nginx
+    depends_on:
+      - postgres
+    env_file:
+      - ./app_django/.env
 
-    # command: python manage.py runserver
+  postgres:
+    image: postgres
+    env_file:
+      - ./app_django/.env
+    networks:
+      - app-network
+    volumes:
+      - postgres:/var/lib/postgresql
+    
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    networks:
+      - app-network
+    ports:
+      - "8001:443"
+    depends_on:
+      - django-app
+    volumes:
+     - django-app-static:/var/lib/django-app
+     - django-app-media:/var/lib/media
+     - nginx-ssl:/etc/nginx/ssl
+     
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  nginx-ssl:
+  django-app-static:
+  django-app-media:
+  postgres:

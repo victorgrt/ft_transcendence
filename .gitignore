@@ -6,3 +6,6 @@ tuto_django/
 bruh/
 .venv/
 db_acc
+*.jpg
+000*
+001*

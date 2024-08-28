@@ -1,0 +1,124 @@
+#profile-container
+{
+  /* Layout */
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 50px;
+  margin-top: 50px;
+
+  width: 80%;
+  max-width: 1150px;
+  height: 80%;
+
+  /* Style */
+  /* background-color: rgba(0, 0, 0, 0.7); Semi-transparent black background */
+  padding: 40px; /* Increased padding */
+  border-radius: 20px; /* Increased border radius */
+  border: 2px solid rgb(61 61 61 / 52%);
+  /* Text */
+  color: white;
+      
+}
+
+#profile_username 
+{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.profile-left-part
+{
+  height: 100%;
+  width:30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap:10px;
+}
+
+.profile-right-part
+{
+  width: 70%;
+  height:100%;
+
+  /* border: 2px solid rgba(40, 40, 40, 1); */
+  border: 1px solid rgb(139 139 139 / 32%);
+  /* margin-top: 50px; */
+  padding: 20px;
+  border-radius: 15px;
+  background: #71717124;
+}
+
+.profile-stats
+{
+  font-size: 18px;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+#friends-stats
+{
+  color: white;
+}
+
+#victory-stats
+{
+  color: rgb(255 220 38);
+}
+
+#defeat-stats
+{
+  color: rgb(161 162 219);
+}
+
+.profile-stats-data
+{
+  font-size: 30px;
+  font-weight: 800;
+  display: flex; /* Makes .profile-stats-data a flex container */
+  align-items: flex-end; /* Aligns children (text) vertically at the bottom */
+  justify-content: center; /* Centers children (text) horizontally */
+  height: 100%; /* Ensure it has a height to align the text at the bottom */
+  margin-bottom: -4px;
+}
+
+#win-rate
+{
+  width: 100%;
+}
+
+
+#profile_avatar {
+  width: 150px; /* Adjust the size as needed */
+  height: 150px; /* Adjust the size as needed */
+  border-radius: 50%; /* Makes the container circular */
+  overflow: hidden; /* Ensures that overflow is hidden */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+#profile_avatar
+{
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  overflow: hidden; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#profile_avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

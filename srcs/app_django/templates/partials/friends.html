@@ -1,0 +1,52 @@
+{% load static %}
+<p id="current_username" style="display: none;">{{ user.username }}</p>
+<div class="basic-container" id="friends">
+	<div id="friends_header">
+    	<h2>Friends</h2>
+		<button id="friends_reload" class="needed_hover" onclick="reloadFriendBox()">RELOAD</button>
+	</div>
+
+  <!-- FRIENDS LIST -->
+	<div class="friends_list" id="friends_list">
+		{% if user.friends.all %}
+			<p id="friend_count">{{ user.friends.count }} friends</p>
+			{% for friend in user.friends.all %}
+			<div class="friend_box" id="friend_box">
+
+        <div class="friend-box-right-part">
+          {% if friend.is_online %}
+					<div class="status_circle" style="background-color: #41ff41;"></div>
+          {% else %}
+            <div class="status_circle" style="background-color: red;"></div>
+          {% endif %}
+          <div id="friend_avatar">
+            <img src="{% static 'pages/img_avatars/' %}{{ friend.get_avatar_name }}">
+          </div>
+          <a class="friend_username" href="{% url 'profile' friend.username %}">{{ friend.username }}</a>
+				</div>
+
+        <button id="sendbtn" class="needed_hover" onclick="friendSendChallenge(`{{ friend.username }}`)" src="{% static 'pages/js/main.js' %}"><img id="friends_challenge" src="{% static 'pages/images/challenge.png' %}""></button>
+			</div>
+			{% endfor %}
+		{% else %}
+			<p>No friends to display</p>
+		{% endif %}
+	</div>
+
+  <!-- SEARCH USER -->
+  <div id="search_friend_error"></div>
+  <div class="friend_box" id="result_box" style="visibility:hidden;height:0px">
+    <div class="status_circle" id="result_status"></div>
+    <div id="friend_avatar">
+      <img class="avatar" id="result_avatar"  src="{% static 'pages/img_avatars/' %}">
+    </div>  
+    <div class="friend_username" id="result_name"></div>
+    <button class="add_button" id="add_button" onclick="sendFriendRequest()">+</button> <!-- Added the + icon here -->
+    <button id="sendbtn" class="needed_hover" onclick="friendSendChallenge('null')" src="{% static 'pages/js/handleFriends.js' %}"><img id="friends_challenge" src="{% static 'pages/images/challenge.png' %}""></button>
+    <!-- <button class="friend_list_button" id="challenge_button" onclick="friendSendChallenge(`{{ result_name }}`)">Challenge</button> -->
+    {% comment %} <button class="invite_tournament_button" id="invite_tournament_button">Invite tournament</button> <!-- Added the + icon here --> {% endcomment %}
+  </div>
+  <input type="text" id="input_search_friend" class="search_bar" placeholder="Search for friends...">
+
+
+</div>

@@ -1,0 +1,23 @@
+{% load static %}
+<div id="change_prof">
+    <div id="top">
+        {% if user.avatar %}
+          <div id="profile_avatar">
+            <img id="profile_image" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}" alt="profile picture">  
+          </div>
+        {% else %}
+            <img id="old_avatar" src="{% static '/pages/img_avatars/default_profile.png' %}" alt="profile picture">
+        {% endif %}
+        <form method="POST" action="/account/settings/" enctype="multipart/form-data" class="settingsForm" id="settingsForm">
+            {% csrf_token %}
+            <input type="file" name="new_avatar" id="new_avatar">
+            <hr id="sep">
+            <h2 id="old_username">{{ user.username }}</h2>
+            <input type="text" name="new_username" id="new_username" placeholder="New Username">
+            <div id="bottom">
+                <button type="submit" id="update_profile">Update Profile</button>
+            </div>
+        </form>
+        <div id="messageDiv"></div>
+    </div>
+</div>

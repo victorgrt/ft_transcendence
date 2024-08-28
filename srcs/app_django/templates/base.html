@@ -1,0 +1,71 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}FT_TRANSCENDENCE{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/account.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/index.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/match_history.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/friends.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/tournamentPage.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/profilePage.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/pong.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'pages/css/header.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'pages/images/transcendence.png' %}">
+</head>
+
+<body>
+
+    <!-- CONTENT -->
+    <div id="content">
+
+    </div>
+
+
+    <!-- 3D LOBBY SCENE -->
+    <div id="scene"/>
+
+
+    <!-- Include common scripts -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+	  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    {% comment %} <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script> {% endcomment %}
+    <script type="text/javascript" src="{% static 'pages/js/zoom.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/scene.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/gameSession.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/loadMenuPong.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/loadTournament.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleElements.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleUserStats.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleLoggout.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/loadHeader.js' %}"></script>    
+    <script type="text/javascript" src="{% static 'pages/js/loadFriends.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/globals.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleLoginForm.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/changeProfile.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleRegisterForm.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleNotification.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleFriends.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/setupNotificationSocket.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/handleMatchHistory.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/pongIA.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/pong.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/pong_local.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/script.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/modal.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/leaveGameButton.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/backToTournament.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/paddleMovements.js' %}"></script>
+    <script type="text/javascript" src="{% static 'pages/js/main.js' %}"></script>
+</body>
+
+</html>

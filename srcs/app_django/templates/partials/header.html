@@ -1,0 +1,24 @@
+{% load static %}
+<div id="header">
+    {% if user.is_authenticated == False %}
+        <button id="header_button" class="needed_hover" onclick='zoomToPC()'>LOGIN  /  REGISTER</button>
+    {% else %}
+        
+        {% if header_mode_complete == True %}
+          <button id="header_button_stats" class="header_hover"><img class="header_icon" src="{% static '/pages/images/mon-profil.png' %}" alt="PROFILE"></button>
+          <button id="header_button_history" class="header_hover"><img class="header_icon" src="{% static '/pages/images/livre-dhistoire.png' %}" alt="MATCH HISTORY"></button>
+          <button id="header_button_friends" class="header_hover"><img class="header_icon" src="{% static '/pages/images/grouper.png' %}"></button>
+        {% endif %}
+
+        <div id="header_profile" class="header_profile_content">
+          <div id="header_avatar">
+            <img id="header_profile_image" src="{% static '/pages/img_avatars/' %}{{user.get_avatar_name}}" alt="profile picture">  
+          </div>
+          <span id="header_username">{{user.username}}</span>
+          <div id="header_button_logout">
+              <img class="header_logout_icon" src="{% static '/pages/images/logout-icon.svg' %}" alt="LOG OUT">
+              LOG OUT
+          </div>
+        </div>
+    {% endif %}
+</div>

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
-from .models import CustomUser
+from account.models import CustomUser
 
 class UserAdmin(BaseUserAdmin):
     list_display = ('email', 'username', 'is_active', 'is_superuser', 'last_login', 'register_date', 'is_staff')

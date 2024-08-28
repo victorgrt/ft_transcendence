@@ -30,26 +30,32 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 
+# For charging files (avatars, images, etc.)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static',]
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 # Application definition
 
 INSTALLED_APPS = [
     #SESSION COOKIES
     'django.contrib.sessions',
-    
+
     'django.contrib.admin',
     'django.contrib.auth',
-    # 'django.contrib.authchat',
     'django.contrib.contenttypes',
-    # 'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'pages',
-    'chat',
     'game',
-    'channels'
+    'channels',
+    'account',
+    'notification',
+    'friends',
 ]
 
-WSGI_APPLICATION = 'django_project.wsgi.application'
+# WSGI_APPLICATION = 'django_project.wsgi.application'
 
 ASGI_APPLICATION = 'django_project.asgi.application'
 
@@ -85,7 +91,7 @@ ROOT_URLCONF = 'django_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -108,13 +114,12 @@ DATABASES = {
         #Update database
         #python manage.py makemigrations
         #python manage.py migrate
-        #'ENGINE':   'django.db.backends.postgresql',
-        'ENGINE':   'django.db.backends.sqlite3',
-        'NAME':     config('DB_ACC_NAME'),
-        'USER':     config('DB_ACC_ADMIN'),
-        'PASSWORD': config('DB_ACC_PSWD'),
-        'HOST':     config('DB_ACC_HOST'),
-        'PORT':     config('DB_ACC_PORT'),
+        'ENGINE':   'django.db.backends.postgresql',
+        'NAME':     'trantran',
+        'USER':     'admin',
+        'PASSWORD': os.getenv('POSTGRES_PASSWORD', 'default_password'),
+        'HOST':     'postgres',
+        'PORT':     '5432',
     }
 
 }
@@ -141,7 +146,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-AUTH_USER_MODEL = 'pages.CustomUser'
+AUTH_USER_MODEL = 'account.CustomUser'
 
 # REST_FRAMEWORK = {
 #     'DEFAULT_AUTHENTICATION_CLASSES': (
@@ -188,3 +193,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
+
+CSRF_TRUSTED_ORIGINS = ['https://0.0.0.0:8000', 'https://0.0.0.0:8001']
