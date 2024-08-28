@@ -266,22 +266,20 @@ function checkEvent(event) {
     // Get references to the main containers
     const friendsContainer = document.getElementById("friends");
     const notificationsContainer = document.getElementById("notifications");
-    const settingsContainer = document.getElementById("change_prof");  // Adjust this selector as needed
-    const userContainer = document.getElementById("user_stats");  // Adjust this selector as needed
+    const settingsContainer = document.getElementById("change_prof");
+    const userContainer = document.getElementById("user_stats");
+    const tournamentContainer = document.getElementById("tournament-container");
 
-    // Check if the click is inside the friends container
     if (friendsContainer && friendsContainer.contains(event.target)) {
         console.log("Positive boss - clicked inside friends container");
         return true;
     }
 
-    // Check if the click is inside the notifications container
     if (notificationsContainer && notificationsContainer.contains(event.target)) {
         console.log("Overlapping with notifications");
         return true;
     }
 
-    // Check if the click is inside the settings container
     if (settingsContainer && settingsContainer.contains(event.target)) {
         console.log("Overlapping with settings");
         return true;
@@ -289,6 +287,11 @@ function checkEvent(event) {
 
     if (userContainer && userContainer.contains(event.target)) {
         console.log("Positive boss - clicked inside user container");
+        return true;
+    }
+
+    if (tournamentContainer && tournamentContainer.contains(event.target)) {
+        console.log("Positive boss - clicked inside tournament container");
         return true;
     }
 

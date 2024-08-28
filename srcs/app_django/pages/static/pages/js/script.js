@@ -45,6 +45,7 @@ function loadHome(){
         var element = document.getElementById("content");
         if (element)
         {
+            console.log("generating go back tournament button");
             var joinDiv = document.createElement('div');
 
             var joinBtn = document.createElement('button');
@@ -133,7 +134,10 @@ function loadContent(url, pushState = true) {
 // Function to load associated scripts for the page
 function loadPageScripts() {
   console.log("LOADING PAGE SCRIPTS");
-
+  document.removeEventListener('keydown', handleKeyDown);
+  document.removeEventListener('keyup', handleKeyUp);
+  document.removeEventListener('keydown', handleKeyDownLoc);
+  document.removeEventListener('keyup', handleKeyUpLoc);
   // Get the url from the window
   const url = window.location.pathname;
   console.log("URL: ", url);

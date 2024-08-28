@@ -76,6 +76,9 @@ function launchGameIA()
     scene.add(leftWall);
     scene.add(rightWall);
 
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('keyup', handleKeyUp); 
+
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
 

@@ -77,7 +77,8 @@ function launchGame()
 
     // var socket = new WebSocket("socket://localhost:8000/socket/pong/your_game_id/");
     //initializeWebSocket(self.gameId);
-
+    document.removeEventListener('keydown', handleKeyDown);
+    document.removeEventListener('keyup', handleKeyUp);
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
 
