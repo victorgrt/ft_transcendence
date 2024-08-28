@@ -151,6 +151,7 @@ def user_avatar(request):
         avatar_url = None
     return render(request, 'index.html', {'avatar_url': avatar_url})
 
+@csrf_exempt
 def logout(request):
 	request.user.is_online = False
 	request.user.save()
