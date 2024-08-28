@@ -133,6 +133,7 @@ function updateTournamentData(data)
     if (data.all_games[2] && data.all_games[3])
     {
         tournamentFinal.innerHTML = "";
+        tournamentSmallFinal.innerHTML = "";
         const finalGameElement = createGameElement(data.all_games[2]);
         const smallFinalGameElement = createGameElement(data.all_games[3]);
         tournamentFinal.appendChild(finalGameElement);
