@@ -36,6 +36,36 @@ function loadHome(){
     loadFriends();
     loadChangeProfile();
     checkModalBug();
+    var is_logged = document.getElementById("stats_username");
+    console.log("is_logged:", is_logged);
+    if (leftTournament === true && is_logged)
+    {
+        console.log("should appen the new button");
+        //append button go back
+        var element = document.getElementById("content");
+        if (element)
+        {
+            var joinDiv = document.createElement('div');
+
+            var joinBtn = document.createElement('button');
+            joinBtn.className = 'needed_hover';
+            joinBtn.textContent = 'Tournament Page';
+            joinBtn.style.position = 'absolute';
+            joinBtn.style.left =  '0';
+            joinBtn.style.bottom =  '0';
+            joinBtn.onclick = function(){
+                leftTournament = false;
+                backToTournament(tournament_id_just_left);
+                return ;
+            };
+
+            joinDiv.appendChild(joinBtn);
+
+            element.appendChild(joinDiv);
+            element.appendChild(joinBtn);
+            console.log("AFTER APPENING");
+        }
+    }
 }
 
 function pongIAPageScripts()

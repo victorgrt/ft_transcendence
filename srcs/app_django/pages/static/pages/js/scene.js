@@ -89,7 +89,6 @@ function init() {
     //     texture.magFilter = THREE.LinearFilter; // Use linear filter for magnification
     //     texture.anisotropy = renderer.capabilities.getMaxAnisotropy(); // Use maximum anisotropy
 
-    //     // Option 1: Set as background
     //     scene.background = texture;
     // });
     window.addEventListener('click', onClickScene);
@@ -175,10 +174,8 @@ function onMouseMove(event) {
     }
     // Mettre en surbrillance l'objet spécifique
     if (intersects.length > 0) {
-        // document.body.style.cursor = 'pointer';
         var selectedObject = intersects.find(function (intersect) {
             // Check si l'utilisteur est sur un objet cliquable
-            // console.log("name:", intersect.object.name);
             if ((intersect.object.name === 'GameScreen_Plane' || intersect.object.name === 'computerScreen_2_1' || intersect.object.name === 'lampSquareFloor_2' || intersect.object.name === 'group780585218' || intersect.object.name === 'Plane001_Door_0' || intersect.object.name === "Couch" || intersect.object.name === "Node-Mesh") && isZooming === false) {
                 selected_object_name = intersect.object.name;
                 return intersect.object.name;
@@ -186,37 +183,27 @@ function onMouseMove(event) {
         });
 
         if (selectedObject && dontClick === false) {
-            document.body.style.cursor = 'pointer';
             selecting_clickable = true;
             var objectToHighlight = selectedObject.object;
-            //ARCADE MACHINE
             if (selectedObject.object.name === 'GameScreen_Plane')
                 objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
-            //ECRAN ORDINATEUR
             else if (selectedObject.object.name === 'computerScreen_2_1') {
                 objectToHighlight.material.emissiveIntensity = 5; // Exemple: intensité d'émission pour la surbrillance
             }
             else if (selectedObject.object.name === 'lampSquareFloor_2') {
-                // objectToHighlight.material.emissiveIntensity = 100; // Exemple: intensité d'émission pour la surbrillance
                 objectToHighlight.material.color.setHex(0xFFFFFF);
             }
             else if (selectedObject.object.name === 'group780585218') {
-                // objectToHighlight.material.emissive = 0.5;
                 objectToHighlight.material.emissiveIntensity = 1; // Exemple: intensité d'émission pour la surbrillance
                 objectToHighlight.material.color.setRGB(0.7454042095350284, 0.010960094003125918, 0.01764195448412081);
             }
             else if (selectedObject.object.name === 'Plane001_Door_0') {
-                // if (friendsVisible === true)
-                // {
-                // document.body.style.cursor = 'not-allowed';
-                // console.log("biggg:", document.body.style.cursor);
-                // }
-                // else
                 objectToHighlight.material.emissiveIntensity = 100;
             }
             else if (selectedObject.object.name === "Node-Mesh")
                 objectToHighlight.material.emissiveIntensity = 100;
-            // Autres ajustements de surbrillance si nécessaire
+            else if (selectedObject.object.name === "Couch")
+                document.body.style.cursor = 'pointer';
             highlightedObject = objectToHighlight;
         }
         else if (!selectedObject) {
@@ -274,21 +261,43 @@ function toggleInterval() {
     }
 }
 
-function checkEvent(event)
-{
+function checkEvent(event) {
     console.log("event:", event);
-    console.log("tagname: ", event.target.id);
-    if (event.target.id === "notifications" || event.target.id === "notiftitle" || event.target.id === "closeNotifs" || event.target.id === "top" || event.target.id === "change_prof" || event.target.id === "update_profile" || event.target.id === "new_username" || event.target.id === "new_avatarg" || event.target.id === "settingsForm" || event.target.id === "messageDiv" || event.target.id === "bottom" || event.target.id === "sep" || event.target.id === "old_username")
-    {
-        console.log("positiv boss");
-        return (true);
+    // Get references to the main containers
+    const friendsContainer = document.getElementById("friends");
+    const notificationsContainer = document.getElementById("notifications");
+    const settingsContainer = document.getElementById("change_prof");  // Adjust this selector as needed
+    const userContainer = document.getElementById("user_stats");  // Adjust this selector as needed
+
+    // Check if the click is inside the friends container
+    if (friendsContainer && friendsContainer.contains(event.target)) {
+        console.log("Positive boss - clicked inside friends container");
+        return true;
     }
-    else
-    {
-        console.log("negatif boss");
-        return (false);
+
+    // Check if the click is inside the notifications container
+    if (notificationsContainer && notificationsContainer.contains(event.target)) {
+        console.log("Overlapping with notifications");
+        return true;
     }
+
+    // Check if the click is inside the settings container
+    if (settingsContainer && settingsContainer.contains(event.target)) {
+        console.log("Overlapping with settings");
+        return true;
+    }
+
+    if (userContainer && userContainer.contains(event.target)) {
+        console.log("Positive boss - clicked inside user container");
+        return true;
+    }
+
+
+    // If none of the above, click is outside the specified areas
+    console.log("Negative boss - clicked outside specified containers");
+    return false;
 }
+
 
 
 function onClickScene(event) {
@@ -310,13 +319,22 @@ function onClickScene(event) {
         const intersection = intersects[0];
         // console.log("here:", intersection);
         if (intersection.object.name === "Couch") {
-            if (checkEvent(event) === true)
+            if (isMouseOverElement(event, notifsDiv) || checkEvent(event)) {
+                document.body.style.cursor = 'default';
+                return;
+            }
+            if (checkEvent(event))
                 return;
             else
+            {
+                document.body.style.cursor = 'pointer';
                 zoomToCouch();
+            }
         }
         if (intersection.object.name === "lampSquareFloor_2") {
             console.log("clicked on lamp :", intersection);
+            if (checkEvent(event))
+                return ;
             let lampLight = scene.getObjectByName("PointLight");
             if (lampOn === true) {
                 lampLight.intensity = 0.5;
@@ -329,6 +347,8 @@ function onClickScene(event) {
             return;
         }
         if (intersection.object.name === "Node-Mesh") {
+            if (checkEvent(event))
+                return ;
             console.log("clicked on switch :");
             if (ambientLight.intensity == 0)
                 ambientLight.intensity = 1;
@@ -343,7 +363,12 @@ function onClickScene(event) {
                 showWarningModal();
             }
             else
+            {
+                if (checkEvent(event))
+                return ;
+
                 toggleInterval();
+            }
             return;
         }
 
@@ -356,15 +381,8 @@ function onClickScene(event) {
                     return;
                 }
                 else if (checkEvent(event))
-                    return
-                else
-                {
-                    showLoggedOutModal();
-                    // zoomLogout();
-                    // zoomToDoor();
-                    headerLogoutFunction();
                     return;
-                }
+                showSureLoggout();
             }
             else {
                 console.log("should enter here right")
@@ -378,6 +396,8 @@ function onClickScene(event) {
             const pseudo = document.getElementById("user_stats");
             console.log("pseudo:", pseudo)
             if (pseudo) {
+                if (checkEvent(event))
+                    return ;    
                 //ZOOM TO ARCADE + DISPLAY MENU PONG
                 zoomToArcade();
                 return;
@@ -399,6 +419,8 @@ function onClickScene(event) {
                 zoomToPC();
             }
             else {
+                if (checkEvent(event))
+                    return ;
                 zoomToPCWhileLogged();
             }
             return;

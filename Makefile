@@ -34,10 +34,3 @@ docker_rmcont:
 
 docker_rmvolume:
 	-docker volume rm $$(docker volume ls -q)
-
-fclean: clean
-	-@docker system prune -af
-#	@-sudo docker rm $$(sudo docker volume ls -q)
-#	@sudo rm -rf /home/lbouguet/data/mariadb /home/lbouguet/data/wordpress
-#	@-sudo docker rmi $$(sudo docker image ls -aq)
-#	@echo "All images and containers are cleared."
