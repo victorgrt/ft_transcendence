@@ -135,7 +135,7 @@ function updateTournamentData(data)
         tournamentFinal.innerHTML = "";
         const finalGameElement = createGameElement(data.all_games[2]);
         const smallFinalGameElement = createGameElement(data.all_games[3]);
-        tournamentFinal.appendChild(gameElement);
+        tournamentFinal.appendChild(finalGameElement);
         tournamentSmallFinal.appendChild(smallFinalGameElement);
     }
     if (data.players_ranking)
